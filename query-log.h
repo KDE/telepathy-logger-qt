@@ -7,45 +7,47 @@
 
 #include <QObject>
 #include <QDate>
+#include <QString>
 
 namespace Logger {
 
 class Message
 {
 public:
-	Message(TplEntry *tpmessage)
-	{
-		(void)tpmessage; //TODO
-	}
+  Message(TplEntry *tpmessage)
+  {
+    (void)tpmessage; //TODO
+  }
 };
 
 class Error
 {
 public:
-	Error(GError *gerror);
-	
-	QString message() { return this->_message; }
-	int code() { return this->_code; }
+  Error(GError *gerror);
+  Error(QString message, int code = 0);
+
+  QString message() { return this->_message; }
+  int code() { return this->_code; }
 
 private:
-	QString _message;
-	int _code;
+  QString _message;
+  int _code;
 };
 
 class Query : public QObject
 {
 public:
-	explicit Query(QString dbuspath);
-	~Query() {}
-	
+  explicit Query(QString dbusid);
+  ~Query() {}
+
 protected:
-	static void callback(GObject *obj, GAsyncResult *result, gpointer self)
-	{
-		(void)obj; (void)result; (void)self;
-	}
-	
-	TplLogManager *logmanager;
-	TpAccount *account;
+  static void callback(GObject *obj, GAsyncResult *result, Query *self) {}
+
+  TplLogManager *logmanager;
+  TpAccount *account;
+
+private:
+  static void setreadycb(GObject *obj, GAsyncResult *result, Query *self);
 };
 
 class ChatExistsQuery : public Query
@@ -53,13 +55,13 @@ class ChatExistsQuery : public Query
 Q_OBJECT
 
 public:
-	explicit ChatExistsQuery(QString dbuspath) : Query(dbuspath) {}
+  explicit ChatExistsQuery(QString dbusid) : Query(dbusid) {}
 
 public slots:
-	void perform(QString contact, bool ischat = false);
+  void perform(QString contact, bool ischat = false);
 
 signals:
-	void completed(bool yes);
+  void completed(bool yes);
 };
 
 class ConversationDatesQuery : public Query
@@ -67,19 +69,19 @@ class ConversationDatesQuery : public Query
 Q_OBJECT
 
 public:
-	explicit ConversationDatesQuery(QString dbuspath) : Query(dbuspath) {}
+  explicit ConversationDatesQuery(QString dbusid) : Query(dbusid) {}
 
 public slots:
-	void perform(QString contact, bool ischat = false);
+  void perform(QString contact, bool ischat = false);
 
 signals:
-	void completed(QList<QDate> dates);
+  void completed(QList<QDate> dates);
 
 private:
-	static void callback(GObject *obj, GAsyncResult *result,
-						 ConversationDatesQuery* self);
+  static void callback(GObject *obj, GAsyncResult *result,
+             ConversationDatesQuery* self);
 
-	QList<QDate> dates;
+  QList<QDate> dates;
 };
 
 class MessagesForDateQuery : public Query
@@ -87,19 +89,19 @@ class MessagesForDateQuery : public Query
 Q_OBJECT
 
 public:
-	explicit MessagesForDateQuery(QString dbuspath) : Query(dbuspath) {}
-	
+  explicit MessagesForDateQuery(QString dbusid) : Query(dbusid) {}
+
 public slots:
-	void perform(QString contact, bool ischat=false, QDate date=QDate::currentDate());
+  void perform(QString contact, bool ischat=false, QDate date=QDate::currentDate());
 
 signals:
-	void completed(QList<Message> messages);
+  void completed(QList<Message> messages);
 
 private:
-	static void callback(GObject *obj, GAsyncResult *result,
-						 MessagesForDateQuery* self);
-	
-	QList<Message> messages;
+  static void callback(GObject *obj, GAsyncResult *result,
+             MessagesForDateQuery* self);
+
+  QList<Message> messages;
 };
 
 } // namespace
