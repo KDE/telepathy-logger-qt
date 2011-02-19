@@ -10,7 +10,7 @@ int main(int argc, char **argv)
 
   if (argc < 3)
   {
-    qWarning("Must specify a dbus object path as first parameter, and a search term as second!");
+    qWarning("Must specify a dbus object path as first parameter, and a search term as second!\n");
     exit(0);
   }
 

@@ -27,7 +27,11 @@ public:
   }
 };
 
-class Chat {}; //TODO
+class Chat
+{
+public:
+  Chat(TplEntity *chat) {} //TODO
+};
 
 class Error
 {

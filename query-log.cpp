@@ -233,11 +233,11 @@ void ChatsForAccountQuery::callback(GObject *obj, GAsyncResult *result,
 {
   (void)obj;
 
-  GList *ghits, *i; GError *error = NULL;
+  GList *gchats, *i; GError *error = NULL;
 
   // Check whether everything went fine, and retrieves data...
   gboolean successful =
-	tpl_log_manager_get_chats_finish(self->logmanager, result, &ghits, &error);
+	tpl_log_manager_get_chats_finish(self->logmanager, result, &gchats, &error);
 
   if (error)
   {
@@ -251,16 +251,16 @@ void ChatsForAccountQuery::callback(GObject *obj, GAsyncResult *result,
 	throw new Error("tpl_log_manager_get_chats_async was not successfull!");
   }
 
-//   TplLogSearchHit *ghit;
-// 
-//   for (i = ghits; i; i = i->next)
-//   {
-// 	ghit= (TplLogSearchHit*)i->data;
-// 	self->hits << Hit(ghit);
-//   } FIXME
+   TplEntity *gchat;
+
+   for (i = gchats; i; i = i->next)
+   {
+	gchat = (TplEntity*)i->data;
+	self->chats << Chat(gchat);
+   }
 
   // Free search results...
-  tpl_log_manager_search_free(ghits);
+  tpl_log_manager_search_free(gchats);
 
   emit self->completed(self->chats);
 }
@@ -280,6 +280,7 @@ Error::Error(GError *gerror, bool dontfree)
 
 Error::Error(QString message, int code) : _message(message), _code(code)
 {
+  // Silence is golden :)
 }
 
 #if 0
