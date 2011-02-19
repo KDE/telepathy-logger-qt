@@ -152,12 +152,12 @@ private:
   QList<Chat> chats;
 };
 
-class Echo : public QObject
+class QueryDebug : public QObject
 {
 Q_OBJECT
 
 public:
-  Echo() : QObject() {}
+  QueryDebug() : QObject() {}
 
 public slots:
   void echo(bool yes) { qDebug() << yes; }

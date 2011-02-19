@@ -6,7 +6,7 @@ using namespace Logger;
 
 int main(int argc, char **argv)
 {
-  Echo e;
+  QueryDebug e;
 
   if (argc < 3)
   {
