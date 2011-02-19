@@ -8,6 +8,7 @@
 #include <QObject>
 #include <QDate>
 #include <QString>
+#include <QDebug>
 
 namespace Logger {
 
@@ -149,6 +150,17 @@ private:
 					   ChatsForAccountQuery *self);
 
   QList<Chat> chats;
+};
+
+class Echo : public QObject
+{
+Q_OBJECT
+
+public:
+  Echo() : QObject() {}
+
+public slots:
+  void echo(bool yes) { qDebug() << yes; }
 };
 
 } // namespace

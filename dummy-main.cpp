@@ -6,16 +6,19 @@ using namespace Logger;
 
 int main(int argc, char **argv)
 {
-  if (argc < 2)
+  Echo e;
+
+  if (argc < 3)
   {
-    qWarning("Must specify a dbus object path as first parameter!");
+    qWarning("Must specify a dbus object path as first parameter, and a search term as second!");
     exit(0);
   }
 
   try
   {
     ChatExistsQuery q(argv[1]);
-    q.perform("Search  text");
+	QObject::connect(&q, SIGNAL(completed(bool)), &e, SLOT(echo(bool)));
+    q.perform(argv[2]);
   }
   catch (Error *e)
   {

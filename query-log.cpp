@@ -1,14 +1,18 @@
 #include <query-log.h>
 
-#include <QDebug>
+#include <QStringList>
 
 using namespace Logger;
 
 Query::Query(QString dbusid, bool isquoted)
 {
+  // Escape string as if it were a valid C indentifier...
   if (!isquoted)
   {
-	//dbusid.quote() // TODO
+	QStringList chunks = dbusid.split("/");
+
+	dbusid = QString("%1/%2/%3").arg(chunks[0]).arg(chunks[1]).
+				arg(tp_escape_as_identifier(chunks[2].toAscii()));
   }
 
   g_type_init();
