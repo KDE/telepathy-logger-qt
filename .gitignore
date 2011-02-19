@@ -1,0 +1,7 @@
+.directory
+Makefile
+*~
+*.o
+kde-telepathy-logger
+*.pro.user
+moc_*.cpp
