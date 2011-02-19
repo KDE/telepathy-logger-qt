@@ -16,7 +16,7 @@ Query::Query(QString dbusid)
 
   if (error)
   {
-    throw new Error(error);
+	throw new Error(error);
   }
 
   error = NULL;
@@ -27,16 +27,16 @@ Query::Query(QString dbusid)
 
   if (error)
   {
-    throw new Error(error);
+	throw new Error(error);
   }
 
   if (!account)
   {
-    throw new Error("Account returned by tp_account_new was NULL!");
+	throw new Error("Account returned by tp_account_new was NULL!");
   }
 
   tp_account_prepare_async(account, NULL,
-               (GAsyncReadyCallback)this->setreadycb, this);
+				(GAsyncReadyCallback)this->setreadycb, this);
 
   this->account = account;
 }
@@ -47,13 +47,13 @@ void Query::setreadycb(GObject *obj, GAsyncResult *result, Query *self)
 
   if (!tp_account_prepare_finish (self->account, result, &error))
   {
-    self->account = NULL;
-    throw new Error(error);
+	self->account = NULL;
+	throw new Error(error);
   }
 
   if (!tp_account_is_valid(self->account))
   {
-    throw new Error("Selected account is not valid!");
+	throw new Error("Selected account is not valid!");
   }
 }
 
@@ -61,7 +61,7 @@ void Query::setreadycb(GObject *obj, GAsyncResult *result, Query *self)
 void ChatExistsQuery::perform(QString chatname, bool ischatroom)
 {
   emit completed(tpl_log_manager_exists(this->logmanager, this->account,
-                      chatname.toAscii(), ischatroom));
+					  chatname.toAscii(), ischatroom));
 }
 
 
@@ -70,11 +70,11 @@ void ConversationDatesQuery::perform(QString chatid, bool ischat)
 {
   // Perform the asynchronous call...
   tpl_log_manager_get_dates_async(this->logmanager, this->account, chatid.toAscii(),
-    ischat, (GAsyncReadyCallback)this->callback, this);
+	ischat, (GAsyncReadyCallback)this->callback, this);
 }
 
 void ConversationDatesQuery::callback(GObject *obj, GAsyncResult *result,
-                    ConversationDatesQuery* self)
+					ConversationDatesQuery* self)
 {
   (void)obj;
 
@@ -84,23 +84,23 @@ void ConversationDatesQuery::callback(GObject *obj, GAsyncResult *result,
   if (!tpl_log_manager_get_dates_finish(self->logmanager, result, &gdates, &error))
   {
   }
-  
+
   if (error)
   {
-    throw new Error(error);
+	throw new Error(error);
   }
 
   GDate *gdate;
 
   for (i = gdates; i; i = i->next)
   {
-    gdate = (GDate*)i->data;
-    self->dates << QDate(gdate->year, gdate->month, gdate->day);
+	gdate = (GDate*)i->data;
+	self->dates << QDate(gdate->year, gdate->month, gdate->day);
   }
-  
+
   // Free search results...
   tpl_log_manager_search_free(gdates);
-  
+
   emit self->completed(self->dates);
 }
 
@@ -109,21 +109,21 @@ void ConversationDatesQuery::callback(GObject *obj, GAsyncResult *result,
 void MessagesForDateQuery::perform(QString chat, bool ischat, QDate date)
 {
   if (!date.isValid()) return;
-  
+
   // Setup a valid GDate (assuming the QDate is valid)...
   GDate gdate;
-  
+
   g_date_clear(&gdate, 1);
   g_date_set_dmy(&gdate, (GDateDay)date.day(),
-    (GDateMonth)date.month(), (GDateYear)date.year());
+	(GDateMonth)date.month(), (GDateYear)date.year());
 
   // Perform the call...
   tpl_log_manager_get_messages_for_date_async(this->logmanager, this->account,
-    chat.toAscii(), ischat, &gdate, (GAsyncReadyCallback)this->callback, this);
+	chat.toAscii(), ischat, &gdate, (GAsyncReadyCallback)this->callback, this);
 }
 
 void MessagesForDateQuery::callback(GObject *obj, GAsyncResult *result,
-                  MessagesForDateQuery *self)
+									MessagesForDateQuery *self)
 {
   (void)obj;
 
@@ -131,13 +131,13 @@ void MessagesForDateQuery::callback(GObject *obj, GAsyncResult *result,
 
   // Check whether everything went fine, and retrieves data...
   if (!tpl_log_manager_get_messages_for_date_finish(self->logmanager,
-    result, &gmessages, &error))
+	result, &gmessages, &error))
   {
   }
-  
+
   if (error)
   {
-    throw new Error(error);
+	throw new Error(error);
   }
 
 
@@ -148,7 +148,7 @@ void MessagesForDateQuery::callback(GObject *obj, GAsyncResult *result,
 	gmessage = (TplEntry*)i->data;
 	self->messages << Message(gmessage);
   }
-  
+
   // Free search results...
   tpl_log_manager_search_free(gmessages);
 
@@ -157,21 +157,21 @@ void MessagesForDateQuery::callback(GObject *obj, GAsyncResult *result,
 
 #if 0
 
-gboolean            tpl_log_manager_get_filtered_messages_finish
-                                                        (TplLogManager *self,
-                                                         GAsyncResult *result,
-                                                         GList **messages,
-                                                         GError **error);
-void                tpl_log_manager_get_filtered_messages_async
-                                                        (TplLogManager *manager,
-                                                         TpAccount *account,
-                                                         const gchar *chat_id,
-                                                         gboolean is_chatroom,
-                                                         guint num_messages,
-                                                         TplLogMessageFilter filter,
-                                                         gpointer filter_user_data,
-                                                         GAsyncReadyCallback callback,
-                                                         gpointer user_data);
+gboolean			tpl_log_manager_get_filtered_messages_finish
+														(TplLogManager *self,
+														 GAsyncResult *result,
+														 GList **messages,
+														 GError **error);
+void				tpl_log_manager_get_filtered_messages_async
+														(TplLogManager *manager,
+														 TpAccount *account,
+														 const gchar *chat_id,
+														 gboolean is_chatroom,
+														 guint num_messages,
+														 TplLogMessageFilter filter,
+														 gpointer filter_user_data,
+														 GAsyncReadyCallback callback,
+														 gpointer user_data);
 
 
 
@@ -179,27 +179,27 @@ void                tpl_log_manager_get_filtered_messages_async
 
 
 
-gboolean            tpl_log_manager_get_chats_finish    (TplLogManager *self,
-                                                         GAsyncResult *result,
-                                                         GList **chats,
-                                                         GError **error);
-void                tpl_log_manager_get_chats_async     (TplLogManager *self,
-                                                         TpAccount *account,
-                                                         GAsyncReadyCallback callback,
-                                                         gpointer user_data);
+gboolean			tpl_log_manager_get_chats_finish	(TplLogManager *self,
+														 GAsyncResult *result,
+														 GList **chats,
+														 GError **error);
+void				tpl_log_manager_get_chats_async	 (TplLogManager *self,
+														 TpAccount *account,
+														 GAsyncReadyCallback callback,
+														 gpointer user_data);
 
 
 
 
 
-gboolean            tpl_log_manager_search_finish       (TplLogManager *self,
-                                                         GAsyncResult *result,
-                                                         GList **chats,
-                                                         GError **error);
-void                tpl_log_manager_search_async        (TplLogManager *manager,
-                                                         const gchar *text,
-                                                         GAsyncReadyCallback callback,
-                                                         gpointer user_data);
+gboolean			tpl_log_manager_search_finish	   (TplLogManager *self,
+														 GAsyncResult *result,
+														 GList **chats,
+														 GError **error);
+void				tpl_log_manager_search_async		(TplLogManager *manager,
+														 const gchar *text,
+														 GAsyncReadyCallback callback,
+														 gpointer user_data);
 
 
 gboolean (*TplLogMessageFilter)(TplEntry *message, gpointer user_data);
@@ -210,7 +210,7 @@ Error::Error(GError *gerror, bool dontfree = false)
 {
   this->_message = QString(gerror->message);
   this->_code = gerror->code;
-  
+
   if (!dontfree)
   {
 	g_error_free(gerror);
