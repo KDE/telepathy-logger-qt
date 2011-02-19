@@ -16,9 +16,7 @@ Query::Query(QString dbusid)
 
   if (error)
   {
-    Error *e = new Error(error);
-    g_error_free(error);
-    throw e;
+    throw new Error(error);
   }
 
   error = NULL;
@@ -29,9 +27,7 @@ Query::Query(QString dbusid)
 
   if (error)
   {
-    Error *e = new Error(error);
-    g_error_free(error);
-    throw e;
+    throw new Error(error);
   }
 
   if (!account)
@@ -41,11 +37,6 @@ Query::Query(QString dbusid)
 
   tp_account_prepare_async(account, NULL,
                (GAsyncReadyCallback)this->setreadycb, this);
-
-  if (!tp_account_is_valid(account))
-  {
-    throw new Error("Selected account is not valid!");
-  }
 
   this->account = account;
 }
@@ -57,9 +48,12 @@ void Query::setreadycb(GObject *obj, GAsyncResult *result, Query *self)
   if (!tp_account_prepare_finish (self->account, result, &error))
   {
     self->account = NULL;
-    Error *e = new Error(error->message);
-    g_error_free (error);
-    throw e;
+    throw new Error(error);
+  }
+
+  if (!tp_account_is_valid(self->account))
+  {
+    throw new Error("Selected account is not valid!");
   }
 }
 
@@ -93,9 +87,7 @@ void ConversationDatesQuery::callback(GObject *obj, GAsyncResult *result,
   
   if (error)
   {
-    Error *e = new Error(error);
-    g_error_free(error);
-    throw e;
+    throw new Error(error);
   }
 
   GDate *gdate;
@@ -145,9 +137,7 @@ void MessagesForDateQuery::callback(GObject *obj, GAsyncResult *result,
   
   if (error)
   {
-    Error *e = new Error(error);
-    g_error_free(error);
-    throw e;
+    throw new Error(error);
   }
 
 
@@ -155,13 +145,13 @@ void MessagesForDateQuery::callback(GObject *obj, GAsyncResult *result,
 
   for (i = gmessages; i; i = i->next)
   {
-    gmessage = (TplEntry*)i->data;
-    self->messages << Message(gmessage);
+	gmessage = (TplEntry*)i->data;
+	self->messages << Message(gmessage);
   }
   
   // Free search results...
   tpl_log_manager_search_free(gmessages);
-  
+
   emit self->completed(self->messages);
 }
 
@@ -216,10 +206,15 @@ gboolean (*TplLogMessageFilter)(TplEntry *message, gpointer user_data);
 
 #endif
 
-Error::Error(GError *gerror)
+Error::Error(GError *gerror, bool dontfree = false)
 {
   this->_message = QString(gerror->message);
   this->_code = gerror->code;
+  
+  if (!dontfree)
+  {
+	g_error_free(gerror);
+  }
 }
 
 Error::Error(QString message, int code) : _message(message), _code(code)
