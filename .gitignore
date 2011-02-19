@@ -5,3 +5,4 @@ Makefile
 kde-telepathy-logger
 *.pro.user
 moc_*.cpp
+templates

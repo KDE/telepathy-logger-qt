@@ -11,6 +11,12 @@
 
 namespace Logger {
 
+class Hit
+{
+public:
+  Hit(TplLogSearchHit *hit) {}
+};
+
 class Message
 {
 public:
@@ -20,10 +26,12 @@ public:
   }
 };
 
+class Chat {}; //TODO
+
 class Error
 {
 public:
-  Error(GError *gerror);
+  Error(GError *gerror, bool dontfree = false);
   Error(QString message, int code = 0);
 
   QString message() { return this->_message; }
@@ -37,7 +45,7 @@ private:
 class Query : public QObject
 {
 public:
-  explicit Query(QString dbusid);
+  explicit Query(QString dbusid, bool isquoted = false);
   ~Query() {}
 
 protected:
@@ -102,6 +110,45 @@ private:
              MessagesForDateQuery* self);
 
   QList<Message> messages;
+};
+
+class KeywordQuery : public Query
+{
+Q_OBJECT
+
+public:
+  KeywordQuery(QString dbusid);
+
+public slots:
+  void perform(QString keyword);
+
+signals:
+  void completed(QList<Hit> hits);
+
+private:
+  static void callback(GObject *obj, GAsyncResult *result, KeywordQuery *self);
+
+  QList<Hit> hits;
+};
+
+class ChatsForAccountQuery : public Query
+{
+Q_OBJECT
+
+public:
+  ChatsForAccountQuery(QString dbusid) : Query(dbusid) {}
+
+public slots:
+  void perform();
+
+signals:
+  void completed(QList<Chat> chats);
+
+private:
+  static void callback(GObject *obj, GAsyncResult *result,
+					   ChatsForAccountQuery *self);
+
+  QList<Chat> chats;
 };
 
 } // namespace

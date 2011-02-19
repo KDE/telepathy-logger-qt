@@ -4,8 +4,13 @@
 
 using namespace Logger;
 
-Query::Query(QString dbusid)
+Query::Query(QString dbusid, bool isquoted)
 {
+  if (!isquoted)
+  {
+	//dbusid.quote() // TODO
+  }
+
   g_type_init();
 
   this->logmanager = tpl_log_manager_dup_singleton();
@@ -21,7 +26,7 @@ Query::Query(QString dbusid)
 
   error = NULL;
 
-  QString path = QString("%1%2").arg(TP_ACCOUNT_OBJECT_PATH_BASE).arg(dbusid);
+  QString path = QString(TP_ACCOUNT_OBJECT_PATH_BASE"%1").arg(dbusid);
 
   TpAccount *account = tp_account_new(daemon, path.toAscii(), &error);
 
@@ -61,7 +66,7 @@ void Query::setreadycb(GObject *obj, GAsyncResult *result, Query *self)
 void ChatExistsQuery::perform(QString chatname, bool ischatroom)
 {
   emit completed(tpl_log_manager_exists(this->logmanager, this->account,
-					  chatname.toAscii(), ischatroom));
+				 chatname.toAscii(), ischatroom));
 }
 
 
@@ -81,13 +86,18 @@ void ConversationDatesQuery::callback(GObject *obj, GAsyncResult *result,
   GList *gdates, *i; GError *error = NULL;
 
   // Check whether everything went fine, and retrieves data...
-  if (!tpl_log_manager_get_dates_finish(self->logmanager, result, &gdates, &error))
-  {
-  }
+  gboolean successful = tpl_log_manager_get_dates_finish(self->logmanager, result, &gdates, &error);
 
   if (error)
   {
 	throw new Error(error);
+  }
+
+  // This is placed as second, just as a failback. Otherwise it would prevent
+  // more detailed exceptions to be thrown...
+  if (!successful)
+  {
+	throw new Error("tpl_log_manager_get_dates_async was not successfull!");
   }
 
   GDate *gdate;
@@ -130,16 +140,20 @@ void MessagesForDateQuery::callback(GObject *obj, GAsyncResult *result,
   GList *gmessages, *i; GError *error = NULL;
 
   // Check whether everything went fine, and retrieves data...
-  if (!tpl_log_manager_get_messages_for_date_finish(self->logmanager,
-	result, &gmessages, &error))
-  {
-  }
+  gboolean successful = tpl_log_manager_get_messages_for_date_finish(
+	self->logmanager, result, &gmessages, &error);
 
   if (error)
   {
 	throw new Error(error);
   }
 
+  // This is placed as second, just as a failback. Otherwise it would prevent
+  // more detailed exceptions to be thrown...
+  if (!successful)
+  {
+	throw new Error("tpl_log_manager_get_messages_for_date_async was not successfull!");
+  }
 
   TplEntry *gmessage;
 
@@ -155,58 +169,101 @@ void MessagesForDateQuery::callback(GObject *obj, GAsyncResult *result,
   emit self->completed(self->messages);
 }
 
-#if 0
-
-gboolean			tpl_log_manager_get_filtered_messages_finish
-														(TplLogManager *self,
-														 GAsyncResult *result,
-														 GList **messages,
-														 GError **error);
-void				tpl_log_manager_get_filtered_messages_async
-														(TplLogManager *manager,
-														 TpAccount *account,
-														 const gchar *chat_id,
-														 gboolean is_chatroom,
-														 guint num_messages,
-														 TplLogMessageFilter filter,
-														 gpointer filter_user_data,
-														 GAsyncReadyCallback callback,
-														 gpointer user_data);
 
 
+void KeywordQuery::perform(QString keyword)
+{
+  // Perform the call...
+  tpl_log_manager_search_async(this->logmanager, keyword.toAscii(),
+	(GAsyncReadyCallback)this->callback, this);
+}
+
+void KeywordQuery::callback(GObject *obj, GAsyncResult *result,
+									KeywordQuery *self)
+{
+  (void)obj;
+
+  GList *ghits, *i; GError *error = NULL;
+
+  // Check whether everything went fine, and retrieves data...
+  gboolean successful =
+	tpl_log_manager_search_finish(self->logmanager, result, &ghits, &error);
+
+  if (error)
+  {
+	throw new Error(error);
+  }
+
+  // This is placed as second, just as a failback. Otherwise it would prevent
+  // more detailed exceptions to be thrown...
+  if (!successful)
+  {
+	throw new Error("tpl_log_manager_search_async was not successfull!");
+  }
+
+  TplLogSearchHit *ghit;
+
+  for (i = ghits; i; i = i->next)
+  {
+	ghit= (TplLogSearchHit*)i->data;
+	self->hits << Hit(ghit);
+  }
+
+  // Free search results...
+  tpl_log_manager_search_free(ghits);
+
+  emit self->completed(self->hits);
+}
 
 
 
+void ChatsForAccountQuery::perform()
+{
+  // Perform the call...
+  tpl_log_manager_get_chats_async(this->logmanager, this->account,
+	(GAsyncReadyCallback)this->callback, this);
+}
+
+void ChatsForAccountQuery::callback(GObject *obj, GAsyncResult *result,
+									ChatsForAccountQuery *self)
+{
+  (void)obj;
+
+  GList *ghits, *i; GError *error = NULL;
+
+  // Check whether everything went fine, and retrieves data...
+  gboolean successful =
+	tpl_log_manager_get_chats_finish(self->logmanager, result, &ghits, &error);
+
+  if (error)
+  {
+	throw new Error(error);
+  }
+
+  // This is placed as second, just as a failback. Otherwise it would prevent
+  // more detailed exceptions to be thrown...
+  if (!successful)
+  {
+	throw new Error("tpl_log_manager_get_chats_async was not successfull!");
+  }
+
+//   TplLogSearchHit *ghit;
+// 
+//   for (i = ghits; i; i = i->next)
+//   {
+// 	ghit= (TplLogSearchHit*)i->data;
+// 	self->hits << Hit(ghit);
+//   } FIXME
+
+  // Free search results...
+  tpl_log_manager_search_free(ghits);
+
+  emit self->completed(self->chats);
+}
 
 
-gboolean			tpl_log_manager_get_chats_finish	(TplLogManager *self,
-														 GAsyncResult *result,
-														 GList **chats,
-														 GError **error);
-void				tpl_log_manager_get_chats_async	 (TplLogManager *self,
-														 TpAccount *account,
-														 GAsyncReadyCallback callback,
-														 gpointer user_data);
 
-
-
-
-
-gboolean			tpl_log_manager_search_finish	   (TplLogManager *self,
-														 GAsyncResult *result,
-														 GList **chats,
-														 GError **error);
-void				tpl_log_manager_search_async		(TplLogManager *manager,
-														 const gchar *text,
-														 GAsyncReadyCallback callback,
-														 gpointer user_data);
-
-
-gboolean (*TplLogMessageFilter)(TplEntry *message, gpointer user_data);
-
-#endif
-
-Error::Error(GError *gerror, bool dontfree = false)
+Error::Error(GError *gerror, bool dontfree)
 {
   this->_message = QString(gerror->message);
   this->_code = gerror->code;
@@ -220,3 +277,28 @@ Error::Error(GError *gerror, bool dontfree = false)
 Error::Error(QString message, int code) : _message(message), _code(code)
 {
 }
+
+#if 0
+
+For later implementation of custom filters...
+
+gboolean tpl_log_manager_get_filtered_messages_finish
+  (TplLogManager *self,
+  GAsyncResult *result,
+  GList **messages,
+  GError **error);
+
+void tpl_log_manager_get_filtered_messages_async
+  (TplLogManager *manager,
+  TpAccount *account,
+  const gchar *chat_id,
+  gboolean is_chatroom,
+  guint num_messages,
+  TplLogMessageFilter filter,
+  gpointer filter_user_data,
+  GAsyncReadyCallback callback,
+  gpointer user_data);
+
+gboolean (*TplLogMessageFilter)(TplEntry *message, gpointer user_data);
+
+#endif
