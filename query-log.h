@@ -2,7 +2,6 @@
 #define __QUERY_LOG__
 
 #include <glib.h>
-#include <telepathy-glib/account.h>
 #include <telepathy-logger/log-manager.h>
 
 #include <QObject>
@@ -15,16 +14,13 @@ namespace Logger {
 class Hit
 {
 public:
-  Hit(TplLogSearchHit *hit) {}
+  Hit(TplLogSearchHit *hit) {} //TODO
 };
 
 class Message
 {
 public:
-  Message(TplEntry *tpmessage)
-  {
-    (void)tpmessage; //TODO
-  }
+  Message(TplEntry *tpmessage) {} //TODO
 };
 
 class Chat
@@ -165,6 +161,7 @@ public:
 
 public slots:
   void echo(bool yes) { qDebug() << yes; }
+  void echo(QList<QDate> dates) { qDebug() << dates; }
 };
 
 } // namespace

@@ -1,5 +1,7 @@
 #include <query-log.h>
 
+#include <telepathy-glib/account.h>
+
 #include <QStringList>
 
 using namespace Logger;
@@ -23,10 +25,7 @@ Query::Query(QString dbusid, bool isquoted)
 
   TpDBusDaemon *daemon = tp_dbus_daemon_dup(&error);
 
-  if (error)
-  {
-	throw new Error(error);
-  }
+  if (error) throw new Error(error);
 
   error = NULL;
 
@@ -34,15 +33,9 @@ Query::Query(QString dbusid, bool isquoted)
 
   TpAccount *account = tp_account_new(daemon, path.toAscii(), &error);
 
-  if (error)
-  {
-	throw new Error(error);
-  }
+  if (error) throw new Error(error);
 
-  if (!account)
-  {
-	throw new Error("Account returned by tp_account_new was NULL!");
-  }
+  if (!account) throw new Error("Account returned by tp_account_new is NULL!");
 
   tp_account_prepare_async(account, NULL,
 				(GAsyncReadyCallback)this->setreadycb, this);
