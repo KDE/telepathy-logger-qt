@@ -1,32 +1,66 @@
 #ifndef __QUERY_LOG__
 #define __QUERY_LOG__
 
-#include <glib.h>
 #include <telepathy-logger/log-manager.h>
 
 #include <QObject>
 #include <QDate>
-#include <QString>
 #include <QDebug>
+
+class QString;
 
 namespace Logger {
 
 class Hit
 {
 public:
-  Hit(TplLogSearchHit *hit) {} //TODO
+  Hit(TplLogSearchHit *hit) {} //TODO unknown type
 };
+
+class TplEntryText;
 
 class Message
 {
 public:
-  Message(TplEntry *tpmessage) {} //TODO
+  Message(TplEntryText *tpmessage);
+  Message(TplEntry *tpmessage) {};
+
+//   "message"                  gchar*
+//   "message-type"             guint
+//   "pending-msg-id"           gint
+
+  enum Direction
+  {
+	 undefined = 0,
+	 incoming  = TPL_ENTRY_DIRECTION_IN,
+	 outcoming = TPL_ENTRY_DIRECTION_OUT
+  };
+
+private:
+  TpAccount* account;
+  long timestamp;
+
+  QString accountpath, channel, chatid, logid;
+  Direction direction;
 };
 
-class Chat
+class Correspondant
 {
 public:
-  Chat(TplEntity *chat) {} //TODO
+  Correspondant(TplEntity *chat);
+
+  enum Who
+  {
+	undefined = TPL_ENTITY_UNKNOWN,
+	contact = TPL_ENTITY_CONTACT,
+	group = TPL_ENTITY_GROUP,
+	self = TPL_ENTITY_SELF
+  };
+
+private:
+  QString alias, id, avatar;
+
+  Who type;
 };
 
 class Error

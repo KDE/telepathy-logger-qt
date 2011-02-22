@@ -1,7 +1,10 @@
 #include <query-log.h>
 
+#include <glib.h>
 #include <telepathy-glib/account.h>
+#include <telepathy-logger/entry-text.h>
 
+#include <QString>
 #include <QStringList>
 
 using namespace Logger;
@@ -249,31 +252,13 @@ void ChatsForAccountQuery::callback(GObject *obj, GAsyncResult *result,
    for (i = gchats; i; i = i->next)
    {
 	gchat = (TplEntity*)i->data;
-	self->chats << Chat(gchat);
+	self->chats << Correspondant(gchat);
    }
 
   // Free search results...
   tpl_log_manager_search_free(gchats);
 
   emit self->completed(self->chats);
-}
-
-
-
-Error::Error(GError *gerror, bool dontfree)
-{
-  this->_message = QString(gerror->message);
-  this->_code = gerror->code;
-
-  if (!dontfree)
-  {
-	g_error_free(gerror);
-  }
-}
-
-Error::Error(QString message, int code) : _message(message), _code(code)
-{
-  // Silence is golden :)
 }
 
 #if 0
@@ -300,3 +285,51 @@ void tpl_log_manager_get_filtered_messages_async
 gboolean (*TplLogMessageFilter)(TplEntry *message, gpointer user_data);
 
 #endif
+
+
+
+Error::Error(GError *gerror, bool dontfree)
+{
+  this->_message = QString(gerror->message);
+  this->_code = gerror->code;
+
+  if (!dontfree)
+  {
+	g_error_free(gerror);
+  }
+}
+
+Error::Error(QString message, int code) : _message(message), _code(code)
+{
+  // Silence is golden :)
+}
+
+Message::Message(TplEntryText *tpmessage)
+{
+  gchar *gaccountpath, *gchannel, *gchatid, *glogid;
+
+  g_object_get(tpmessage,
+	"account", &this->account, "account-path", &gaccountpath,
+	"channel-path", &gchannel, "chat-id", &gchatid,
+	"direction", &this->direction, "log-id", &glogid,
+// 	"receiver", TplEntity*, "sender", TplEntity*,
+	"timestamp", &this->timestamp, NULL);
+
+  this->accountpath = QString(gaccountpath);
+  this->channel = QString(gchannel);
+  this->chatid = QString(gchatid);
+  this->logid = QString(glogid);
+}
+
+Correspondant::Correspondant(TplEntity *chat)
+{
+  gchar *galias, *gid, *gavatar;
+
+  g_object_get(chat,
+	"alias", &galias, "identifier", &gid,
+	"avatar-token", &gavatar, "entity-type", &this->type);
+
+  this->alias = QString(galias);
+  this->id = QString(id);
+  this->avatar = QString(gavatar);
+}
