@@ -5,7 +5,6 @@
 
 #include <QObject>
 #include <QDate>
-#include <QDebug>
 
 class QString;
 
@@ -14,40 +13,16 @@ namespace Logger {
 class Hit
 {
 public:
-  Hit(TplLogSearchHit *hit) {} //TODO unknown type
+  Hit(TplLogSearchHit *hit) {} //FIXME unknown type
 };
 
 class TplEntryText;
-
-class Message
-{
-public:
-  Message(TplEntryText *tpmessage);
-  Message(TplEntry *tpmessage) {};
-
-//   "message"                  gchar*
-//   "message-type"             guint
-//   "pending-msg-id"           gint
-
-  enum Direction
-  {
-	 undefined = 0,
-	 incoming  = TPL_ENTRY_DIRECTION_IN,
-	 outcoming = TPL_ENTRY_DIRECTION_OUT
-  };
-
-private:
-  TpAccount* account;
-  long timestamp;
-
-  QString accountpath, channel, chatid, logid;
-  Direction direction;
-};
 
 class Correspondant
 {
 public:
   Correspondant(TplEntity *chat);
+  Correspondant() {};
 
   enum Who
   {
@@ -61,6 +36,43 @@ private:
   QString alias, id, avatar;
 
   Who type;
+};
+
+class Message
+{
+public:
+  Message(TplEntryText *tpmessage);
+  Message(TplEntry *tpmessage) {};
+  Message() {};
+
+//   "message"                  gchar*
+//   "message-type"             guint
+//   "pending-msg-id"           gint
+
+  enum Direction
+  {
+	 undefined = 0,
+	 incoming  = TPL_ENTRY_DIRECTION_IN,
+	 outcoming = TPL_ENTRY_DIRECTION_OUT
+  };
+
+  QString accountpath() { return this->_accountpath; }
+  QString channel() { return this->_channel; }
+  QString chatid() { return this->_chatid; }
+  QString logid() { return this->_logid; }
+  Direction direction() { return this->_direction; }
+  Correspondant sender() { return this->_sender; }
+  Correspondant receiver() { return this->_receiver; }
+  TpAccount* account() {return this->_account; }
+  long timestamp() { return this->_timestamp; }
+
+private:
+  TpAccount* _account;
+  long _timestamp;
+
+  QString _accountpath, _channel, _chatid, _logid;
+  Direction _direction;
+  Correspondant _sender, _receiver;
 };
 
 class Error
@@ -115,7 +127,7 @@ public:
   explicit ConversationDatesQuery(QString dbusid) : Query(dbusid) {}
 
 public slots:
-  void perform(QString contact, bool ischat = false);
+  void perform(QString contact, bool ischatroom = false);
 
 signals:
   void completed(QList<QDate> dates);
@@ -177,25 +189,27 @@ public slots:
   void perform();
 
 signals:
-  void completed(QList<Chat> chats);
+  void completed(QList<Correspondant> chats);
 
 private:
   static void callback(GObject *obj, GAsyncResult *result,
 					   ChatsForAccountQuery *self);
 
-  QList<Chat> chats;
+  QList<Correspondant> chats;
 };
 
-class QueryDebug : public QObject
+class Debug : public QObject
 {
 Q_OBJECT
 
 public:
-  QueryDebug() : QObject() {}
+  Debug() : QObject() {}
 
 public slots:
-  void echo(bool yes) { qDebug() << yes; }
-  void echo(QList<QDate> dates) { qDebug() << dates; }
+  void echo(bool yes);
+  void echo(QList<QDate> dates);
+  void echo(QList<Message> messages);
+  void echo(QList<Correspondant> buddies);
 };
 
 } // namespace

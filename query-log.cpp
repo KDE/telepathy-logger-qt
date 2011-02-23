@@ -4,6 +4,7 @@
 #include <telepathy-glib/account.h>
 #include <telepathy-logger/entry-text.h>
 
+#include <QDebug>
 #include <QString>
 #include <QStringList>
 
@@ -307,18 +308,21 @@ Error::Error(QString message, int code) : _message(message), _code(code)
 Message::Message(TplEntryText *tpmessage)
 {
   gchar *gaccountpath, *gchannel, *gchatid, *glogid;
+  TplEntity *gsender, *greceiver;
 
   g_object_get(tpmessage,
-	"account", &this->account, "account-path", &gaccountpath,
+	"account", &this->_account, "account-path", &gaccountpath,
 	"channel-path", &gchannel, "chat-id", &gchatid,
-	"direction", &this->direction, "log-id", &glogid,
-// 	"receiver", TplEntity*, "sender", TplEntity*,
-	"timestamp", &this->timestamp, NULL);
+	"direction", &this->_direction, "log-id", &glogid,
+ 	"receiver", &greceiver, "sender", &gsender,
+	"timestamp", &this->_timestamp, NULL);
 
-  this->accountpath = QString(gaccountpath);
-  this->channel = QString(gchannel);
-  this->chatid = QString(gchatid);
-  this->logid = QString(glogid);
+  this->_accountpath = QString(gaccountpath);
+  this->_channel = QString(gchannel);
+  this->_chatid = QString(gchatid);
+  this->_logid = QString(glogid);
+  this->_receiver = Correspondant(greceiver);
+  this->_sender = Correspondant(gsender);
 }
 
 Correspondant::Correspondant(TplEntity *chat)
@@ -327,9 +331,38 @@ Correspondant::Correspondant(TplEntity *chat)
 
   g_object_get(chat,
 	"alias", &galias, "identifier", &gid,
-	"avatar-token", &gavatar, "entity-type", &this->type);
+	"avatar-token", &gavatar, "entity-type", &this->type, NULL);
 
   this->alias = QString(galias);
   this->id = QString(id);
   this->avatar = QString(gavatar);
+}
+
+void Debug::echo(bool yes)
+{
+  qDebug("Logger::Debug::echo(bool) was called");
+
+  qDebug() << yes;
+}
+
+void Debug::echo(QList<QDate> dates)
+{
+  qDebug("Logger::Debug::echo(QList<QDate>) was called");
+
+  qDebug() << dates;
+}
+
+void Debug::echo(QList<Message> messages)
+{
+  qDebug("Logger::Debug::echo(QList<Message>) was called");
+
+  foreach(Message m, messages)
+  {
+	qDebug() << m.chatid();
+  }
+}
+
+void Debug::echo(QList<Correspondant> buddies)
+{
+  qDebug("Logger::Debug::echo(QList<Correspondant>) was called");
 }

@@ -6,7 +6,7 @@ using namespace Logger;
 
 int main(int argc, char **argv)
 {
-  QueryDebug e;
+  Logger::Debug e;
 
   if (argc < 3)
   {
@@ -16,9 +16,18 @@ int main(int argc, char **argv)
 
   try
   {
-    ChatExistsQuery q(argv[1]);
-	QObject::connect(&q, SIGNAL(completed(bool)), &e, SLOT(echo(bool)));
-    q.perform(argv[2]);
+    ChatExistsQuery q1(argv[1]);
+	QObject::connect(&q1, SIGNAL(completed(bool)), &e, SLOT(echo(bool)));
+    q1.perform(argv[2]);
+
+	
+	ConversationDatesQuery q2(argv[1]);
+	QObject::connect(&q2, SIGNAL(completed(QList<QDate>)), &e, SLOT(echo(QList<QDate>)));
+    q2.perform(argv[2]);
+	
+	MessagesForDateQuery q3(argv[1]);
+	QObject::connect(&q3, SIGNAL(completed(QList<Message>)), &e, SLOT(echo(QList<Message>)));
+    q3.perform(argv[2]);
   }
   catch (Error *e)
   {
@@ -26,6 +35,9 @@ int main(int argc, char **argv)
     delete e;
     exit(1);
   }
+
+  // To ensure all active queries are over...
+  sleep(5);
 
   return 0;
 }
