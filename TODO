@@ -37,6 +37,3 @@ understood how this async model works.
 extensively. This is certainly a memory leak. If you decide not to use
 QGlib::Object to wrap them, you MUST unref them when you are done
 using them.
-
-* Your code MUST have a copyright & license, otherwise other people
-cannot use it without breaking copyright law. 

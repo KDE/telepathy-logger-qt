@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 {
     Logger::Debug e;
 
-    if(argc < 3) {
+    if (argc < 3) {
         qWarning("Must specify a dbus object path as first parameter, and a search term as second!\n");
         exit(0);
     }
@@ -45,9 +45,9 @@ int main(int argc, char **argv)
         MessagesForDateQuery q3(argv[1]);
         QObject::connect(&q3, SIGNAL(completed(QList<Message>)), &e, SLOT(echo(QList<Message>)));
         q3.perform(argv[2]);
-    } catch(Error *e) {
-        qDebug() << e->message();
-        delete e;
+
+    } catch (const Error &e) {
+        // qDebug() << e.message();
         exit(1);
     }
 

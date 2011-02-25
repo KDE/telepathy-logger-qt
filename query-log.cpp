@@ -29,14 +29,16 @@
 
 using namespace Logger;
 
-Query::Query(QString dbusid, bool isquoted)
+Query::Query(const QString &dbusid, bool isquoted)
 {
+    QString quotedDbusID;
+
     // Escape string as if it were a valid C indentifier...
     if(!isquoted) {
         QStringList chunks = dbusid.split("/");
 
-        dbusid = QString("%1/%2/%3").arg(chunks[0]).arg(chunks[1]).
-                 arg(tp_escape_as_identifier(chunks[2].toAscii()));
+        quotedDbusID = QString("%1/%2/%3").arg(chunks[0]).arg(chunks[1]).
+                         arg(tp_escape_as_identifier(chunks[2].toAscii()));
     }
 
     g_type_init();
@@ -47,17 +49,17 @@ Query::Query(QString dbusid, bool isquoted)
 
     TpDBusDaemon *daemon = tp_dbus_daemon_dup(&error);
 
-    if(error) throw Error(error);
+    if (error) throw Error(error);
 
     error = NULL;
 
-    QString path = QString(TP_ACCOUNT_OBJECT_PATH_BASE"%1").arg(dbusid);
+    QString path = QString(TP_ACCOUNT_OBJECT_PATH_BASE"%1").arg(quotedDbusID);
 
     TpAccount *account = tp_account_new(daemon, path.toAscii(), &error);
 
-    if(error) throw Error(error);
+    if (error) throw Error(error);
 
-    if(!account) throw Error("Account returned by tp_account_new is NULL!");
+    if (!account) throw Error("Account returned by tp_account_new is NULL!");
 
     tp_account_prepare_async(account, NULL,
                              (GAsyncReadyCallback)this->setreadycb, this);
@@ -80,7 +82,7 @@ void Query::setreadycb(GObject *obj, GAsyncResult *result, Query *self)
 }
 
 
-void ChatExistsQuery::perform(QString chatname, bool ischatroom)
+void ChatExistsQuery::perform(const QString &chatname, bool ischatroom)
 {
     emit completed(tpl_log_manager_exists(this->logmanager, this->account,
                                           chatname.toAscii(), ischatroom));
@@ -88,11 +90,11 @@ void ChatExistsQuery::perform(QString chatname, bool ischatroom)
 
 
 
-void ConversationDatesQuery::perform(QString chatid, bool ischat)
+void ConversationDatesQuery::perform(const QString &chatid, bool ischatroom)
 {
     // Perform the asynchronous call...
     tpl_log_manager_get_dates_async(this->logmanager, this->account, chatid.toAscii(),
-                                    ischat, (GAsyncReadyCallback)this->callback, this);
+                                    ischatroom, (GAsyncReadyCallback)this->callback, this);
 }
 
 void ConversationDatesQuery::callback(GObject *obj, GAsyncResult *result,
@@ -104,21 +106,22 @@ void ConversationDatesQuery::callback(GObject *obj, GAsyncResult *result,
     GError *error = NULL;
 
     // Check whether everything went fine, and retrieves data...
-    gboolean successful = tpl_log_manager_get_dates_finish(self->logmanager, result, &gdates, &error);
+    gboolean successful = tpl_log_manager_get_dates_finish(self->logmanager,
+                                                           result, &gdates, &error);
 
-    if(error) {
+    if (error) {
         throw new Error(error);
     }
 
     // This is placed as second, just as a failback. Otherwise it would prevent
     // more detailed exceptions to be thrown...
-    if(!successful) {
+    if (!successful) {
         throw new Error("tpl_log_manager_get_dates_async was not successfull!");
     }
 
     GDate *gdate;
 
-    for(i = gdates; i; i = i->next) {
+    for (i = gdates; i; i = i->next) {
         gdate = (GDate*)i->data;
         self->dates << QDate(gdate->year, gdate->month, gdate->day);
     }
@@ -131,9 +134,10 @@ void ConversationDatesQuery::callback(GObject *obj, GAsyncResult *result,
 
 
 
-void MessagesForDateQuery::perform(QString chat, bool ischat, QDate date)
+void MessagesForDateQuery::perform(const QString &chat, bool ischat,
+                                   const QDate &date)
 {
-    if(!date.isValid()) return;
+    if (!date.isValid()) return;
 
     // Setup a valid GDate (assuming the QDate is valid)...
     GDate gdate;
@@ -184,7 +188,7 @@ void MessagesForDateQuery::callback(GObject *obj, GAsyncResult *result,
 
 
 
-void KeywordQuery::perform(QString keyword)
+void KeywordQuery::perform(const QString &keyword)
 {
     // Perform the call...
     tpl_log_manager_search_async(this->logmanager, keyword.toAscii(),
@@ -307,7 +311,7 @@ Error::Error(GError *gerror, bool dontfree)
     }
 }
 
-Error::Error(QString message, int code) : _message(message), _code(code)
+Error::Error(const QString &message, int code) : _message(message), _code(code)
 {
     // Silence is golden :)
 }
@@ -345,8 +349,6 @@ Correspondant::Correspondant(TplEntity *chat)
     this->avatar = QString(gavatar);
 }
 
-
-
 void Debug::echo(bool yes)
 {
     qDebug("Logger::Debug::echo(bool) was called");
@@ -354,14 +356,14 @@ void Debug::echo(bool yes)
     qDebug() << yes;
 }
 
-void Debug::echo(QList<QDate> dates)
+void Debug::echo(const QList<QDate> &dates)
 {
     qDebug("Logger::Debug::echo(QList<QDate>) was called");
 
     qDebug() << dates;
 }
 
-void Debug::echo(QList<Message> messages)
+void Debug::echo(const QList<Message> &messages)
 {
     qDebug("Logger::Debug::echo(QList<Message>) was called");
 
@@ -370,7 +372,7 @@ void Debug::echo(QList<Message> messages)
     }
 }
 
-void Debug::echo(QList<Correspondant> buddies)
+void Debug::echo(const QList<Correspondant> &buddies)
 {
     qDebug("Logger::Debug::echo(QList<Correspondant>) was called");
 }
