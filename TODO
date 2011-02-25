@@ -1,0 +1,45 @@
+* You should split the classes in multiple files and separate the
+public API from the private internal API. This will also help review,
+since putting them all together in one file makes it difficult to
+visualize the components in the mind.
+
+* A Qt-style public API should never include headers from the
+underlying library that provides the implementation. What I mean here
+is that supposing query-log.h is a public header, it should NOT
+include <telepathy-logger/*.h> or other glib headers for any reason.
+
+* Have a look at the kdelibs coding style guidelines and try to adapt
+your code to them.
+
+* Use const references for function and signal arguments. i.e. instead
+of "foo(QString a)", write "foo(const QString & a)". For all
+non-native types.
+
+* For public API, use private classes to store the class members.
+
+* Do not throw pointers of objects that are allocated on the heap.
+i.e. instead of "throw new Error(foo);" write "throw Error(foo);" and
+catch with a const reference: "catch (const Error & e)". Btw, you
+might want to use QtGLib here to avoid doing such stuff yourself and
+in the wrong way. class Error could be completely replaced with
+QGlib::Error for example.
+
+* Throwing exceptions inside C callbacks is a terribly bad idea imho.
+To catch exceptions, the calling code needs to have a stack compiled
+with exception support (afaik), and C libraries definitely do not do
+that. Most likely, the code will crash. Those callbacks are called
+from the event loop anyway, so if you throw exceptions, they will be
+delivered to the event loop and Qt doesn't handle exceptions very well
+in there.
+
+* Speaking of an event loop... you don't seem to have one in your
+main(). I am sure this is why it is not working ;) I guess you haven't
+understood how this async model works.
+
+* I see no calls to g_object_unref, although you are using GObjects
+extensively. This is certainly a memory leak. If you decide not to use
+QGlib::Object to wrap them, you MUST unref them when you are done
+using them.
+
+* Your code MUST have a copyright & license, otherwise other people
+cannot use it without breaking copyright law. 
