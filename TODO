@@ -8,18 +8,11 @@ underlying library that provides the implementation. What I mean here
 is that supposing query-log.h is a public header, it should NOT
 include <telepathy-logger/*.h> or other glib headers for any reason.
 
-* Use const references for function and signal arguments. i.e. instead
-of "foo(QString a)", write "foo(const QString & a)". For all
-non-native types.
-
 * For public API, use private classes to store the class members.
 
-* Do not throw pointers of objects that are allocated on the heap.
-i.e. instead of "throw new Error(foo);" write "throw Error(foo);" and
-catch with a const reference: "catch (const Error & e)". Btw, you
-might want to use QtGLib here to avoid doing such stuff yourself and
-in the wrong way. class Error could be completely replaced with
-QGlib::Error for example.
+* Btw, you might want to use QtGLib here to avoid doing such stuff
+yourself and in the wrong way. class Error could be completely
+replaced with QGlib::Error for example.
 
 * Throwing exceptions inside C callbacks is a terribly bad idea imho.
 To catch exceptions, the calling code needs to have a stack compiled

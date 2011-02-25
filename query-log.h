@@ -153,7 +153,7 @@ class Query : public QObject
 {
 public:
      explicit Query(const QString &dbusid, bool isquoted = false);
-    ~Query() {}
+    ~Query();
 
 protected:
     static void callback(GObject *obj, GAsyncResult *result, Query *self) {}

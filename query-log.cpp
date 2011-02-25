@@ -36,9 +36,12 @@ Query::Query(const QString &dbusid, bool isquoted)
     // Escape string as if it were a valid C indentifier...
     if(!isquoted) {
         QStringList chunks = dbusid.split("/");
+        gchar *escapedUserName = tp_escape_as_identifier(chunks[2].toAscii());
 
         quotedDbusID = QString("%1/%2/%3").arg(chunks[0]).arg(chunks[1]).
-                         arg(tp_escape_as_identifier(chunks[2].toAscii()));
+                         arg(escapedUserName);
+
+        g_free(escapedUserName);
     }
 
     g_type_init();
@@ -64,7 +67,15 @@ Query::Query(const QString &dbusid, bool isquoted)
     tp_account_prepare_async(account, NULL,
                              (GAsyncReadyCallback)this->setreadycb, this);
 
+    // Get rid of the bus proxy...
+    g_object_unref(daemon);
+
     this->account = account;
+}
+
+Query::~Query()
+{
+    g_object_unref(this->account);
 }
 
 void Query::setreadycb(GObject *obj, GAsyncResult *result, Query *self)
