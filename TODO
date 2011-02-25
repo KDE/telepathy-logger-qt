@@ -8,9 +8,6 @@ underlying library that provides the implementation. What I mean here
 is that supposing query-log.h is a public header, it should NOT
 include <telepathy-logger/*.h> or other glib headers for any reason.
 
-* Have a look at the kdelibs coding style guidelines and try to adapt
-your code to them.
-
 * Use const references for function and signal arguments. i.e. instead
 of "foo(QString a)", write "foo(const QString & a)". For all
 non-native types.

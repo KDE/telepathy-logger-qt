@@ -1,3 +1,22 @@
+/*
+ * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
+ *
+ * @author Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
+ *
+ * This library is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published
+ * by the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include <query-log.h>
 
 #include <glib.h>
@@ -28,7 +47,7 @@ Query::Query(QString dbusid, bool isquoted)
 
     TpDBusDaemon *daemon = tp_dbus_daemon_dup(&error);
 
-    if(error) throw new Error(error);
+    if(error) throw Error(error);
 
     error = NULL;
 
@@ -36,9 +55,9 @@ Query::Query(QString dbusid, bool isquoted)
 
     TpAccount *account = tp_account_new(daemon, path.toAscii(), &error);
 
-    if(error) throw new Error(error);
+    if(error) throw Error(error);
 
-    if(!account) throw new Error("Account returned by tp_account_new is NULL!");
+    if(!account) throw Error("Account returned by tp_account_new is NULL!");
 
     tp_account_prepare_async(account, NULL,
                              (GAsyncReadyCallback)this->setreadycb, this);
@@ -185,13 +204,13 @@ void KeywordQuery::callback(GObject *obj, GAsyncResult *result,
         tpl_log_manager_search_finish(self->logmanager, result, &ghits, &error);
 
     if(error) {
-        throw new Error(error);
+        throw Error(error);
     }
 
     // This is placed as second, just as a failback. Otherwise it would prevent
     // more detailed exceptions to be thrown...
     if(!successful) {
-        throw new Error("tpl_log_manager_search_async was not successfull!");
+        throw Error("tpl_log_manager_search_async was not successfull!");
     }
 
     TplLogSearchHit *ghit;
@@ -229,13 +248,13 @@ void ChatsForAccountQuery::callback(GObject *obj, GAsyncResult *result,
         tpl_log_manager_get_chats_finish(self->logmanager, result, &gchats, &error);
 
     if(error) {
-        throw new Error(error);
+        throw Error(error);
     }
 
     // This is placed as second, just as a failback. Otherwise it would prevent
     // more detailed exceptions to be thrown...
     if(!successful) {
-        throw new Error("tpl_log_manager_get_chats_async was not successfull!");
+        throw Error("tpl_log_manager_get_chats_async was not successfull!");
     }
 
     TplEntity *gchat;
