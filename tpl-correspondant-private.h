@@ -1,3 +1,6 @@
+#ifndef __CORRESPONDANT_PRIVATE__
+#define __CORRESPONDANT_PRIVATE__
+
 /*
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
  *
@@ -17,36 +20,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <Logger/tpl-debug.h>
-
-#include <QtCore/QDebug>
-
-using namespace Logger;
-
-void Debug::echo(bool yes)
+namespace Logger
 {
-    qDebug("Logger::Debug::echo(bool) was called");
 
-    qDebug() << yes;
-}
+class Correspondant;
 
-void Debug::echo(const QList<QDate> &dates)
+class CorrespondantPrivateData
 {
-    qDebug("Logger::Debug::echo(QList<QDate>) was called");
+public:
+    CorrespondantPrivateData(TplEntity *chat);
 
-    qDebug() << dates;
-}
+    QString alias;
+    QString id;
+    QString avatar;
+    uint type;
+//         undefined = TPL_ENTITY_UNKNOWN,
+//         contact = TPL_ENTITY_CONTACT,
+//         group = TPL_ENTITY_GROUP,
+//         self = TPL_ENTITY_SELF*/
+};
 
-void Debug::echo(const QList<Message> &messages)
-{
-    qDebug("Logger::Debug::echo(QList<Message>) was called");
+} //namespace
 
-    foreach(Message m, messages) { // TODO overload Message <<
-        qDebug() << m.chatid();
-    }
-}
-
-void Debug::echo(const QList<Correspondant> &buddies)
-{
-    qDebug("Logger::Debug::echo(QList<Correspondant>) was called");
-}
+#endif // __CORRESPONDANT_PRIVATE__

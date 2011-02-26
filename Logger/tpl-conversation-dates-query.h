@@ -32,7 +32,7 @@ class ConversationDatesQuery : public Query
 Q_OBJECT
 
 public:
-    explicit ConversationDatesQuery(const QString &dbusid) : Query(dbusid) {}
+    explicit ConversationDatesQuery(const QString &dbusid);
 
 public slots:
     void perform(const QString &contact, bool ischatroom = false);

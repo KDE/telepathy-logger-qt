@@ -20,28 +20,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtCore/QString>
-
 namespace Logger
 {
+
+class CorrespondantPrivateData;
 
 class Correspondant
 {
 public:
-    Correspondant(TplEntity *chat);
     Correspondant() {};
 
-    enum Who {
-        undefined = TPL_ENTITY_UNKNOWN,
-        contact = TPL_ENTITY_CONTACT,
-        group = TPL_ENTITY_GROUP,
-        self = TPL_ENTITY_SELF
-    };
+    enum Whois { undefined = 0, contact, group, self };
 
 private:
-    QString alias, id, avatar;
-
-    Who type;
+    CorrespondantPrivateData *d;
 };
 
 } //namespace

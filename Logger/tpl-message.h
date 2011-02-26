@@ -20,9 +20,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// XXX
-#include <telepathy-logger/entry-text.h>
-
 #include <Logger/Correspondant>
 
 #include <QtCore/QString>
@@ -30,44 +27,33 @@
 namespace Logger
 {
 
+class MessagePrivateData;
+
 class Message
 {
 public:
-    Message(TplEntry *tpmessage);
-    Message(TplEntryText *tpmessage);
-    Message() {};
-
-//   "message"                  gchar*
-//   "message-type"             guint
-//   "pending-msg-id"           gint
-
-    enum Direction {
-        undefined = 0,
-        incoming  = TPL_ENTRY_DIRECTION_IN,
-        outcoming = TPL_ENTRY_DIRECTION_OUT
-    };
+    Message();
+    ~Message();
 
     QString accountpath();
     QString channel();
     QString chatid();
     QString logid();
 
-    Direction direction();
+    uint direction(); //FIXME
     Correspondant sender();
     Correspondant receiver();
 
-    TpAccount* account();
     long timestamp();
 
+    enum Direction {  undefined = 0,
+        incoming, /* = TPL_ENTRY_DIRECTION_IN,*/
+        outcoming /*= TPL_ENTRY_DIRECTION_OUT*/
+    };
+
 private:
-//     MessagePrivate data;
-
-    TpAccount* _account;
-    long _timestamp;
-
-    QString _accountpath, _channel, _chatid, _logid;
-    Direction _direction;
-    Correspondant _sender, _receiver;
+    friend class MessagesForDateQuery;
+    MessagePrivateData *d;
 };
 
 } //namespace

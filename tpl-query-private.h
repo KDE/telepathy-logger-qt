@@ -22,6 +22,8 @@
 
 #include <telepathy-logger/log-manager.h>
 
+#include <QtCore/QString>
+
 namespace Logger
 {
 

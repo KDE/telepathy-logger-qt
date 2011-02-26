@@ -4,7 +4,7 @@
 
 # Paths
 TEMPLATE = app
-TARGET = 
+TARGET = libktelepathy-logquery
 DEPENDPATH += . Logger
 INCLUDEPATH += . Logger
 
@@ -22,10 +22,16 @@ HEADERS += Logger/tpl-conversation-dates-query.h \
            Logger/tpl-query.h \
            Logger/tpl-message.h \
            Logger/tpl-correspondant.h \
-           Logger/tpl-debug.h
+           Logger/tpl-debug.h \
+           tpl-query-private.h \
+           tpl-message-private.h
 
 SOURCES += tpl-query.cpp tpl-debug.cpp \
            tpl-message.cpp tpl-error.cpp \
+           tpl-query-private.cpp \
+           tpl-message-private.cpp \
+           tpl-chat-exists-query.cpp \
+           tpl-conversation-dates-query.cpp \
 query-log.cpp dummy-main.cpp
 
 # Output

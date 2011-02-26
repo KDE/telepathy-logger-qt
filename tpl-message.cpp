@@ -18,89 +18,58 @@
  */
 
 #include <Logger/tpl-message.h>
-#include <Logger/tpl-correspondant.h>
+#include <tpl-message-private.h>
+
+// #include <Logger/tpl-correspondant.h>
 
 using namespace Logger;
 
-Message::Message(TplEntryText *tpmessage)
+Message::Message()
 {
-    gchar *gaccountpath, *gchannel, *gchatid, *glogid;
-    TplEntity *gsender, *greceiver;
-
-    g_object_get(tpmessage,
-                 "account", &this->_account, "account-path", &gaccountpath,
-                 "channel-path", &gchannel, "chat-id", &gchatid,
-                 "direction", &this->_direction, "log-id", &glogid,
-                 "receiver", &greceiver, "sender", &gsender,
-                 "timestamp", &this->_timestamp, NULL);
-
-    this->_accountpath = QString(gaccountpath);
-    this->_channel = QString(gchannel);
-    this->_chatid = QString(gchatid);
-    this->_logid = QString(glogid);
-    this->_receiver = Correspondant(greceiver);
-    this->_sender = Correspondant(gsender);
+    this->d = new MessagePrivateData;
 }
 
-Message::Message(TplEntry *tpmessage)
+Message::~Message()
 {
+    delete this->d;
 }
-
-Correspondant::Correspondant(TplEntity *chat)
-{
-    gchar *galias, *gid, *gavatar;
-
-    g_object_get(chat,
-                 "alias", &galias, "identifier", &gid,
-                 "avatar-token", &gavatar, "entity-type", &this->type, NULL);
-
-    this->alias = QString(galias);
-    this->id = QString(id);
-    this->avatar = QString(gavatar);
-}
-
 
 QString Message::accountpath()
 {
-    return this->_accountpath;
+    return this->d->accountpath;
 }
 
 QString Message::channel()
 {
-    return this->_channel;
+    return this->d->channel;
 }
 
 QString Message::chatid()
 {
-    return this->_chatid;
+    return this->d->chatid;
 }
 
 QString Message::logid()
 {
-    return this->_logid;
+    return this->d->logid;
 }
 
-Message::Direction Message::direction()
+uint Message::direction()
 {
-    return this->_direction;
+    return this->d->direction;
 }
 
 Correspondant Message::sender()
 {
-    return this->_sender;
+    return this->d->sender;
 }
 
 Correspondant Message::receiver()
 {
-    return this->_receiver;
-}
-
-TpAccount* Message::account()
-{
-    return this->_account;
+    return this->d->receiver;
 }
 
 long Message::timestamp()
 {
-    return this->_timestamp;
+    return this->d->timestamp;
 }

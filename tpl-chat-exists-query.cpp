@@ -17,36 +17,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <Logger/tpl-debug.h>
+#include <telepathy-logger/log-manager.h>
 
-#include <QtCore/QDebug>
+#include <Logger/tpl-chat-exists-query.h>
+#include <tpl-query-private.h>
 
 using namespace Logger;
 
-void Debug::echo(bool yes)
+void ChatExistsQuery::perform(const QString &chatname, bool isChatRoom)
 {
-    qDebug("Logger::Debug::echo(bool) was called");
-
-    qDebug() << yes;
-}
-
-void Debug::echo(const QList<QDate> &dates)
-{
-    qDebug("Logger::Debug::echo(QList<QDate>) was called");
-
-    qDebug() << dates;
-}
-
-void Debug::echo(const QList<Message> &messages)
-{
-    qDebug("Logger::Debug::echo(QList<Message>) was called");
-
-    foreach(Message m, messages) { // TODO overload Message <<
-        qDebug() << m.chatid();
-    }
-}
-
-void Debug::echo(const QList<Correspondant> &buddies)
-{
-    qDebug("Logger::Debug::echo(QList<Correspondant>) was called");
+    emit completed(tpl_log_manager_exists(this->d->logmanager, this->d->account,
+                                          chatname.toAscii(), isChatRoom));
 }

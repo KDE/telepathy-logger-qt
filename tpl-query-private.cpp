@@ -17,8 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <Logger/tpl-error.h>
+#include <telepathy-glib/account.h>
 
+#include <Logger/tpl-error.h>
 #include <tpl-query-private.h>
 
 using namespace Logger;

@@ -17,36 +17,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <Logger/tpl-debug.h>
+#include <Logger/tpl-correspondant.h>
+#include <tpl-correspondant-private.h>
 
-#include <QtCore/QDebug>
-
-using namespace Logger;
-
-void Debug::echo(bool yes)
+Correspondant::Correspondant(TplEntity *chat)
 {
-    qDebug("Logger::Debug::echo(bool) was called");
+    gchar *galias;
+    gchar *gid;
+    gchar *gavatar;
 
-    qDebug() << yes;
-}
+    g_object_get(chat,
+                 "alias", &galias, "identifier", &gid,
+                 "avatar-token", &gavatar, "entity-type", &this->type, NULL);
 
-void Debug::echo(const QList<QDate> &dates)
-{
-    qDebug("Logger::Debug::echo(QList<QDate>) was called");
+    this->alias = QString(galias);
+    this->id = QString(id);
+    this->avatar = QString(gavatar);
 
-    qDebug() << dates;
-}
-
-void Debug::echo(const QList<Message> &messages)
-{
-    qDebug("Logger::Debug::echo(QList<Message>) was called");
-
-    foreach(Message m, messages) { // TODO overload Message <<
-        qDebug() << m.chatid();
-    }
-}
-
-void Debug::echo(const QList<Correspondant> &buddies)
-{
-    qDebug("Logger::Debug::echo(QList<Correspondant>) was called");
+    g_free(galias);
+    g_free(gid);
+    g_free(gavatar);
 }

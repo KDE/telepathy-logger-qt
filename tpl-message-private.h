@@ -1,3 +1,6 @@
+#ifndef __MESSAGE_PRIVATE__
+#define __MESSAGE_PRIVATE__
+
 /*
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
  *
@@ -17,36 +20,37 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <Logger/tpl-debug.h>
+#include <telepathy-logger/entry-text.h>
 
-#include <QtCore/QDebug>
-
-using namespace Logger;
-
-void Debug::echo(bool yes)
+namespace Logger
 {
-    qDebug("Logger::Debug::echo(bool) was called");
 
-    qDebug() << yes;
-}
+class Message;
 
-void Debug::echo(const QList<QDate> &dates)
+class MessagePrivateData
 {
-    qDebug("Logger::Debug::echo(QList<QDate>) was called");
+public:
+    MessagePrivateData(TplEntry *tpmessage);
+    MessagePrivateData(TplEntryText *tpmessage);
+    MessagePrivateData();
+    ~MessagePrivateData();
 
-    qDebug() << dates;
-}
+    TpAccount* account;
+    long timestamp;
 
-void Debug::echo(const QList<Message> &messages)
-{
-    qDebug("Logger::Debug::echo(QList<Message>) was called");
+    QString accountpath, channel, chatid, logid;
+    Message::Direction direction;
+    Correspondant sender, receiver;
 
-    foreach(Message m, messages) { // TODO overload Message <<
-        qDebug() << m.chatid();
-    }
-}
+//   "message"                  gchar*
+//   "message-type"             guint
+//   "pending-msg-id"           gint
+/*    enum Direction {
+    undefined, = 0,
+    incoming,  = TPL_ENTRY_DIRECTION_IN,
+    outcoming = TPL_ENTRY_DIRECTION_OUT*/
+};
 
-void Debug::echo(const QList<Correspondant> &buddies)
-{
-    qDebug("Logger::Debug::echo(QList<Correspondant>) was called");
-}
+} //namespace
+
+#endif // __MESSAGE_PRIVATE__

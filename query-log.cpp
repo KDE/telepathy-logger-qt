@@ -18,65 +18,14 @@
  */
 
 #include <glib.h>
-#include <telepathy-glib/account.h>
 #include <telepathy-logger/entry-text.h>
 #include <telepathy-logger/log-manager.h>
 
 #include <Logger/Log>
 
+#include <tpl-query-private.h>
+
 using namespace Logger;
-
-void ChatExistsQuery::perform(const QString &chatname, bool ischatroom)
-{
-    emit completed(tpl_log_manager_exists(this->logmanager, this->account,
-                                          chatname.toAscii(), ischatroom));
-}
-
-
-
-void ConversationDatesQuery::perform(const QString &chatid, bool ischatroom)
-{
-    // Perform the asynchronous call...
-    tpl_log_manager_get_dates_async(this->logmanager, this->account, chatid.toAscii(),
-                                    ischatroom, (GAsyncReadyCallback)this->callback, this);
-}
-
-void ConversationDatesQuery::callback(GObject *obj, GAsyncResult *result,
-                                      ConversationDatesQuery* self)
-{
-    (void)obj;
-
-    GList *gdates, *i;
-    GError *error = NULL;
-
-    // Check whether everything went fine, and retrieves data...
-    gboolean successful = tpl_log_manager_get_dates_finish(self->logmanager,
-                                                           result, &gdates, &error);
-
-    if (error) {
-        throw new Error(error);
-    }
-
-    // This is placed as second, just as a failback. Otherwise it would prevent
-    // more detailed exceptions to be thrown...
-    if (!successful) {
-        throw new Error("tpl_log_manager_get_dates_async was not successfull!");
-    }
-
-    GDate *gdate;
-
-    for (i = gdates; i; i = i->next) {
-        gdate = (GDate*)i->data;
-        self->dates << QDate(gdate->year, gdate->month, gdate->day);
-    }
-
-    // Free search results...
-    tpl_log_manager_search_free(gdates);
-
-    emit self->completed(self->dates);
-}
-
-
 
 void MessagesForDateQuery::perform(const QString &chat, bool ischat,
                                    const QDate &date)
@@ -91,7 +40,7 @@ void MessagesForDateQuery::perform(const QString &chat, bool ischat,
                    (GDateMonth)date.month(), (GDateYear)date.year());
 
     // Perform the call...
-    tpl_log_manager_get_messages_for_date_async(this->logmanager, this->account,
+    tpl_log_manager_get_messages_for_date_async(this->d->logmanager, this->d->account,
             chat.toAscii(), ischat, &gdate, (GAsyncReadyCallback)this->callback, this);
 }
 
@@ -105,23 +54,23 @@ void MessagesForDateQuery::callback(GObject *obj, GAsyncResult *result,
 
     // Check whether everything went fine, and retrieves data...
     gboolean successful = tpl_log_manager_get_messages_for_date_finish(
-                              self->logmanager, result, &gmessages, &error);
+                             self->d->logmanager, result, &gmessages, &error);
 
     if(error) {
-        throw new Error(error);
+        throw Error(error);
     }
 
     // This is placed as second, just as a failback. Otherwise it would prevent
     // more detailed exceptions to be thrown...
     if(!successful) {
-        throw new Error("tpl_log_manager_get_messages_for_date_async was not successfull!");
+        throw Error("tpl_log_manager_get_messages_for_date_async was not successfull!");
     }
 
     TplEntry *gmessage;
 
-    for(i = gmessages; i; i = i->next) {
+    for (i = gmessages; i; i = i->next) {
         gmessage = (TplEntry*)i->data;
-        self->messages << Message(gmessage);
+		self->messages << Message(); // FIXME gmessage);
     }
 
     // Free search results...
@@ -135,7 +84,7 @@ void MessagesForDateQuery::callback(GObject *obj, GAsyncResult *result,
 void KeywordQuery::perform(const QString &keyword)
 {
     // Perform the call...
-    tpl_log_manager_search_async(this->logmanager, keyword.toAscii(),
+    tpl_log_manager_search_async(this->d->logmanager, keyword.toAscii(),
                                  (GAsyncReadyCallback)this->callback, this);
 }
 
@@ -149,7 +98,7 @@ void KeywordQuery::callback(GObject *obj, GAsyncResult *result,
 
     // Check whether everything went fine, and retrieves data...
     gboolean successful =
-        tpl_log_manager_search_finish(self->logmanager, result, &ghits, &error);
+		tpl_log_manager_search_finish(self->d->logmanager, result, &ghits, &error);
 
     if(error) {
         throw Error(error);
@@ -177,7 +126,7 @@ void KeywordQuery::callback(GObject *obj, GAsyncResult *result,
 void ChatsForAccountQuery::perform()
 {
     // Perform the call...
-    tpl_log_manager_get_chats_async(this->logmanager, this->account,
+    tpl_log_manager_get_chats_async(this->d->logmanager, this->d->account,
                                     (GAsyncReadyCallback)this->callback, this);
 }
 
@@ -191,7 +140,7 @@ void ChatsForAccountQuery::callback(GObject *obj, GAsyncResult *result,
 
     // Check whether everything went fine, and retrieves data...
     gboolean successful =
-        tpl_log_manager_get_chats_finish(self->logmanager, result, &gchats, &error);
+		tpl_log_manager_get_chats_finish(self->d->logmanager, result, &gchats, &error);
 
     if(error) {
         throw Error(error);
@@ -207,7 +156,7 @@ void ChatsForAccountQuery::callback(GObject *obj, GAsyncResult *result,
 
     for(i = gchats; i; i = i->next) {
         gchat = (TplEntity*)i->data;
-        self->chats << Correspondant(gchat);
+        self->chats << Correspondant(); // FIXME gchat);
     }
 
     // Free search results...
