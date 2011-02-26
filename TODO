@@ -4,9 +4,7 @@ since putting them all together in one file makes it difficult to
 visualize the components in the mind.
 
 * A Qt-style public API should never include headers from the
-underlying library that provides the implementation. What I mean here
-is that supposing query-log.h is a public header, it should NOT
-include <telepathy-logger/*.h> or other glib headers for any reason.
+underlying library that provides the implementation.
 
 * For public API, use private classes to store the class members.
 
@@ -25,8 +23,3 @@ in there.
 * Speaking of an event loop... you don't seem to have one in your
 main(). I am sure this is why it is not working ;) I guess you haven't
 understood how this async model works.
-
-* I see no calls to g_object_unref, although you are using GObjects
-extensively. This is certainly a memory leak. If you decide not to use
-QGlib::Object to wrap them, you MUST unref them when you are done
-using them.

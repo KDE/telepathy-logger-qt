@@ -34,7 +34,7 @@ Query::Query(const QString &dbusid, bool isquoted)
     QString quotedDbusID;
 
     // Escape string as if it were a valid C indentifier...
-    if(!isquoted) {
+    if (!isquoted) {
         QStringList chunks = dbusid.split("/");
         gchar *escapedUserName = tp_escape_as_identifier(chunks[2].toAscii());
 
@@ -82,12 +82,12 @@ void Query::setreadycb(GObject *obj, GAsyncResult *result, Query *self)
 {
     GError *error = NULL;
 
-    if(!tp_account_prepare_finish(self->account, result, &error)) {
+    if (!tp_account_prepare_finish(self->account, result, &error)) {
         self->account = NULL;
         throw new Error(error);
     }
 
-    if(!tp_account_is_valid(self->account)) {
+    if (!tp_account_is_valid(self->account)) {
         throw new Error("Selected account is not valid!");
     }
 }
@@ -241,8 +241,6 @@ void KeywordQuery::callback(GObject *obj, GAsyncResult *result,
     emit self->completed(self->hits);
 }
 
-
-
 void ChatsForAccountQuery::perform()
 {
     // Perform the call...
@@ -309,8 +307,6 @@ void tpl_log_manager_get_filtered_messages_async
 gboolean(*TplLogMessageFilter)(TplEntry *message, gpointer user_data);
 
 #endif
-
-
 
 Error::Error(GError *gerror, bool dontfree)
 {
@@ -386,4 +382,49 @@ void Debug::echo(const QList<Message> &messages)
 void Debug::echo(const QList<Correspondant> &buddies)
 {
     qDebug("Logger::Debug::echo(QList<Correspondant>) was called");
+}
+
+QString Message::accountpath()
+{
+    return this->_accountpath;
+}
+
+QString Message::channel()
+{
+    return this->_channel;
+}
+
+QString Message::chatid()
+{
+    return this->_chatid;
+}
+
+QString Message::logid()
+{
+    return this->_logid;
+}
+
+Direction Message::direction()
+{
+    return this->_direction;
+}
+
+Correspondant Message::sender()
+{
+    return this->_sender;
+}
+
+Correspondant Message::receiver()
+{
+    return this->_receiver;
+}
+
+TpAccount* Message::account()
+{
+    return this->_account;
+}
+
+long Message::timestamp()
+{
+    return this->_timestamp;
 }

@@ -20,8 +20,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <telepathy-logger/log-manager.h>
-
 #include <QObject>
 #include <QDate>
 
@@ -74,50 +72,17 @@ public:
         outcoming = TPL_ENTRY_DIRECTION_OUT
     };
 
-    QString accountpath()
-    {
-        return this->_accountpath;
-    }
+    QString accountpath();
+    QString channel();
+    QString chatid();
+    QString logid();
 
-    QString channel()
-    {
-        return this->_channel;
-    }
+    Direction direction();
+    Correspondant sender();
+    Correspondant receiver();
 
-    QString chatid()
-    {
-        return this->_chatid;
-    }
-
-    QString logid()
-    {
-        return this->_logid;
-    }
-
-    Direction direction()
-    {
-        return this->_direction;
-    }
-
-    Correspondant sender()
-    {
-        return this->_sender;
-    }
-
-    Correspondant receiver()
-    {
-        return this->_receiver;
-    }
-
-    TpAccount* account()
-    {
-        return this->_account;
-    }
-
-    long timestamp()
-    {
-        return this->_timestamp;
-    }
+    TpAccount* account();
+    long timestamp();
 
 private:
     TpAccount* _account;
