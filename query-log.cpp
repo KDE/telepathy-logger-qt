@@ -17,11 +17,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <query-log.h>
-
 #include <glib.h>
 #include <telepathy-glib/account.h>
 #include <telepathy-logger/entry-text.h>
+#include <telepathy-logger/log-manager.h>
+
+#include <Logger/Log>
 
 #include <QtCore/QDebug>
 #include <QtCore/QString>
@@ -341,6 +342,10 @@ Message::Message(TplEntryText *tpmessage)
     this->_logid = QString(glogid);
     this->_receiver = Correspondant(greceiver);
     this->_sender = Correspondant(gsender);
+}
+
+Message::Message(TplEntry *tpmessage)
+{
 }
 
 Correspondant::Correspondant(TplEntity *chat)
