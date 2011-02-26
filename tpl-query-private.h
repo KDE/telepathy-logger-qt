@@ -1,5 +1,5 @@
-#ifndef __TP_LOGGER_QUERY__
-#define __TP_LOGGER_QUERY__
+#ifndef __QUERY_PRIVATE__
+#define __QUERY_PRIVATE__
 
 /*
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
@@ -20,23 +20,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtCore/QObject>
+#include <telepathy-logger/log-manager.h>
 
 namespace Logger
 {
 
 class QueryPrivateData;
 
-class Query : public QObject
+typedef void (*QueryCallback)(GObject *obj, GAsyncResult *result,
+                              QueryPrivateData *self);
+
+class QueryPrivateData
 {
 public:
-     explicit Query(const QString &dbusid, bool idIsEscaped = false);
-    ~Query();
+    QueryPrivateData(const QString &dbusid);
+    ~QueryPrivateData();
 
-protected:
-    QueryPrivateData *d;
+    static void setreadycb(GObject *obj, GAsyncResult *result,
+                           QueryPrivateData *self);
+
+    QueryCallback finishedcb;
+    TplLogManager *logmanager;
+    TpAccount *account;
 };
 
-}
+} //namespace
 
-#endif // __TP_LOGGER_QUERY__
+#endif // __QUERY_PRIVATE__

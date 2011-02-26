@@ -17,19 +17,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <telepathy-logger/log-manager.h>
+
 #include <Logger/tpl-query.h>
 #include <Logger/tpl-error.h>
+
+#include <tpl-query-private.h>
 
 #include <QStringList>
 
 using namespace Logger;
 
-Query::Query(const QString &dbusid, bool isquoted)
+Query::Query(const QString &dbusid, bool idIsEscaped)
 {
+    g_type_init();
+
     QString quotedDbusID;
 
     // Escape string as if it were a valid C indentifier...
-    if (!isquoted) {
+    if (!idIsEscaped) {
         QStringList chunks = dbusid.split("/");
         gchar *escapedUserName = tp_escape_as_identifier(chunks[2].toAscii());
 
@@ -39,50 +45,15 @@ Query::Query(const QString &dbusid, bool isquoted)
         g_free(escapedUserName);
     }
 
-    g_type_init();
-
-    this->logmanager = tpl_log_manager_dup_singleton();
-
-    GError *error = NULL;
-
-    TpDBusDaemon *daemon = tp_dbus_daemon_dup(&error);
-
-    if (error) throw Error(error);
-
-    error = NULL;
-
-    QString path = QString(TP_ACCOUNT_OBJECT_PATH_BASE"%1").arg(quotedDbusID);
-
-    TpAccount *account = tp_account_new(daemon, path.toAscii(), &error);
-
-    if (error) throw Error(error);
-
-    if (!account) throw Error("Account returned by tp_account_new is NULL!");
-
-    tp_account_prepare_async(account, NULL,
-                             (GAsyncReadyCallback)this->setreadycb, this);
-
-    // Get rid of the bus proxy...
-    g_object_unref(daemon);
-
-    this->account = account;
+    try {
+        this->d = new QueryPrivateData(quotedDbusID);
+    }
+    catch (const std::bad_alloc &e) {
+        throw Error("Could not allocate memory for Query private data!");
+    }
 }
 
 Query::~Query()
 {
-    g_object_unref(this->account);
-}
-
-void Query::setreadycb(GObject *obj, GAsyncResult *result, Query *self)
-{
-    GError *error = NULL;
-
-    if (!tp_account_prepare_finish(self->account, result, &error)) {
-        self->account = NULL;
-        throw new Error(error);
-    }
-
-    if (!tp_account_is_valid(self->account)) {
-        throw new Error("Selected account is not valid!");
-    }
+    delete this->d; // REVIEW heap or stack?
 }
