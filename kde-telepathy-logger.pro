@@ -25,3 +25,8 @@ HEADERS += Logger/tpl-conversation-dates-query.h \
            Logger/tpl-debug.h
 
 SOURCES += dummy-main.cpp query-log.cpp
+
+# Output
+OBJECTS_DIR = .objects
+MOC_DIR = .meta
+RCC_DIR = .meta

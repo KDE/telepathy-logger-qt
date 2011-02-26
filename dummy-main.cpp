@@ -17,11 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <query-log.h>
+#include <Logger/Log>
 
 #include <QtCore/QDebug>
-
-#include <glib.h>
 
 using namespace Logger;
 
