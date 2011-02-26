@@ -20,8 +20,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QObject>
-#include <QDate>
+#include <telepathy-logger/log-manager.h>
+
+#include <QtCore/QObject>
+#include <QtCore/QDate>
 
 class QString;
 

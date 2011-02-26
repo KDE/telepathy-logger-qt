@@ -21,6 +21,8 @@
 
 #include <QtCore/QDebug>
 
+#include <glib.h>
+
 using namespace Logger;
 
 int main(int argc, char **argv)

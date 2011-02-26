@@ -23,9 +23,9 @@
 #include <telepathy-glib/account.h>
 #include <telepathy-logger/entry-text.h>
 
-#include <QDebug>
-#include <QString>
-#include <QStringList>
+#include <QtCore/QDebug>
+#include <QtCore/QString>
+#include <QtCore/QStringList>
 
 using namespace Logger;
 
@@ -404,7 +404,7 @@ QString Message::logid()
     return this->_logid;
 }
 
-Direction Message::direction()
+Message::Direction Message::direction()
 {
     return this->_direction;
 }
