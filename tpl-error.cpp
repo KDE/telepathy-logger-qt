@@ -1,6 +1,3 @@
-#ifndef __HIT__
-#define __HIT__
-
 /*
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
  *
@@ -20,15 +17,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Logger
+#include <Logger/tpl-error.h>
+
+using namespace Logger;
+
+Error::Error(GError *gerror, bool dontfree)
 {
+    this->_message = QString(gerror->message);
+    this->_code = gerror->code;
 
-class Hit
+    if(!dontfree) {
+        g_error_free(gerror);
+    }
+}
+
+Error::Error(const QString &message, int code) : _message(message), _code(code)
 {
-public:
-    Hit(TplLogSearchHit *hit) {} //FIXME unknown type
-};
-
-} //namespace
-
-#endif // __HIT__
+    // Silence is golden :)
+}

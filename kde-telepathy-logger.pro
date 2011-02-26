@@ -24,7 +24,9 @@ HEADERS += Logger/tpl-conversation-dates-query.h \
            Logger/tpl-correspondant.h \
            Logger/tpl-debug.h
 
-SOURCES += dummy-main.cpp query-log.cpp
+SOURCES += tpl-query.cpp tpl-debug.cpp \
+           tpl-message.cpp tpl-error.cpp \
+query-log.cpp dummy-main.cpp
 
 # Output
 OBJECTS_DIR = .objects

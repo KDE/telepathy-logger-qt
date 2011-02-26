@@ -1,6 +1,3 @@
-#ifndef __HIT__
-#define __HIT__
-
 /*
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
  *
@@ -20,15 +17,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Logger
+#include <Logger/tpl-debug.h>
+
+#include <QtCore/QDebug>
+
+using namespace Logger;
+
+void Debug::echo(bool yes)
 {
+    qDebug("Logger::Debug::echo(bool) was called");
 
-class Hit
+    qDebug() << yes;
+}
+
+void Debug::echo(const QList<QDate> &dates)
 {
-public:
-    Hit(TplLogSearchHit *hit) {} //FIXME unknown type
-};
+    qDebug("Logger::Debug::echo(QList<QDate>) was called");
 
-} //namespace
+    qDebug() << dates;
+}
 
-#endif // __HIT__
+void Debug::echo(const QList<Message> &messages)
+{
+    qDebug("Logger::Debug::echo(QList<Message>) was called");
+
+    foreach(Message m, messages) {
+        qDebug() << m.chatid();
+    }
+}
+
+void Debug::echo(const QList<Correspondant> &buddies)
+{
+    qDebug("Logger::Debug::echo(QList<Correspondant>) was called");
+}
