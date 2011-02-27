@@ -20,6 +20,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QtCore/QString>
+
 namespace Logger
 {
 
@@ -32,6 +34,11 @@ public:
     Correspondant() {};
 
     enum Whois { undefined = 0, contact, group, self };
+
+    QString alias();
+    QString id();
+    QString avatar();
+    Whois type();
 
 private:
     Correspondant(CorrespondantPrivateData *_d) : d(_d) {}

@@ -20,24 +20,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <Logger/tpl-correspondant.h>
+
+#include <QtCore/QString>
+#include <QtCore/QHash>
+
 namespace Logger
 {
-
-class Correspondant;
 
 class CorrespondantPrivateData
 {
 public:
     CorrespondantPrivateData(TplEntity *chat);
+    ~CorrespondantPrivateData();
 
-    QString alias;
-    QString id;
-    QString avatar;
-    uint type;
-//         undefined = TPL_ENTITY_UNKNOWN,
-//         contact = TPL_ENTITY_CONTACT,
-//         group = TPL_ENTITY_GROUP,
-//         self = TPL_ENTITY_SELF*/
+    QString alias();
+    QString id();
+    QString avatar();
+    Correspondant::Whois type();
+
+private:
+    QString _alias;
+    QString _id;
+    QString _avatar;
+    Correspondant::Whois _type;
+
+    static QHash<TplEntityType, Correspondant::Whois> tplToCorrespondantWhoisHash;
+    static bool first_object;
 };
 
 } //namespace

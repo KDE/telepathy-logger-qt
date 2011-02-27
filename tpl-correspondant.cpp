@@ -18,23 +18,23 @@
  */
 
 #include <Logger/tpl-correspondant.h>
-#include <tpl-correspondant-private.h>
 
-Correspondant::Correspondant(TplEntity *chat)
+QString Correspondant::alias()
 {
-    gchar *galias;
-    gchar *gid;
-    gchar *gavatar;
+    this->d->alias();
+}
 
-    g_object_get(chat,
-                 "alias", &galias, "identifier", &gid,
-                 "avatar-token", &gavatar, "entity-type", &this->type, NULL);
+QString Correspondant::id()
+{
+    this->d->id();
+}
 
-    this->alias = QString(galias);
-    this->id = QString(id);
-    this->avatar = QString(gavatar);
+QString Correspondant::avatar()
+{
+    this->d->avatar();
+}
 
-    g_free(galias);
-    g_free(gid);
-    g_free(gavatar);
+Correspondant::Whois Correspondant::type()
+{
+    this->d->type();
 }

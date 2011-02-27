@@ -22,6 +22,8 @@
 
 #include <telepathy-logger/entry-text.h>
 
+#include <QtCore/QHash>
+
 namespace Logger
 {
 
@@ -57,6 +59,9 @@ private:
     Message::Direction _direction;
     Correspondant _sender;
     Correspondant _receiver;
+
+    static QHash<uint, Message::Direction> tplToMessageDirectionHash;
+    static bool first_object;
 };
 
 } //namespace

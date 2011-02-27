@@ -18,10 +18,13 @@
  */
 
 #include <Logger/tpl-message.h>
+
 #include <tpl-message-private.h>
 #include <tpl-correspondant-private.h>
 
 using namespace Logger;
+
+bool MessagePrivateData::first_object = true;
 
 MessagePrivateData::MessagePrivateData(TplEntryText *tpmessage)
 {
@@ -30,30 +33,41 @@ MessagePrivateData::MessagePrivateData(TplEntryText *tpmessage)
 
 MessagePrivateData::MessagePrivateData(TplEntry *tpmessage)
 {
-    gchar *gaccountpath, *gchannel, *gchatid, *glogid;
+    if (this->first_object)
+    {
+        // Initialises lookup hash (matches Message and TplEntry type codes)
+        tplToMessageDirectionHash[0] = Message::undefined;
+        tplToMessageDirectionHash[TPL_ENTRY_DIRECTION_IN] = Message::incoming;
+        tplToMessageDirectionHash[TPL_ENTRY_DIRECTION_OUT] = Message::outcoming;
+
+        this->first_object = false;
+    }
+
+#if 0
+TODO add Message specific props:
+   "message"          gchar*
+   "message-type"     guint
+   "pending-msg-id"   gint
+#endif
+
+gchar *gaccountpath, *gchannel, *gchatid, *glogid;
     TplEntity *gsender, *greceiver;
+    TplEntryDirection gdirection;
 
     g_object_get(tpmessage,
                  "account", &this->_account, "account-path", &gaccountpath,
                  "channel-path", &gchannel, "chat-id", &gchatid,
-                 "direction", &this->_direction, "log-id", &glogid,
+                 "direction", &gdirection, "log-id", &glogid,
                  "receiver", &greceiver, "sender", &gsender,
                  "timestamp", &this->_timestamp, NULL);
-
-#if 0
-   "message"                  gchar*
-   "message-type"             guint
-   "pending-msg-id"           gint
-
-    undefined, = 0,
-    incoming,  = TPL_ENTRY_DIRECTION_IN,
-    outcoming = TPL_ENTRY_DIRECTION_OUT
-#endif
 
     this->_accountpath = QString(gaccountpath);
     this->_channel = QString(gchannel);
     this->_chatid = QString(gchatid);
     this->_logid = QString(glogid);
+
+    // If the value is unknown, QHash automatically returns 0 == Message::undefined
+    this->_direction = tplToMessageDirectionHash[gdirection];
 
     CorrespondantPrivateData *psender = new CorrespondantPrivateData(gsender);
     CorrespondantPrivateData *preceiver = new CorrespondantPrivateData(greceiver);
