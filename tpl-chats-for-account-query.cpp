@@ -39,8 +39,8 @@ void ChatsForAccountQuery::perform()
 void ChatsForAccountQuery::callback(void *_logmanager, void *_result,
                                     ChatsForAccountQuery *self)
 {
-    TplLogManager *logmanager = (TplLogManager*)_logmanager;
-    GAsyncResult *result = (GAsyncResult*)_result;
+    TplLogManager *logmanager = static_cast<TplLogManager*>(_logmanager);
+    GAsyncResult *result = static_cast<GAsyncResult*>(_result);
 
     if (!TPL_IS_LOG_MANAGER (logmanager)) {
         throw Error("Query callback returned an invalid TplLogManager object.");

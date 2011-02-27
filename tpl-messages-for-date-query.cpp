@@ -53,8 +53,8 @@ void MessagesForDateQuery::callback(void *_logmanager, void *_result,
     GList *gmessages, *i;
     GError *error = NULL;
 
-    TplLogManager *logmanager = (TplLogManager*)_logmanager;
-    GAsyncResult *result = (GAsyncResult*)_result;
+    TplLogManager *logmanager = static_cast<TplLogManager*>(_logmanager);
+    GAsyncResult *result = static_cast<GAsyncResult*>(_result);
 
     if (!TPL_IS_LOG_MANAGER (logmanager)) {
         throw Error("MessagesForDateQuery callback returned an invalid "

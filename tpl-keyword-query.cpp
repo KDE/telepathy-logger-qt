@@ -37,8 +37,8 @@ void KeywordQuery::perform(const QString &keyword)
 void KeywordQuery::callback(void *_logmanager, void*_result, KeywordQuery *self)
 {
     // Cast parameters...
-    TplLogManager *logmanager = (TplLogManager*)_logmanager;
-    GAsyncResult *result = (GAsyncResult*)_result;
+    TplLogManager *logmanager = static_cast<TplLogManager*>(_logmanager);
+    GAsyncResult *result = static_cast<GAsyncResult*>(_result);
 
     if (!TPL_IS_LOG_MANAGER (logmanager)) {
         throw Error("KeywordQuery callback returned an invalid TplLogManager object.");

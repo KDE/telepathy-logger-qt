@@ -25,8 +25,6 @@
 #include <Logger/tpl-message.h>
 #include <Logger/tpl-correspondant.h>
 
-#include <tpl-query-callback-template.h>
-
 #include <QtCore/QHash>
 
 namespace Logger
