@@ -24,6 +24,7 @@
 #include <Logger/Log>
 
 #include <tpl-query-private.h>
+#include <tpl-message-private.h>
 
 using namespace Logger;
 
@@ -61,16 +62,14 @@ void MessagesForDateQuery::callback(GObject *obj, GAsyncResult *result,
     }
 
     // This is placed as second, just as a failback. Otherwise it would prevent
-    // more detailed exceptions to be thrown...
+    // more detailed exceptions from being thrown...
     if(!successful) {
         throw Error("tpl_log_manager_get_messages_for_date_async was not successfull!");
     }
 
-    TplEntry *gmessage;
-
     for (i = gmessages; i; i = i->next) {
-        gmessage = (TplEntry*)i->data;
-		self->messages << Message(); // FIXME gmessage);
+        MessagePrivateData *pmessage = new MessagePrivateData((TplEntry*)i->data);
+        self->messages << Message(pmessage);
     }
 
     // Free search results...

@@ -24,6 +24,7 @@ namespace Logger
 {
 
 class CorrespondantPrivateData;
+class MessagePrivateData;
 
 class Correspondant
 {
@@ -33,6 +34,10 @@ public:
     enum Whois { undefined = 0, contact, group, self };
 
 private:
+    Correspondant(CorrespondantPrivateData *_d) : d(_d) {}
+
+    friend class MessagePrivateData;
+
     CorrespondantPrivateData *d;
 };
 

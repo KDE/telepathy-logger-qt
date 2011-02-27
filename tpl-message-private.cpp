@@ -19,6 +19,7 @@
 
 #include <Logger/tpl-message.h>
 #include <tpl-message-private.h>
+#include <tpl-correspondant-private.h>
 
 using namespace Logger;
 
@@ -33,18 +34,31 @@ MessagePrivateData::MessagePrivateData(TplEntry *tpmessage)
     TplEntity *gsender, *greceiver;
 
     g_object_get(tpmessage,
-                 "account", &this->account, "account-path", &gaccountpath,
+                 "account", &this->_account, "account-path", &gaccountpath,
                  "channel-path", &gchannel, "chat-id", &gchatid,
-                 "direction", &this->direction, "log-id", &glogid,
+                 "direction", &this->_direction, "log-id", &glogid,
                  "receiver", &greceiver, "sender", &gsender,
-                 "timestamp", &this->timestamp, NULL);
+                 "timestamp", &this->_timestamp, NULL);
 
-    this->accountpath = QString(gaccountpath);
-    this->channel = QString(gchannel);
-    this->chatid = QString(gchatid);
-    this->logid = QString(glogid);
-//     this->receiver = Correspondant(greceiver); FIXME
-//     this->sender = Correspondant(gsender);
+#if 0
+   "message"                  gchar*
+   "message-type"             guint
+   "pending-msg-id"           gint
+
+    undefined, = 0,
+    incoming,  = TPL_ENTRY_DIRECTION_IN,
+    outcoming = TPL_ENTRY_DIRECTION_OUT
+#endif
+
+    this->_accountpath = QString(gaccountpath);
+    this->_channel = QString(gchannel);
+    this->_chatid = QString(gchatid);
+    this->_logid = QString(glogid);
+
+    CorrespondantPrivateData *psender = new CorrespondantPrivateData(gsender);
+    CorrespondantPrivateData *preceiver = new CorrespondantPrivateData(greceiver);
+    this->_receiver = Correspondant(preceiver);
+    this->_sender = Correspondant(psender);
 
     g_free(gaccountpath);
     g_free(gchannel);
@@ -57,5 +71,50 @@ MessagePrivateData::MessagePrivateData(TplEntry *tpmessage)
 
 MessagePrivateData::~MessagePrivateData()
 {
-    g_object_unref(this->account);
+    g_object_unref(this->_account);
+}
+
+inline TpAccount* MessagePrivateData::account()
+{
+    return this->_account;
+}
+
+inline long MessagePrivateData::timestamp()
+{
+    return this->_timestamp;
+}
+
+inline QString MessagePrivateData::accountpath()
+{
+    return this->_accountpath;
+}
+
+inline QString MessagePrivateData::channel()
+{
+    return this->_channel;
+}
+
+inline QString MessagePrivateData::chatid()
+{
+    return this->_chatid;
+}
+
+inline QString MessagePrivateData::logid()
+{
+    return this->_logid;
+}
+
+inline Message::Direction MessagePrivateData::direction()
+{
+    return this->_direction;
+}
+
+inline Correspondant MessagePrivateData::sender()
+{
+    return this->_sender;
+}
+
+inline Correspondant MessagePrivateData::receiver()
+{
+    return this->_receiver;
 }

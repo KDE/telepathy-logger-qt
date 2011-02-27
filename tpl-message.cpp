@@ -20,56 +20,57 @@
 #include <Logger/tpl-message.h>
 #include <tpl-message-private.h>
 
-// #include <Logger/tpl-correspondant.h>
-
 using namespace Logger;
 
 Message::Message()
 {
-    this->d = new MessagePrivateData;
+    this->d = 0;
 }
 
 Message::~Message()
 {
-    delete this->d;
+    // Delete data, if valid...
+    if (this->d) {
+        delete this->d;
+    }
 }
 
 QString Message::accountpath()
 {
-    return this->d->accountpath;
+    return this->d->accountpath();
 }
 
 QString Message::channel()
 {
-    return this->d->channel;
+    return this->d->channel();
 }
 
 QString Message::chatid()
 {
-    return this->d->chatid;
+    return this->d->chatid();
 }
 
 QString Message::logid()
 {
-    return this->d->logid;
+    return this->d->logid();
 }
 
-uint Message::direction()
+Message::Direction Message::direction()
 {
-    return this->d->direction;
+    return this->d->direction();
 }
 
 Correspondant Message::sender()
 {
-    return this->d->sender;
+    return this->d->sender();
 }
 
 Correspondant Message::receiver()
 {
-    return this->d->receiver;
+    return this->d->receiver();
 }
 
 long Message::timestamp()
 {
-    return this->d->timestamp;
+    return this->d->timestamp();
 }

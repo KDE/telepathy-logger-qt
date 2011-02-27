@@ -30,7 +30,7 @@ namespace Logger
 
 class MessagesForDateQuery : public Query
 {
-    Q_OBJECT
+Q_OBJECT
 
 public:
     explicit MessagesForDateQuery(const QString &dbusid) : Query(dbusid) {}

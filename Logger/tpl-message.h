@@ -35,24 +35,24 @@ public:
     Message();
     ~Message();
 
+    enum Direction { undefined = 0, incoming, outcoming };
+
     QString accountpath();
     QString channel();
     QString chatid();
     QString logid();
 
-    uint direction(); //FIXME
+    Direction direction();
     Correspondant sender();
     Correspondant receiver();
 
     long timestamp();
 
-    enum Direction {  undefined = 0,
-        incoming, /* = TPL_ENTRY_DIRECTION_IN,*/
-        outcoming /*= TPL_ENTRY_DIRECTION_OUT*/
-    };
-
 private:
+    Message(MessagePrivateData *_d) : d(_d) {}
+
     friend class MessagesForDateQuery;
+
     MessagePrivateData *d;
 };
 

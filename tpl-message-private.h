@@ -35,20 +35,28 @@ public:
     MessagePrivateData();
     ~MessagePrivateData();
 
-    TpAccount* account;
-    long timestamp;
+    TpAccount* account();
+    long timestamp();
 
-    QString accountpath, channel, chatid, logid;
-    Message::Direction direction;
-    Correspondant sender, receiver;
+    QString accountpath();
+    QString channel();
+    QString chatid();
+    QString logid();
+    Message::Direction direction();
+    Correspondant sender();
+    Correspondant receiver();
 
-//   "message"                  gchar*
-//   "message-type"             guint
-//   "pending-msg-id"           gint
-/*    enum Direction {
-    undefined, = 0,
-    incoming,  = TPL_ENTRY_DIRECTION_IN,
-    outcoming = TPL_ENTRY_DIRECTION_OUT*/
+private:
+    TpAccount* _account;
+    long _timestamp;
+
+    QString _accountpath;
+    QString _channel;
+    QString _chatid;
+    QString _logid;
+    Message::Direction _direction;
+    Correspondant _sender;
+    Correspondant _receiver;
 };
 
 } //namespace

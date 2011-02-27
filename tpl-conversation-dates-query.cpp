@@ -31,7 +31,7 @@ void ConversationDatesQueryCallback(GObject *obj, GAsyncResult *result,
 ConversationDatesQuery::ConversationDatesQuery(const QString &dbusid) :
     Query(dbusid)
 {
-    this->d->finishedcb = &ConversationDatesQueryCallback;
+    //this->d->finishedcb = &ConversationDatesQueryCallback;
 }
 
 void ConversationDatesQuery::perform(const QString &chatid, bool ischatroom)
@@ -41,7 +41,7 @@ void ConversationDatesQuery::perform(const QString &chatid, bool ischatroom)
                                     ischatroom, (GAsyncReadyCallback)this->callback, this);
 }
 
-//XXX replace with callback
+//XXX replace with callback template
 void ConversationDatesQuery::callback(GObject *obj, GAsyncResult *result,
                                     ConversationDatesQuery* self)
 {
