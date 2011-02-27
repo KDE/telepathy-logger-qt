@@ -22,6 +22,9 @@
 
 #include <telepathy-logger/entry-text.h>
 
+#include <Logger/tpl-message.h>
+#include <Logger/tpl-correspondant.h>
+
 #include <QtCore/QHash>
 
 namespace Logger

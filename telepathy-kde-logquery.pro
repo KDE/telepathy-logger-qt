@@ -34,15 +34,19 @@ HEADERS += tpl-correspondant-private.h \
 
 SOURCES += tpl-chat-exists-query.cpp \
            tpl-conversation-dates-query.cpp \
-           tpl-correspondant-private.cpp \
+           tpl-messages-for-date-query.cpp \
+           tpl-keyword-query.cpp \
+           tpl-chats-for-account-query.cpp \
+           tpl-filter-query.cpp \
            tpl-correspondant.cpp \
+           tpl-message.cpp \
+           tpl-query.cpp \
+           dummy-main.cpp
            tpl-debug.cpp \
            tpl-error.cpp \
+           tpl-correspondant-private.cpp \
            tpl-message-private.cpp \
-           tpl-message.cpp \
            tpl-query-private.cpp \
-           tpl-query.cpp \
-           dummy-main.cpp query-log.cpp
 
 
 # Output
