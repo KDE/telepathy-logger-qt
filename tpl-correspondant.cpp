@@ -19,22 +19,37 @@
 
 #include <Logger/tpl-correspondant.h>
 
+#include <tpl-correspondant-private.h>
+
+using namespace Logger;
+
+Correspondant::Correspondant() : d(0)
+{
+}
+
+Correspondant::~Correspondant()
+{
+    if (this->d) {
+        delete this->d;
+    }
+}
+
 QString Correspondant::alias()
 {
-    this->d->alias();
+    return this->d->alias();
 }
 
 QString Correspondant::id()
 {
-    this->d->id();
+    return this->d->id();
 }
 
 QString Correspondant::avatar()
 {
-    this->d->avatar();
+    return this->d->avatar();
 }
 
 Correspondant::Whois Correspondant::type()
 {
-    this->d->type();
+    return this->d->type();
 }

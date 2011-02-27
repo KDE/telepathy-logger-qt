@@ -20,6 +20,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <telepathy-logger/log-manager.h>
+
 #include <Logger/tpl-correspondant.h>
 
 #include <QtCore/QString>

@@ -28,7 +28,7 @@ class TplLogSearchHit;
 class Hit
 {
 public:
-     Hit(TplLogSearchHit *hit) {} //FIXME unknown type
+     Hit(TplLogSearchHit *hit) { (void)hit; } //TODO unknown type
 };
 
 } //namespace

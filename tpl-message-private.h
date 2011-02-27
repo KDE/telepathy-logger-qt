@@ -60,7 +60,7 @@ private:
     Correspondant _sender;
     Correspondant _receiver;
 
-    static QHash<uint, Message::Direction> tplToMessageDirectionHash;
+    static QHash<TplEntryDirection, Message::Direction> tplToMessageDirectionHash;
     static bool first_object;
 };
 

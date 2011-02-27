@@ -21,7 +21,12 @@
 
 #include <tpl-correspondant-private.h>
 
+using namespace Logger;
+
 bool CorrespondantPrivateData::first_object = true;
+
+QHash<TplEntityType, Correspondant::Whois>
+  CorrespondantPrivateData::tplToCorrespondantWhoisHash;
 
 CorrespondantPrivateData::CorrespondantPrivateData(TplEntity *chat)
 {
@@ -38,39 +43,42 @@ CorrespondantPrivateData::CorrespondantPrivateData(TplEntity *chat)
     gchar *galias;
     gchar *gid;
     gchar *gavatar;
-    TplEntityType *gtype;
+    TplEntityType gentitytype;
 
     g_object_get(chat,
                  "alias", &galias, "identifier", &gid,
-                 "avatar-token", &gavatar, "entity-type", &gtype, NULL);
+                 "avatar-token", &gavatar, "entity-type", &gentitytype, NULL);
 
     this->_alias = QString(galias);
-    this->_id = QString(id);
+    this->_id = QString(gid);
     this->_avatar = QString(gavatar);
-    this->_type = tplToCorrespondantWhoisHash[gtype];
+    this->_type = tplToCorrespondantWhoisHash[gentitytype];
 
     g_free(galias);
     g_free(gid);
     g_free(gavatar);
 }
 
-inline QString CorrespondantPrivateData::alias()
+CorrespondantPrivateData::~CorrespondantPrivateData()
+{
+}
+
+QString CorrespondantPrivateData::alias()
 {
     return this->_alias;
 }
 
-inline QString CorrespondantPrivateData::id()
+QString CorrespondantPrivateData::id()
 {
     return this->_id;
 }
 
-inline QString CorrespondantPrivateData::avatar()
+QString CorrespondantPrivateData::avatar()
 {
     return this->_avatar;
 }
 
-inline Correspondant::Whois CorrespondantPrivateData::type()
-
+Correspondant::Whois CorrespondantPrivateData::type()
 {
     return this->_type;
 }

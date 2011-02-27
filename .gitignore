@@ -2,7 +2,7 @@
 Makefile
 *~
 *.o
-kde-telepathy-logger
+telepathy-kde-logquery
 *.pro.user
 moc_*.cpp
 .template

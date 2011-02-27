@@ -26,6 +26,9 @@ using namespace Logger;
 
 bool MessagePrivateData::first_object = true;
 
+QHash<TplEntryDirection, Message::Direction>
+    MessagePrivateData::tplToMessageDirectionHash;
+
 MessagePrivateData::MessagePrivateData(TplEntryText *tpmessage)
 {
     MessagePrivateData((TplEntry*)tpmessage);
@@ -36,9 +39,9 @@ MessagePrivateData::MessagePrivateData(TplEntry *tpmessage)
     if (this->first_object)
     {
         // Initialises lookup hash (matches Message and TplEntry type codes)
-        tplToMessageDirectionHash[0] = Message::undefined;
-        tplToMessageDirectionHash[TPL_ENTRY_DIRECTION_IN] = Message::incoming;
+        tplToMessageDirectionHash[TPL_ENTRY_DIRECTION_NONE] = Message::undefined;
         tplToMessageDirectionHash[TPL_ENTRY_DIRECTION_OUT] = Message::outcoming;
+        tplToMessageDirectionHash[TPL_ENTRY_DIRECTION_IN] = Message::incoming;
 
         this->first_object = false;
     }
@@ -88,47 +91,47 @@ MessagePrivateData::~MessagePrivateData()
     g_object_unref(this->_account);
 }
 
-inline TpAccount* MessagePrivateData::account()
+TpAccount* MessagePrivateData::account()
 {
     return this->_account;
 }
 
-inline long MessagePrivateData::timestamp()
+long MessagePrivateData::timestamp()
 {
     return this->_timestamp;
 }
 
-inline QString MessagePrivateData::accountpath()
+QString MessagePrivateData::accountpath()
 {
     return this->_accountpath;
 }
 
-inline QString MessagePrivateData::channel()
+QString MessagePrivateData::channel()
 {
     return this->_channel;
 }
 
-inline QString MessagePrivateData::chatid()
+QString MessagePrivateData::chatid()
 {
     return this->_chatid;
 }
 
-inline QString MessagePrivateData::logid()
+QString MessagePrivateData::logid()
 {
     return this->_logid;
 }
 
-inline Message::Direction MessagePrivateData::direction()
+Message::Direction MessagePrivateData::direction()
 {
     return this->_direction;
 }
 
-inline Correspondant MessagePrivateData::sender()
+Correspondant MessagePrivateData::sender()
 {
     return this->_sender;
 }
 
-inline Correspondant MessagePrivateData::receiver()
+Correspondant MessagePrivateData::receiver()
 {
     return this->_receiver;
 }

@@ -31,7 +31,8 @@ class MessagePrivateData;
 class Correspondant
 {
 public:
-    Correspondant() {};
+    Correspondant();
+    ~Correspondant();
 
     enum Whois { undefined = 0, contact, group, self };
 

@@ -60,6 +60,8 @@ QueryPrivateData::~QueryPrivateData()
 
 void QueryPrivateData::setreadycb(GObject *obj, GAsyncResult *result, QueryPrivateData *self)
 {
+    (void)obj;
+
     GError *error = NULL;
 
     if (!tp_account_prepare_finish(self->account, result, &error)) {

@@ -22,9 +22,8 @@
 
 using namespace Logger;
 
-Message::Message()
+Message::Message() : d(0)
 {
-    this->d = 0;
 }
 
 Message::~Message()
