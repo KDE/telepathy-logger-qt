@@ -20,9 +20,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-//XXX
-#include <telepathy-logger/log-manager.h>
-
 #include <QtCore/QObject>
 
 namespace Logger

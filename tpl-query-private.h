@@ -27,11 +27,6 @@
 namespace Logger
 {
 
-class QueryPrivateData;
-
-typedef void (*QueryCallback)(GObject *obj, GAsyncResult *result,
-                              QueryPrivateData *self);
-
 class QueryPrivateData
 {
 public:
@@ -41,9 +36,12 @@ public:
     static void setreadycb(GObject *obj, GAsyncResult *result,
                            QueryPrivateData *self);
 
-    QueryCallback finishedcb;
-    TplLogManager *logmanager;
-    TpAccount *account;
+    TplLogManager *logmanager() const;
+    TpAccount *account() const;
+
+private:
+    TplLogManager *_logmanager;
+    TpAccount *_account;
 };
 
 } //namespace

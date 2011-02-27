@@ -15,6 +15,7 @@ PKGCONFIG += telepathy-logger-0.1 telepathy-glib glib-2.0
 HEADERS += tpl-correspondant-private.h \
            tpl-message-private.h \
            tpl-query-private.h \
+           tpl-query-callback-template.h \
            Logger/tpl-chat-exists-query.h \
            Logger/tpl-chats-for-account-query.h \
            Logger/tpl-conversation-dates-query.h \
@@ -41,13 +42,12 @@ SOURCES += tpl-chat-exists-query.cpp \
            tpl-correspondant.cpp \
            tpl-message.cpp \
            tpl-query.cpp \
-           dummy-main.cpp
+           dummy-main.cpp \
            tpl-debug.cpp \
            tpl-error.cpp \
            tpl-correspondant-private.cpp \
            tpl-message-private.cpp \
-           tpl-query-private.cpp \
-
+           tpl-query-private.cpp
 
 # Output
 OBJECTS_DIR = .objects

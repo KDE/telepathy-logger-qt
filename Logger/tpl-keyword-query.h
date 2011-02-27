@@ -40,7 +40,7 @@ signals:
     void completed(const QList<Hit> &hits);
 
 private:
-    static void callback(GObject *obj, GAsyncResult *result, KeywordQuery *self);
+    static void callback(void *logmanager, void *result, KeywordQuery *self);
 
     QList<Hit> hits;
 };

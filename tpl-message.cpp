@@ -34,42 +34,42 @@ Message::~Message()
     }
 }
 
-QString Message::accountpath()
+QString Message::accountpath() const
 {
     return this->d->accountpath();
 }
 
-QString Message::channel()
+QString Message::channel() const
 {
     return this->d->channel();
 }
 
-QString Message::chatid()
+QString Message::chatid() const
 {
     return this->d->chatid();
 }
 
-QString Message::logid()
+QString Message::logid() const
 {
     return this->d->logid();
 }
 
-Message::Direction Message::direction()
+Message::Direction Message::direction() const
 {
     return this->d->direction();
 }
 
-Correspondant Message::sender()
+Correspondant Message::sender() const
 {
     return this->d->sender();
 }
 
-Correspondant Message::receiver()
+Correspondant Message::receiver() const
 {
     return this->d->receiver();
 }
 
-long Message::timestamp()
+long Message::timestamp() const
 {
     return this->d->timestamp();
 }

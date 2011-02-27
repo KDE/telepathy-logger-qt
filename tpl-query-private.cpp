@@ -26,7 +26,7 @@ using namespace Logger;
 
 QueryPrivateData::QueryPrivateData(const QString &quotedDbusID)
 {
-    this->logmanager = tpl_log_manager_dup_singleton();
+    this->_logmanager = tpl_log_manager_dup_singleton();
 
     GError *error = NULL;
 
@@ -50,12 +50,12 @@ QueryPrivateData::QueryPrivateData(const QString &quotedDbusID)
     // Get rid of the bus proxy...
     g_object_unref(daemon);
 
-    this->account = account;
+    this->_account = account;
 }
 
 QueryPrivateData::~QueryPrivateData()
 {
-    g_object_unref(this->account);
+    g_object_unref(this->_account);
 }
 
 void QueryPrivateData::setreadycb(GObject *obj, GAsyncResult *result, QueryPrivateData *self)
@@ -64,12 +64,22 @@ void QueryPrivateData::setreadycb(GObject *obj, GAsyncResult *result, QueryPriva
 
     GError *error = NULL;
 
-    if (!tp_account_prepare_finish(self->account, result, &error)) {
-        self->account = NULL;
+    if (!tp_account_prepare_finish(self->_account, result, &error)) {
+        self->_account = NULL;
         throw new Error(error);
     }
 
-    if (!tp_account_is_valid(self->account)) {
+    if (!tp_account_is_valid(self->_account)) {
         throw new Error("Selected account is not valid!");
     }
+}
+
+TplLogManager* QueryPrivateData::logmanager() const
+{
+    return this->_logmanager;
+}
+
+TpAccount* QueryPrivateData::account() const
+{
+    return this->_account;
 }

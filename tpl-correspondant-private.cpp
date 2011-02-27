@@ -63,22 +63,22 @@ CorrespondantPrivateData::~CorrespondantPrivateData()
 {
 }
 
-QString CorrespondantPrivateData::alias()
+QString CorrespondantPrivateData::alias() const
 {
     return this->_alias;
 }
 
-QString CorrespondantPrivateData::id()
+QString CorrespondantPrivateData::id() const
 {
     return this->_id;
 }
 
-QString CorrespondantPrivateData::avatar()
+QString CorrespondantPrivateData::avatar() const
 {
     return this->_avatar;
 }
 
-Correspondant::Whois CorrespondantPrivateData::type()
+Correspondant::Whois CorrespondantPrivateData::type() const
 {
     return this->_type;
 }

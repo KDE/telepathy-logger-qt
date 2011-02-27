@@ -36,10 +36,10 @@ public:
     CorrespondantPrivateData(TplEntity *chat);
     ~CorrespondantPrivateData();
 
-    QString alias();
-    QString id();
-    QString avatar();
-    Correspondant::Whois type();
+    QString alias() const;
+    QString id() const;
+    QString avatar() const;
+    Correspondant::Whois type() const;
 
 private:
     QString _alias;

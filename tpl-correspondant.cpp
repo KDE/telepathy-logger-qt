@@ -34,22 +34,22 @@ Correspondant::~Correspondant()
     }
 }
 
-QString Correspondant::alias()
+QString Correspondant::alias() const
 {
     return this->d->alias();
 }
 
-QString Correspondant::id()
+QString Correspondant::id() const
 {
     return this->d->id();
 }
 
-QString Correspondant::avatar()
+QString Correspondant::avatar() const
 {
     return this->d->avatar();
 }
 
-Correspondant::Whois Correspondant::type()
+Correspondant::Whois Correspondant::type() const
 {
     return this->d->type();
 }

@@ -17,8 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <glib.h>
-#include <telepathy-logger/entry-text.h>
+#include <telepathy-logger/log-manager.h>
 
 #include <Logger/tpl-keyword-query.h>
 
@@ -31,21 +30,26 @@ using namespace Logger;
 void KeywordQuery::perform(const QString &keyword)
 {
     // Perform the call...
-    tpl_log_manager_search_async(this->d->logmanager, keyword.toAscii(),
+    tpl_log_manager_search_async(this->d->logmanager(), keyword.toAscii(),
                                  (GAsyncReadyCallback)this->callback, this);
 }
 
-void KeywordQuery::callback(GObject *obj, GAsyncResult *result,
-                            KeywordQuery *self)
+void KeywordQuery::callback(void *_logmanager, void*_result, KeywordQuery *self)
 {
-    (void)obj;
+    // Cast parameters...
+    TplLogManager *logmanager = (TplLogManager*)_logmanager;
+    GAsyncResult *result = (GAsyncResult*)_result;
+
+    if (!TPL_IS_LOG_MANAGER (logmanager)) {
+        throw Error("KeywordQuery callback returned an invalid TplLogManager object.");
+    }
 
     GList *ghits, *i;
     GError *error = NULL;
 
     // Check whether everything went fine, and retrieves data...
     gboolean successful =
-        tpl_log_manager_search_finish(self->d->logmanager, result, &ghits, &error);
+        tpl_log_manager_search_finish(logmanager, result, &ghits, &error);
 
     if(error) {
         throw Error(error);
@@ -60,7 +64,7 @@ void KeywordQuery::callback(GObject *obj, GAsyncResult *result,
     TplLogSearchHit *ghit;
 
     for(i = ghits; i; i = i->next) {
-        ghit = (TplLogSearchHit*)i->data;
+        ghit = (TplLogSearchHit*)i->data; // FIXME
         self->hits << Hit(ghit);
     }
 

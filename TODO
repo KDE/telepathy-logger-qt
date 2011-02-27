@@ -1,8 +1,3 @@
-* A Qt-style public API should never include headers from the
-underlying library that provides the implementation.
-
-* For public API, use private classes to store the class members.
-
 * Btw, you might want to use QtGLib here to avoid doing such stuff
 yourself and in the wrong way. class Error could be completely
 replaced with QGlib::Error for example.
@@ -14,7 +9,3 @@ that. Most likely, the code will crash. Those callbacks are called
 from the event loop anyway, so if you throw exceptions, they will be
 delivered to the event loop and Qt doesn't handle exceptions very well
 in there.
-
-* Speaking of an event loop... you don't seem to have one in your
-main(). I am sure this is why it is not working ;) I guess you haven't
-understood how this async model works.

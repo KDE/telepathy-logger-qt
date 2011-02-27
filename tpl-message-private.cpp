@@ -91,47 +91,47 @@ MessagePrivateData::~MessagePrivateData()
     g_object_unref(this->_account);
 }
 
-TpAccount* MessagePrivateData::account()
+TpAccount* MessagePrivateData::account() const
 {
     return this->_account;
 }
 
-long MessagePrivateData::timestamp()
+long MessagePrivateData::timestamp() const
 {
     return this->_timestamp;
 }
 
-QString MessagePrivateData::accountpath()
+QString MessagePrivateData::accountpath() const
 {
     return this->_accountpath;
 }
 
-QString MessagePrivateData::channel()
+QString MessagePrivateData::channel() const
 {
     return this->_channel;
 }
 
-QString MessagePrivateData::chatid()
+QString MessagePrivateData::chatid() const
 {
     return this->_chatid;
 }
 
-QString MessagePrivateData::logid()
+QString MessagePrivateData::logid() const
 {
     return this->_logid;
 }
 
-Message::Direction MessagePrivateData::direction()
+Message::Direction MessagePrivateData::direction() const
 {
     return this->_direction;
 }
 
-Correspondant MessagePrivateData::sender()
+Correspondant MessagePrivateData::sender() const
 {
     return this->_sender;
 }
 
-Correspondant MessagePrivateData::receiver()
+Correspondant MessagePrivateData::receiver() const
 {
     return this->_receiver;
 }

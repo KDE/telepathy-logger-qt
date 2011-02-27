@@ -43,8 +43,7 @@ signals:
     void completed(const QList<Message> &messages);
 
 private:
-    static void callback(GObject *obj, GAsyncResult *result,
-                         MessagesForDateQuery* self);
+    static void callback(void *logmanager, void *result, MessagesForDateQuery* self);
 
     QList<Message> messages;
 };

@@ -25,6 +25,7 @@
 namespace Logger
 {
 
+class ChatsForAccountQuery;
 class CorrespondantPrivateData;
 class MessagePrivateData;
 
@@ -36,15 +37,16 @@ public:
 
     enum Whois { undefined = 0, contact, group, self };
 
-    QString alias();
-    QString id();
-    QString avatar();
-    Whois type();
+    QString alias() const;
+    QString id() const;
+    QString avatar() const;
+    Whois type() const;
 
 private:
     Correspondant(CorrespondantPrivateData *_d) : d(_d) {}
 
     friend class MessagePrivateData;
+    friend class ChatsForAccountQuery;
 
     CorrespondantPrivateData *d;
 };

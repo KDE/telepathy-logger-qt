@@ -37,16 +37,16 @@ public:
 
     enum Direction { undefined = 0, incoming, outcoming };
 
-    QString accountpath();
-    QString channel();
-    QString chatid();
-    QString logid();
+    QString accountpath() const;
+    QString channel() const;
+    QString chatid() const;
+    QString logid() const;
 
-    Direction direction();
-    Correspondant sender();
-    Correspondant receiver();
+    Direction direction() const;
+    Correspondant sender() const;
+    Correspondant receiver() const;
 
-    long timestamp();
+    long timestamp() const;
 
 private:
     Message(MessagePrivateData *_d) : d(_d) {}

@@ -41,8 +41,7 @@ signals:
     void completed(const QList<QDate> &dates);
 
 private:
-    static void callback(GObject *obj, GAsyncResult *result,
-                         ConversationDatesQuery* self);
+    static void callback(void *obj, void *result, ConversationDatesQuery *self);
 
     QList<QDate> dates;
 };

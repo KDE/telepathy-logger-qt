@@ -34,12 +34,12 @@ public:
     Error(const QString &message, int code = 0);
     Error(GError *gerror, bool dontfree = false);
 
-    QString message()
+    QString message() const
     {
         return this->_message;
     }
 
-    int code()
+    int code() const
     {
         return this->_code;
     }

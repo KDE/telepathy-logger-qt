@@ -41,8 +41,7 @@ signals:
     void completed(const QList<Correspondant> &chats);
 
 private:
-    static void callback(GObject *obj, GAsyncResult *result,
-                         ChatsForAccountQuery *self);
+    static void callback(void *obj, void *result, ChatsForAccountQuery *self);
 
     QList<Correspondant> chats;
 };

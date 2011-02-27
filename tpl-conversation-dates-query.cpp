@@ -25,33 +25,41 @@
 
 using namespace Logger;
 
-void ConversationDatesQueryCallback(GObject *obj, GAsyncResult *result,
-                                      ConversationDatesQuery* self);
+// Bridge class between QDate and GDate
+class QGDate : public QDate
+{
+public:
+    QGDate(guint year, guint month, guint day) : QDate(year, month, day) {}
+};
 
 ConversationDatesQuery::ConversationDatesQuery(const QString &dbusid) :
     Query(dbusid)
 {
-    //this->d->finishedcb = &ConversationDatesQueryCallback;
 }
 
 void ConversationDatesQuery::perform(const QString &chatid, bool ischatroom)
 {
     // Perform the asynchronous call...
-    tpl_log_manager_get_dates_async(this->d->logmanager, this->d->account, chatid.toAscii(),
+    tpl_log_manager_get_dates_async(this->d->logmanager(), this->d->account(), chatid.toAscii(),
                                     ischatroom, (GAsyncReadyCallback)this->callback, this);
 }
 
 //XXX replace with callback template
-void ConversationDatesQuery::callback(GObject *obj, GAsyncResult *result,
-                                    ConversationDatesQuery* self)
+void ConversationDatesQuery::callback(void *_logmanager, void *_result,
+                                      ConversationDatesQuery* self)
 {
-    (void)obj;
-
     GList *gdates, *i;
     GError *error = NULL;
 
+    TplLogManager *logmanager = (TplLogManager*)_logmanager;
+    GAsyncResult *result = (GAsyncResult*)_result;
+
+    if (!TPL_IS_LOG_MANAGER (logmanager)) {
+        throw Error("Query callback returned an invalid TplLogManager object.");
+    }
+
     // Check whether everything went fine, and retrieves data...
-    gboolean successful = tpl_log_manager_get_dates_finish(self->d->logmanager,
+    gboolean successful = tpl_log_manager_get_dates_finish((TplLogManager*)logmanager,
                                                            result, &gdates, &error);
 
     if (error) {

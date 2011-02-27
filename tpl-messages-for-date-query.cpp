@@ -17,8 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <glib.h>
-#include <telepathy-logger/entry-text.h>
+#include <telepathy-logger/log-manager.h>
 
 #include <Logger/tpl-messages-for-date-query.h>
 
@@ -26,7 +25,10 @@
 #include <tpl-message-private.h>
 #include <tpl-error.h>
 
+#include <tpl-query-callback-template.h>
+
 using namespace Logger;
+
 
 void MessagesForDateQuery::perform(const QString &chat, bool ischat,
                                    const QDate &date)
@@ -41,21 +43,27 @@ void MessagesForDateQuery::perform(const QString &chat, bool ischat,
                    (GDateMonth)date.month(), (GDateYear)date.year());
 
     // Perform the call...
-    tpl_log_manager_get_messages_for_date_async(this->d->logmanager, this->d->account,
+    tpl_log_manager_get_messages_for_date_async(this->d->logmanager(), this->d->account(),
             chat.toAscii(), ischat, &gdate, (GAsyncReadyCallback)this->callback, this);
 }
 
-void MessagesForDateQuery::callback(GObject *obj, GAsyncResult *result,
+void MessagesForDateQuery::callback(void *_logmanager, void *_result,
                                     MessagesForDateQuery *self)
 {
-    (void)obj;
-
     GList *gmessages, *i;
     GError *error = NULL;
 
+    TplLogManager *logmanager = (TplLogManager*)_logmanager;
+    GAsyncResult *result = (GAsyncResult*)_result;
+
+    if (!TPL_IS_LOG_MANAGER (logmanager)) {
+        throw Error("MessagesForDateQuery callback returned an invalid "
+                    "TplLogManager object.");
+    }
+
     // Check whether everything went fine, and retrieves data...
     gboolean successful = tpl_log_manager_get_messages_for_date_finish(
-                             self->d->logmanager, result, &gmessages, &error);
+                             logmanager, result, &gmessages, &error);
 
     if(error) {
         throw Error(error);

@@ -25,6 +25,8 @@
 #include <Logger/tpl-message.h>
 #include <Logger/tpl-correspondant.h>
 
+#include <tpl-query-callback-template.h>
+
 #include <QtCore/QHash>
 
 namespace Logger
@@ -40,16 +42,16 @@ public:
     MessagePrivateData();
     ~MessagePrivateData();
 
-    TpAccount* account();
-    long timestamp();
+    TpAccount* account() const;
+    long timestamp() const;
 
-    QString accountpath();
-    QString channel();
-    QString chatid();
-    QString logid();
-    Message::Direction direction();
-    Correspondant sender();
-    Correspondant receiver();
+    QString accountpath() const;
+    QString channel() const;
+    QString chatid() const;
+    QString logid() const;
+    Message::Direction direction() const;
+    Correspondant sender() const;
+    Correspondant receiver() const;
 
 private:
     TpAccount* _account;

@@ -26,6 +26,6 @@ using namespace Logger;
 
 void ChatExistsQuery::perform(const QString &chatname, bool isChatRoom)
 {
-    emit completed(tpl_log_manager_exists(this->d->logmanager, this->d->account,
+    emit completed(tpl_log_manager_exists(this->d->logmanager(), this->d->account(),
                                           chatname.toAscii(), isChatRoom));
 }
