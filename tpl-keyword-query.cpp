@@ -17,9 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <telepathy-logger/log-manager.h>
-
 #include <Logger/tpl-keyword-query.h>
+
+#include <telepathy-logger/log-manager.h>
 
 #include <tpl-query-private.h>
 #include <tpl-message-private.h>
@@ -71,5 +71,5 @@ void KeywordQuery::callback(void *_logmanager, void*_result, KeywordQuery *self)
     // Free search results...
     tpl_log_manager_search_free(ghits);
 
-    emit self->completed(self->hits);
+    Q_EMIT self->completed(self->hits);
 }

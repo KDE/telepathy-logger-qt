@@ -17,10 +17,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <telepathy-logger/log-manager.h>
-
 #include <Logger/tpl-conversation-dates-query.h>
 #include <Logger/tpl-error.h>
+
+#include <telepathy-logger/log-manager.h>
+
 #include <tpl-query-private.h>
 
 using namespace Logger;
@@ -82,5 +83,5 @@ void ConversationDatesQuery::callback(void *_logmanager, void *_result,
     // Free search results...
     tpl_log_manager_search_free(gdates);
 
-    emit self->completed(self->dates);
+    Q_EMIT self->completed(self->dates);
 }

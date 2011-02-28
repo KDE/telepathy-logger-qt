@@ -17,9 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <telepathy-logger/log-manager.h>
-
 #include <Logger/tpl-messages-for-date-query.h>
+
+#include <telepathy-logger/log-manager.h>
 
 #include <tpl-query-private.h>
 #include <tpl-message-private.h>
@@ -83,5 +83,5 @@ void MessagesForDateQuery::callback(void *_logmanager, void *_result,
     // Free search results...
     tpl_log_manager_search_free(gmessages);
 
-    emit self->completed(self->messages);
+    Q_EMIT self->completed(self->messages);
 }

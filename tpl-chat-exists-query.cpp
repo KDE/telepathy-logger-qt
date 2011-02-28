@@ -17,15 +17,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <Logger/tpl-chat-exists-query.h>
+
 #include <telepathy-logger/log-manager.h>
 
-#include <Logger/tpl-chat-exists-query.h>
 #include <tpl-query-private.h>
 
 using namespace Logger;
 
 void ChatExistsQuery::perform(const QString &chatname, bool isChatRoom)
 {
-    emit completed(tpl_log_manager_exists(this->d->logmanager(), this->d->account(),
+    Q_EMIT completed(tpl_log_manager_exists(this->d->logmanager(), this->d->account(),
                                           chatname.toAscii(), isChatRoom));
 }

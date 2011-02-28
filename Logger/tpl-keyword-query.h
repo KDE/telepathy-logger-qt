@@ -33,10 +33,10 @@ class KeywordQuery : public Query
 public:
     KeywordQuery(const QString &dbusid);
 
-public slots:
+public Q_SLOTS:
     void perform(const QString &keyword);
 
-signals:
+Q_SIGNALS:
     void completed(const QList<Hit> &hits);
 
 private:

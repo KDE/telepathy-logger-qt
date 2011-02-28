@@ -34,10 +34,10 @@ Q_OBJECT
 public:
     explicit ConversationDatesQuery(const QString &dbusid);
 
-public slots:
+public Q_SLOTS:
     void perform(const QString &contact, bool ischatroom = false);
 
-signals:
+Q_SIGNALS:
     void completed(const QList<QDate> &dates);
 
 private:

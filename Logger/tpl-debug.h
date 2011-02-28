@@ -36,7 +36,7 @@ Q_OBJECT
 public:
     Debug() : QObject() {}
 
-public slots:
+public Q_SLOTS:
     void echo(bool yes);
     void echo(const QList<QDate> &dates);
     void echo(const QList<Message> &messages);

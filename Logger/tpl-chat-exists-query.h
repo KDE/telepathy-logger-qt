@@ -33,10 +33,10 @@ Q_OBJECT
 public:
     explicit ChatExistsQuery(const QString &dbusid) : Query(dbusid) {}
 
-public slots:
+public Q_SLOTS:
     void perform(const QString &contact, bool ischat = false);
 
-signals:
+Q_SIGNALS:
     void completed(bool yes);
 };
 

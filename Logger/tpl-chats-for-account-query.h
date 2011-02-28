@@ -34,10 +34,10 @@ Q_OBJECT
 public:
     ChatsForAccountQuery(const QString &dbusid) : Query(dbusid) {}
 
-public slots:
+public Q_SLOTS:
     void perform();
 
-signals:
+Q_SIGNALS:
     void completed(const QList<Correspondant> &chats);
 
 private:

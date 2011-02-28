@@ -41,7 +41,7 @@ void Debug::echo(const QList<Message> &messages)
 {
     qDebug("Logger::Debug::echo(QList<Message>) was called");
 
-    foreach(Message m, messages) { // TODO overload Message <<
+    Q_FOREACH (Message m, messages) { // TODO overload Message <<
         qDebug() << m.chatid();
     }
 }
@@ -50,7 +50,7 @@ void Debug::echo(const QList<Correspondant> &buddies)
 {
     qDebug("Logger::Debug::echo(QList<Correspondant>) was called");
 
-    foreach(Correspondant b, buddies) { // TODO overload Message <<
+    Q_FOREACH (Correspondant b, buddies) { // TODO overload Message <<
         qDebug() << b.id();
     }
 }

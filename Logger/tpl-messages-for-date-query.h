@@ -23,7 +23,7 @@
 #include <Logger/Query>
 #include <Logger/Message>
 
-#include <QDate>
+#include <QtCore/QDate>
 
 namespace Logger
 {
@@ -35,11 +35,11 @@ Q_OBJECT
 public:
     explicit MessagesForDateQuery(const QString &dbusid) : Query(dbusid) {}
 
-public slots:
+public Q_SLOTS:
     void perform(const QString &contact, bool ischat = false,
                  const QDate &date = QDate::currentDate());
 
-signals:
+Q_SIGNALS:
     void completed(const QList<Message> &messages);
 
 private:
