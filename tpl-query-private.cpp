@@ -58,9 +58,15 @@ QueryPrivateData::~QueryPrivateData()
     g_object_unref(this->_account);
 }
 
+#include <QDebug>
+
 void QueryPrivateData::setreadycb(GObject *obj, GAsyncResult *result, QueryPrivateData *self)
 {
     (void)obj;
+
+#if 0
+    // FIXME THIS FEW LINES GIVE SEGFAULT... guess is st. related to
+    // bad C-C++ interation
 
     GError *error = NULL;
 
@@ -72,6 +78,7 @@ void QueryPrivateData::setreadycb(GObject *obj, GAsyncResult *result, QueryPriva
     if (!tp_account_is_valid(self->_account)) {
         throw new Error("Selected account is not valid!");
     }
+#endif
 }
 
 TplLogManager* QueryPrivateData::logmanager() const

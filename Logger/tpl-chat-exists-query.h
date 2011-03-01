@@ -34,7 +34,7 @@ public:
     explicit ChatExistsQuery(const QString &dbusid) : Query(dbusid) {}
 
 public Q_SLOTS:
-    void perform(const QString &contact, bool ischat = false);
+    void perform(const QString &contact, bool ischatroom = false);
 
 Q_SIGNALS:
     void completed(bool yes);

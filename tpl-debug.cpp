@@ -37,9 +37,15 @@ void Debug::echo(const QList<QDate> &dates)
     qDebug() << dates;
 }
 
+//FIXME
 void Debug::echo(const QList<Message> &messages)
 {
     qDebug("Logger::Debug::echo(QList<Message>) was called");
+
+    if (messages.isEmpty()) {
+        qDebug() << "()"; // fake qDebug() behaviour for standard types
+        return;
+    }
 
     Q_FOREACH (Message m, messages) { // TODO overload Message <<
         qDebug() << m.chatid();

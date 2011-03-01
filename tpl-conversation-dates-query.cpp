@@ -30,7 +30,7 @@ using namespace Logger;
 class QGDate : public QDate
 {
 public:
-    QGDate(guint year, guint month, guint day) : QDate(year, month, day) {}
+    QGDate(GDate* date) : QDate(date->year, date->month, date->day) {}
 };
 
 ConversationDatesQuery::ConversationDatesQuery(const QString &dbusid) :

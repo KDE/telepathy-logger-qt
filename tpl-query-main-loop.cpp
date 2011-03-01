@@ -33,6 +33,8 @@ public:
 
 using namespace Logger;
 
+// TODO maybe use a singleton?
+
 QueryMainLoop::QueryMainLoop(QObject *parent) : QObject(parent)
 {
     this->d = new QueryMainLoopPrivateData;
@@ -61,6 +63,8 @@ void QueryMainLoop::stop()
     // Since once is stopped, it cannot be resumed, get rid of it.
     g_main_loop_quit(this->d->handle);
     g_main_loop_unref(this->d->handle);
+
+    // Set the specific pointer to NULL
     this->d->handle = NULL;
 }
 
