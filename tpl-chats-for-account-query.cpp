@@ -73,5 +73,5 @@ void ChatsForAccountQuery::callback(void *_logmanager, void *_result,
     // Free search results...
     tpl_log_manager_search_free(gchats);
 
-    emit self->completed(self->chats);
+    Q_EMIT self->completed(self->chats);
 }

@@ -37,6 +37,13 @@ Query::Query(const QString &dbusid, bool idIsEscaped)
     // Escape string as if it were a valid C indentifier...
     if (!idIsEscaped) {
         QStringList chunks = dbusid.split("/");
+
+        // A manager/protocol/username triplet is required
+        if (chunks.count() != 3) {
+            throw Error("Provided DBus Telepathy id does not contain three "
+                        "'/' separed elements");
+        }
+
         gchar *escapedUserName = tp_escape_as_identifier(chunks[2].toAscii());
 
         quotedDbusID = QString("%1/%2/%3").arg(chunks[0]).arg(chunks[1]).

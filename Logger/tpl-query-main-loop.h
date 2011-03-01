@@ -1,5 +1,5 @@
-#ifndef __LOG_QUERY__
-#define __LOG_QUERY__
+#ifndef __QUERY_MAIN_LOOP__
+#define __QUERY_MAIN_LOOP__
 
 /*
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
@@ -20,24 +20,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// Base types...
-#include "tpl-error.h"
-#include "tpl-hit.h"
-#include "tpl-correspondant.h"
-#include "tpl-message.h"
+#include <QtCore/QObject>
 
-// Main loop...
-#include "tpl-query-main-loop.h"
+namespace Logger {
 
-// Query classes...
-#include "tpl-query.h"
-#include "tpl-chat-exists-query.h"
-#include "tpl-conversation-dates-query.h"
-#include "tpl-messages-for-date-query.h"
-#include "tpl-keyword-query.h"
-#include "tpl-chats-for-account-query.h"
+class QueryMainLoopPrivateData;
 
-// Debug...
-#include "tpl-debug.h"
+class QueryMainLoop : public QObject
+{
+public:
+    QueryMainLoop(QObject *parent = 0);
+    ~QueryMainLoop();
 
-#endif // __LOG_QUERY__
+Q_SLOTS
+    void exec();
+    void stop();
+    void fatal(const QString &error);
+
+private:
+    QueryMainLoopPrivateData *d;
+};
+
+} //namespace
+
+#endif // __QUERY_MAIN_LOOP__

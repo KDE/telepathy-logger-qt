@@ -50,7 +50,8 @@ int main(int argc, char **argv)
         exit(1);
     }
 
-    // TODO glib exec main loop
+    QueryMainLoop a;
+    a.exec();
 
     return 0;
 }

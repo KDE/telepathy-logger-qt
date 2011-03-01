@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# May change to 'lib' when testing is over :)
 TEMPLATE = app
 TARGET = telepathy-kde-logquery
 DEPENDPATH += . Logger
@@ -40,6 +41,7 @@ HEADERS += tpl-correspondant-private.h \
            Logger/tpl-debug.h \
            Logger/tpl-error.h \
            Logger/tpl-hit.h \
+           Logger/tpl-query-main-loop.h \
            Logger/tpl-keyword-query.h \
            Logger/tpl-message.h \
            Logger/tpl-messages-for-date-query.h \
@@ -48,7 +50,8 @@ HEADERS += tpl-correspondant-private.h \
            Logger/Correspondant \
            Logger/Query \
            Logger/Message \
-           Logger/Hit
+           Logger/Hit \
+           Logger/QueryMainLoop
 
 SOURCES += tpl-chat-exists-query.cpp \
            tpl-conversation-dates-query.cpp \
@@ -59,12 +62,13 @@ SOURCES += tpl-chat-exists-query.cpp \
            tpl-correspondant.cpp \
            tpl-message.cpp \
            tpl-query.cpp \
-           dummy-main.cpp \
            tpl-debug.cpp \
            tpl-error.cpp \
+           tpl-query-main-loop.cpp \
            tpl-correspondant-private.cpp \
            tpl-message-private.cpp \
-           tpl-query-private.cpp
+           tpl-query-private.cpp \
+           dummy-main.cpp
 
 # Output
 OBJECTS_DIR = .objects

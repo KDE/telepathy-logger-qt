@@ -29,7 +29,6 @@
 
 using namespace Logger;
 
-
 void MessagesForDateQuery::perform(const QString &chat, bool ischat,
                                    const QDate &date)
 {

@@ -37,12 +37,13 @@ typedef gboolean (*RetrieveResultsFunction)(TplLogManager*, GAsyncResult*,
 
 using namespace Logger;
 
-template <typename GTypeForQueryResults,
-          class QTypeForQueryResults,
-          class QPrivateDataType,
+template <typename QueryResultsType,
+          class QueryPrivateDataType,
           RetrieveResultsFunction hasfinished>
 
-void queryCompletedCallback(GObject *logmanager, GAsyncResult *result, QList<QTypeForQueryResults> &results)
+void fillPrivateDataListWithQueryResults(GObject *logmanager,
+                                         GAsyncResult *result,
+                                         QList<QueryPrivateDataType> &results)
 {
     GList *gresults;
     GList *i;
@@ -66,10 +67,9 @@ void queryCompletedCallback(GObject *logmanager, GAsyncResult *result, QList<QTy
         throw Error("An async call to TpLogger failed with no specified error!");
     }
 
-    // Iterate over the list, cast GObjects and initialises correspective QObject
+    // Iterate over the list, cast GObjects and initialises private data
     for (i = gresults; i; i = i->next) {
-        QPrivateDataType *d = new QPrivateDataType((GTypeForQueryResults*)i->data);
-        results << QTypeForQueryResults(d);
+        results << QueryPrivateDataType((TypeForQueryResults*)i->data);
     }
 
     // Free search results...

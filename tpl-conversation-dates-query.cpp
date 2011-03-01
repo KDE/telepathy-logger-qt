@@ -52,7 +52,7 @@ void ConversationDatesQuery::callback(void *_logmanager, void *_result,
     GList *gdates, *i;
     GError *error = NULL;
 
-    TplLogManager *logmanager = static_cast<TplLogManager*>(_logmanager);
+    TplLogManager *logmanager = reinterpret_cast<TplLogManager*>(_logmanager);
     GAsyncResult *result = static_cast<GAsyncResult*>(_result);
 
     if (!TPL_IS_LOG_MANAGER (logmanager)) {
