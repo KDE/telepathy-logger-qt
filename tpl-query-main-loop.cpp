@@ -36,15 +36,13 @@ using namespace Logger;
 QueryMainLoop::QueryMainLoop(QObject *parent) : QObject(parent)
 {
     this->d = new QueryMainLoopPrivateData;
-
     this->d->handle = g_main_loop_new(NULL, false);
 }
 
 QueryMainLoop::~QueryMainLoop()
 {
     this->stop();
-
-    delete this->d->handle;
+    delete this->d;
 }
 
 void QueryMainLoop::exec()
@@ -69,7 +67,7 @@ void QueryMainLoop::stop()
 void QueryMainLoop::fatal(const QString &error)
 {
     this->stop();
-    
+
     (void)error; //FIXME
 }
 
