@@ -27,6 +27,10 @@
 
 using namespace Logger;
 
+KeywordQuery::KeywordQuery(const QString &dbusid) : Query(dbusid)
+{
+}
+
 void KeywordQuery::perform(const QString &keyword)
 {
     // Perform the call...

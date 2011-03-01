@@ -37,7 +37,6 @@ void Debug::echo(const QList<QDate> &dates)
     qDebug() << dates;
 }
 
-//FIXME
 void Debug::echo(const QList<Message> &messages)
 {
     qDebug("Logger::Debug::echo(QList<Message>) was called");
@@ -59,4 +58,11 @@ void Debug::echo(const QList<Correspondant> &buddies)
     Q_FOREACH (Correspondant b, buddies) { // TODO overload Message <<
         qDebug() << b.id();
     }
+}
+
+void Debug::echo(const QList<Hit> &hits)
+{
+    qDebug("Logger::Debug::echo(QList<Hit>) was called");
+
+    (void)hits; //FIXME
 }
