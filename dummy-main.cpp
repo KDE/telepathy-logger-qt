@@ -32,16 +32,18 @@ int main(int argc, char **argv)
         exit(0);
     }
 
+    // Variable name must be declared in same block as QueryMainLoop
+    ChatExistsQuery q1(argv[1]);
+    ConversationDatesQuery q2(argv[1]);
+    MessagesForDateQuery q3(argv[1]);
+
     try {
-        ChatExistsQuery q1(argv[1]);
         QObject::connect(&q1, SIGNAL(completed(bool)), &e, SLOT(echo(bool)));
         q1.perform(argv[2]);
 
-        ConversationDatesQuery q2(argv[1]);
         QObject::connect(&q2, SIGNAL(completed(QList<QDate>)), &e, SLOT(echo(QList<QDate>)));
         q2.perform(argv[2]);
 
-        MessagesForDateQuery q3(argv[1]);
         QObject::connect(&q3, SIGNAL(completed(QList<Message>)), &e, SLOT(echo(QList<Message>)));
         q3.perform(argv[2]);
 
