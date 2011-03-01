@@ -20,11 +20,13 @@
 #include <Logger/Log>
 
 #include <QtCore/QDebug>
+#include <QApplication>
 
 using namespace Logger;
 
 int main(int argc, char **argv)
 {
+    QApplication app(argc, argv);
     Logger::Debug e;
 
     if (argc < 3) {
@@ -33,13 +35,15 @@ int main(int argc, char **argv)
     }
 
     try {
-        // Variable name must be declared in same block as QueryMainLoop
+        // Query objects must be declared in same block as QueryMainLoop
+        // (as they will return const refs)
         ChatExistsQuery q1(argv[1]);
         ConversationDatesQuery q2(argv[1]);
         MessagesForDateQuery q3(argv[1]);
         KeywordQuery q4(argv[1]);
         ChatsForAccountQuery q5(argv[1]);
 
+        // Debugging/Example connections
         QObject::connect(&q1, SIGNAL(completed(bool)), &e, SLOT(echo(bool)));
         QObject::connect(&q2, SIGNAL(completed(QList<QDate>)), &e, SLOT(echo(QList<QDate>)));
         QObject::connect(&q3, SIGNAL(completed(QList<Message>)), &e, SLOT(echo(QList<Message>)));
@@ -52,13 +56,12 @@ int main(int argc, char **argv)
         q4.perform(argv[2]);
         q5.perform();
 
-        QueryMainLoop a;
-        a.exec();
+        return app.exec();
 
     } catch (const Error &e) {
         qDebug() << e.message();
         exit(1);
     }
 
-    return 0;
+    return -1;
 }

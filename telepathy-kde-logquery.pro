@@ -34,6 +34,7 @@ HEADERS += tpl-correspondant-private.h \
            tpl-message-private.h \
            tpl-query-private.h \
            tpl-query-callback-template.h \
+           tpl-query-main-loop.h \
            Logger/tpl-chat-exists-query.h \
            Logger/tpl-chats-for-account-query.h \
            Logger/tpl-conversation-dates-query.h \
@@ -41,7 +42,6 @@ HEADERS += tpl-correspondant-private.h \
            Logger/tpl-debug.h \
            Logger/tpl-error.h \
            Logger/tpl-hit.h \
-           Logger/tpl-query-main-loop.h \
            Logger/tpl-keyword-query.h \
            Logger/tpl-message.h \
            Logger/tpl-messages-for-date-query.h \
@@ -50,8 +50,7 @@ HEADERS += tpl-correspondant-private.h \
            Logger/Correspondant \
            Logger/Query \
            Logger/Message \
-           Logger/Hit \
-           Logger/QueryMainLoop
+           Logger/Hit
 
 SOURCES += tpl-chat-exists-query.cpp \
            tpl-conversation-dates-query.cpp \

@@ -17,6 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#if 0
 #include <Logger/tpl-query-main-loop.h>
 
 #include <glib.h>
@@ -81,3 +82,5 @@ void QueryMainLoop::fatal(const QString &error)
 //         this->d->stop();
 //     }
 // }
+
+#endif

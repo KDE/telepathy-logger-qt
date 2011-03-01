@@ -22,6 +22,8 @@
 
 #include <QtCore/QObject>
 
+#error "The header file was deprecated and is marked for deletion!"
+
 namespace Logger {
 
 class QueryMainLoopPrivateData;

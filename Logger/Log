@@ -26,9 +26,6 @@
 #include "tpl-correspondant.h"
 #include "tpl-message.h"
 
-// Main loop...
-#include "tpl-query-main-loop.h"
-
 // Query classes...
 #include "tpl-query.h"
 #include "tpl-chat-exists-query.h"

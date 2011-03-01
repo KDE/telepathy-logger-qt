@@ -33,6 +33,9 @@ public:
      explicit Query(const QString &dbusid, bool idIsEscaped = false);
     ~Query();
 
+Q_SIGNALS:
+    void completed();
+
 protected:
     QueryPrivateData *d;
 };
