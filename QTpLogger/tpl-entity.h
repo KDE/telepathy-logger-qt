@@ -22,7 +22,7 @@
 
 #include <QtCore/QString>
 
-namespace Logger
+namespace QTpLogger
 {
 
 class ChatsForAccountQuery;

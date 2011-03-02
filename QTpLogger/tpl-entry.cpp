@@ -20,7 +20,7 @@
 #include <QTpLogger/tpl-entry.h>
 #include <tpl-entry-private.h>
 
-using namespace Logger;
+using namespace QTpLogger;
 
 Entry::Entry() : d(0)
 {

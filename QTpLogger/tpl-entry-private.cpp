@@ -22,7 +22,7 @@
 #include <tpl-entry-private.h>
 #include <tpl-entity-private.h>
 
-using namespace Logger;
+using namespace QTpLogger;
 
 bool EntryPrivate::first_object = true;
 

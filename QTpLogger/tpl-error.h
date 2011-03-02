@@ -26,7 +26,7 @@
 
 typedef struct _GError GError;
 
-namespace Logger
+namespace QTpLogger
 {
 
 class Error

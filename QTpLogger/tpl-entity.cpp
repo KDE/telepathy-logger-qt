@@ -21,7 +21,7 @@
 
 #include <tpl-entity-private.h>
 
-using namespace Logger;
+using namespace QTpLogger;
 
 Entity::Entity() : d(0)
 {

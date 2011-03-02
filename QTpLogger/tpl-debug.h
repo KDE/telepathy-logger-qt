@@ -27,7 +27,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QDate>
 
-namespace Logger
+namespace QTpLogger
 {
 
 class Debug : public QObject

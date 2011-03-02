@@ -25,7 +25,7 @@
 
 #include <tpl-query-callback-template.h>
 
-using namespace Logger;
+using namespace QTpLogger;
 
 // Bridge class between QDate and GDate
 class QGDate : public QDate

@@ -23,7 +23,7 @@
 #include <QTpLogger/Query>
 #include <QTpLogger/Entry>
 
-namespace Logger
+namespace QTpLogger
 {
 
 class FilterQuery : public Query

@@ -23,7 +23,7 @@
 
 #include <glib.h>
 
-using namespace Logger;
+using namespace QTpLogger;
 
 Error::Error(GError *gerror, bool dontfree)
 {

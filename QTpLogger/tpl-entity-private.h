@@ -27,7 +27,7 @@
 #include <QtCore/QString>
 #include <QtCore/QHash>
 
-namespace Logger
+namespace QTpLogger
 {
 
 class EntityPrivate

@@ -25,7 +25,7 @@
 
 #include <QtCore/QDate>
 
-namespace Logger
+namespace QTpLogger
 {
 
 class MessagesForDateQuery : public Query

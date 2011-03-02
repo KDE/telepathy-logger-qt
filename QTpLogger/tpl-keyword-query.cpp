@@ -27,7 +27,7 @@
 
 #include <tpl-query-callback-template.h>
 
-using namespace Logger;
+using namespace QTpLogger;
 
 KeywordQuery::KeywordQuery(const QString &dbusid) : Query(dbusid)
 {

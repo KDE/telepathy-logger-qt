@@ -24,7 +24,7 @@
 #include <tpl-query-private.h>
 #include <tpl-entry-private.h>
 
-using namespace Logger;
+using namespace QTpLogger;
 
 /*
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
@@ -56,7 +56,7 @@ using namespace Logger;
 
 #include <QtCore/QDebug>
 
-using namespace Logger;
+using namespace QTpLogger;
 
 FilterQuery::FilterQuery(const QString &dbusid) :
     Query(dbusid)
