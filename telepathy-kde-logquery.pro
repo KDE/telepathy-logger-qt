@@ -25,6 +25,9 @@ INCLUDEPATH += . QTpLogger
 # As an option, use -DQT_NO_KEYWORDS in the build system
 CONFIG += no_keywords
 
+# Disable verbose gcc command echo, your eyes will thank you
+CONFIG += silent
+
 # External deps config
 CONFIG += link_pkgconfig
 PKGCONFIG += telepathy-logger-0.1 telepathy-glib glib-2.0 QtGLib-2.0
@@ -39,11 +42,11 @@ HEADERS += QTpLogger/tpl-chat-exists-query.h \
            \
            QTpLogger/tpl-query-callback-template.h \
            QTpLogger/tpl-query-private.h \
+           QTpLogger/tpl-entry-text-private.h \
            QTpLogger/tpl-entry.h \
            QTpLogger/tpl-entry-private.h \
            QTpLogger/tpl-entity.h \
            QTpLogger/tpl-entity-private.h \
-           QTpLogger/tpl-entity-text-private.h \
            \
            QTpLogger/tpl-debug.h \
            \
