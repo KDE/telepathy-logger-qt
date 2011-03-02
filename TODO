@@ -1,3 +1,7 @@
-* Write class FilterQuery
-* Fix issue with setreadycb in tpl-query-private module
+* Implement class FilterQuery
+* Fix issue with setreadycb in tpl-query-private.cpp
 * Fix exception handling in tpl-query-callback-template
+* Implement SearchHit class
+* Add TpEntryText specific fields (if possible)
+* Overload << operators to give a decent debug representation
+* Review tpl-query-callback-template.h

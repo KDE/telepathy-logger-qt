@@ -30,11 +30,11 @@ namespace QTpLogger
 class QueryPrivate
 {
 public:
-	explicit QueryPrivate(const QString &dbusid);
-	virtual ~QueryPrivate();
+    explicit QueryPrivate(const QString &dbusid);
+    virtual ~QueryPrivate();
 
     static void setreadycb(GObject *obj, GAsyncResult *result,
-						   QueryPrivate *self);
+                           QueryPrivate *self);
 
     TplLogManager *logmanager() const;
     TpAccount *account() const;

@@ -47,7 +47,7 @@ EntryPrivate::EntryPrivate(TplEntry *tpmessage)
     }
 
 #if 0
-TODO add Message specific props:
+TODO add Message specific props, if possible
    "message"          gchar*
    "message-type"     guint
    "pending-msg-id"   gint
