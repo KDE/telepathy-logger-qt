@@ -40,8 +40,8 @@ public:
     TpAccount *account() const;
 
 private:
-    TplLogManager *_logmanager;
     TpAccount *_account;
+    static TplLogManager *_logmanager;
 };
 
 } //namespace

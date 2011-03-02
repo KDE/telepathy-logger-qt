@@ -24,10 +24,10 @@
 
 using namespace QTpLogger;
 
+TplLogManager* QueryPrivate::_logmanager = tpl_log_manager_dup_singleton();
+
 QueryPrivate::QueryPrivate(const QString &quotedDbusID)
 {
-    this->_logmanager = tpl_log_manager_dup_singleton();
-
     GError *error = NULL;
 
     TpDBusDaemon *daemon = tp_dbus_daemon_dup(&error);
@@ -68,7 +68,6 @@ void QueryPrivate::setreadycb(GObject *obj, GAsyncResult *result, QueryPrivate *
     GError *error = NULL;
 
     if (!tp_account_prepare_finish(self->_account, result, &error)) {
-        self->_account = NULL;
         throw QGlib::Error(error);
     }
 
