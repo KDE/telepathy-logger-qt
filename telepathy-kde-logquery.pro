@@ -17,7 +17,7 @@
 
 # May change to 'lib' when testing is over :)
 TEMPLATE = app
-TARGET = telepathy-kde-logquery
+TARGET = QTpLogger-test
 DEPENDPATH += . QTpLogger
 INCLUDEPATH += . QTpLogger
 
@@ -27,7 +27,7 @@ CONFIG += no_keywords
 
 # External deps config
 CONFIG += link_pkgconfig
-PKGCONFIG += telepathy-logger-0.1 telepathy-glib glib-2.0
+PKGCONFIG += telepathy-logger-0.1 telepathy-glib glib-2.0 QtGLib-2.0
 
 # Input
 HEADERS += QTpLogger/tpl-chat-exists-query.h \
@@ -42,7 +42,7 @@ HEADERS += QTpLogger/tpl-chat-exists-query.h \
            QTpLogger/tpl-entry.h \
            QTpLogger/tpl-entry-private.h \
            QTpLogger/tpl-entity.h \
-           QTpLogger/tpl-entity-private.h
+           QTpLogger/tpl-entity-private.h \
            \
            QTpLogger/tpl-debug.h \
            QTpLogger/tpl-error.h \
@@ -65,7 +65,7 @@ SOURCES += QTpLogger/tpl-chat-exists-query.cpp \
            QTpLogger/tpl-entry-private.cpp \
            QTpLogger/tpl-entry.cpp \
            QTpLogger/tpl-entity-private.cpp \
-           QTpLogger/tpl-entity.cpp
+           QTpLogger/tpl-entity.cpp \
            \
            tests/dummy-main.cpp
 

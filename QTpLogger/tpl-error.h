@@ -40,7 +40,7 @@ private:
     Error(GError *gerror, bool dontfree = false);
 
     friend class Query;
-    friend class QueryPrivateData;
+    friend class QueryPrivate;
 
     QString _message;
     int _code;
