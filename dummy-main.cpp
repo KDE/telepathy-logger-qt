@@ -50,12 +50,14 @@ int main(int argc, char **argv)
         QObject::connect(&q4, SIGNAL(completed(QList<Hit>)), &e, SLOT(echo(QList<Hit>)));
         QObject::connect(&q5, SIGNAL(completed(QList<Correspondant>)), &e, SLOT(echo(QList<Correspondant>)));
 
-        q1.perform(argv[2]);
-        q2.perform(argv[2]);
-        q3.perform(argv[2]);
+        // Perform all queries...
+        q1.perform(argv[2], true);
+        q2.perform(argv[2], true);
+        q3.perform(argv[2], true);
         q4.perform(argv[2]);
         q5.perform();
 
+        // Run main loop...
         return app.exec();
 
     } catch (const Error &e) {

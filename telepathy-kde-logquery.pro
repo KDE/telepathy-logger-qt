@@ -41,7 +41,7 @@ HEADERS += tpl-correspondant-private.h \
            Logger/tpl-correspondant.h \
            Logger/tpl-debug.h \
            Logger/tpl-error.h \
-           Logger/tpl-hit.h \
+           Logger/tpl-search-hit.h \
            Logger/tpl-keyword-query.h \
            Logger/tpl-message.h \
            Logger/tpl-messages-for-date-query.h \
@@ -50,7 +50,7 @@ HEADERS += tpl-correspondant-private.h \
            Logger/Correspondant \
            Logger/Query \
            Logger/Message \
-           Logger/Hit
+           Logger/SearchHit
 
 SOURCES += tpl-chat-exists-query.cpp \
            tpl-conversation-dates-query.cpp \
@@ -60,6 +60,7 @@ SOURCES += tpl-chat-exists-query.cpp \
            tpl-filter-query.cpp \
            tpl-correspondant.cpp \
            tpl-message.cpp \
+           tpl-search-hit.cpp \
            tpl-query.cpp \
            tpl-debug.cpp \
            tpl-error.cpp \

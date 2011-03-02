@@ -18,6 +18,8 @@
  */
 
 #if 0
+//XXX
+
 #include <Logger/tpl-query-main-loop.h>
 
 #include <glib.h>

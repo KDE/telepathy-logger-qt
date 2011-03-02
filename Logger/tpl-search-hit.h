@@ -25,10 +25,23 @@ namespace Logger
 
 class TplLogSearchHit;
 
-class Hit
+class SearchHitPrivateData
 {
 public:
-     Hit(TplLogSearchHit *hit) { (void)hit; } //TODO unknown type
+    SearchHitPrivateData(TplLogSearchHit *hit) { (void)hit; } //TODO unknown type
+};
+
+class SearchHit
+{
+public:
+    SearchHit() {};
+
+private:
+    SearchHit(SearchHitPrivateData *_d) : d(_d) {}
+
+    friend class KeywordQuery;
+
+    SearchHitPrivateData *d;
 };
 
 } //namespace

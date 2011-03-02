@@ -49,7 +49,8 @@ void ConversationDatesQuery::perform(const QString &chatid, bool ischatroom)
 void ConversationDatesQuery::callback(void *_logmanager, void *_result,
                                       ConversationDatesQuery* self)
 {
-    GList *gdates, *i;
+    GList *gdates = NULL;
+    GList *i;
     GError *error = NULL;
 
     TplLogManager *logmanager = reinterpret_cast<TplLogManager*>(_logmanager);

@@ -34,6 +34,8 @@ void Debug::echo(const QList<QDate> &dates)
 {
     qDebug("Logger::Debug::echo(QList<QDate>) was called");
 
+    if (dates.isEmpty()) return;
+
     qDebug() << dates;
 }
 
@@ -41,10 +43,7 @@ void Debug::echo(const QList<Message> &messages)
 {
     qDebug("Logger::Debug::echo(QList<Message>) was called");
 
-    if (messages.isEmpty()) {
-        qDebug() << "()"; // fake qDebug() behaviour for standard types
-        return;
-    }
+    if (messages.isEmpty()) return;
 
     Q_FOREACH (Message m, messages) { // TODO overload Message <<
         qDebug() << m.chatid();
@@ -60,7 +59,7 @@ void Debug::echo(const QList<Correspondant> &buddies)
     }
 }
 
-void Debug::echo(const QList<Hit> &hits)
+void Debug::echo(const QList<SearchHit> &hits)
 {
     qDebug("Logger::Debug::echo(QList<Hit>) was called");
 

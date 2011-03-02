@@ -21,7 +21,7 @@
  */
 
 #include <Logger/Query>
-#include <Logger/Hit>
+#include <Logger/SearchHit>
 
 namespace Logger
 {
@@ -37,12 +37,12 @@ public Q_SLOTS:
     void perform(const QString &keyword);
 
 Q_SIGNALS:
-    void completed(const QList<Hit> &hits);
+    void completed(const QList<SearchHit> &hits);
 
 private:
     static void callback(void *logmanager, void *result, KeywordQuery *self);
 
-    QList<Hit> hits;
+    QList<SearchHit> hits;
 };
 
 } //namespace

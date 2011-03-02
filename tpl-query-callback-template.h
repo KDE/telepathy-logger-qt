@@ -26,17 +26,20 @@
 
 #include <QtCore/QList>
 
-typedef gboolean (*RetrieveResultsFunction)(TplLogManager*, GAsyncResult*,
+namespace Logger {
+
+typedef gboolean (*RetrieveFunction)(TplLogManager*, GAsyncResult*,
                                             GList **, GError**);
 
-template <typename QueryResultsType,
-          class QueryPrivateDataType,
-          RetrieveResultsFunction hasfinished>
-
-void fillPrivateDataListWithQueryResults(GObject *logmanager,
-                                         GAsyncResult *result,
-                                         QList<QueryPrivateDataType> &results)
+template
+<typename QueryResultsT, class QueryPrivateDataT, RetrieveFunction hasfinished>
+void fillPrivateDataListWithQueryResults(void *_logmanager, void *_result,
+                                         QList<QueryPrivateDataT> &results)
 {
+    // Cast parameters...
+    TplLogManager *logmanager = static_cast<TplLogManager*>(_logmanager);
+    GAsyncResult *result = static_cast<GAsyncResult*>(_result);
+
     GList *gresults;
     GList *i;
     GError *error = NULL;
@@ -46,8 +49,7 @@ void fillPrivateDataListWithQueryResults(GObject *logmanager,
     }
 
     // Check whether everything went fine, and retrieves data...
-    gboolean success = hasfinished((TplLogManager*)logmanager, result,
-                                    &gresults, &error);
+    gboolean success = hasfinished(logmanager, result, &gresults, &error);
 
     if (error) {
         throw Logger::Error(error);
@@ -59,13 +61,16 @@ void fillPrivateDataListWithQueryResults(GObject *logmanager,
         throw Logger::Error("An async call to TpLogger failed with no specified error!");
     }
 
+    // FIXME: will it work? Do QList make copies of data?
     // Iterate over the list, cast GObjects and initialises private data
     for (i = gresults; i; i = i->next) {
-        results << QueryPrivateDataType((QueryResultsType*)i->data);
+        results << QueryPrivateDataT((QueryResultsT*)i->data);
     }
 
     // Free search results...
     tpl_log_manager_search_free(gresults);
 }
+
+} //namespace
 
 #endif // __QUERY_CALLBACK_TEMPLATE__

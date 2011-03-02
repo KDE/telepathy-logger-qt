@@ -22,7 +22,7 @@
 
 #include <Logger/Message>
 #include <Logger/Correspondant>
-#include <Logger/Hit>
+#include <Logger/SearchHit>
 
 #include <QtCore/QObject>
 #include <QtCore/QDate>
@@ -42,7 +42,7 @@ public Q_SLOTS:
     void echo(const QList<QDate> &dates);
     void echo(const QList<Message> &messages);
     void echo(const QList<Correspondant> &buddies);
-    void echo(const QList<Hit> &hits);
+    void echo(const QList<SearchHit> &hits);
 };
 
 } // namespace

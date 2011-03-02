@@ -46,7 +46,8 @@ void ChatsForAccountQuery::callback(void *_logmanager, void *_result,
         throw Error("Query callback returned an invalid TplLogManager object.");
     }
 
-    GList *gchats, *i;
+    GList *gchats = NULL;
+    GList *i;
     GError *error = NULL;
 
     // Check whether everything went fine, and retrieves data...
@@ -72,6 +73,7 @@ void ChatsForAccountQuery::callback(void *_logmanager, void *_result,
 
     // Free search results...
     tpl_log_manager_search_free(gchats);
+
 
     Q_EMIT self->completed(self->chats);
 }

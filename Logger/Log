@@ -22,7 +22,7 @@
 
 // Base types...
 #include "tpl-error.h"
-#include "tpl-hit.h"
+#include "tpl-search-hit.h"
 #include "tpl-correspondant.h"
 #include "tpl-message.h"
 
