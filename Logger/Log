@@ -33,6 +33,7 @@
 #include "tpl-messages-for-date-query.h"
 #include "tpl-keyword-query.h"
 #include "tpl-chats-for-account-query.h"
+#include "tpl-filter-query.h"
 
 // Debug...
 #include "tpl-debug.h"

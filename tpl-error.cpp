@@ -19,6 +19,8 @@
 
 #include <Logger/tpl-error.h>
 
+#include <glib.h>
+
 using namespace Logger;
 
 Error::Error(GError *gerror, bool dontfree)

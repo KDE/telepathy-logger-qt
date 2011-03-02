@@ -52,6 +52,7 @@ private:
     Message(MessagePrivateData *_d) : d(_d) {}
 
     friend class MessagesForDateQuery;
+    friend class FilterQuery;
 
     MessagePrivateData *d;
 };

@@ -68,7 +68,7 @@ void fillPrivateDataListWithQueryResults(void *_logmanager, void *_result,
     }
 
     // Free search results...
-    tpl_log_manager_search_free(gresults);
+      tpl_log_manager_search_free(gresults);
 }
 
 } //namespace
@@ -79,17 +79,17 @@ void fillPrivateDataListWithQueryResults(void *_logmanager, void *_result,
 // Constructors from *PrivateData are declared as private, so they can be called
 // only into Query classes, which are friends.
 
-#define TP_QUERY_FILL_DATA(logmanager, result, hasfinished, \
-                           QueryResultsT, QueryPrivateDataT, QueryPublicDataT, \
-                           listToFill) \
+#define TPL_QUERY_FILL_DATA(logmanager, result, hasfinished, \
+                            QueryResultsT, QueryPrivateDataT, QueryPublicDataT, \
+                            listToFill) \
 \
-QList<SearchHitPrivateData> __private_data__; \
+QList<QueryPrivateDataT> __private_data__; \
 \
 fillPrivateDataListWithQueryResults<QueryResultsT, QueryPrivateDataT, \
     hasfinished>(logmanager, result, __private_data__); \
 \
-Q_FOREACH(SearchHitPrivateData __d__, __private_data__) { \
-    listToFill << SearchHit(&__d__); \
+Q_FOREACH(QueryPrivateDataT __d__, __private_data__) { \
+    listToFill << QueryPublicDataT(&__d__); \
 }
 
 #endif // __QUERY_CALLBACK_TEMPLATE__

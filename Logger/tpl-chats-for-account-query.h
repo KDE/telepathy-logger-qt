@@ -32,7 +32,7 @@ class ChatsForAccountQuery : public Query
 Q_OBJECT
 
 public:
-    ChatsForAccountQuery(const QString &dbusid) : Query(dbusid) {}
+    explicit ChatsForAccountQuery(const QString &dbusid);
 
 public Q_SLOTS:
     void perform();

@@ -33,7 +33,7 @@ class MessagesForDateQuery : public Query
 Q_OBJECT
 
 public:
-    explicit MessagesForDateQuery(const QString &dbusid) : Query(dbusid) {}
+    explicit MessagesForDateQuery(const QString &dbusid);
 
 public Q_SLOTS:
     void perform(const QString &contact, bool ischat = false,

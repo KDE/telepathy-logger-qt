@@ -27,7 +27,13 @@
 
 #include <tpl-error.h>
 
+#include <tpl-query-callback-template.h>
+
 using namespace Logger;
+
+ChatsForAccountQuery::ChatsForAccountQuery(const QString &dbusid) : Query(dbusid)
+{
+}
 
 void ChatsForAccountQuery::perform()
 {
@@ -36,57 +42,12 @@ void ChatsForAccountQuery::perform()
                                     (GAsyncReadyCallback)this->callback, this);
 }
 
-void ChatsForAccountQuery::callback(void *_logmanager, void *_result,
+void ChatsForAccountQuery::callback(void *logmanager, void *result,
                                     ChatsForAccountQuery *self)
 {
-    TplLogManager *logmanager = static_cast<TplLogManager*>(_logmanager);
-    GAsyncResult *result = static_cast<GAsyncResult*>(_result);
-
-    if (!TPL_IS_LOG_MANAGER (logmanager)) {
-        throw Error("Query callback returned an invalid TplLogManager object.");
-    }
-
-    GList *gchats = NULL;
-    GList *i;
-    GError *error = NULL;
-
-    // Check whether everything went fine, and retrieves data...
-    gboolean successful =
-        tpl_log_manager_get_chats_finish(self->d->logmanager(), result, &gchats, &error);
-
-    if(error) {
-        throw Error(error);
-    }
-
-    // This is placed as second, just as a failback. Otherwise it would prevent
-    // more detailed exceptions to be thrown...
-    if(!successful) {
-        throw Error("tpl_log_manager_get_chats_async was not successfull!");
-    }
-
-    for(i = gchats; i; i = i->next) {
-        CorrespondantPrivateData *d = new
-          CorrespondantPrivateData((TplEntity*)i->data);
-
-        self->chats << Correspondant(d);
-    }
-
-    // Free search results...
-    tpl_log_manager_search_free(gchats);
-
-
-    Q_EMIT self->completed(self->chats);
-    
-//     // Retrieve private data...
-//     QList<SearchHitPrivateData> privateData;
-// 
-//     fillPrivateDataListWithQueryResults<TplLogSearchHit, CorrespondantPrivateData,
-//         tpl_log_manager_search_finish>(logmanager, result, privateData);
-// 
-//     // Fill public types with data...
-//     Q_FOREACH(SearchHitPrivateData d, privateData) {
-//         self->hits << SearchHit(&d);
-//     }
+    TPL_QUERY_FILL_DATA (logmanager, result, tpl_log_manager_get_chats_finish,
+                         TplEntity, CorrespondantPrivateData, Correspondant,
+                         self->chats);
 
     // Notify
     Q_EMIT self->completed(self->chats);

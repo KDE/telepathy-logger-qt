@@ -38,6 +38,7 @@ HEADERS += tpl-correspondant-private.h \
            Logger/tpl-chat-exists-query.h \
            Logger/tpl-chats-for-account-query.h \
            Logger/tpl-conversation-dates-query.h \
+           Logger/tpl-filter-query.h \
            Logger/tpl-correspondant.h \
            Logger/tpl-debug.h \
            Logger/tpl-error.h \

@@ -1,5 +1,5 @@
-#ifndef __TP_LOGGER_ERROR__
-#define __TP_LOGGER_ERROR__
+#ifndef __FILTER_QUERY__
+#define __FILTER_QUERY__
 
 /*
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
@@ -20,34 +20,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-typedef struct _GError GError;
-
-#include <QtCore/QString>
+#include <Logger/Query>
+#include <Logger/Message>
 
 namespace Logger
 {
 
-class Error
+class FilterQuery : public Query
 {
+
+Q_OBJECT
+
 public:
-    Error(const QString &message, int code = 0);
-    Error(GError *gerror, bool dontfree = false);
+    explicit FilterQuery(const QString &dbusid);
 
-    QString message() const
-    {
-        return this->_message;
-    }
+public Q_SLOTS:
+    void perform(const QString &chatid, bool ischatroom);
 
-    int code() const
-    {
-        return this->_code;
-    }
+Q_SIGNALS:
+     void completed(const QList<Message> &messages);
 
 private:
-    QString _message;
-    int _code;
+    static void callback(void *obj, void *result, FilterQuery *self);
+
+    QList<Message> messages;
 };
 
-} // namespace
+} //namespace
 
-#endif // __TP_LOGGER_ERROR__
+#endif // __FILTER_QUERY__
