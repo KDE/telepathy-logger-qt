@@ -2,7 +2,8 @@
 Makefile
 *~
 *.o
-telepathy-kde-logquery
+QTpLogger-test
+*.tar.gz
 *.pro.user
 moc_*.cpp
 build
