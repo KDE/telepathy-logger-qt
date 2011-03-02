@@ -5,4 +5,4 @@ Makefile
 telepathy-kde-logquery
 *.pro.user
 moc_*.cpp
-.template
+build

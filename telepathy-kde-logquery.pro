@@ -18,8 +18,8 @@
 # May change to 'lib' when testing is over :)
 TEMPLATE = app
 TARGET = telepathy-kde-logquery
-DEPENDPATH += . Logger
-INCLUDEPATH += . Logger
+DEPENDPATH += . QTpLogger
+INCLUDEPATH += . QTpLogger
 
 # Disable Qt keywords, necessary to include glib headers.
 # As an option, use -DQT_NO_KEYWORDS in the build system
@@ -30,48 +30,46 @@ CONFIG += link_pkgconfig
 PKGCONFIG += telepathy-logger-0.1 telepathy-glib glib-2.0
 
 # Input
-HEADERS += tpl-correspondant-private.h \
-           tpl-message-private.h \
-           tpl-query-private.h \
-           tpl-query-callback-template.h \
-           tpl-query-main-loop.h \
-           Logger/tpl-chat-exists-query.h \
-           Logger/tpl-chats-for-account-query.h \
-           Logger/tpl-conversation-dates-query.h \
-           Logger/tpl-filter-query.h \
-           Logger/tpl-correspondant.h \
-           Logger/tpl-debug.h \
-           Logger/tpl-error.h \
-           Logger/tpl-search-hit.h \
-           Logger/tpl-keyword-query.h \
-           Logger/tpl-message.h \
-           Logger/tpl-messages-for-date-query.h \
-           Logger/tpl-query.h \
-           Logger/Log \
-           Logger/Correspondant \
-           Logger/Query \
-           Logger/Message \
-           Logger/SearchHit
+HEADERS += QTpLogger/tpl-chat-exists-query.h \
+           QTpLogger/tpl-chats-for-account-query.h \
+           QTpLogger/tpl-conversation-dates-query.h \
+           QTpLogger/tpl-messages-for-date-query.h \
+           QTpLogger/tpl-filter-query.h \
+           QTpLogger/tpl-keyword-query.h \
+           \
+           \
+           QTpLogger/tpl-query-callback-template.h \
+           QTpLogger/tpl-query-private.h \
+           \
+           QTpLogger/tpl-debug.h \
+           QTpLogger/tpl-error.h \
+           \
+           QTpLogger/tpl-query.h \
+           QTpLogger/tpl-search-hit.h \
+    QTpLogger/tpl-entry.h \
+    QTpLogger/tpl-entry-private.h \
+    QTpLogger/tpl-entity.h \
+    QTpLogger/tpl-entity-private.h
 
-SOURCES += tpl-chat-exists-query.cpp \
-           tpl-conversation-dates-query.cpp \
-           tpl-messages-for-date-query.cpp \
-           tpl-keyword-query.cpp \
-           tpl-chats-for-account-query.cpp \
-           tpl-filter-query.cpp \
-           tpl-correspondant.cpp \
-           tpl-message.cpp \
-           tpl-search-hit.cpp \
-           tpl-query.cpp \
-           tpl-debug.cpp \
-           tpl-error.cpp \
-           tpl-query-main-loop.cpp \
-           tpl-correspondant-private.cpp \
-           tpl-message-private.cpp \
-           tpl-query-private.cpp \
-           dummy-main.cpp
+SOURCES += QTpLogger/tpl-chat-exists-query.cpp \
+           QTpLogger/tpl-chats-for-account-query.cpp \
+           QTpLogger/tpl-conversation-dates-query.cpp \
+           QTpLogger/tpl-debug.cpp \
+           QTpLogger/tpl-error.cpp \
+           QTpLogger/tpl-filter-query.cpp \
+           QTpLogger/tpl-keyword-query.cpp \
+           QTpLogger/tpl-messages-for-date-query.cpp \
+           QTpLogger/tpl-query-private.cpp \
+           QTpLogger/tpl-query.cpp \
+           QTpLogger/tpl-search-hit.cpp \
+           \
+           tests/dummy-main.cpp \
+    QTpLogger/tpl-entry-private.cpp \
+    QTpLogger/tpl-entry.cpp \
+    QTpLogger/tpl-entity-private.cpp \
+    QTpLogger/tpl-entity.cpp
 
 # Output
-OBJECTS_DIR = .objects
-MOC_DIR = .meta
-RCC_DIR = .meta
+OBJECTS_DIR = build
+MOC_DIR = build
+RCC_DIR = build

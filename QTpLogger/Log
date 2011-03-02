@@ -1,0 +1,41 @@
+#ifndef __LOG_QUERY__
+#define __LOG_QUERY__
+
+/*
+ * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
+ *
+ * @author Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
+ *
+ * This library is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published
+ * by the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+// Base types...
+#include "tpl-error.h"
+#include "tpl-search-hit.h"
+#include "tpl-entity.h"
+#include "tpl-entry.h"
+
+// Query classes...
+#include "tpl-query.h"
+#include "tpl-chat-exists-query.h"
+#include "tpl-conversation-dates-query.h"
+#include "tpl-messages-for-date-query.h"
+#include "tpl-keyword-query.h"
+#include "tpl-chats-for-account-query.h"
+#include "tpl-filter-query.h"
+
+// Debug...
+#include "tpl-debug.h"
+
+#endif // __LOG_QUERY__
