@@ -37,19 +37,18 @@ HEADERS += QTpLogger/tpl-chat-exists-query.h \
            QTpLogger/tpl-filter-query.h \
            QTpLogger/tpl-keyword-query.h \
            \
-           \
            QTpLogger/tpl-query-callback-template.h \
            QTpLogger/tpl-query-private.h \
+           QTpLogger/tpl-entry.h \
+           QTpLogger/tpl-entry-private.h \
+           QTpLogger/tpl-entity.h \
+           QTpLogger/tpl-entity-private.h
            \
            QTpLogger/tpl-debug.h \
            QTpLogger/tpl-error.h \
            \
            QTpLogger/tpl-query.h \
-           QTpLogger/tpl-search-hit.h \
-    QTpLogger/tpl-entry.h \
-    QTpLogger/tpl-entry-private.h \
-    QTpLogger/tpl-entity.h \
-    QTpLogger/tpl-entity-private.h
+           QTpLogger/tpl-search-hit.h
 
 SOURCES += QTpLogger/tpl-chat-exists-query.cpp \
            QTpLogger/tpl-chats-for-account-query.cpp \
@@ -59,15 +58,16 @@ SOURCES += QTpLogger/tpl-chat-exists-query.cpp \
            QTpLogger/tpl-filter-query.cpp \
            QTpLogger/tpl-keyword-query.cpp \
            QTpLogger/tpl-messages-for-date-query.cpp \
-           QTpLogger/tpl-query-private.cpp \
            QTpLogger/tpl-query.cpp \
            QTpLogger/tpl-search-hit.cpp \
            \
-           tests/dummy-main.cpp \
-    QTpLogger/tpl-entry-private.cpp \
-    QTpLogger/tpl-entry.cpp \
-    QTpLogger/tpl-entity-private.cpp \
-    QTpLogger/tpl-entity.cpp
+           QTpLogger/tpl-query-private.cpp \
+           QTpLogger/tpl-entry-private.cpp \
+           QTpLogger/tpl-entry.cpp \
+           QTpLogger/tpl-entity-private.cpp \
+           QTpLogger/tpl-entity.cpp
+           \
+           tests/dummy-main.cpp
 
 # Output
 OBJECTS_DIR = build
