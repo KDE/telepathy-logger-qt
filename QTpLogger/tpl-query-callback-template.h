@@ -77,10 +77,10 @@ void fillPrivateDataListWithQueryResults(void *_logmanager, void *_result,
 // Retrieve private data using the template below and fills the public list
 //
 // This has to be declared as a #define to avoid messing up incapsulation:
-// Constructors from *PrivateData are declared as private, so they can be called
-// only into Query classes, which are friends.
+// Constructors from *Private classes are declared as private, so they can be
+// called only into Query classes, which are friends.
 
-// For Logger types (with *Private data)
+// For Logger types (if C be a class, CPrivate contains its private data)
 #define TPL_QUERY_FILL_DATA(logmanager, result, hasfinished, \
                             QueryResultsT, QueryPrivateDataT, QueryPublicDataT, \
                             listToFill) \

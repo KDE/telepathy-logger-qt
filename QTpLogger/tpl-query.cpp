@@ -17,12 +17,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "tpl-query.h"
+#include "tpl-query-private.h"
+
 #include <telepathy-logger/log-manager.h>
 
-#include <QTpLogger/tpl-query.h>
-#include <QTpLogger/tpl-error.h>
-
-#include <tpl-query-private.h>
+#include "tpl-error.h"
 
 #include <QStringList>
 

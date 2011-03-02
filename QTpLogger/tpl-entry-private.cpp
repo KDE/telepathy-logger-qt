@@ -17,10 +17,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QTpLogger/tpl-entry.h>
+#include "tpl-entry.h"
 
-#include <tpl-entry-private.h>
-#include <tpl-entity-private.h>
+#include "tpl-entry-private.h"
+#include "tpl-entity-private.h"
 
 using namespace QTpLogger;
 

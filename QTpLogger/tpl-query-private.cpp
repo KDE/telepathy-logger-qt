@@ -17,11 +17,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QTpLogger/tpl-error.h>
+#include "tpl-query-private.h"
+#include "tpl-error.h"
 
 #include <telepathy-glib/account.h>
-
-#include <tpl-query-private.h>
 
 using namespace QTpLogger;
 

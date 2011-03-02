@@ -20,8 +20,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QTpLogger/tpl-entry.h>
-#include <QTpLogger/tpl-entity.h>
+#include "tpl-entry.h"
+#include "tpl-entity.h"
 
 #include <telepathy-logger/entry-text.h>
 

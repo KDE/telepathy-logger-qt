@@ -17,17 +17,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QTpLogger/tpl-chats-for-account-query.h>
+#include "tpl-chats-for-account-query.h"
 
 #include <telepathy-logger/log-manager.h>
 
-#include <tpl-query-private.h>
-#include <tpl-entry-private.h>
-#include <tpl-entity-private.h>
-
-#include <tpl-error.h>
-
-#include <tpl-query-callback-template.h>
+#include "tpl-query-private.h"
+#include "tpl-entry-private.h"
+#include "tpl-entity-private.h"
+#include "tpl-query-callback-template.h"
 
 using namespace QTpLogger;
 

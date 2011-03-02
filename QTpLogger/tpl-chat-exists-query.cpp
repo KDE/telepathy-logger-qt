@@ -17,11 +17,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QTpLogger/tpl-chat-exists-query.h>
+#include "tpl-chat-exists-query.h"
 
 #include <telepathy-logger/log-manager.h>
 
-#include <tpl-query-private.h>
+#include "tpl-query-private.h"
 
 using namespace QTpLogger;
 

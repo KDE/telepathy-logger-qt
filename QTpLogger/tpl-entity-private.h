@@ -20,7 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QTpLogger/tpl-entity.h>
+#include "tpl-entity.h"
 
 #include <telepathy-logger/log-manager.h>
 
