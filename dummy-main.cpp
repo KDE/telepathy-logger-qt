@@ -47,7 +47,7 @@ int main(int argc, char **argv)
         QObject::connect(&q1, SIGNAL(completed(bool)), &e, SLOT(echo(bool)));
         QObject::connect(&q2, SIGNAL(completed(QList<QDate>)), &e, SLOT(echo(QList<QDate>)));
         QObject::connect(&q3, SIGNAL(completed(QList<Message>)), &e, SLOT(echo(QList<Message>)));
-        QObject::connect(&q4, SIGNAL(completed(QList<Hit>)), &e, SLOT(echo(QList<Hit>)));
+        QObject::connect(&q4, SIGNAL(completed(QList<SearchHit>)), &e, SLOT(echo(QList<SearchHit>)));
         QObject::connect(&q5, SIGNAL(completed(QList<Correspondant>)), &e, SLOT(echo(QList<Correspondant>)));
 
         // Perform all queries...

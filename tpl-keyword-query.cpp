@@ -42,17 +42,10 @@ void KeywordQuery::perform(const QString &keyword)
 
 void KeywordQuery::callback(void *logmanager, void *result, KeywordQuery *self)
 {
-    // Retrieve private data...
-    QList<SearchHitPrivateData> privateData;
+    TP_QUERY_FILL_DATA (logmanager, result, tpl_log_manager_search_finish,
+                        TplLogSearchHit, SearchHitPrivateData, SearchHit,
+                        self->hits);
 
-    fillPrivateDataListWithQueryResults<TplLogSearchHit, SearchHitPrivateData,
-        tpl_log_manager_search_finish>(logmanager, result, privateData);
-
-    // Fill public types with data...
-    Q_FOREACH(SearchHitPrivateData d, privateData) {
-        self->hits << SearchHit(&d);
-    }
-
-    // Notify...
+    // Notify
     Q_EMIT self->completed(self->hits);
 }

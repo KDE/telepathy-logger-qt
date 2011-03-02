@@ -76,4 +76,18 @@ void ChatsForAccountQuery::callback(void *_logmanager, void *_result,
 
 
     Q_EMIT self->completed(self->chats);
+    
+//     // Retrieve private data...
+//     QList<SearchHitPrivateData> privateData;
+// 
+//     fillPrivateDataListWithQueryResults<TplLogSearchHit, CorrespondantPrivateData,
+//         tpl_log_manager_search_finish>(logmanager, result, privateData);
+// 
+//     // Fill public types with data...
+//     Q_FOREACH(SearchHitPrivateData d, privateData) {
+//         self->hits << SearchHit(&d);
+//     }
+
+    // Notify
+    Q_EMIT self->completed(self->chats);
 }
