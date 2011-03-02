@@ -31,26 +31,7 @@ Query::Query(const QString &dbusid, bool idIsEscaped)
 {
     g_type_init();
 
-    QString quotedDbusID;
-
-    // Escape string as if it were a valid C indentifier...
-    if (!idIsEscaped) {
-        QStringList chunks = dbusid.split("/");
-
-        // A manager/protocol/username triplet is required
-        if (chunks.count() != 3) {
-            QGlib::Error(TPL_LOG_MANAGER_ERROR, 0, "Provided DBus Telepathy id"
-                                                   " does not contain three "
-                                                   "'/' separed elements");
-        }
-
-        gchar *escapedUserName = tp_escape_as_identifier(chunks[2].toAscii());
-
-        quotedDbusID = QString("%1/%2/%3").arg(chunks[0]).arg(chunks[1]).
-                         arg(escapedUserName);
-
-        g_free(escapedUserName);
-    }
+    QString quotedDbusID = idIsEscaped? dbusid: escapeDBusID(dbusid);
 
     try {
         this->d = new QueryPrivate(quotedDbusID);
@@ -64,4 +45,26 @@ Query::Query(const QString &dbusid, bool idIsEscaped)
 Query::~Query()
 {
     delete this->d; // REVIEW heap or stack?
+}
+
+// Escape string as if it were a valid C indentifier...
+QString Query::escapeDBusID(const QString &id)
+{
+    QStringList chunks = id.split("/");
+
+    // A manager/protocol/username triplet is required
+    if (chunks.count() != 3) {
+        throw QGlib::Error(TPL_LOG_MANAGER_ERROR, 0,
+                            "Provided DBus Telepathy id does not contain "
+                            "three '/' separed elements");
+    }
+
+    gchar *gEscapedString = tp_escape_as_identifier(chunks[2].toAscii());
+
+    QString escapedString = QString("%1/%2/%3").arg(chunks[0]).arg(chunks[1]).
+                                                arg(gEscapedString);
+
+    g_free(gEscapedString);
+
+    return escapedString;
 }

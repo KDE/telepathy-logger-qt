@@ -21,6 +21,7 @@
  */
 
 #include <QtCore/QObject>
+#include <QtCore/QString>
 
 namespace QTpLogger
 {
@@ -32,6 +33,8 @@ class Query : public QObject
 public:
     explicit Query(const QString &dbusid, bool idIsEscaped = false);
     virtual ~Query();
+
+    static QString escapeDBusID(const QString &id);
 
 Q_SIGNALS:
     void completed();

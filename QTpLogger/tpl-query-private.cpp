@@ -47,8 +47,8 @@ QueryPrivate::QueryPrivate(const QString &quotedDbusID)
                                                      "tp_account_new is NULL!");
     }
 
-    tp_account_prepare_async(account, NULL, NULL, NULL);
-//  XXX                     (GAsyncReadyCallback)this->setreadycb, this);
+    tp_account_prepare_async(account, NULL, //NULL, NULL);
+                             (GAsyncReadyCallback)this->setreadycb, this);
 
     // Get rid of the bus proxy...
     g_object_unref(daemon);
@@ -65,19 +65,16 @@ void QueryPrivate::setreadycb(GObject *obj, GAsyncResult *result, QueryPrivate *
 {
     (void)obj;
 
-    // XXX THESE FEW LINES GIVE SEGFAULT... guess is st. related to
-    // bad C-C++ interation
-
     GError *error = NULL;
 
     if (!tp_account_prepare_finish(self->_account, result, &error)) {
         self->_account = NULL;
-        throw new QGlib::Error(error);
+        throw QGlib::Error(error);
     }
 
     if (!tp_account_is_valid(self->_account)) {
-        throw new QGlib::Error(TPL_LOG_MANAGER_ERROR, 0, "Selected account "
-                                                         "is not valid!");
+        throw QGlib::Error(TPL_LOG_MANAGER_ERROR, 0, "Selected account "
+                                                     "is not valid!");
     }
 }
 

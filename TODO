@@ -1,7 +1,5 @@
 * Implement class FilterQuery
-* Fix issue with setreadycb in tpl-query-private.cpp
-* Fix exception handling in tpl-query-callback-template
+* Fix exception handling in tpl-query-callback-template.h
 * Implement SearchHit class
 * Test if values returned by Entry building queries are TplEntry or TplEntryText
 * Overload << operators to give a decent debug representation
-* Review tpl-query-callback-template.h
