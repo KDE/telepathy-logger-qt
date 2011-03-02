@@ -52,8 +52,7 @@ void FilterQuery::callback(void *logmanager, void *result, FilterQuery* self)
 {
     TPL_QUERY_FILL_DATA (logmanager, result,
                          tpl_log_manager_get_filtered_messages_finish,
-                         TplEntry, EntryPrivate, Entry,
-                         self->messages);
+                         TplEntry, Entry, self->messages);
 
     // Notify
     Q_EMIT self->completed(self->messages);

@@ -41,8 +41,7 @@ void KeywordQuery::perform(const QString &keyword)
 void KeywordQuery::callback(void *logmanager, void *result, KeywordQuery *self)
 {
     TPL_QUERY_FILL_DATA (logmanager, result, tpl_log_manager_search_finish,
-                         TplLogSearchHit, SearchHitPrivate, SearchHit,
-                         self->hits);
+                         TplLogSearchHit, SearchHit, self->hits);
 
     // Notify
     Q_EMIT self->completed(self->hits);

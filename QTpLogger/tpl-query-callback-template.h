@@ -81,17 +81,17 @@ void fillPrivateDataListWithQueryResults(void *_logmanager, void *_result,
 // called only into Query classes, which are friends.
 
 // For Logger types (if C be a class, CPrivate contains its private data)
+// WARNING: if a QueryDataT is specified, say `Foo`, a `FooPrivate` class must exists.
 #define TPL_QUERY_FILL_DATA(logmanager, result, hasfinished, \
-                            QueryResultsT, QueryPrivateDataT, QueryPublicDataT, \
-                            listToFill) \
+                            QueryResultsT, QueryDataT, listToFill) \
 \
-QList<QueryPrivateDataT> __private_data__; \
+QList<QueryDataT##Private> __private_data__; \
 \
-fillPrivateDataListWithQueryResults<QueryResultsT, QueryPrivateDataT, \
+fillPrivateDataListWithQueryResults<QueryResultsT, QueryDataT##Private, \
     hasfinished>(logmanager, result, __private_data__); \
 \
-Q_FOREACH (QueryPrivateDataT __d__, __private_data__) { \
-    listToFill << QueryPublicDataT(&__d__); \
+Q_FOREACH (QueryDataT##Private __d__, __private_data__) { \
+    listToFill << QueryDataT(&__d__); \
 }
 
 // For Qt native types

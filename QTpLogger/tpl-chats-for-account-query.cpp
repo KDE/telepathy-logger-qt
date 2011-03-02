@@ -43,8 +43,7 @@ void ChatsForAccountQuery::callback(void *logmanager, void *result,
                                     ChatsForAccountQuery *self)
 {
     TPL_QUERY_FILL_DATA (logmanager, result, tpl_log_manager_get_chats_finish,
-                         TplEntity, EntityPrivate, Entity,
-                         self->chats);
+                         TplEntity, Entity, self->chats);
 
     // Notify
     Q_EMIT self->completed(self->chats);
