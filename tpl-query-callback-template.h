@@ -26,12 +26,11 @@
 
 #include <QtCore/QList>
 
-namespace Logger {
-
-// TODO eliminate Error throwing from this code!! It'll be plain C
-
 typedef gboolean (*RetrieveFunction)(TplLogManager*, GAsyncResult*,
                                             GList **, GError**);
+
+// WARNING: This template is not intented for direct calling!
+// Use macros below, instead.
 
 template
 <typename QueryResultsT, class QueryPrivateDataT, RetrieveFunction hasfinished>
@@ -45,6 +44,8 @@ void fillPrivateDataListWithQueryResults(void *_logmanager, void *_result,
     GList *gresults;
     GList *i;
     GError *error = NULL;
+
+    // TODO eliminate Error throwing from this code!! It'll be plain C
 
     if (!TPL_IS_LOG_MANAGER (logmanager)) {
 //         throw Logger::Error("Query callback returned an invalid TplLogManager object.");
@@ -73,8 +74,6 @@ void fillPrivateDataListWithQueryResults(void *_logmanager, void *_result,
       tpl_log_manager_search_free(gresults);
 }
 
-} //namespace
-
 // Retrieve private data using the template below and fills the public list
 //
 // This has to be declared as a #define to avoid messing up incapsulation:
@@ -97,13 +96,13 @@ Q_FOREACH (QueryPrivateDataT __d__, __private_data__) { \
 
 // For Qt native types
 #define TPL_QUERY_FILL_DATA_QT_NATIVE(logmanager, result, hasfinished, \
-                                      QueryDataT, QueryResultsT, listToFill) \
-QList<QueryResultsT> __private_data_2__; \
+                                      QueryResultsT, QueryDataT, listToFill) \
+QList<QueryDataT> __private_data_2__; \
 \
-fillPrivateDataListWithQueryResults<QueryDataT, QueryResultsT, \
-        hasfinished>(logmanager, result, __private_data_2__); \
+fillPrivateDataListWithQueryResults<QueryResultsT, QueryDataT, \
+    hasfinished>(logmanager, result, __private_data_2__); \
 \
-Q_FOREACH (QueryResultsT __d_2__, __private_data_2__) { \
+Q_FOREACH (QueryDataT __d_2__, __private_data_2__) { \
     listToFill << __d_2__; \
 }
 
