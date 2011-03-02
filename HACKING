@@ -1,26 +1,25 @@
 Contents:
 
 • Version control
+• Short version
 • Coding style...
   › ...for C++ code
   › ...for C and Python code
 • Submitting patches
 
-
 ===============================================================================
 Version control
 ===============================================================================
 
-The current development version of telepathy-qt4 is available from the
-'master' branch in the git repository:
+The current development version of QTpLogger is available from a scratch repo:
 
-  <git://git.collabora.co.uk/git/telepathy-qt4.git>
-  <git+ssh://git.collabora.co.uk/git/telepathy-qt4.git> (for committers)
-  <http://git.collabora.co.uk/?p=telepathy-qt4.git> (gitweb)
+    <http://quickgit.kde.org/?p=scratch%2Fsanfilippo%2Ftelepathy-logger-query.git&a=summary>
 
-Stable branches are available from branches with names like
-'telepathy-qt4-0.2' in the same repository.
+===============================================================================
+Short version
+===============================================================================
 
+QTpLogger follows the same conventions as Tp-Qt4 and Qt itself.
 
 ===============================================================================
 Coding style
@@ -29,7 +28,7 @@ Coding style
 For C++ code:
 -------------
 
-TelepathyQt4 uses the standard Qt4 coding style for the Qt/C++ code, as also
+QTpLogger uses the standard Qt4 coding style for the Qt/C++ code, as also
 followed by eg. KDELibs.  The coding style is described in more detail in the
 KDE TechBase at <http://techbase.kde.org/Policies/Kdelibs_Coding_Style>; in
 short, it amounts to:
@@ -74,34 +73,16 @@ short, it amounts to:
     private Q_SLOTS
     private
  * friend class xxx definitions must be placed right below the private keyword.
- * All exported classes should use TELEPATHY_QT4_EXPORT macro as following:
-    class TELEPATHY_QT4_EXPORT xxx { ... };
-
-
-For C and Python code:
-----------------------
-
-Parts of the regression tests — namely, those parts in tests/lib/glib/ — are
-taken from telepathy-glib, and are written in C; the majority of the code
-generation tools — in tools/ — are written in Python. Please follow
-<http://telepathy.freedesktop.org/wiki/Style> for these.
-
 
 ===============================================================================
 Submitting patches
 ===============================================================================
 
 Patches should be made as (preferably) git branches or (last resort) -uNr diffs
-against upstream git master, as found at:
+against upstream git master, as found at git repos stated above.
 
-  git://git.collabora.co.uk/git/telepathy-qt4.git
-  git+ssh://git.collabora.co.uk/git/telepathy-qt4.git (for committers)
-  http://git.collabora.co.uk/?p=telepathy-qt4.git (gitweb)
-
-Patches can be announced at the freedesktop.org bugzilla, using the product
-"Telepathy" and component "tp-qt4":
-
-  https://bugs.freedesktop.org/enter_bug.cgi?product=Telepathy&component=tp-qt4
+Patches can be announced at the kde-telepathy mailing list, for the moment.
+We'll move to bugzilla very soon.
 
 If submitting a Git branch, please set the URL field of the bug to point to
 your Git branch. Regardless of whether you are referring to a Git branch or
