@@ -23,7 +23,6 @@
 
 #include <tpl-query-private.h>
 #include <tpl-message-private.h>
-#include <tpl-error.h>
 
 using namespace Logger;
 
@@ -69,16 +68,12 @@ void FilterQuery::perform(const QString &chatid, bool ischatroom)
 {
 #if 0
     // Perform the asynchronous call...
-    tpl_log_manager_get_filtered_messages_async(this->d->logmanager(), this->d->account(), chatid.toAscii(),
-                                    ischatroom, (GAsyncReadyCallback)this->callback, this);
- guint num_messages,
- TplLogMessageFilter filter,
- gpointer filter_user_data,
- GAsyncReadyCallback callback,
- gpointer user_data);
+    tpl_log_manager_get_filtered_messages_async(
+        this->d->logmanager(), this->d->account(), chatid.toAscii(), ischatroom,
+        // guint num_messages, TplLogMessageFilter filter, gpointer filter_user_data,
+        (GAsyncReadyCallback)this->callback, this);
 
-typedef gboolean(*TplLogMessageFilter)(TplEntry *message, gpointer user_data);
-
+    // typedef gboolean(*TplLogMessageFilter)(TplEntry *message, gpointer user_data);
 #endif
 }
 

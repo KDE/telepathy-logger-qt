@@ -20,6 +20,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef TPL_QUERY_USES_QTGLIB
+
 #include <QtCore/QString>
 
 typedef struct _GError GError;
@@ -45,5 +47,7 @@ private:
 };
 
 } // namespace
+
+#endif // TPL_QUERY_USES_QTGLIB
 
 #endif // __TP_LOGGER_ERROR__

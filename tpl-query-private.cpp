@@ -17,9 +17,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <Logger/tpl-error.h>
+
 #include <telepathy-glib/account.h>
 
-#include <Logger/tpl-error.h>
 #include <tpl-query-private.h>
 
 using namespace Logger;
@@ -45,7 +46,7 @@ QueryPrivateData::QueryPrivateData(const QString &quotedDbusID)
     if (!account) throw Error("Account returned by tp_account_new is NULL!");
 
     tp_account_prepare_async(account, NULL, NULL, NULL);
-//                             (GAsyncReadyCallback)this->setreadycb, this);
+//  XXX                     (GAsyncReadyCallback)this->setreadycb, this);
 
     // Get rid of the bus proxy...
     g_object_unref(daemon);

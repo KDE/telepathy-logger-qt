@@ -19,8 +19,8 @@
 
 #include <Logger/Log>
 
-#include <QtCore/QDebug>
 #include <QApplication>
+#include <QtCore/QDebug>
 
 using namespace Logger;
 

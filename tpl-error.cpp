@@ -17,6 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef TPL_QUERY_USES_QTGLIB
+
 #include <Logger/tpl-error.h>
 
 #include <glib.h>
@@ -37,3 +39,5 @@ Error::Error(const QString &message, int code) : _message(message), _code(code)
 {
     // Silence is golden :)
 }
+
+#endif

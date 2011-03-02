@@ -43,24 +43,18 @@ ConversationDatesQuery::ConversationDatesQuery(const QString &dbusid) :
 void ConversationDatesQuery::perform(const QString &chatid, bool ischatroom)
 {
     // Perform the asynchronous call...
-    tpl_log_manager_get_dates_async(this->d->logmanager(), this->d->account(), chatid.toAscii(),
-                                    ischatroom, (GAsyncReadyCallback)this->callback, this);
+    tpl_log_manager_get_dates_async(this->d->logmanager(), this->d->account(),
+                                    chatid.toAscii(), ischatroom,
+                                    (GAsyncReadyCallback)this->callback, this);
 }
 
 void ConversationDatesQuery::callback(void *logmanager, void *result,
                                       ConversationDatesQuery* self)
 {
     // This is different: QDate is a Qt type :)
-    QList<QGDate> dates;
-
-    fillPrivateDataListWithQueryResults<GDate, QGDate,
-        tpl_log_manager_get_dates_finish>(logmanager, result, dates);
-
-    // Fill
-    Q_FOREACH(QGDate d, dates) {
-        self->dates << d;
-    }
-
+    TPL_QUERY_FILL_DATA_QT_NATIVE (logmanager, result,
+                                   tpl_log_manager_get_dates_finish,
+                                   GDate, QGDate, self->dates);
     // Notify
     Q_EMIT self->completed(self->dates);
 }
