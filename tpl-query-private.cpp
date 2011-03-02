@@ -62,7 +62,7 @@ QueryPrivateData::~QueryPrivateData()
 
 void QueryPrivateData::setreadycb(GObject *obj, GAsyncResult *result, QueryPrivateData *self)
 {
-    (void)obj;
+    (void)obj; (void)result; (void)self;
 
 #if 0
     // FIXME THIS FEW LINES GIVE SEGFAULT... guess is st. related to

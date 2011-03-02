@@ -28,6 +28,8 @@
 
 namespace Logger {
 
+// TODO eliminate Error throwing from this code!! It'll be plain C
+
 typedef gboolean (*RetrieveFunction)(TplLogManager*, GAsyncResult*,
                                             GList **, GError**);
 
@@ -45,20 +47,20 @@ void fillPrivateDataListWithQueryResults(void *_logmanager, void *_result,
     GError *error = NULL;
 
     if (!TPL_IS_LOG_MANAGER (logmanager)) {
-        throw Logger::Error("Query callback returned an invalid TplLogManager object.");
+//         throw Logger::Error("Query callback returned an invalid TplLogManager object.");
     }
 
     // Check whether everything went fine, and retrieves data...
     gboolean success = hasfinished(logmanager, result, &gresults, &error);
 
     if (error) {
-        throw Logger::Error(error);
+//         throw Logger::Error(error);
     }
 
     // This is placed as second, just as a failback. Otherwise it would prevent
     // more detailed exceptions from being thrown...
     if (!success) {
-        throw Logger::Error("An async call to TpLogger failed with no specified error!");
+//         throw Logger::Error("An async call to TpLogger failed with no specified error!");
     }
 
     // FIXME: will it work? Do QList make copies of data?

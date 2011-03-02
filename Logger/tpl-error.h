@@ -20,9 +20,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-typedef struct _GError GError;
-
 #include <QtCore/QString>
+
+typedef struct _GError GError;
 
 namespace Logger
 {
@@ -30,20 +30,16 @@ namespace Logger
 class Error
 {
 public:
+    QString message() const { return this->_message; }
+    int code() const { return this->_code; }
+
+private:
     Error(const QString &message, int code = 0);
     Error(GError *gerror, bool dontfree = false);
 
-    QString message() const
-    {
-        return this->_message;
-    }
+    friend class Query;
+    friend class QueryPrivateData;
 
-    int code() const
-    {
-        return this->_code;
-    }
-
-private:
     QString _message;
     int _code;
 };
