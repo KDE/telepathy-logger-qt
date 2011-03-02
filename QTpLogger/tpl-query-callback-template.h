@@ -80,7 +80,7 @@ void fillPrivateDataListWithQueryResults(void *_logmanager, void *_result,
 // Constructors from *PrivateData are declared as private, so they can be called
 // only into Query classes, which are friends.
 
-// For Logger types (with *PrivateData data)
+// For Logger types (with *Private data)
 #define TPL_QUERY_FILL_DATA(logmanager, result, hasfinished, \
                             QueryResultsT, QueryPrivateDataT, QueryPublicDataT, \
                             listToFill) \
