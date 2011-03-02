@@ -1,11 +1,3 @@
-* Btw, you might want to use QtGLib here to avoid doing such stuff
-yourself and in the wrong way. class Error could be completely
-replaced with QGlib::Error for example.
-
-* Throwing exceptions inside C callbacks is a terribly bad idea imho.
-To catch exceptions, the calling code needs to have a stack compiled
-with exception support (afaik), and C libraries definitely do not do
-that. Most likely, the code will crash. Those callbacks are called
-from the event loop anyway, so if you throw exceptions, they will be
-delivered to the event loop and Qt doesn't handle exceptions very well
-in there.
+* Write class FilterQuery
+* Fix issue with setreadycb in tpl-query-private module
+* Fix exception handling in tpl-query-callback-template
