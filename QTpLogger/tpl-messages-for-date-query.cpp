@@ -53,8 +53,7 @@ void MessagesForDateQuery::callback(void *logmanager, void *result,
                                     MessagesForDateQuery *self)
 {
     TPL_QUERY_FILL_DATA (logmanager, result, tpl_log_manager_get_messages_for_date_finish,
-                         TplEntry, Entry,
-                         self->messages);
+                         TplEntry, Entry, self->messages);
 
     // Notify
     Q_EMIT self->completed(self->messages);

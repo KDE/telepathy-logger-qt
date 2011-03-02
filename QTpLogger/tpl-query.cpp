@@ -22,9 +22,8 @@
 
 #include <telepathy-logger/log-manager.h>
 
-#include "tpl-error.h"
-
-#include <QStringList>
+#include <QtCore/QStringList>
+#include <QGlib/Error>
 
 using namespace QTpLogger;
 
@@ -40,8 +39,9 @@ Query::Query(const QString &dbusid, bool idIsEscaped)
 
         // A manager/protocol/username triplet is required
         if (chunks.count() != 3) {
-            throw Error("Provided DBus Telepathy id does not contain three "
-                        "'/' separed elements");
+            QGlib::Error(TPL_LOG_MANAGER_ERROR, 0, "Provided DBus Telepathy id"
+                                                   " does not contain three "
+                                                   "'/' separed elements");
         }
 
         gchar *escapedUserName = tp_escape_as_identifier(chunks[2].toAscii());
@@ -56,7 +56,8 @@ Query::Query(const QString &dbusid, bool idIsEscaped)
         this->d = new QueryPrivate(quotedDbusID);
     }
     catch (const std::bad_alloc &e) {
-        throw Error("Could not allocate memory for Query private data!");
+        throw QGlib::Error(TPL_LOG_MANAGER_ERROR, 0, "Could not allocate memory"
+                                                     " for Query private data!");
     }
 }
 

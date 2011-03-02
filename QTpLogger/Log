@@ -21,7 +21,6 @@
  */
 
 // Base types...
-#include "tpl-error.h"
 #include "tpl-search-hit.h"
 #include "tpl-entity.h"
 #include "tpl-entry.h"

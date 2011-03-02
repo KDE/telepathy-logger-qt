@@ -20,11 +20,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QTpLogger/tpl-error.h>
-
 #include <telepathy-logger/log-manager.h>
 
 #include <QtCore/QList>
+#include <QGlib/Error>
 
 typedef gboolean (*RetrieveFunction)(TplLogManager*, GAsyncResult*,
                                             GList **, GError**);
@@ -94,7 +93,7 @@ Q_FOREACH (QueryDataT##Private __d__, __private_data__) { \
     listToFill << QueryDataT(&__d__); \
 }
 
-// For Qt native types
+// For Qt native types, or those who do not need a *Private data class.
 #define TPL_QUERY_FILL_DATA_QT_NATIVE(logmanager, result, hasfinished, \
                                       QueryResultsT, QueryDataT, listToFill) \
 \

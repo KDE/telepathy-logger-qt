@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# May change to 'lib' when testing is over :)
+# May change to 'lib' and remove -test suffix when testing is over :)
 TEMPLATE = app
 TARGET = QTpLogger-test
 DEPENDPATH += . QTpLogger
@@ -45,7 +45,6 @@ HEADERS += QTpLogger/tpl-chat-exists-query.h \
            QTpLogger/tpl-entity-private.h \
            \
            QTpLogger/tpl-debug.h \
-           QTpLogger/tpl-error.h \
            \
            QTpLogger/tpl-query.h \
            QTpLogger/tpl-search-hit.h
@@ -54,7 +53,6 @@ SOURCES += QTpLogger/tpl-chat-exists-query.cpp \
            QTpLogger/tpl-chats-for-account-query.cpp \
            QTpLogger/tpl-conversation-dates-query.cpp \
            QTpLogger/tpl-debug.cpp \
-           QTpLogger/tpl-error.cpp \
            QTpLogger/tpl-filter-query.cpp \
            QTpLogger/tpl-keyword-query.cpp \
            QTpLogger/tpl-messages-for-date-query.cpp \

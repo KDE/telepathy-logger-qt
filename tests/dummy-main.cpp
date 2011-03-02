@@ -18,6 +18,7 @@
  */
 
 #include <QTpLogger/Log>
+#include <QGlib/Error>
 
 #include <QApplication>
 #include <QtCore/QDebug>
@@ -60,7 +61,7 @@ int main(int argc, char **argv)
         // Run main loop...
         return app.exec();
 
-    } catch (const Error &e) {
+    } catch (const QGlib::Error &e) {
         qDebug() << e.message();
         exit(1);
     }

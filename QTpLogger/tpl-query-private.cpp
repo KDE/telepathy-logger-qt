@@ -18,9 +18,9 @@
  */
 
 #include "tpl-query-private.h"
-#include "tpl-error.h"
 
 #include <telepathy-glib/account.h>
+#include <QGlib/Error>
 
 using namespace QTpLogger;
 
@@ -32,7 +32,7 @@ QueryPrivate::QueryPrivate(const QString &quotedDbusID)
 
     TpDBusDaemon *daemon = tp_dbus_daemon_dup(&error);
 
-    if (error) throw Error(error);
+    if (error) throw QGlib::Error(error);
 
     error = NULL;
 
@@ -40,9 +40,12 @@ QueryPrivate::QueryPrivate(const QString &quotedDbusID)
 
     TpAccount *account = tp_account_new(daemon, path.toAscii(), &error);
 
-    if (error) throw Error(error);
+    if (error) throw QGlib::Error(error);
 
-    if (!account) throw Error("Account returned by tp_account_new is NULL!");
+    if (!account) {
+        throw QGlib::Error(TPL_LOG_MANAGER_ERROR, 0, "Account returned by "
+                                                     "tp_account_new is NULL!");
+    }
 
     tp_account_prepare_async(account, NULL, NULL, NULL);
 //  XXX                     (GAsyncReadyCallback)this->setreadycb, this);
@@ -58,8 +61,6 @@ QueryPrivate::~QueryPrivate()
     g_object_unref(this->_account);
 }
 
-#include <QDebug>
-
 void QueryPrivate::setreadycb(GObject *obj, GAsyncResult *result, QueryPrivate *self)
 {
     (void)obj;
@@ -71,11 +72,12 @@ void QueryPrivate::setreadycb(GObject *obj, GAsyncResult *result, QueryPrivate *
 
     if (!tp_account_prepare_finish(self->_account, result, &error)) {
         self->_account = NULL;
-        throw new Error(error);
+        throw new QGlib::Error(error);
     }
 
     if (!tp_account_is_valid(self->_account)) {
-        throw new Error("Selected account is not valid!");
+        throw new QGlib::Error(TPL_LOG_MANAGER_ERROR, 0, "Selected account "
+                                                         "is not valid!");
     }
 }
 
