@@ -44,8 +44,8 @@ QueryPrivateData::QueryPrivateData(const QString &quotedDbusID)
 
     if (!account) throw Error("Account returned by tp_account_new is NULL!");
 
-    tp_account_prepare_async(account, NULL,
-                             (GAsyncReadyCallback)this->setreadycb, this);
+    tp_account_prepare_async(account, NULL, NULL, NULL);
+//                             (GAsyncReadyCallback)this->setreadycb, this);
 
     // Get rid of the bus proxy...
     g_object_unref(daemon);
@@ -62,10 +62,9 @@ QueryPrivateData::~QueryPrivateData()
 
 void QueryPrivateData::setreadycb(GObject *obj, GAsyncResult *result, QueryPrivateData *self)
 {
-    (void)obj; (void)result; (void)self;
+    (void)obj;
 
-#if 0
-    // FIXME THIS FEW LINES GIVE SEGFAULT... guess is st. related to
+    // XXX THESE FEW LINES GIVE SEGFAULT... guess is st. related to
     // bad C-C++ interation
 
     GError *error = NULL;
@@ -78,7 +77,6 @@ void QueryPrivateData::setreadycb(GObject *obj, GAsyncResult *result, QueryPriva
     if (!tp_account_is_valid(self->_account)) {
         throw new Error("Selected account is not valid!");
     }
-#endif
 }
 
 TplLogManager* QueryPrivateData::logmanager() const
