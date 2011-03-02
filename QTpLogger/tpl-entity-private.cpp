@@ -31,10 +31,10 @@ EntityPrivate::EntityPrivate(TplEntity *chat)
 {
     if (this->first_object)
     {
-		tplToCorrespondantWhoisHash[TPL_ENTITY_UNKNOWN] = Entity::undefined;
-		tplToCorrespondantWhoisHash[TPL_ENTITY_CONTACT] = Entity::contact;
-		tplToCorrespondantWhoisHash[TPL_ENTITY_GROUP] = Entity::group;
-		tplToCorrespondantWhoisHash[TPL_ENTITY_SELF] = Entity::self;
+        tplToCorrespondantWhoisHash[TPL_ENTITY_UNKNOWN] = Entity::undefined;
+        tplToCorrespondantWhoisHash[TPL_ENTITY_CONTACT] = Entity::contact;
+        tplToCorrespondantWhoisHash[TPL_ENTITY_GROUP] = Entity::group;
+        tplToCorrespondantWhoisHash[TPL_ENTITY_SELF] = Entity::self;
 
         this->first_object = false;
     }

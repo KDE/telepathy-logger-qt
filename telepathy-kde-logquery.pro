@@ -43,6 +43,7 @@ HEADERS += QTpLogger/tpl-chat-exists-query.h \
            QTpLogger/tpl-entry-private.h \
            QTpLogger/tpl-entity.h \
            QTpLogger/tpl-entity-private.h \
+           QTpLogger/tpl-entity-text-private.h \
            \
            QTpLogger/tpl-debug.h \
            \
@@ -62,6 +63,7 @@ SOURCES += QTpLogger/tpl-chat-exists-query.cpp \
            QTpLogger/tpl-query-private.cpp \
            QTpLogger/tpl-entry-private.cpp \
            QTpLogger/tpl-entry.cpp \
+           QTpLogger/tpl-entry-text-private.cpp \
            QTpLogger/tpl-entity-private.cpp \
            QTpLogger/tpl-entity.cpp \
            \

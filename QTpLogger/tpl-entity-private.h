@@ -33,21 +33,21 @@ namespace QTpLogger
 class EntityPrivate
 {
 public:
-	EntityPrivate(TplEntity *chat);
-	~EntityPrivate();
+    EntityPrivate(TplEntity *chat);
+    ~EntityPrivate();
 
     QString alias() const;
     QString id() const;
     QString avatar() const;
-	Entity::Whois type() const;
+    Entity::Whois type() const;
 
 private:
     QString _alias;
     QString _id;
     QString _avatar;
-	Entity::Whois _type;
+    Entity::Whois _type;
 
-	static QHash<TplEntityType, Entity::Whois> tplToCorrespondantWhoisHash;
+    static QHash<TplEntityType, Entity::Whois> tplToCorrespondantWhoisHash;
     static bool first_object;
 };
 

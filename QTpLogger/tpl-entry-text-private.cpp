@@ -1,6 +1,3 @@
-#ifndef __CORRESPONDANT__
-#define __CORRESPONDANT__
-
 /*
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
  *
@@ -20,37 +17,37 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtCore/QString>
+#include "tpl-entry-text-private.h"
 
-namespace QTpLogger
+#include <glib.h>
+
+using namespace QTpLogger;
+
+EntryTextPrivate::EntryTextPrivate(TplEntryText *tpmessage) :
+    EntryPrivate(reinterpret_cast<TplEntry*>(tpmessage))
 {
+    gchar *gmessage;
 
-class ChatsForAccountQuery;
-class EntityPrivate;
-class EntryPrivate;
+    g_object_get(tpmessage,
+                 "message", &gmessage, "message-type", &this->_type,
+                 "pending-msg-id", &this->_pendingID, NULL);
 
-class Entity
+    this->_message = QString(gmessage);
+
+    g_free(gmessage);
+}
+
+QString EntryTextPrivate::message() const
 {
-public:
-	Entity();
-	~Entity();
+    return this->_message;
+}
 
-    enum Whois { undefined = 0, contact, group, self };
+uint EntryTextPrivate::type() const
+{
+    return this->_type;
+}
 
-    QString alias() const;
-    QString id() const;
-    QString avatar() const;
-    Whois type() const;
-
-private:
-    Entity(EntityPrivate *_d) : d(_d) {}
-
-    friend class EntryPrivate;
-    friend class ChatsForAccountQuery;
-
-    EntityPrivate *d;
-};
-
-} //namespace
-
-#endif // __CORRESPONDANT__
+int EntryTextPrivate::pendingID() const
+{
+    return this->_pendingID;
+}

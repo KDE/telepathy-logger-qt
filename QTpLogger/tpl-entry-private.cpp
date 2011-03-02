@@ -17,8 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "tpl-entry.h"
-
 #include "tpl-entry-private.h"
 #include "tpl-entity-private.h"
 
@@ -29,32 +27,24 @@ bool EntryPrivate::first_object = true;
 QHash<TplEntryDirection, Entry::Direction>
 	EntryPrivate::tplToMessageDirectionHash;
 
-EntryPrivate::EntryPrivate(TplEntryText *tpmessage)
-{
-	EntryPrivate((TplEntry*)tpmessage);
-}
-
 EntryPrivate::EntryPrivate(TplEntry *tpmessage)
 {
     if (this->first_object)
     {
         // Initialises lookup hash (matches Message and TplEntry type codes)
-		tplToMessageDirectionHash[TPL_ENTRY_DIRECTION_NONE] = Entry::undefined;
-		tplToMessageDirectionHash[TPL_ENTRY_DIRECTION_OUT] = Entry::outcoming;
-		tplToMessageDirectionHash[TPL_ENTRY_DIRECTION_IN] = Entry::incoming;
+        tplToMessageDirectionHash[TPL_ENTRY_DIRECTION_NONE] = Entry::undefined;
+        tplToMessageDirectionHash[TPL_ENTRY_DIRECTION_OUT] = Entry::outcoming;
+        tplToMessageDirectionHash[TPL_ENTRY_DIRECTION_IN] = Entry::incoming;
 
         this->first_object = false;
     }
 
-#if 0
-TODO add Message specific props, if possible
-   "message"          gchar*
-   "message-type"     guint
-   "pending-msg-id"   gint
-#endif
-
-gchar *gaccountpath, *gchannel, *gchatid, *glogid;
-    TplEntity *gsender, *greceiver;
+    gchar *gaccountpath;
+    gchar *gchannel;
+    gchar *gchatid;
+    gchar *glogid;
+    TplEntity *gsender;
+    TplEntity *greceiver;
     TplEntryDirection gdirection;
 
     g_object_get(tpmessage,
@@ -72,10 +62,10 @@ gchar *gaccountpath, *gchannel, *gchatid, *glogid;
     // If the value is unknown, QHash automatically returns 0 == Message::undefined
     this->_direction = tplToMessageDirectionHash[gdirection];
 
-	EntityPrivate *psender = new EntityPrivate(gsender);
-	EntityPrivate *preceiver = new EntityPrivate(greceiver);
-	this->_receiver = Entity(preceiver);
-	this->_sender = Entity(psender);
+    EntityPrivate *psender = new EntityPrivate(gsender);
+    EntityPrivate *preceiver = new EntityPrivate(greceiver);
+    this->_receiver = Entity(preceiver);
+    this->_sender = Entity(psender);
 
     g_free(gaccountpath);
     g_free(gchannel);

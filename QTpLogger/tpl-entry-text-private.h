@@ -1,5 +1,5 @@
-#ifndef __CORRESPONDANT__
-#define __CORRESPONDANT__
+#ifndef __ENTRY_TEXT___
+#define __ENTRY_TEXT___
 
 /*
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
@@ -20,37 +20,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <tpl-entry-private.h>
+
+#include <telepathy-logger/entry-text.h>
+
 #include <QtCore/QString>
 
 namespace QTpLogger
 {
 
-class ChatsForAccountQuery;
-class EntityPrivate;
-class EntryPrivate;
-
-class Entity
+class EntryTextPrivate : public EntryPrivate
 {
 public:
-	Entity();
-	~Entity();
+    EntryTextPrivate(TplEntryText *tpmessage);
 
-    enum Whois { undefined = 0, contact, group, self };
+    QString message() const;
+    uint type() const;
+    int pendingID() const;
 
-    QString alias() const;
-    QString id() const;
-    QString avatar() const;
-    Whois type() const;
+    enum PendingStatus { notpending = -1 };
 
 private:
-    Entity(EntityPrivate *_d) : d(_d) {}
-
-    friend class EntryPrivate;
-    friend class ChatsForAccountQuery;
-
-    EntityPrivate *d;
+    QString _message;
+    uint _type;
+    int _pendingID;
 };
 
 } //namespace
 
-#endif // __CORRESPONDANT__
+#endif // __ENTRY_TEXT___

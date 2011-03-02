@@ -23,8 +23,7 @@
 #include "tpl-entry.h"
 #include "tpl-entity.h"
 
-#include <telepathy-logger/entry-text.h>
-
+#include <telepathy-logger/log-manager.h>
 #include <QtCore/QHash>
 
 namespace QTpLogger
@@ -35,10 +34,9 @@ class Entry;
 class EntryPrivate
 {
 public:
-	EntryPrivate(TplEntry *tpmessage);
-	EntryPrivate(TplEntryText *tpmessage);
-	EntryPrivate();
-	~EntryPrivate();
+    EntryPrivate(TplEntry *tpmessage);
+    EntryPrivate();
+    ~EntryPrivate();
 
     TpAccount* account() const;
     long timestamp() const;
@@ -47,9 +45,9 @@ public:
     QString channel() const;
     QString chatid() const;
     QString logid() const;
-	Entry::Direction direction() const;
-	Entity sender() const;
-	Entity receiver() const;
+    Entry::Direction direction() const;
+    Entity sender() const;
+    Entity receiver() const;
 
 private:
     TpAccount* _account;
@@ -59,11 +57,11 @@ private:
     QString _channel;
     QString _chatid;
     QString _logid;
-	Entry::Direction _direction;
-	Entity _sender;
-	Entity _receiver;
+    Entry::Direction _direction;
+    Entity _sender;
+    Entity _receiver;
 
-	static QHash<TplEntryDirection, Entry::Direction> tplToMessageDirectionHash;
+    static QHash<TplEntryDirection, Entry::Direction> tplToMessageDirectionHash;
     static bool first_object;
 };
 
