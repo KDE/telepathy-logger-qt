@@ -3,3 +3,18 @@
 * Implement SearchHit class
 * Test if values returned by Entry building queries are TplEntry or TplEntryText
 * Overload << operators to give a decent debug representation
+
+* Use base class QGlib::Object for glib wrapper objects (Entity, Event, LogManager)
+* Create LogManager class instead of having all classes query classes scattered
+* Port to cmake (might be needed to do codegen for example)
+* Use codegen from Qtgstreamer project to generate needed code for QGlib
+* Port to Tp::PendingOperation subclasses or similar for async ops
+* Use error reporting mechanism in Tp::PendingOperation
+* Change guard headers to something like _QTpLogger_entity_h_HEADER_GUARD_
+* Do not use tabs in source code
+* In general rename tpl-name.h to name.h, although access point header is provided through already created headers like Entity, Query, etc.
+* Convert to telepathy logger 0.2.4 API (now is 0.1)
+* Build library and export lib symbols 
+* Rename QTpLogger namespace to QTpl
+
+* Implement access to Clear log functionality, the gdbus bindings for Clear log operations will be released soon on telepathy-logger
