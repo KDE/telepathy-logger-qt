@@ -21,20 +21,20 @@
  */
 
 // Base types...
-#include "tpl-search-hit.h"
-#include "tpl-entity.h"
-#include "tpl-entry.h"
+#include "search-hit.h"
+#include "entity.h"
+#include "entry.h"
 
 // Query classes...
-#include "tpl-query.h"
-#include "tpl-chat-exists-query.h"
-#include "tpl-conversation-dates-query.h"
-#include "tpl-messages-for-date-query.h"
-#include "tpl-keyword-query.h"
-#include "tpl-chats-for-account-query.h"
-#include "tpl-filter-query.h"
+#include "query.h"
+#include "chat-exists-query.h"
+#include "conversation-dates-query.h"
+#include "messages-for-date-query.h"
+#include "keyword-query.h"
+#include "chats-for-account-query.h"
+#include "filter-query.h"
 
 // Debug...
-#include "tpl-debug.h"
+#include "debug.h"
 
 #endif // __TP_LOG_QUERY__

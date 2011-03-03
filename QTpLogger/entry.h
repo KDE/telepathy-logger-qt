@@ -1,3 +1,6 @@
+#ifndef __MESSAGE__
+#define __MESSAGE__
+
 /*
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
  *
@@ -17,19 +20,43 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "tpl-chat-exists-query.h"
+#include <QTpLogger/Entity>
 
-#include <telepathy-logger/log-manager.h>
+#include <QtCore/QString>
 
-#include "tpl-query-private.h"
-
-using namespace QTpLogger;
-
-void ChatExistsQuery::perform(const QString &chatname, bool isChatRoom)
+namespace QTpLogger
 {
-    // TODO
-    /*
-    Q_EMIT completed(tpl_log_manager_exists(this->d->logmanager(), this->d->account(),
-                                          chatname.toAscii(), isChatRoom));
-                                          */
-}
+
+class EntryPrivate;
+
+class Entry
+{
+public:
+    Entry();
+    ~Entry();
+
+    enum Direction { undefined = 0, incoming, outcoming };
+
+    QString accountpath() const;
+    QString channel() const;
+    QString chatid() const;
+    QString logid() const;
+
+    Direction direction() const;
+    Entity *sender() const;
+    Entity *receiver() const;
+
+    long timestamp() const;
+
+private:
+    Entry(EntryPrivate *_d) : d(_d) {}
+
+    friend class MessagesForDateQuery;
+    friend class FilterQuery;
+
+    EntryPrivate *d;
+};
+
+} //namespace
+
+#endif // __MESSAGE__

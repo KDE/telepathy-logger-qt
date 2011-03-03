@@ -17,14 +17,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "tpl-query-private.h"
+#include "query-private.h"
 
 #include <telepathy-glib/account.h>
 #include <QGlib/Error>
 
 using namespace QTpLogger;
 
-TplLogManager* QueryPrivate::_logmanager = tpl_log_manager_dup_singleton();
+TplLogManager *QueryPrivate::_logmanager = tpl_log_manager_dup_singleton();
 
 QueryPrivate::QueryPrivate(const QString &quotedDbusID)
 {

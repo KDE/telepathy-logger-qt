@@ -1,6 +1,3 @@
-#ifndef __HIT__
-#define __HIT__
-
 /*
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
  *
@@ -20,30 +17,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace QTpLogger
+#include "chat-exists-query.h"
+
+#include <telepathy-logger/log-manager.h>
+
+#include "query-private.h"
+
+using namespace QTpLogger;
+
+void ChatExistsQuery::perform(const QString &chatname, bool isChatRoom)
 {
-
-class TplLogSearchHit;
-
-class SearchHitPrivate
-{
-public:
-	SearchHitPrivate(TplLogSearchHit *hit) { (void)hit; } //TODO unknown type
-};
-
-class SearchHit
-{
-public:
-    SearchHit() {};
-
-private:
-	SearchHit(SearchHitPrivate *_d) : d(_d) {}
-
-    friend class KeywordQuery;
-
-	SearchHitPrivate *d;
-};
-
-} //namespace
-
-#endif // __HIT__
+    // TODO
+    /*
+    Q_EMIT completed(tpl_log_manager_exists(this->d->logmanager(), this->d->account(),
+                                          chatname.toAscii(), isChatRoom));
+                                          */
+}

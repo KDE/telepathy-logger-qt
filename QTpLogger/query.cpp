@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "tpl-query.h"
-#include "tpl-query-private.h"
+#include "query.h"
+#include "query-private.h"
 
 #include <telepathy-logger/log-manager.h>
 

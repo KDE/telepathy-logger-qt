@@ -1,3 +1,6 @@
+#ifndef __MESSAGES_FOR_DATE_QUERY__
+#define __MESSAGES_FOR_DATE_QUERY__
+
 /*
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
  *
@@ -17,37 +20,34 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "tpl-entry-text-private.h"
+#include <QTpLogger/Query>
+#include <QTpLogger/Entry>
 
-#include <glib.h>
+#include <QtCore/QDate>
 
-using namespace QTpLogger;
-
-EntryTextPrivate::EntryTextPrivate(TplEntryText *tpmessage) :
-    EntryPrivate(reinterpret_cast<TplEntry*>(tpmessage))
+namespace QTpLogger
 {
-    gchar *gmessage;
 
-    g_object_get(tpmessage,
-                 "message", &gmessage, "message-type", &this->_type,
-                 "pending-msg-id", &this->_pendingID, NULL);
-
-    this->_message = QString(gmessage);
-
-    g_free(gmessage);
-}
-
-QString EntryTextPrivate::message() const
+class MessagesForDateQuery : public Query
 {
-    return this->_message;
-}
+Q_OBJECT
 
-uint EntryTextPrivate::type() const
-{
-    return this->_type;
-}
+public:
+    explicit MessagesForDateQuery(const QString &dbusid);
 
-int EntryTextPrivate::pendingID() const
-{
-    return this->_pendingID;
-}
+public Q_SLOTS:
+    void perform(const QString &contact, bool ischat = false,
+                 const QDate &date = QDate::currentDate());
+
+Q_SIGNALS:
+    void completed(const QList<Entry> &messages);
+
+private:
+    static void callback(void *logmanager, void *result, MessagesForDateQuery* self);
+
+    QList<Entry> messages;
+};
+
+} //namespace
+
+#endif // __MESSAGES_FOR_DATE_QUERY__

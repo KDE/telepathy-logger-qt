@@ -1,5 +1,5 @@
-#ifndef __MESSAGES_FOR_DATE_QUERY__
-#define __MESSAGES_FOR_DATE_QUERY__
+#ifndef __FILTER_QUERY__
+#define __FILTER_QUERY__
 
 /*
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
@@ -23,31 +23,29 @@
 #include <QTpLogger/Query>
 #include <QTpLogger/Entry>
 
-#include <QtCore/QDate>
-
 namespace QTpLogger
 {
 
-class MessagesForDateQuery : public Query
+class FilterQuery : public Query
 {
+
 Q_OBJECT
 
 public:
-    explicit MessagesForDateQuery(const QString &dbusid);
+    explicit FilterQuery(const QString &dbusid);
 
 public Q_SLOTS:
-    void perform(const QString &contact, bool ischat = false,
-                 const QDate &date = QDate::currentDate());
+    void perform(const QString &chatid, bool ischatroom);
 
 Q_SIGNALS:
-	void completed(const QList<Entry> &messages);
+     void completed(const QList<Entry> &messages);
 
 private:
-    static void callback(void *logmanager, void *result, MessagesForDateQuery* self);
+    static void callback(void *obj, void *result, FilterQuery *self);
 
-	QList<Entry> messages;
+    QList<Entry> messages;
 };
 
 } //namespace
 
-#endif // __MESSAGES_FOR_DATE_QUERY__
+#endif // __FILTER_QUERY__

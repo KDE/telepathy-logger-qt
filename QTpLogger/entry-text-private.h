@@ -1,12 +1,10 @@
-#ifndef __ENTITY__
-#define __ENTITY__
+#ifndef __ENTRY_TEXT___
+#define __ENTRY_TEXT___
 
 /*
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
- * Copyright (C) 2011 Collabora Ltd. <http://www.collabora.co.uk/>
  *
  * @author Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
- * @author Mateu Batle <mateu.batle@collabora.co.uk>
  *
  * This library is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published
@@ -22,37 +20,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "global.h"
-#include <QGlib/Object>
+#include <entry-private.h>
+
+// TODO port to tp-logger 0.2
+//#include <telepathy-logger/entry-text.h>
+
+#include <QtCore/QString>
 
 namespace QTpLogger
 {
 
-enum EntityType
-{
-    EntityTypeUnknown,
-    EntityTypeContat,
-    EntityTypeRoom,
-    EntityTypeSelf
-};
+// TODO port to tp-logger 0.2
+class TplEntryText;
 
-/*! \headerfile tpl-entity.h <QTpLogger/Entity>
- * \brief Wrapper class for TplEntity
- */
-class Entity : public QGlib::Object
+class EntryTextPrivate : public EntryPrivate
 {
-    QTPLOGGER_WRAPPER(Entity)
 public:
+    EntryTextPrivate(TplEntryText *tpmessage);
 
-    QString alias() const;
-    QString identifier() const;
-    EntityType entityType() const;
-    QString avatarToken() const;
+    QString message() const;
+    uint type() const;
+    int pendingID() const;
+
+    enum PendingStatus { notpending = -1 };
+
+private:
+    QString _message;
+    uint _type;
+    int _pendingID;
 };
 
 } //namespace
 
-QTPLOGGER_REGISTER_TYPE(QTpLogger::EntityType)
-QTPLOGGER_REGISTER_TYPE(QTpLogger::Entity)
-
-#endif // __ENTITY__
+#endif // __ENTRY_TEXT___

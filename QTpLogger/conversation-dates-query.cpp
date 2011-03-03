@@ -17,12 +17,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "tpl-conversation-dates-query.h"
+#include "conversation-dates-query.h"
 
 #include <telepathy-logger/log-manager.h>
 
-#include "tpl-query-private.h"
-#include "tpl-query-callback-template.h"
+#include "query-private.h"
+#include "query-callback-template.h"
 
 using namespace QTpLogger;
 

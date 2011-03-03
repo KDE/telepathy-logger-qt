@@ -1,6 +1,3 @@
-#ifndef __MESSAGE__
-#define __MESSAGE__
-
 /*
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
  *
@@ -20,43 +17,37 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QTpLogger/Entity>
+#include "entry-text-private.h"
 
-#include <QtCore/QString>
+#include <glib.h>
 
-namespace QTpLogger
+using namespace QTpLogger;
+
+EntryTextPrivate::EntryTextPrivate(TplEntryText *tpmessage) :
+    EntryPrivate(reinterpret_cast<TplEntry*>(tpmessage))
 {
+    gchar *gmessage;
 
-class EntryPrivate;
+    g_object_get(tpmessage,
+                 "message", &gmessage, "message-type", &this->_type,
+                 "pending-msg-id", &this->_pendingID, NULL);
 
-class Entry
+    this->_message = QString(gmessage);
+
+    g_free(gmessage);
+}
+
+QString EntryTextPrivate::message() const
 {
-public:
-	Entry();
-	~Entry();
+    return this->_message;
+}
 
-    enum Direction { undefined = 0, incoming, outcoming };
+uint EntryTextPrivate::type() const
+{
+    return this->_type;
+}
 
-    QString accountpath() const;
-    QString channel() const;
-    QString chatid() const;
-    QString logid() const;
-
-    Direction direction() const;
-    Entity *sender() const;
-    Entity *receiver() const;
-
-    long timestamp() const;
-
-private:
-	Entry(EntryPrivate *_d) : d(_d) {}
-
-    friend class MessagesForDateQuery;
-    friend class FilterQuery;
-
-	EntryPrivate *d;
-};
-
-} //namespace
-
-#endif // __MESSAGE__
+int EntryTextPrivate::pendingID() const
+{
+    return this->_pendingID;
+}

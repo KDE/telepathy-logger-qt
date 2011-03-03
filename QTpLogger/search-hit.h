@@ -1,5 +1,5 @@
-#ifndef __TPL_DEBUG__
-#define __TPL_DEBUG__
+#ifndef __HIT__
+#define __HIT__
 
 /*
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
@@ -20,34 +20,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QTpLogger/Entity>
-#include <QTpLogger/Entry>
-#include <QTpLogger/SearchHit>
-
-#include <QtCore/QObject>
-#include <QtCore/QDate>
-
 namespace QTpLogger
 {
 
-class Debug : public QObject
+class TplLogSearchHit;
+
+class SearchHitPrivate
 {
-Q_OBJECT
-
 public:
-    Debug() : QObject() {}
-
-public Q_SLOTS:
-    // TODO update to tp-logger 0.2
-    /*
-    void echo(bool yes);
-    void echo(const QList<QDate> &dates);
-	void echo(const QList<Entry> &messages);
-	void echo(const QList<Entity> &buddies);
-    void echo(const QList<SearchHit> &hits);
-    */
+    SearchHitPrivate(TplLogSearchHit *hit) { (void)hit; } //TODO unknown type
 };
 
-} // namespace
+class SearchHit
+{
+public:
+    SearchHit() {};
 
-#endif // __TPL_DEBUG__
+private:
+    SearchHit(SearchHitPrivate *_d) : d(_d) {}
+
+    friend class KeywordQuery;
+
+    SearchHitPrivate *d;
+};
+
+} //namespace
+
+#endif // __HIT__

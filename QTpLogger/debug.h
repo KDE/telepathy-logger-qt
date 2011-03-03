@@ -1,5 +1,5 @@
-#ifndef __FILTER_QUERY__
-#define __FILTER_QUERY__
+#ifndef __TPL_DEBUG__
+#define __TPL_DEBUG__
 
 /*
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
@@ -20,32 +20,34 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QTpLogger/Query>
+#include <QTpLogger/Entity>
 #include <QTpLogger/Entry>
+#include <QTpLogger/SearchHit>
+
+#include <QtCore/QObject>
+#include <QtCore/QDate>
 
 namespace QTpLogger
 {
 
-class FilterQuery : public Query
+class Debug : public QObject
 {
-
 Q_OBJECT
 
 public:
-    explicit FilterQuery(const QString &dbusid);
+    Debug() : QObject() {}
 
 public Q_SLOTS:
-    void perform(const QString &chatid, bool ischatroom);
-
-Q_SIGNALS:
-	 void completed(const QList<Entry> &messages);
-
-private:
-    static void callback(void *obj, void *result, FilterQuery *self);
-
-	QList<Entry> messages;
+    // TODO update to tp-logger 0.2
+    /*
+    void echo(bool yes);
+    void echo(const QList<QDate> &dates);
+    void echo(const QList<Entry> &messages);
+    void echo(const QList<Entity> &buddies);
+    void echo(const QList<SearchHit> &hits);
+    */
 };
 
-} //namespace
+} // namespace
 
-#endif // __FILTER_QUERY__
+#endif // __TPL_DEBUG__

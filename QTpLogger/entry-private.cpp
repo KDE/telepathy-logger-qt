@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "tpl-entry-private.h"
+#include "entry-private.h"
 
 using namespace QTpLogger;
 

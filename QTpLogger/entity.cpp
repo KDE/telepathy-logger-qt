@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "tpl-entity.h"
+#include "entity.h"
 #include <telepathy-logger/entity.h>
 
 using namespace QTpLogger;

@@ -20,8 +20,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "tpl-entry.h"
-#include "tpl-entity.h"
+#include "entry.h"
+#include "entity.h"
 
 #include <telepathy-logger/log-manager.h>
 #include <QtCore/QHash>
