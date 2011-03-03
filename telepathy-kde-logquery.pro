@@ -30,7 +30,7 @@ CONFIG += silent
 
 # External deps config
 CONFIG += link_pkgconfig
-PKGCONFIG += telepathy-logger-0.1 telepathy-glib glib-2.0 QtGLib-2.0
+PKGCONFIG += telepathy-logger-0.2 telepathy-glib glib-2.0 QtGLib-2.0
 
 # Input
 HEADERS += QTpLogger/tpl-chat-exists-query.h \
@@ -51,7 +51,8 @@ HEADERS += QTpLogger/tpl-chat-exists-query.h \
            QTpLogger/tpl-debug.h \
            \
            QTpLogger/tpl-query.h \
-           QTpLogger/tpl-search-hit.h
+           QTpLogger/tpl-search-hit.h \
+           QTpLogger/global.h
 
 SOURCES += QTpLogger/tpl-chat-exists-query.cpp \
            QTpLogger/tpl-chats-for-account-query.cpp \

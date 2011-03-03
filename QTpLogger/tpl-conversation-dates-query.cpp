@@ -40,10 +40,13 @@ ConversationDatesQuery::ConversationDatesQuery(const QString &dbusid) :
 
 void ConversationDatesQuery::perform(const QString &chatid, bool ischatroom)
 {
+    // TODO
     // Perform the asynchronous call...
+    /*
     tpl_log_manager_get_dates_async(this->d->logmanager(), this->d->account(),
                                     chatid.toAscii(), ischatroom,
                                     (GAsyncReadyCallback)this->callback, this);
+                                    */
 }
 
 void ConversationDatesQuery::callback(void *logmanager, void *result,

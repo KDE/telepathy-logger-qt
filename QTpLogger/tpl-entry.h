@@ -43,8 +43,8 @@ public:
     QString logid() const;
 
     Direction direction() const;
-	Entity sender() const;
-	Entity receiver() const;
+    Entity *sender() const;
+    Entity *receiver() const;
 
     long timestamp() const;
 

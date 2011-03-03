@@ -19,7 +19,8 @@
 
 #include "tpl-filter-query.h"
 
-#include <telepathy-logger/entry-text.h>
+// TODO port tp-logger 0.2
+//#include <telepathy-logger/entry-text.h>
 
 #include "tpl-query-private.h"
 #include "tpl-entry-private.h"
@@ -50,10 +51,12 @@ void FilterQuery::perform(const QString &chatid, bool ischatroom)
 
 void FilterQuery::callback(void *logmanager, void *result, FilterQuery* self)
 {
+    // TODO port to tp-logger 0.2
+    /*
     TPL_QUERY_FILL_DATA (logmanager, result,
                          tpl_log_manager_get_filtered_messages_finish,
                          TplEntry, Entry, self->messages);
-
+*/
     // Notify
     Q_EMIT self->completed(self->messages);
 }

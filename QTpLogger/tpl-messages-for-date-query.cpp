@@ -44,16 +44,22 @@ void MessagesForDateQuery::perform(const QString &chat, bool ischat,
     g_date_set_dmy(&gdate, (GDateDay)date.day(),
                    (GDateMonth)date.month(), (GDateYear)date.year());
 
+    // TODO port to tp-logger 0.2
     // Perform the call...
+    /*
     tpl_log_manager_get_messages_for_date_async(this->d->logmanager(), this->d->account(),
             chat.toAscii(), ischat, &gdate, (GAsyncReadyCallback)this->callback, this);
+            */
 }
 
 void MessagesForDateQuery::callback(void *logmanager, void *result,
                                     MessagesForDateQuery *self)
 {
+    // TODO port to tp-logger 0.2
+    /*
     TPL_QUERY_FILL_DATA (logmanager, result, tpl_log_manager_get_messages_for_date_finish,
                          TplEntry, Entry, self->messages);
+                         */
 
     // Notify
     Q_EMIT self->completed(self->messages);

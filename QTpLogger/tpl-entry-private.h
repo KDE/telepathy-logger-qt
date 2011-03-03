@@ -30,6 +30,8 @@ namespace QTpLogger
 {
 
 class Entry;
+// TODO port to tp-logger 0.2
+class TplEntry;
 
 class EntryPrivate
 {
@@ -46,8 +48,8 @@ public:
     QString chatid() const;
     QString logid() const;
     Entry::Direction direction() const;
-    Entity sender() const;
-    Entity receiver() const;
+    Entity *sender() const;
+    Entity *receiver() const;
 
 private:
     TpAccount* _account;
@@ -58,10 +60,11 @@ private:
     QString _chatid;
     QString _logid;
     Entry::Direction _direction;
-    Entity _sender;
-    Entity _receiver;
+    Entity *_sender;
+    Entity *_receiver;
 
-    static QHash<TplEntryDirection, Entry::Direction> tplToMessageDirectionHash;
+    // TODO port to tp-logger 0.2
+    //static QHash<TplEntryDirection, Entry::Direction> tplToMessageDirectionHash;
     static bool first_object;
 };
 

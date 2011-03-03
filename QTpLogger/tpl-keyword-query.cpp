@@ -33,15 +33,21 @@ KeywordQuery::KeywordQuery(const QString &dbusid) : Query(dbusid)
 
 void KeywordQuery::perform(const QString &keyword)
 {
+    // TODO port to tp-logger 0.2
     // Perform the call...
+    /*
     tpl_log_manager_search_async(this->d->logmanager(), keyword.toAscii(),
                                  (GAsyncReadyCallback)this->callback, this);
+                                 */
 }
 
 void KeywordQuery::callback(void *logmanager, void *result, KeywordQuery *self)
 {
+    // TODO port to tp-logger 0.2
+    /*
     TPL_QUERY_FILL_DATA (logmanager, result, tpl_log_manager_search_finish,
                          TplLogSearchHit, SearchHit, self->hits);
+                         */
 
     // Notify
     Q_EMIT self->completed(self->hits);

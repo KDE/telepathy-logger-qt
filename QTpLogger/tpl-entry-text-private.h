@@ -22,12 +22,16 @@
 
 #include <tpl-entry-private.h>
 
-#include <telepathy-logger/entry-text.h>
+// TODO port to tp-logger 0.2
+//#include <telepathy-logger/entry-text.h>
 
 #include <QtCore/QString>
 
 namespace QTpLogger
 {
+
+// TODO port to tp-logger 0.2
+class TplEntryText;
 
 class EntryTextPrivate : public EntryPrivate
 {

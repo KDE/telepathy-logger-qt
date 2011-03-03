@@ -21,7 +21,7 @@
  */
 
 #include <QTpLogger/Query>
-#include <QTpLogger/Entry>
+//#include <QTpLogger/Entry>
 
 namespace QTpLogger
 {
@@ -38,12 +38,14 @@ public Q_SLOTS:
     void perform();
 
 Q_SIGNALS:
-    void completed(const QList<Entity> &chats);
+    // TODO update to tp-logger 0.2
+    //void completed(const QList<Entity> &chats);
 
 private:
     static void callback(void *obj, void *result, ChatsForAccountQuery *self);
 
-    QList<Entity> chats;
+    // TODO update to tp-logger 0.2
+    //QList<Entity> chats;
 };
 
 } //namespace

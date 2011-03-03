@@ -59,14 +59,18 @@ Entry::Direction Entry::direction() const
     return this->d->direction();
 }
 
-Entity Entry::sender() const
+Entity *Entry::sender() const
 {
-    return this->d->sender();
+    // TODO update to tp-logger 0.2
+    //return this->d->sender();
+    return 0;
 }
 
-Entity Entry::receiver() const
+Entity *Entry::receiver() const
 {
-    return this->d->receiver();
+    // TODO update to tp-logger 0.2
+    //return this->d->receiver();
+    return 0;
 }
 
 long Entry::timestamp() const

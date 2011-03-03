@@ -18,23 +18,28 @@
  */
 
 #include "tpl-entry-private.h"
-#include "tpl-entity-private.h"
 
 using namespace QTpLogger;
 
 bool EntryPrivate::first_object = true;
 
+// TODO port to tp-logger 0.2
+/*
 QHash<TplEntryDirection, Entry::Direction>
 	EntryPrivate::tplToMessageDirectionHash;
+        */
 
 EntryPrivate::EntryPrivate(TplEntry *tpmessage)
 {
     if (this->first_object)
     {
+        // TODO port to tp-logger 0.2
+        /*
         // Initialises lookup hash (matches Message and TplEntry type codes)
         tplToMessageDirectionHash[TPL_ENTRY_DIRECTION_NONE] = Entry::undefined;
         tplToMessageDirectionHash[TPL_ENTRY_DIRECTION_OUT] = Entry::outcoming;
         tplToMessageDirectionHash[TPL_ENTRY_DIRECTION_IN] = Entry::incoming;
+        */
 
         this->first_object = false;
     }
@@ -45,12 +50,14 @@ EntryPrivate::EntryPrivate(TplEntry *tpmessage)
     gchar *glogid;
     TplEntity *gsender;
     TplEntity *greceiver;
-    TplEntryDirection gdirection;
+    // TODO port to tp-logger 0.2
+    //TplEntryDirection gdirection;
 
     g_object_get(tpmessage,
                  "account", &this->_account, "account-path", &gaccountpath,
                  "channel-path", &gchannel, "chat-id", &gchatid,
-                 "direction", &gdirection, "log-id", &glogid,
+                 // TODO port to tp-logger 0.2
+                 //"direction", &gdirection, "log-id", &glogid,
                  "receiver", &greceiver, "sender", &gsender,
                  "timestamp", &this->_timestamp, NULL);
 
@@ -60,12 +67,14 @@ EntryPrivate::EntryPrivate(TplEntry *tpmessage)
     this->_logid = QString(glogid);
 
     // If the value is unknown, QHash automatically returns 0 == Message::undefined
-    this->_direction = tplToMessageDirectionHash[gdirection];
+    // TODO port to tp-logger 0.2
+    //this->_direction = tplToMessageDirectionHash[gdirection];
 
-    EntityPrivate *psender = new EntityPrivate(gsender);
-    EntityPrivate *preceiver = new EntityPrivate(greceiver);
-    this->_receiver = Entity(preceiver);
-    this->_sender = Entity(psender);
+    // TODO update to tp-logger 0.2
+    //EntityPrivate *psender = new EntityPrivate(gsender);
+    //EntityPrivate *preceiver = new EntityPrivate(greceiver);
+    //this->_receiver = Entity(preceiver);
+    //this->_sender = Entity(psender);
 
     g_free(gaccountpath);
     g_free(gchannel);
@@ -116,12 +125,16 @@ Entry::Direction EntryPrivate::direction() const
     return this->_direction;
 }
 
-Entity EntryPrivate::sender() const
+Entity *EntryPrivate::sender() const
 {
-    return this->_sender;
+    // TODO update to tp-logger 0.2
+    //return this->_sender;
+    return 0;
 }
 
-Entity EntryPrivate::receiver() const
+Entity *EntryPrivate::receiver() const
 {
-    return this->_receiver;
+    // TODO update to tp-logger 0.2
+    //return this->_receiver;
+    return 0;
 }

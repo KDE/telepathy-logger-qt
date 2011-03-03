@@ -38,11 +38,14 @@ public:
     Debug() : QObject() {}
 
 public Q_SLOTS:
+    // TODO update to tp-logger 0.2
+    /*
     void echo(bool yes);
     void echo(const QList<QDate> &dates);
 	void echo(const QList<Entry> &messages);
 	void echo(const QList<Entity> &buddies);
     void echo(const QList<SearchHit> &hits);
+    */
 };
 
 } // namespace

@@ -23,7 +23,6 @@
 
 #include "tpl-query-private.h"
 #include "tpl-entry-private.h"
-#include "tpl-entity-private.h"
 #include "tpl-query-callback-template.h"
 
 using namespace QTpLogger;
@@ -35,16 +34,23 @@ ChatsForAccountQuery::ChatsForAccountQuery(const QString &dbusid) : Query(dbusid
 void ChatsForAccountQuery::perform()
 {
     // Perform the call...
+    // TODO update to tp-logger 0.2
+    /*
     tpl_log_manager_get_chats_async(this->d->logmanager(), this->d->account(),
-                                    (GAsyncReadyCallback)this->callback, this);
+                                    (GAsyncReadyCallback)this->callback, (gpointer) this);
+                                    */
 }
 
 void ChatsForAccountQuery::callback(void *logmanager, void *result,
                                     ChatsForAccountQuery *self)
 {
+    // TODO update to tp-logger 0.2
+    /*
     TPL_QUERY_FILL_DATA (logmanager, result, tpl_log_manager_get_chats_finish,
                          TplEntity, Entity, self->chats);
+                         */
 
     // Notify
-    Q_EMIT self->completed(self->chats);
+    // TODO update to tp-logger 0.2
+    //Q_EMIT self->completed(self->chats);
 }

@@ -23,6 +23,8 @@
 
 using namespace QTpLogger;
 
+// TODO update to tp-logger 0.2
+/*
 void Debug::echo(bool yes)
 {
     qDebug("Logger::Debug::echo(bool) was called");
@@ -52,10 +54,10 @@ void Debug::echo(const QList<Entry> &messages)
 
 void Debug::echo(const QList<Entity> &buddies)
 {
-    qDebug("Logger::Debug::echo(QList<Correspondant>) was called");
+    qDebug("Logger::Debug::echo(QList<Entity>) was called");
 
     Q_FOREACH (Entity b, buddies) { // TODO overload Message <<
-        qDebug() << b.id();
+        qDebug() << b.identifier();
     }
 }
 
@@ -65,3 +67,4 @@ void Debug::echo(const QList<SearchHit> &hits)
 
     (void)hits; //FIXME
 }
+*/
