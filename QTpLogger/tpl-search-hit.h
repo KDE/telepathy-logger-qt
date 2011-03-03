@@ -28,7 +28,7 @@ class TplLogSearchHit;
 class SearchHitPrivate
 {
 public:
-	SearchHitPrivate(TplLogSearchHit *hit) { (void)hit; } //TODO unknown type
+    SearchHitPrivate(TplLogSearchHit *hit) { (void)hit; } //TODO unknown type
 };
 
 class SearchHit
@@ -37,11 +37,11 @@ public:
     SearchHit() {};
 
 private:
-	SearchHit(SearchHitPrivate *_d) : d(_d) {}
+    SearchHit(SearchHitPrivate *_d) : d(_d) {}
 
     friend class KeywordQuery;
 
-	SearchHitPrivate *d;
+    SearchHitPrivate *d;
 };
 
 } //namespace

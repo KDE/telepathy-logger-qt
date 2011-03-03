@@ -32,8 +32,8 @@ class EntryPrivate;
 class Entity
 {
 public:
-	Entity();
-	~Entity();
+    Entity();
+    ~Entity();
 
     enum Whois { undefined = 0, contact, group, self };
 

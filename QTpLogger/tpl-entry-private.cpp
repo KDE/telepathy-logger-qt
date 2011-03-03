@@ -25,7 +25,7 @@ using namespace QTpLogger;
 bool EntryPrivate::first_object = true;
 
 QHash<TplEntryDirection, Entry::Direction>
-	EntryPrivate::tplToMessageDirectionHash;
+    EntryPrivate::tplToMessageDirectionHash;
 
 EntryPrivate::EntryPrivate(TplEntry *tpmessage)
 {

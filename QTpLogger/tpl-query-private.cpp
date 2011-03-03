@@ -24,7 +24,7 @@
 
 using namespace QTpLogger;
 
-TplLogManager* QueryPrivate::_logmanager = tpl_log_manager_dup_singleton();
+TplLogManager *QueryPrivate::_logmanager = tpl_log_manager_dup_singleton();
 
 QueryPrivate::QueryPrivate(const QString &quotedDbusID)
 {

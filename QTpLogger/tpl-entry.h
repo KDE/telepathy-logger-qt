@@ -32,8 +32,8 @@ class EntryPrivate;
 class Entry
 {
 public:
-	Entry();
-	~Entry();
+    Entry();
+    ~Entry();
 
     enum Direction { undefined = 0, incoming, outcoming };
 
@@ -43,18 +43,18 @@ public:
     QString logid() const;
 
     Direction direction() const;
-	Entity sender() const;
-	Entity receiver() const;
+    Entity sender() const;
+    Entity receiver() const;
 
     long timestamp() const;
 
 private:
-	Entry(EntryPrivate *_d) : d(_d) {}
+    Entry(EntryPrivate *_d) : d(_d) {}
 
     friend class MessagesForDateQuery;
     friend class FilterQuery;
 
-	EntryPrivate *d;
+    EntryPrivate *d;
 };
 
 } //namespace

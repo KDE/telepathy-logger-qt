@@ -38,12 +38,12 @@ public Q_SLOTS:
     void perform(const QString &chatid, bool ischatroom);
 
 Q_SIGNALS:
-	 void completed(const QList<Entry> &messages);
+     void completed(const QList<Entry> &messages);
 
 private:
     static void callback(void *obj, void *result, FilterQuery *self);
 
-	QList<Entry> messages;
+    QList<Entry> messages;
 };
 
 } //namespace
