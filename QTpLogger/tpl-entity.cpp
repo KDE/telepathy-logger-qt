@@ -1,7 +1,9 @@
 /*
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
+ * Copyright (C) 2011 Collabora Ltd. <http://www.collabora.co.uk/>
  *
  * @author Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
+ * @author Mateu Batle <mateu.batle@collabora.co.uk>
  *
  * This library is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published
@@ -18,37 +20,36 @@
  */
 
 #include "tpl-entity.h"
-#include "tpl-entity-private.h"
+#include <telepathy-logger/entity.h>
 
 using namespace QTpLogger;
 
-Entity::Entity() : d(0)
-{
-}
-
-Entity::~Entity()
-{
-    if (this->d) {
-        delete this->d;
-    }
-}
-
 QString Entity::alias() const
 {
-    return this->d->alias();
+    const gchar *s = tpl_entity_get_alias(object<TplEntity>());
+    QString str = QString::fromUtf8(s);
+    g_free((gpointer) s);
+    return str;
 }
 
-QString Entity::id() const
+QString Entity::identifier() const
 {
-    return this->d->id();
+    const gchar *s = tpl_entity_get_identifier(object<TplEntity>());
+    QString str = QString::fromUtf8(s);
+    g_free((gpointer) s);
+    return str;
 }
 
-QString Entity::avatar() const
+EntityType Entity::entityType() const
 {
-    return this->d->avatar();
+    TplEntityType entityType = tpl_entity_get_entity_type(object<TplEntity>());
+    return EntityType(entityType);
 }
 
-Entity::Whois Entity::type() const
+QString Entity::avatarToken() const
 {
-    return this->d->type();
+    const gchar *s = tpl_entity_get_avatar_token(object<TplEntity>());
+    QString str = QString::fromUtf8(s);
+    g_free((gpointer) s);
+    return str;
 }
