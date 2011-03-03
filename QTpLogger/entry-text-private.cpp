@@ -17,34 +17,37 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "tpl-chats-for-account-query.h"
+#include "entry-text-private.h"
 
-#include <telepathy-logger/log-manager.h>
-
-#include "tpl-query-private.h"
-#include "tpl-entry-private.h"
-#include "tpl-entity-private.h"
-#include "tpl-query-callback-template.h"
+#include <glib.h>
 
 using namespace QTpLogger;
 
-ChatsForAccountQuery::ChatsForAccountQuery(const QString &dbusid) : Query(dbusid)
+EntryTextPrivate::EntryTextPrivate(TplEntryText *tpmessage) :
+    EntryPrivate(reinterpret_cast<TplEntry*>(tpmessage))
 {
+    gchar *gmessage;
+
+    g_object_get(tpmessage,
+                 "message", &gmessage, "message-type", &this->_type,
+                 "pending-msg-id", &this->_pendingID, NULL);
+
+    this->_message = QString(gmessage);
+
+    g_free(gmessage);
 }
 
-void ChatsForAccountQuery::perform()
+QString EntryTextPrivate::message() const
 {
-    // Perform the call...
-    tpl_log_manager_get_chats_async(this->d->logmanager(), this->d->account(),
-                                    (GAsyncReadyCallback)this->callback, this);
+    return this->_message;
 }
 
-void ChatsForAccountQuery::callback(void *logmanager, void *result,
-                                    ChatsForAccountQuery *self)
+uint EntryTextPrivate::type() const
 {
-    TPL_QUERY_FILL_DATA (logmanager, result, tpl_log_manager_get_chats_finish,
-                         TplEntity, Entity, self->chats);
+    return this->_type;
+}
 
-    // Notify
-    Q_EMIT self->completed(self->chats);
+int EntryTextPrivate::pendingID() const
+{
+    return this->_pendingID;
 }

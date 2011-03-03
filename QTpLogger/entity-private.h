@@ -1,5 +1,5 @@
-#ifndef __MESSAGE_PRIVATE__
-#define __MESSAGE_PRIVATE__
+#ifndef __CORRESPONDANT_PRIVATE__
+#define __CORRESPONDANT_PRIVATE__
 
 /*
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
@@ -20,51 +20,37 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "tpl-entry.h"
-#include "tpl-entity.h"
+#include "entity.h"
 
 #include <telepathy-logger/log-manager.h>
+
+#include <QtCore/QString>
 #include <QtCore/QHash>
 
 namespace QTpLogger
 {
 
-class Entry;
-
-class EntryPrivate
+class EntityPrivate
 {
 public:
-    EntryPrivate(TplEntry *tpmessage);
-    EntryPrivate();
-    ~EntryPrivate();
+    EntityPrivate(TplEntity *chat);
+    ~EntityPrivate();
 
-    TpAccount* account() const;
-    long timestamp() const;
-
-    QString accountpath() const;
-    QString channel() const;
-    QString chatid() const;
-    QString logid() const;
-    Entry::Direction direction() const;
-    Entity sender() const;
-    Entity receiver() const;
+    QString alias() const;
+    QString id() const;
+    QString avatar() const;
+    Entity::Whois type() const;
 
 private:
-    TpAccount* _account;
-    long _timestamp;
+    QString _alias;
+    QString _id;
+    QString _avatar;
+    Entity::Whois _type;
 
-    QString _accountpath;
-    QString _channel;
-    QString _chatid;
-    QString _logid;
-    Entry::Direction _direction;
-    Entity _sender;
-    Entity _receiver;
-
-    static QHash<TplEntryDirection, Entry::Direction> tplToMessageDirectionHash;
+    static QHash<TplEntityType, Entity::Whois> tplToCorrespondantWhoisHash;
     static bool first_object;
 };
 
 } //namespace
 
-#endif // __MESSAGE_PRIVATE__
+#endif // __CORRESPONDANT_PRIVATE__

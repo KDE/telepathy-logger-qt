@@ -17,13 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "tpl-filter-query.h"
+#include "filter-query.h"
 
 #include <telepathy-logger/entry-text.h>
 
-#include "tpl-query-private.h"
-#include "tpl-entry-private.h"
-#include "tpl-query-callback-template.h"
+#include "query-private.h"
+#include "entry-private.h"
+#include "query-callback-template.h"
 
 using namespace QTpLogger;
 

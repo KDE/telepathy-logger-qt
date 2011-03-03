@@ -1,6 +1,3 @@
-#ifndef __ENTRY_TEXT___
-#define __ENTRY_TEXT___
-
 /*
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
  *
@@ -20,32 +17,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <tpl-entry-private.h>
+#include "chat-exists-query.h"
 
-#include <telepathy-logger/entry-text.h>
+#include <telepathy-logger/log-manager.h>
 
-#include <QtCore/QString>
+#include "query-private.h"
 
-namespace QTpLogger
+using namespace QTpLogger;
+
+void ChatExistsQuery::perform(const QString &chatname, bool isChatRoom)
 {
-
-class EntryTextPrivate : public EntryPrivate
-{
-public:
-    EntryTextPrivate(TplEntryText *tpmessage);
-
-    QString message() const;
-    uint type() const;
-    int pendingID() const;
-
-    enum PendingStatus { notpending = -1 };
-
-private:
-    QString _message;
-    uint _type;
-    int _pendingID;
-};
-
-} //namespace
-
-#endif // __ENTRY_TEXT___
+    Q_EMIT completed(tpl_log_manager_exists(this->d->logmanager(), this->d->account(),
+                                          chatname.toAscii(), isChatRoom));
+}

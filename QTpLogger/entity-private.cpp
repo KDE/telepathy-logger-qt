@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "tpl-entity.h"
-#include "tpl-entity-private.h"
+#include "entity.h"
+#include "entity-private.h"
 
 using namespace QTpLogger;
 

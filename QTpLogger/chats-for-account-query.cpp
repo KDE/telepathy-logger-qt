@@ -1,6 +1,3 @@
-#ifndef __CORRESPONDANT_PRIVATE__
-#define __CORRESPONDANT_PRIVATE__
-
 /*
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
  *
@@ -20,37 +17,34 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "tpl-entity.h"
+#include "chats-for-account-query.h"
 
 #include <telepathy-logger/log-manager.h>
 
-#include <QtCore/QString>
-#include <QtCore/QHash>
+#include "query-private.h"
+#include "entry-private.h"
+#include "entity-private.h"
+#include "query-callback-template.h"
 
-namespace QTpLogger
+using namespace QTpLogger;
+
+ChatsForAccountQuery::ChatsForAccountQuery(const QString &dbusid) : Query(dbusid)
 {
+}
 
-class EntityPrivate
+void ChatsForAccountQuery::perform()
 {
-public:
-    EntityPrivate(TplEntity *chat);
-    ~EntityPrivate();
+    // Perform the call...
+    tpl_log_manager_get_chats_async(this->d->logmanager(), this->d->account(),
+                                    (GAsyncReadyCallback)this->callback, this);
+}
 
-    QString alias() const;
-    QString id() const;
-    QString avatar() const;
-    Entity::Whois type() const;
+void ChatsForAccountQuery::callback(void *logmanager, void *result,
+                                    ChatsForAccountQuery *self)
+{
+    TPL_QUERY_FILL_DATA (logmanager, result, tpl_log_manager_get_chats_finish,
+                         TplEntity, Entity, self->chats);
 
-private:
-    QString _alias;
-    QString _id;
-    QString _avatar;
-    Entity::Whois _type;
-
-    static QHash<TplEntityType, Entity::Whois> tplToCorrespondantWhoisHash;
-    static bool first_object;
-};
-
-} //namespace
-
-#endif // __CORRESPONDANT_PRIVATE__
+    // Notify
+    Q_EMIT self->completed(self->chats);
+}

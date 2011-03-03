@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "tpl-debug.h"
+#include "debug.h"
 
 #include <QtCore/QDebug>
 

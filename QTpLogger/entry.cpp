@@ -17,38 +17,59 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "tpl-entity.h"
-#include "tpl-entity-private.h"
+#include "entry.h"
+#include "entry-private.h"
 
 using namespace QTpLogger;
 
-Entity::Entity() : d(0)
+Entry::Entry() : d(0)
 {
 }
 
-Entity::~Entity()
+Entry::~Entry()
 {
+    // Delete data, if valid...
     if (this->d) {
         delete this->d;
     }
 }
 
-QString Entity::alias() const
+QString Entry::accountpath() const
 {
-    return this->d->alias();
+    return this->d->accountpath();
 }
 
-QString Entity::id() const
+QString Entry::channel() const
 {
-    return this->d->id();
+    return this->d->channel();
 }
 
-QString Entity::avatar() const
+QString Entry::chatid() const
 {
-    return this->d->avatar();
+    return this->d->chatid();
 }
 
-Entity::Whois Entity::type() const
+QString Entry::logid() const
 {
-    return this->d->type();
+    return this->d->logid();
+}
+
+Entry::Direction Entry::direction() const
+{
+    return this->d->direction();
+}
+
+Entity Entry::sender() const
+{
+    return this->d->sender();
+}
+
+Entity Entry::receiver() const
+{
+    return this->d->receiver();
+}
+
+long Entry::timestamp() const
+{
+    return this->d->timestamp();
 }

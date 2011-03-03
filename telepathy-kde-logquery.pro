@@ -33,42 +33,42 @@ CONFIG += link_pkgconfig
 PKGCONFIG += telepathy-logger-0.1 telepathy-glib glib-2.0 QtGLib-2.0
 
 # Input
-HEADERS += QTpLogger/tpl-chat-exists-query.h \
-           QTpLogger/tpl-chats-for-account-query.h \
-           QTpLogger/tpl-conversation-dates-query.h \
-           QTpLogger/tpl-messages-for-date-query.h \
-           QTpLogger/tpl-filter-query.h \
-           QTpLogger/tpl-keyword-query.h \
+HEADERS += QTpLogger/chat-exists-query.h \
+           QTpLogger/chats-for-account-query.h \
+           QTpLogger/conversation-dates-query.h \
+           QTpLogger/messages-for-date-query.h \
+           QTpLogger/filter-query.h \
+           QTpLogger/keyword-query.h \
            \
-           QTpLogger/tpl-query-callback-template.h \
-           QTpLogger/tpl-query-private.h \
-           QTpLogger/tpl-entry-text-private.h \
-           QTpLogger/tpl-entry.h \
-           QTpLogger/tpl-entry-private.h \
-           QTpLogger/tpl-entity.h \
-           QTpLogger/tpl-entity-private.h \
+           QTpLogger/query-callback-template.h \
+           QTpLogger/query-private.h \
+           QTpLogger/entry-text-private.h \
+           QTpLogger/entry.h \
+           QTpLogger/entry-private.h \
+           QTpLogger/entity.h \
+           QTpLogger/entity-private.h \
            \
-           QTpLogger/tpl-debug.h \
+           QTpLogger/debug.h \
            \
-           QTpLogger/tpl-query.h \
-           QTpLogger/tpl-search-hit.h
+           QTpLogger/query.h \
+           QTpLogger/search-hit.h
 
-SOURCES += QTpLogger/tpl-chat-exists-query.cpp \
-           QTpLogger/tpl-chats-for-account-query.cpp \
-           QTpLogger/tpl-conversation-dates-query.cpp \
-           QTpLogger/tpl-debug.cpp \
-           QTpLogger/tpl-filter-query.cpp \
-           QTpLogger/tpl-keyword-query.cpp \
-           QTpLogger/tpl-messages-for-date-query.cpp \
-           QTpLogger/tpl-query.cpp \
-           QTpLogger/tpl-search-hit.cpp \
+SOURCES += QTpLogger/chat-exists-query.cpp \
+           QTpLogger/chats-for-account-query.cpp \
+           QTpLogger/conversation-dates-query.cpp \
+           QTpLogger/debug.cpp \
+           QTpLogger/filter-query.cpp \
+           QTpLogger/keyword-query.cpp \
+           QTpLogger/messages-for-date-query.cpp \
+           QTpLogger/query.cpp \
+           QTpLogger/search-hit.cpp \
            \
-           QTpLogger/tpl-query-private.cpp \
-           QTpLogger/tpl-entry-private.cpp \
-           QTpLogger/tpl-entry.cpp \
-           QTpLogger/tpl-entry-text-private.cpp \
-           QTpLogger/tpl-entity-private.cpp \
-           QTpLogger/tpl-entity.cpp \
+           QTpLogger/query-private.cpp \
+           QTpLogger/entry-private.cpp \
+           QTpLogger/entry.cpp \
+           QTpLogger/entry-text-private.cpp \
+           QTpLogger/entity-private.cpp \
+           QTpLogger/entity.cpp \
            \
            tests/dummy-main.cpp
 
