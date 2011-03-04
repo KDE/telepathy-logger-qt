@@ -21,8 +21,28 @@
 
 #include "entity.h"
 #include <telepathy-logger/entity.h>
+#include <TelepathyQt4/Account>
 
 using namespace QTpLogger;
+
+EntityPtr Entity::create(const char *id, EntityType type, const char *alias, const char *avatarToken)
+{
+    TplEntity *entity = tpl_entity_new(id, (TplEntityType) type, alias, avatarToken);
+    return EntityPtr::wrap(entity, false);
+}
+
+EntityPtr Entity::create(Tp::ContactPtr contact, EntityType type)
+{
+    // TODO how to go from Tp::ContactPtr to TpContact
+    TplEntity *entity = tpl_entity_new_from_tp_contact(0, (TplEntityType) type);
+    return EntityPtr::wrap(entity, false);
+}
+
+EntityPtr Entity::create(const char *room_id)
+{
+    TplEntity *entity = tpl_entity_new_from_room_id(room_id);
+    return EntityPtr::wrap(entity, false);
+}
 
 QString Entity::alias() const
 {

@@ -22,8 +22,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "global.h"
 #include <QGlib/Object>
+#include "global.h"
+#include <TelepathyQt4/Types>
 
 namespace QTpLogger
 {
@@ -43,6 +44,10 @@ class Entity : public QGlib::Object
 {
     QTPLOGGER_WRAPPER(Entity)
 public:
+    static EntityPtr create(const char *id, EntityType type, const char *alias, const char *avatarToken);
+    static EntityPtr create(Tp::ContactPtr contact, EntityType type);
+    static EntityPtr create(const char *room_id);
+
     QString alias() const;
     QString identifier() const;
     EntityType entityType() const;
