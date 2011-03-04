@@ -7,6 +7,7 @@
 * Use base class QGlib::Object for glib wrapper objects (LogManager)
 * Convert to telepathy logger 0.2.4 API (now it is based on 0.1)
 
+* Create Job class for query (very similar to Attica::Job for example), Tp::PendingOperation not working because of constructor with sharedptr
 * Create LogManager class instead of having all classes query classes scattered
 * Port to cmake (might be needed to do codegen for example)
 * Use codegen from Qtgstreamer project to generate needed code for QGlib
