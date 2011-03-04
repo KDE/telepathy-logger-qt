@@ -22,8 +22,8 @@
 #ifndef __PENDING_DATES_QUERY__
 #define __PENDING_DATES_QUERY__
 
-#include "log-manager.h"
-#include <TelepathyQt4/PendingOperation>
+#include <QTpLogger/LogManager>
+#include <QTpLogger/PendingOperation>
 #include <QtCore/QList>
 #include <QtCore/QDate>
 
@@ -32,7 +32,7 @@ namespace QTpLogger
 
 typedef QList<QDate> QDateList;
 
-class PendingDatesQuery : public Tp::PendingOperation
+class PendingDatesQuery : public QTpLogger::PendingOperation
 {
     Q_OBJECT
     Q_DISABLE_COPY(PendingDatesQuery);
@@ -40,7 +40,7 @@ class PendingDatesQuery : public Tp::PendingOperation
 public:
     ~PendingDatesQuery();
 
-    void start();
+    virtual void start();
     QDateList dates() const;
 
 private:

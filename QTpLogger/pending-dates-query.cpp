@@ -20,8 +20,12 @@
 
 #include "pending-dates-query.h"
 #include "entity.h"
-#include "global.h"
+#include "constants.h"
 #include <TelepathyQt4/Account>
+#include "telepathy-logger/log-manager.h"
+#include <QDebug>
+#include <glib/gerror.h>
+#include <glib/gdate.h>
 
 using namespace QTpLogger;
 
@@ -37,8 +41,8 @@ struct QTPLOGGER_NO_EXPORT PendingDatesQuery::Private
 };
 
 PendingDatesQuery::PendingDatesQuery(LogManagerPtr manager, Tp::AccountPtr account, EntityPtr entity, EventTypeMask typeMask)
-    : PendingOperation(manager.operator ->()),
-      mPriv(new Private)
+    : PendingOperation(),
+      mPriv(new Private())
 {
     mPriv->manager = manager;
     mPriv->account = account;
@@ -58,7 +62,7 @@ void PendingDatesQuery::start()
         0, // mPriv->account
         mPriv->entity,
         mPriv->typeMask,
-        (GAsyncReadyCallback) callback,
+        (GAsyncReadyCallback) Private::callback,
         this);
 }
 
@@ -77,17 +81,37 @@ QDateList PendingDatesQuery::dates() const
 
 void PendingDatesQuery::Private::callback(void *logManager, void *result, PendingDatesQuery *self)
 {
-    TPL_QUERY_FILL_DATA_QT_NATIVE (logManager, result,
-                                   tpl_log_manager_get_dates_finish,
-                                   GDate, QGDate, self->mPriv->dates);
+    if (!TPL_IS_LOG_MANAGER(logManager)) {
+        self->setFinishedWithError(QTPLOGGER_ERROR_INVALID_ARGUMENT, "Invalid log manager in callback");
+        return;
+    }
+
+    if (!G_IS_ASYNC_RESULT(result)) {
+        self->setFinishedWithError(QTPLOGGER_ERROR_INVALID_ARGUMENT, "Invalid async result in callback");
+        return;
+    }
+
+    GList *dates = NULL;
+    GError *error = NULL;
+    gboolean success = tpl_log_manager_get_dates_finish(TPL_LOG_MANAGER(logManager), G_ASYNC_RESULT(result), &dates, &error);
+    if (error) {
+        self->setFinishedWithError(QTPLOGGER_ERROR_INVALID_ARGUMENT, error->message);
+        return;
+    }
+
+    if (!success) {
+        self->setFinishedWithError(QTPLOGGER_ERROR_INVALID_ARGUMENT, "Query failed with specific error");
+        return;
+    }
+
+    GList *i;
+    for (i = dates; i; i = i->next) {
+        GDate * item = (GDate *) i->data;
+        self->mPriv->dates << QDate(item->year, item->month, item->day);
+    }
+
+    g_list_foreach(dates, (GFunc) g_date_free, NULL);
+    g_list_free(dates);
 
     self->setFinished();
-}
-
-void ConversationDatesQuery::callback(void *logmanager, void *result,
-                                      ConversationDatesQuery* self)
-{
-    // This is different: QDate is a Qt type :)
-    // Notify
-    Q_EMIT self->completed(self->dates);
 }
