@@ -20,6 +20,7 @@ TEMPLATE = app
 TARGET = QTpLogger-test
 DEPENDPATH += . QTpLogger
 INCLUDEPATH += . QTpLogger
+CONFIG += qdbus
 
 # Disable Qt keywords, necessary to include glib headers.
 # As an option, use -DQT_NO_KEYWORDS in the build system
@@ -42,10 +43,9 @@ HEADERS += QTpLogger/chat-exists-query.h \
            \
            QTpLogger/query-callback-template.h \
            QTpLogger/query-private.h \
-           QTpLogger/entry-text-private.h \
-           QTpLogger/entry.h \
            QTpLogger/entity.h \
-           QTpLogger/entity-private.h \
+           QTpLogger/event.h \
+           QTpLogger/textevent.h \
            \
            QTpLogger/debug.h \
            \
@@ -64,10 +64,9 @@ SOURCES += QTpLogger/chat-exists-query.cpp \
            QTpLogger/search-hit.cpp \
            \
            QTpLogger/query-private.cpp \
-           QTpLogger/entry-private.cpp \
-           QTpLogger/entry.cpp \
-           QTpLogger/entry-text-private.cpp \
            QTpLogger/entity.cpp \
+           QTpLogger/event.cpp \
+           QTpLogger/textevent.cpp \
            \
            tests/dummy-main.cpp
 

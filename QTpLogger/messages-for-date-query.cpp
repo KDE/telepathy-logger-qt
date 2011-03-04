@@ -22,7 +22,6 @@
 #include <telepathy-logger/log-manager.h>
 
 #include "query-private.h"
-#include "entry-private.h"
 
 #include "query-callback-template.h"
 
@@ -62,5 +61,5 @@ void MessagesForDateQuery::callback(void *logmanager, void *result,
                          */
 
     // Notify
-    Q_EMIT self->completed(self->messages);
+    //Q_EMIT self->completed(self->messages);
 }

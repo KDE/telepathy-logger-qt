@@ -1,7 +1,12 @@
+#ifndef __TEXTEVENT__
+#define __TEXTEVENT__
+
 /*
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
+ * Copyright (C) 2011 Collabora Ltd. <http://www.collabora.co.uk/>
  *
  * @author Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
+ * @author Mateu Batle <mateu.batle@collabora.co.uk>
  *
  * This library is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published
@@ -17,37 +22,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "entry-text-private.h"
+#include "global.h"
+#include <QGlib/Object>
+#include <QTpLogger/Event>
+#include <QtCore/QString>
+#include <TelepathyQt4/Types>
+// TODO avoid this depdendency by defining custom enum
+#include <telepathy-glib/enums.h>
 
-#include <glib.h>
-
-using namespace QTpLogger;
-
-EntryTextPrivate::EntryTextPrivate(TplEntryText *tpmessage) :
-    EntryPrivate(reinterpret_cast<TplEntry*>(tpmessage))
+namespace QTpLogger
 {
-    gchar *gmessage;
 
-    g_object_get(tpmessage,
-                 "message", &gmessage, "message-type", &this->_type,
-                 "pending-msg-id", &this->_pendingID, NULL);
-
-    this->_message = QString(gmessage);
-
-    g_free(gmessage);
-}
-
-QString EntryTextPrivate::message() const
+/*! \headerfile textevent.h <QTpLogger/TextEvent>
+ * \brief Wrapper class for TplTextEvent
+ */
+class TextEvent : public Event
 {
-    return this->_message;
-}
+    QTPLOGGER_WRAPPER(TextEvent)
+public:
+    // GType tpl_text_event_get_type (void);
+    TpChannelTextMessageType messageType();
+    QString message();
+};
 
-uint EntryTextPrivate::type() const
-{
-    return this->_type;
-}
+} //namespace
 
-int EntryTextPrivate::pendingID() const
-{
-    return this->_pendingID;
-}
+QTPLOGGER_REGISTER_TYPE(QTpLogger::TextEvent)
+
+#endif // __TEXTEVENT__

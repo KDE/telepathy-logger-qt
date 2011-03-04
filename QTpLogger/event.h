@@ -1,10 +1,12 @@
-#ifndef __ENTRY_TEXT___
-#define __ENTRY_TEXT___
+#ifndef __EVENT__
+#define __EVENT__
 
 /*
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
+ * Copyright (C) 2011 Collabora Ltd. <http://www.collabora.co.uk/>
  *
  * @author Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
+ * @author Mateu Batle <mateu.batle@collabora.co.uk>
  *
  * This library is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published
@@ -20,36 +22,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <entry-private.h>
-
-// TODO port to tp-logger 0.2
-//#include <telepathy-logger/entry-text.h>
-
+#include "global.h"
+#include <QGlib/Object>
+#include <QTpLogger/Entity>
 #include <QtCore/QString>
+#include <TelepathyQt4/Types>
 
 namespace QTpLogger
 {
 
-// TODO port to tp-logger 0.2
-class TplEntryText;
-
-class EntryTextPrivate : public EntryPrivate
+/*! \headerfile event.h <QTpLogger/Event>
+ * \brief Wrapper class for TplEvent
+ */
+class Event : public QGlib::Object
 {
+    QTPLOGGER_WRAPPER(Event)
 public:
-    EntryTextPrivate(TplEntryText *tpmessage);
-
-    QString message() const;
-    uint type() const;
-    int pendingID() const;
-
-    enum PendingStatus { notpending = -1 };
-
-private:
-    QString _message;
-    uint _type;
-    int _pendingID;
+    // GType tpl_event_get_type (void);
+    QDateTime timestamp() const;
+    QString accountPath() const;
+    Tp::AccountPtr account() const;
+    EntityPtr sender() const;
+    EntityPtr receiver() const;
+    bool operator==(Event& rhs) const;
 };
 
 } //namespace
 
-#endif // __ENTRY_TEXT___
+QTPLOGGER_REGISTER_TYPE(QTpLogger::Event)
+
+#endif // __EVENT__

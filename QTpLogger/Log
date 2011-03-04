@@ -23,7 +23,6 @@
 // Base types...
 #include "search-hit.h"
 #include "entity.h"
-#include "entry.h"
 
 // Query classes...
 #include "query.h"

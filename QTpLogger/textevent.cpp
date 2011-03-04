@@ -1,10 +1,9 @@
-#ifndef __MESSAGE__
-#define __MESSAGE__
-
 /*
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
+ * Copyright (C) 2011 Collabora Ltd. <http://www.collabora.co.uk/>
  *
  * @author Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
+ * @author Mateu Batle <mateu.batle@collabora.co.uk>
  *
  * This library is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published
@@ -20,43 +19,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QTpLogger/Entity>
+#include "textevent.h"
+#include <telepathy-logger/text-event.h>
+#include <TelepathyQt4/Account>
 
-#include <QtCore/QString>
+using namespace QTpLogger;
 
-namespace QTpLogger
+TpChannelTextMessageType TextEvent::messageType()
 {
+    TpChannelTextMessageType mt = tpl_text_event_get_message_type(object<TplTextEvent>());
+    return mt;
+}
 
-class EntryPrivate;
-
-class Entry
+QString TextEvent::message()
 {
-public:
-    Entry();
-    ~Entry();
-
-    enum Direction { undefined = 0, incoming, outcoming };
-
-    QString accountpath() const;
-    QString channel() const;
-    QString chatid() const;
-    QString logid() const;
-
-    Direction direction() const;
-    Entity *sender() const;
-    Entity *receiver() const;
-
-    long timestamp() const;
-
-private:
-    Entry(EntryPrivate *_d) : d(_d) {}
-
-    friend class MessagesForDateQuery;
-    friend class FilterQuery;
-
-    EntryPrivate *d;
-};
-
-} //namespace
-
-#endif // __MESSAGE__
+    const gchar *s = tpl_text_event_get_message(object<TplTextEvent>());
+    QString str = QString::fromUtf8(s);
+    g_free((gpointer) s);
+    return str;
+}

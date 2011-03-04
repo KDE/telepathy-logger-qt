@@ -48,10 +48,10 @@ QTPLOGGER_REGISTER_TYPE(QDateTime) //codegen: skip=true
 
 
 #define QTPLOGGER_WRAPPER_QTPLOGGERCLASS_DECLARATION(Class) \
-    typedef struct _QTpLogger##Class QTpLogger##Class;
+    typedef struct _Tpl##Class QTpLogger##Class;
 
 #define QTPLOGGER_WRAPPER_DIFFERENT_QTPLOGGERCLASS_DECLARATION(Class, CClass) \
-    typedef struct _QTpLogger##CClass QTpLogger##Class;
+    typedef struct _Tpl##CClass QTpLogger##Class;
 
 #define QTPLOGGER_WRAPPER_REFPOINTER_DECLARATION(Class) \
     namespace QTpLogger { \
@@ -64,8 +64,8 @@ QTPLOGGER_REGISTER_TYPE(QDateTime) //codegen: skip=true
     QTPLOGGER_WRAPPER_REFPOINTER_DECLARATION(Class)
 
 QTPLOGGER_WRAPPER_DECLARATION(Entity)
-//QTPLOGGER_WRAPPER_DECLARATION(Event)
-//QTPLOGGER_WRAPPER_DECLARATION(TextEvent)
+QTPLOGGER_WRAPPER_DECLARATION(Event)
+QTPLOGGER_WRAPPER_DECLARATION(TextEvent)
 //QTPLOGGER_WRAPPER_DECLARATION(LogManager)
 
 #undef QTPLOGGER_WRAPPER_DECLARATION

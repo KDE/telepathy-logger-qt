@@ -21,7 +21,7 @@
  */
 
 #include <QTpLogger/Entity>
-#include <QTpLogger/Entry>
+//#include <QTpLogger/Event>
 #include <QTpLogger/SearchHit>
 
 #include <QtCore/QObject>

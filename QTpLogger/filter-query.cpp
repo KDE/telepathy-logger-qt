@@ -23,7 +23,6 @@
 //#include <telepathy-logger/entry-text.h>
 
 #include "query-private.h"
-#include "entry-private.h"
 #include "query-callback-template.h"
 
 using namespace QTpLogger;
@@ -58,5 +57,5 @@ void FilterQuery::callback(void *logmanager, void *result, FilterQuery* self)
                          TplEntry, Entry, self->messages);
 */
     // Notify
-    Q_EMIT self->completed(self->messages);
+    //Q_EMIT self->completed(self->messages);
 }

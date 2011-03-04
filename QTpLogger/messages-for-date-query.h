@@ -21,7 +21,7 @@
  */
 
 #include <QTpLogger/Query>
-#include <QTpLogger/Entry>
+//#include <QTpLogger/Entry>
 
 #include <QtCore/QDate>
 
@@ -40,12 +40,12 @@ public Q_SLOTS:
                  const QDate &date = QDate::currentDate());
 
 Q_SIGNALS:
-    void completed(const QList<Entry> &messages);
+    //void completed(const QList<Entry> &messages);
 
 private:
     static void callback(void *logmanager, void *result, MessagesForDateQuery* self);
 
-    QList<Entry> messages;
+    //QList<Entry> messages;
 };
 
 } //namespace
