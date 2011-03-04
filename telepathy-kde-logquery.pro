@@ -46,6 +46,8 @@ HEADERS += QTpLogger/chat-exists-query.h \
            QTpLogger/entity.h \
            QTpLogger/event.h \
            QTpLogger/text-event.h \
+           QTpLogger/log-manager.h \
+           QTpLogger/global.h \
            \
            QTpLogger/debug.h \
            \
@@ -66,6 +68,7 @@ SOURCES += QTpLogger/chat-exists-query.cpp \
            QTpLogger/entity.cpp \
            QTpLogger/event.cpp \
            QTpLogger/text-event.cpp \
+           QTpLogger/log-manager.cpp \
            \
            tests/dummy-main.cpp
 
