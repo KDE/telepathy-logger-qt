@@ -1,3 +1,6 @@
+#ifndef __TEXTEVENT__
+#define __TEXTEVENT__
+
 /*
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
  * Copyright (C) 2011 Collabora Ltd. <http://www.collabora.co.uk/>
@@ -19,22 +22,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "textevent.h"
-#include <telepathy-logger/text-event.h>
-#include <TelepathyQt4/Account>
+#include "global.h"
+#include <QGlib/Object>
+#include <QTpLogger/Event>
+#include <QtCore/QString>
+#include <TelepathyQt4/Types>
+// TODO avoid this depdendency by defining custom enum
+#include <telepathy-glib/enums.h>
 
-using namespace QTpLogger;
-
-TpChannelTextMessageType TextEvent::messageType()
+namespace QTpLogger
 {
-    TpChannelTextMessageType mt = tpl_text_event_get_message_type(object<TplTextEvent>());
-    return mt;
-}
 
-QString TextEvent::message()
+/*! \headerfile text-event.h <QTpLogger/TextEvent>
+ * \brief Wrapper class for TplTextEvent
+ */
+class TextEvent : public Event
 {
-    const gchar *s = tpl_text_event_get_message(object<TplTextEvent>());
-    QString str = QString::fromUtf8(s);
-    g_free((gpointer) s);
-    return str;
-}
+    QTPLOGGER_WRAPPER(TextEvent)
+public:
+    // GType tpl_text_event_get_type (void);
+    TpChannelTextMessageType messageType();
+    QString message();
+};
+
+} //namespace
+
+QTPLOGGER_REGISTER_TYPE(QTpLogger::TextEvent)
+
+#endif // __TEXTEVENT__

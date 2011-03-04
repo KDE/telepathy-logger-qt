@@ -37,7 +37,7 @@ enum EntityType
     EntityTypeSelf
 };
 
-/*! \headerfile tpl-entity.h <QTpLogger/Entity>
+/*! \headerfile entity.h <QTpLogger/Entity>
  * \brief Wrapper class for TplEntity
  */
 class Entity : public QGlib::Object

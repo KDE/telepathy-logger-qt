@@ -40,18 +40,17 @@ HEADERS += QTpLogger/chat-exists-query.h \
            QTpLogger/messages-for-date-query.h \
            QTpLogger/filter-query.h \
            QTpLogger/keyword-query.h \
-           \
            QTpLogger/query-callback-template.h \
            QTpLogger/query-private.h \
+           \
            QTpLogger/entity.h \
            QTpLogger/event.h \
-           QTpLogger/textevent.h \
+           QTpLogger/text-event.h \
            \
            QTpLogger/debug.h \
            \
            QTpLogger/query.h \
-           QTpLogger/search-hit.h \
-           QTpLogger/global.h
+           QTpLogger/search-hit.h
 
 SOURCES += QTpLogger/chat-exists-query.cpp \
            QTpLogger/chats-for-account-query.cpp \
@@ -62,11 +61,11 @@ SOURCES += QTpLogger/chat-exists-query.cpp \
            QTpLogger/messages-for-date-query.cpp \
            QTpLogger/query.cpp \
            QTpLogger/search-hit.cpp \
-           \
            QTpLogger/query-private.cpp \
+           \
            QTpLogger/entity.cpp \
            QTpLogger/event.cpp \
-           QTpLogger/textevent.cpp \
+           QTpLogger/text-event.cpp \
            \
            tests/dummy-main.cpp
 
