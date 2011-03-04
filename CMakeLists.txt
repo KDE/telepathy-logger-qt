@@ -1,0 +1,29 @@
+# Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
+#
+# @author Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
+#
+# This library is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published
+# by the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>
+
+project (telepathy-qt4-logger)
+
+cmake_minimum_required (VERSION 2.8)
+
+find_package (Qt 4.7.0 REQUIRED)
+# find_package(telepathy-logger-0.1 REQUIRED)
+# find_package(telepathy-glib REQUIRED)
+# find_package(glib-2.0 REQUIRED)
+# find_package(QtGLib-2.0)
+
+add_subdirectory (QTpLogger)
+add_subdirectory (tests)
