@@ -1,6 +1,6 @@
 include(${QT_USE_FILE})
 
-set (tp_q4_logger_SRCS
+set (tp_q4_logger_CXX
      chat-exists-query.cpp
      chats-for-account-query.cpp
      conversation-dates-query.cpp
@@ -26,7 +26,9 @@ set (tp_qt4_logger_MOC_SRCS
      filter-query.h
      keyword-query.h
      search-hit.h
-    )
+     query.h
+     debug.h
+)
 
 set (tp_qt4_logger_INCLUDE_PATHS
      /usr/include/telepathy-logger-0.1
@@ -51,5 +53,5 @@ target_link_libraries (telepathy-qt4-logger
     QtGLib-2.0 QtCore QtGui telepathy-logger
     telepathy-glib xml2 dbus-glib-1 gio-2.0
     dbus-1 gobject-2.0 gmodule-2.0
-    gthread-2.0 -lrt glib-2.0
+    gthread-2.0 rt glib-2.0
 )
