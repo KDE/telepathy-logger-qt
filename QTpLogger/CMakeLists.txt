@@ -30,18 +30,19 @@ set (tp_qt4_logger_MOC_SRCS
      debug.h
 )
 
-set (tp_qt4_logger_INCLUDE_PATHS
-     /usr/include/telepathy-logger-0.1
-     /usr/include/telepathy-1.0
-     /usr/include/libxml2
-     /usr/include/dbus-1.0
-     /usr/include/glib-2.0
-     /usr/lib64/glib-2.0/include
-     /usr/lib64/dbus-1.0/include
-     /usr/include/QtGStreamer
-)
+find_path (GLIB_INCLUDE_PATHS glib.h)
+find_path (DBUS_INCLUDE_PATHS dbus.h)
+find_path (GLIB_CONFIG_PATHS glibconfig.h)
 
-include_directories (${PROJECT_SOURCE_DIR} ${tp_qt4_logger_INCLUDE_PATHS})
+set (TELEPATHY_INCLUDE_PATHS /usr/lib64/glib-2.0/include /usr/include/telepathy-1.0 /usr/include/telepathy-logger-0.1)
+
+find_library (QTGLIB_LIBRARIES QtGLib-2.0)
+find_library (TELEPATHY_LIBRARIES telepathy-logger telepathy-glib)
+find_library (GLIB_AND_CO_LIBRARIES glib-2.0 gio-2.0 gobject-2.0 gmodule-2.0 gthread-2.0)
+find_library (DBUS_LIBRARIES dbus-glib-1 dbus-1)
+find_library (XML_LIBRARIES xml2)
+
+include_directories (${PROJECT_SOURCE_DIR} ${GLIB_INCLUDE_PATHS} ${TELEPATHY_INCLUDE_PATHS} ${DBUS_INCLUDE_PATHS} ${GLIB_CONFIG_PATHS})
 
 add_definitions (-DQT_NO_KEYWORDS)
 
@@ -50,8 +51,7 @@ qt4_wrap_cpp (tp_qt4_logger_MOC_CXX ${tp_qt4_logger_MOC_SRCS})
 add_library (telepathy-qt4-logger SHARED ${tp_qt4_logger_MOC_CXX} ${tp_q4_logger_CXX})
 
 target_link_libraries (telepathy-qt4-logger
-    QtGLib-2.0 QtCore QtGui telepathy-logger
-    telepathy-glib xml2 dbus-glib-1 gio-2.0
-    dbus-1 gobject-2.0 gmodule-2.0
-    gthread-2.0 rt glib-2.0
+    ${QT_LIBRARIES} ${XML_LIBRARIES} rt
+    ${TELEPATHY_LIBRARIES} ${DBUS_LIBRARIES}
+    ${GLIB_AND_CO_LIBRARIES} ${QTGLIB_LIBRARIES}
 )

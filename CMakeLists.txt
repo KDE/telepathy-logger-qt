@@ -20,10 +20,6 @@ project (telepathy-qt4-logger)
 cmake_minimum_required (VERSION 2.8)
 
 find_package (Qt 4.7.0 REQUIRED)
-# find_package(telepathy-logger-0.1 REQUIRED)
-# find_package(telepathy-glib REQUIRED)
-# find_package(glib-2.0 REQUIRED)
-# find_package(QtGLib-2.0)
 
 add_subdirectory (QTpLogger)
 add_subdirectory (tests)
