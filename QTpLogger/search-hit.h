@@ -33,7 +33,7 @@ public:
     SearchHitPrivate(TplLogSearchHit *hit) { (void)hit; } //TODO unknown type
 };
 
-class SearchHit : public QObject
+class SearchHit
 {
 public:
     SearchHit() {}
