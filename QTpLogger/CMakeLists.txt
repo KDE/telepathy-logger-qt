@@ -51,17 +51,14 @@ set (tp_qt4_logger_MOC_SRCS
 )
 
 # Automagically setup include paths for external deps.
-find_package(GLIB2)
-find_package(GObject)
-find_package(DBus)
-find_package(DBusGLib)
-find_package(LibXml2)
-find_package(TelepathyGlib)
-
-# Manually find other deps.
-set (TELEPATHY_LOGGER_INCLUDE_DIR /usr/include/telepathy-1.0 /usr/include/telepathy-logger-0.1 /usr/include/QtGStreamer)
-find_library (TELEPATHY_LOGGER_LIBRARIES telepathy-logger)
-find_library (QTGLIB_LIBRARIES QtGLib-2.0)
+find_package(GLIB2 REQUIRED)
+find_package(GObject REQUIRED)
+find_package(DBus REQUIRED)
+find_package(DBusGLib REQUIRED)
+find_package(LibXml2 REQUIRED)
+find_package(TelepathyGlib REQUIRED)
+find_package(QtGLib REQUIRED)
+find_package(TelepathyLogger REQUIRED)
 
 # Make tpl-qt4 to include all the paths above.
 include_directories (
@@ -73,6 +70,7 @@ include_directories (
     ${DBUS_GLIB_INCLUDE_DIR}
     ${TELEPATHY_GLIB_INCLUDE_DIR}
     ${TELEPATHY_LOGGER_INCLUDE_DIR}
+    ${QTGLIB_INCLUDE_DIR}
 )
 
 # Compile MOC srcs.
@@ -88,7 +86,7 @@ add_library (telepathy-qt4-logger SHARED
 
 # Link against all deps above (to check for linker errors)
 target_link_libraries (telepathy-qt4-logger
-    ${QT_LIBRARIES} 
+    ${QT_LIBRARIES}
     ${GLIB2_LIBRARIES}
     ${GOBJECT_LIBRARIES}
     ${LIBXML2_LIBRARIES}

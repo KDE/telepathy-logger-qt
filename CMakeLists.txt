@@ -19,6 +19,7 @@ project (telepathy-qt4-logger)
 
 cmake_minimum_required (VERSION 2.8)
 
+# Activate debug symbols generation
 set(CMAKE_CXX_FLAGS "-g -Wall")
 
 set (CMAKE_MODULE_PATH
