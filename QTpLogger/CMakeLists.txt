@@ -46,52 +46,38 @@ set (tp_qt4_logger_MOC_SRCS
      messages-for-date-query.h
      filter-query.h
      keyword-query.h
-     search-hit.h
      query.h
      debug.h
 )
 
-# Setup include paths for external deps. TODO
-set (GLIB_INCLUDE_PATHS /usr/include/glib-2.0 /usr/lib64/glib-2.0/include)
-set (DBUS_INCLUDE_PATHS /usr/include/dbus-1.0 /usr/lib64/dbus-1.0/include)
-set (QGLIB_INCLUDE_PATHS /usr/include/QtGStreamer /usr/include/QtCore /usr/include/glib-2.0 /usr/lib64/glib-2.0/include)
-set (TELEPATHY_INCLUDE_PATHS /usr/lib64/glib-2.0/include /usr/include/telepathy-1.0 /usr/include/telepathy-logger-0.1)
+# Automagically setup include paths for external deps.
+find_package(GLIB2)
+find_package(GObject)
+find_package(DBus)
+find_package(DBusGLib)
+find_package(LibXml2)
+find_package(TelepathyGlib)
 
-# Setup linker paths.
-find_library (QTGLIB_LIBRARIES
-    QtGLib-2.0
-)
-find_library (TELEPATHY_LIBRARIES
-    telepathy-logger
-    telepathy-glib
-)
-find_library (GLIB_AND_CO_LIBRARIES
-    glib-2.0
-    gio-2.0
-    gobject-2.0
-    gmodule-2.0
-    gthread-2.0
-)
-find_library (DBUS_LIBRARIES
-    dbus-glib-1
-    dbus-1
-)
-find_library (XML_LIBRARIES
-    xml2
-)
+# Manually find other deps.
+set (TELEPATHY_LOGGER_INCLUDE_DIR /usr/include/telepathy-1.0 /usr/include/telepathy-logger-0.1 /usr/include/QtGStreamer)
+find_library (TELEPATHY_LOGGER_LIBRARIES telepathy-logger)
+find_library (QTGLIB_LIBRARIES QtGLib-2.0)
 
 # Make tpl-qt4 to include all the paths above.
 include_directories (
     ${PROJECT_SOURCE_DIR}
-    ${GLIB_INCLUDE_PATHS}
-    ${TELEPATHY_INCLUDE_PATHS}
-    ${QGLIB_INCLUDE_PATHS}
-    ${DBUS_INCLUDE_PATHS}
+    ${GLIB2_INCLUDE_DIR}
+    ${GOBJECT_INCLUDE_DIR}
+    ${LIBXML2_INCLUDE_DIR}
+    ${DBUS_INCLUDE_DIR}
+    ${DBUS_GLIB_INCLUDE_DIR}
+    ${TELEPATHY_GLIB_INCLUDE_DIR}
+    ${TELEPATHY_LOGGER_INCLUDE_DIR}
 )
 
-# Compile MOX srcs.
+# Compile MOC srcs.
 qt4_wrap_cpp (tp_qt4_logger_MOC_CXX
-  ${tp_qt4_logger_MOC_SRCS}
+    ${tp_qt4_logger_MOC_SRCS}
 )
 
 # Compile and link as a shared object.
@@ -102,7 +88,13 @@ add_library (telepathy-qt4-logger SHARED
 
 # Link against all deps above (to check for linker errors)
 target_link_libraries (telepathy-qt4-logger
-    ${QT_LIBRARIES} ${XML_LIBRARIES} rt
-    ${TELEPATHY_LIBRARIES} ${DBUS_LIBRARIES}
-    ${GLIB_AND_CO_LIBRARIES} ${QTGLIB_LIBRARIES}
+    ${QT_LIBRARIES} 
+    ${GLIB2_LIBRARIES}
+    ${GOBJECT_LIBRARIES}
+    ${LIBXML2_LIBRARIES}
+    ${DBUS_LIBRARIES}
+    ${DBUS_GLIB_LIBRARIES}
+    ${TELEPATHY_GLIB_LIBRARIES}
+    ${TELEPATHY_LOGGER_LIBRARIES}
+    ${QTGLIB_LIBRARIES}
 )

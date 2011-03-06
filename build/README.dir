@@ -1,0 +1,5 @@
+Here will go temporary build files and built binaries.
+
+Please cd to this directory, then issue:
+
+cmake .. && make
