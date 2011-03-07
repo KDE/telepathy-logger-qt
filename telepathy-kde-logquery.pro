@@ -31,7 +31,7 @@ CONFIG += silent
 
 # External deps config
 CONFIG += link_pkgconfig
-PKGCONFIG += telepathy-logger-0.2 telepathy-glib glib-2.0 QtGLib-2.0
+PKGCONFIG += telepathy-logger-0.2 telepathy-glib glib-2.0 QtGLib-2.0 TelepathyQt4
 
 # Input
 HEADERS += QTpLogger/chat-exists-query.h \
@@ -49,6 +49,7 @@ HEADERS += QTpLogger/chat-exists-query.h \
            QTpLogger/log-manager.h \
            QTpLogger/pending-operation.h \
            QTpLogger/pending-dates-query.h \
+           QTpLogger/pending-tpcontacts-query.h \
            QTpLogger/global.h \
            QTpLogger/constants.h \
            \
@@ -74,6 +75,7 @@ SOURCES += QTpLogger/chat-exists-query.cpp \
            QTpLogger/log-manager.cpp \
            QTpLogger/pending-operation.cpp \
            QTpLogger/pending-dates-query.cpp \
+           QTpLogger/pending-tpcontacts-query.cpp \
            \
            tests/dummy-main.cpp
 
