@@ -96,6 +96,7 @@ void PendingDatesQuery::Private::callback(void *logManager, void *result, Pendin
     gboolean success = tpl_log_manager_get_dates_finish(TPL_LOG_MANAGER(logManager), G_ASYNC_RESULT(result), &dates, &error);
     if (error) {
         self->setFinishedWithError(QTPLOGGER_ERROR_INVALID_ARGUMENT, error->message);
+        g_error_free(error);
         return;
     }
 
