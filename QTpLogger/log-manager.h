@@ -40,7 +40,7 @@ enum EventTypeMask
     EventTypeMaskAny = 0xffff
 };
 
-class PendingDatesQuery;
+class PendingDates;
 
 //TODO
 /*
@@ -67,7 +67,7 @@ public:
     //GType tpl_log_manager_get_type (void);
     bool exists(Tp::AccountPtr account, EntityPtr target, EventTypeMask type) const;
 
-    //PendingDatesQuery *queryDates(Tp::AccountPtr account, EntityPtr entity, EventTypeMask typeMask);
+    PendingDates *queryDates(Tp::AccountPtr account, EntityPtr entity, EventTypeMask typeMask);
     //PendingEventsQuery *queryEvents() const;
     //PendingEventsQuery *queryFilteredEvents() const;
     //PendingEntitiesQuery *queryEntities() const;

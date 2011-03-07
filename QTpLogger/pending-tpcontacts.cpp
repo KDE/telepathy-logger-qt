@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "pending-tpcontacts-query.h"
+#include "pending-tpcontacts.h"
 #include "constants.h"
 #include <TelepathyQt4/Account>
 #include <TelepathyQt4/ReferencedHandles>
@@ -30,7 +30,7 @@
 
 using namespace QTpLogger;
 
-struct QTPLOGGER_NO_EXPORT PendingTpContactsQuery::Private
+struct QTPLOGGER_NO_EXPORT PendingTpContacts::Private
 {
     /*
     Private(const ContactPtrList &contactPtrList)
@@ -63,26 +63,26 @@ struct QTPLOGGER_NO_EXPORT PendingTpContactsQuery::Private
             gpointer user_data, GObject *weak_object);
 };
 
-PendingTpContactsQuery::PendingTpContactsQuery(Tp::ContactPtr contact)
+PendingTpContacts::PendingTpContacts(Tp::ContactPtr contact)
     : PendingOperation(),
       mPriv(new Private(contact))
 {
 }
 
 /*
-PendingTpContactsQuery::PendingTpContactsQuery(ContactPtrList contactPtrList)
+PendingTpContacts::PendingTpContacts(ContactPtrList contactPtrList)
     : PendingOperation(),
       mPriv(new Private(contactPtrList))
 {
 }
 */
 
-PendingTpContactsQuery::~PendingTpContactsQuery()
+PendingTpContacts::~PendingTpContacts()
 {
     delete mPriv;
 }
 
-void PendingTpContactsQuery::start()
+void PendingTpContacts::start()
 {
     if (mPriv->mContactPtrList.size() <= 0) {
         setFinishedWithError(QTPLOGGER_ERROR_INVALID_ARGUMENT, "No contacts provided");
@@ -148,11 +148,11 @@ void PendingTpContactsQuery::start()
     }
 }
 
-void PendingTpContactsQuery::Private::callback(TpConnection *connection, guint n_contacts,
+void PendingTpContacts::Private::callback(TpConnection *connection, guint n_contacts,
         TpContact * const *contacts, guint n_failed, const TpHandle *failed, const GError *error,
         gpointer user_data, GObject *weak_object)
 {
-    PendingTpContactsQuery *self = (PendingTpContactsQuery *) user_data;
+    PendingTpContacts *self = (PendingTpContacts *) user_data;
 
     if (error != NULL) {
         self->setFinishedWithError(QTPLOGGER_ERROR_INVALID_ARGUMENT, error->message);
@@ -171,13 +171,13 @@ void PendingTpContactsQuery::Private::callback(TpConnection *connection, guint n
     self->setFinished();
 }
 
-TpContact *PendingTpContactsQuery::tpContact() const
+TpContact *PendingTpContacts::tpContact() const
 {
     if (!isFinished()) {
-        qWarning() << "PendingTpContactsQuery::tpContact called before finished, returning 0";
+        qWarning() << "PendingTpContacts::tpContact called before finished, returning 0";
         return 0;
     } else if (!isValid()) {
-        qWarning() << "PendingTpContactsQuery::tpContact called when not valid, returning 0";
+        qWarning() << "PendingTpContacts::tpContact called when not valid, returning 0";
         return 0;
     } else if (mPriv->mNumTpContacts <= 0) {
         return 0;

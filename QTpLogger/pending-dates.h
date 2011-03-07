@@ -1,6 +1,7 @@
 /*
  * This file is part of QTpLogger
  *
+ * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
  * Copyright (C) 2011 Collabora Ltd. <http://www.collabora.co.uk/>
  *
  * This library is free software; you can redistribute it and/or
@@ -18,36 +19,35 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef __PENDING_TPCONTACTS_QUERY__
-#define __PENDING_TPCONTACTS_QUERY__
+#ifndef __PENDING_DATES_QUERY__
+#define __PENDING_DATES_QUERY__
 
 #include <QTpLogger/LogManager>
 #include <QTpLogger/PendingOperation>
 #include <QtCore/QList>
-#include <telepathy-glib/contact.h>
+#include <QtCore/QDate>
 
 namespace QTpLogger
 {
 
-typedef QList<TpContact> TpContactList;
-typedef QList<Tp::ContactPtr> ContactPtrList;
+typedef QList<QDate> QDateList;
 
-class PendingTpContactsQuery : public QTpLogger::PendingOperation
+class PendingDates : public QTpLogger::PendingOperation
 {
     Q_OBJECT
-    Q_DISABLE_COPY(PendingTpContactsQuery);
+    Q_DISABLE_COPY(PendingDates);
 
 public:
-    PendingTpContactsQuery(Tp::ContactPtr contact);
-    //PendingTpContactsQuery(ContactPtrList contactList);
-    ~PendingTpContactsQuery();
+    ~PendingDates();
 
     virtual void start();
-    TpContact *tpContact() const;
-    //TpContact **tpContactList() const;
-    //uint numTpContacts() const;
+    QDateList dates() const;
 
 private:
+    friend class LogManager;
+
+    PendingDates(LogManagerPtr manager, Tp::AccountPtr account, EntityPtr entity, EventTypeMask typeMask);
+
     struct Private;
     friend struct Private;
     Private *mPriv;
@@ -55,4 +55,4 @@ private:
 
 } // QTpLogger
 
-#endif // __PENDING_TPCONTACTS_QUERY__
+#endif // __PENDING_DATES_QUERY__

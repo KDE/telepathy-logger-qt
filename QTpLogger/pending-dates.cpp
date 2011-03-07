@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "pending-dates-query.h"
+#include "pending-dates.h"
 #include "entity.h"
 #include "constants.h"
 #include <TelepathyQt4/Account>
@@ -29,7 +29,7 @@
 
 using namespace QTpLogger;
 
-struct QTPLOGGER_NO_EXPORT PendingDatesQuery::Private
+struct QTPLOGGER_NO_EXPORT PendingDates::Private
 {
     LogManagerPtr manager;
     Tp::AccountPtr account;
@@ -37,10 +37,10 @@ struct QTPLOGGER_NO_EXPORT PendingDatesQuery::Private
     EventTypeMask typeMask;
     QDateList dates;
 
-    static void callback(void *logManager, void *result, PendingDatesQuery *self);
+    static void callback(void *logManager, void *result, PendingDates *self);
 };
 
-PendingDatesQuery::PendingDatesQuery(LogManagerPtr manager, Tp::AccountPtr account, EntityPtr entity, EventTypeMask typeMask)
+PendingDates::PendingDates(LogManagerPtr manager, Tp::AccountPtr account, EntityPtr entity, EventTypeMask typeMask)
     : PendingOperation(),
       mPriv(new Private())
 {
@@ -50,12 +50,12 @@ PendingDatesQuery::PendingDatesQuery(LogManagerPtr manager, Tp::AccountPtr accou
     mPriv->typeMask = typeMask;
 }
 
-PendingDatesQuery::~PendingDatesQuery()
+PendingDates::~PendingDates()
 {
     delete mPriv;
 }
 
-void PendingDatesQuery::start()
+void PendingDates::start()
 {
     // TODO what to do with AccountPtr
     tpl_log_manager_get_dates_async(mPriv->manager,
@@ -66,20 +66,20 @@ void PendingDatesQuery::start()
         this);
 }
 
-QDateList PendingDatesQuery::dates() const
+QDateList PendingDates::dates() const
 {
     if (!isFinished()) {
-        qWarning() << "PendingDatesQuery::dates called before finished, returning empty";
+        qWarning() << "PendingDates::dates called before finished, returning empty";
         return QDateList();
     } else if (!isValid()) {
-        qWarning() << "PendingDatesQuery::dates called when not valid, returning empty";
+        qWarning() << "PendingDates::dates called when not valid, returning empty";
         return QDateList();
     }
 
     return mPriv->dates;
 }
 
-void PendingDatesQuery::Private::callback(void *logManager, void *result, PendingDatesQuery *self)
+void PendingDates::Private::callback(void *logManager, void *result, PendingDates *self)
 {
     if (!TPL_IS_LOG_MANAGER(logManager)) {
         self->setFinishedWithError(QTPLOGGER_ERROR_INVALID_ARGUMENT, "Invalid log manager in callback");
