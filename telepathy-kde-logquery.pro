@@ -49,6 +49,7 @@ HEADERS += QTpLogger/chat-exists-query.h \
            QTpLogger/log-manager.h \
            QTpLogger/pending-operation.h \
            QTpLogger/pending-dates.h \
+           QTpLogger/pending-events.h \
            QTpLogger/pending-tpcontacts.h \
            QTpLogger/global.h \
            QTpLogger/constants.h \
@@ -75,6 +76,7 @@ SOURCES += QTpLogger/chat-exists-query.cpp \
            QTpLogger/log-manager.cpp \
            QTpLogger/pending-operation.cpp \
            QTpLogger/pending-dates.cpp \
+           QTpLogger/pending-events.cpp \
            QTpLogger/pending-tpcontacts.cpp \
            \
            tests/dummy-main.cpp

@@ -41,6 +41,7 @@ enum EventTypeMask
 };
 
 class PendingDates;
+class PendingEvents;
 
 //TODO
 /*
@@ -68,7 +69,7 @@ public:
     bool exists(Tp::AccountPtr account, EntityPtr target, EventTypeMask type) const;
 
     PendingDates *queryDates(Tp::AccountPtr account, EntityPtr entity, EventTypeMask typeMask);
-    //PendingEventsQuery *queryEvents() const;
+    PendingEvents *queryEvents(Tp::AccountPtr account, EntityPtr entity, EventTypeMask typeMask, QDate date);
     //PendingEventsQuery *queryFilteredEvents() const;
     //PendingEntitiesQuery *queryEntities() const;
     //PendingSearch *search() const;

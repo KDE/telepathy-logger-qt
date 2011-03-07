@@ -18,29 +18,34 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "pending-dates.h"
+#include "pending-events.h"
 #include "entity.h"
 #include "constants.h"
+#include "text-event.h"
+#include "event.h"
 #include <TelepathyQt4/Account>
 #include "telepathy-logger/log-manager.h"
+#include "telepathy-logger/event.h"
+#include "telepathy-logger/text-event.h"
 #include <QDebug>
 #include <glib/gerror.h>
 #include <glib/gdate.h>
 
 using namespace QTpLogger;
 
-struct QTPLOGGER_NO_EXPORT PendingDates::Private
+struct QTPLOGGER_NO_EXPORT PendingEvents::Private
 {
     LogManagerPtr manager;
     Tp::AccountPtr account;
     EntityPtr entity;
     EventTypeMask typeMask;
-    QDateList dates;
+    QDate date;
+    EventList events;
 
-    static void callback(void *logManager, void *result, PendingDates *self);
+    static void callback(void *logManager, void *result, PendingEvents *self);
 };
 
-PendingDates::PendingDates(LogManagerPtr manager, Tp::AccountPtr account, EntityPtr entity, EventTypeMask typeMask)
+PendingEvents::PendingEvents(LogManagerPtr manager, Tp::AccountPtr account, EntityPtr entity, EventTypeMask typeMask, const QDate &date)
     : PendingOperation(),
       mPriv(new Private())
 {
@@ -48,38 +53,45 @@ PendingDates::PendingDates(LogManagerPtr manager, Tp::AccountPtr account, Entity
     mPriv->account = account;
     mPriv->entity = entity;
     mPriv->typeMask = typeMask;
+    mPriv->date = date;
 }
 
-PendingDates::~PendingDates()
+PendingEvents::~PendingEvents()
 {
     delete mPriv;
 }
 
-void PendingDates::start()
+void PendingEvents::start()
 {
     // TODO what to do with AccountPtr
-    tpl_log_manager_get_dates_async(mPriv->manager,
+    GDate *gdate = g_date_new_dmy(
+        mPriv->date.day(),
+        (GDateMonth) mPriv->date.month(),
+        mPriv->date.year());
+    tpl_log_manager_get_events_for_date_async(mPriv->manager,
         0, // mPriv->account
         mPriv->entity,
         mPriv->typeMask,
+        gdate,
         (GAsyncReadyCallback) Private::callback,
         this);
+    g_date_free(gdate);
 }
 
-QDateList PendingDates::dates() const
+EventList PendingEvents::events() const
 {
     if (!isFinished()) {
-        qWarning() << "PendingDates::dates called before finished, returning empty";
-        return QDateList();
+        qWarning() << "PendingEvents::events called before finished, returning empty";
+        return EventList();
     } else if (!isValid()) {
-        qWarning() << "PendingDates::dates called when not valid, returning empty";
-        return QDateList();
+        qWarning() << "PendingEvents::events called when not valid, returning empty";
+        return EventList();
     }
 
-    return mPriv->dates;
+    return mPriv->events;
 }
 
-void PendingDates::Private::callback(void *logManager, void *result, PendingDates *self)
+void PendingEvents::Private::callback(void *logManager, void *result, PendingEvents *self)
 {
     if (!TPL_IS_LOG_MANAGER(logManager)) {
         self->setFinishedWithError(QTPLOGGER_ERROR_INVALID_ARGUMENT, "Invalid log manager in callback");
@@ -91,9 +103,9 @@ void PendingDates::Private::callback(void *logManager, void *result, PendingDate
         return;
     }
 
-    GList *dates = NULL;
+    GList *events = NULL;
     GError *error = NULL;
-    gboolean success = tpl_log_manager_get_dates_finish(TPL_LOG_MANAGER(logManager), G_ASYNC_RESULT(result), &dates, &error);
+    gboolean success = tpl_log_manager_get_events_for_date_finish(TPL_LOG_MANAGER(logManager), G_ASYNC_RESULT(result), &events, &error);
     if (error) {
         self->setFinishedWithError(QTPLOGGER_ERROR_INVALID_ARGUMENT, error->message);
         g_error_free(error);
@@ -106,13 +118,19 @@ void PendingDates::Private::callback(void *logManager, void *result, PendingDate
     }
 
     GList *i;
-    for (i = dates; i; i = i->next) {
-        GDate * item = (GDate *) i->data;
-        self->mPriv->dates << QDate(item->year, item->month, item->day);
+    for (i = events; i; i = i->next) {
+        TplEvent * item = (TplEvent *) i->data;
+        if (TPL_IS_TEXT_EVENT(item)) {
+            TextEventPtr eventPtr = TextEventPtr::wrap(TPL_TEXT_EVENT(item), false);
+            self->mPriv->events << eventPtr;
+        } else if (TPL_IS_EVENT(item)) {
+            EventPtr eventPtr = EventPtr::wrap(TPL_EVENT(item), false);
+            self->mPriv->events << eventPtr;
+        }
     }
 
-    g_list_foreach(dates, (GFunc) g_date_free, NULL);
-    g_list_free(dates);
+    //g_list_foreach(dates, (GFunc) , NULL);
+    g_list_free(events);
 
     self->setFinished();
 }
