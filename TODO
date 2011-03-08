@@ -2,7 +2,7 @@
 * Use codegen from Qtgstreamer project to generate needed code for QGlib
 * Change guard headers to something like _QTpLogger_entity_h_HEADER_GUARD_
 * Build library and export lib symbols 
-* Rename QTpLogger namespace to Tpl ?
+* Rename QTpLogger namespace to Tpl ? TelepathyQt4 uses Tp, TelepathyQt4Yell uses Tpy, TelepathyQt4Logger could be Tpl ?
 
 * Implement access to Clear log functionality, the gdbus bindings for Clear log operations will be released soon on telepathy-logger
 * Implement Call Event to be released soon
