@@ -53,6 +53,7 @@ HEADERS += QTpLogger/chat-exists-query.h \
            QTpLogger/pending-tpcontacts.h \
            QTpLogger/global.h \
            QTpLogger/constants.h \
+           QTpLogger/types.h \
            \
            QTpLogger/debug.h \
            \

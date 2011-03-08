@@ -30,8 +30,6 @@
 namespace QTpLogger
 {
 
-typedef QList<QDate> QDateList;
-
 class PendingDates : public QTpLogger::PendingOperation
 {
     Q_OBJECT

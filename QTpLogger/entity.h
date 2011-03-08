@@ -25,17 +25,10 @@
 #include <QGlib/Object>
 #include "global.h"
 #include <TelepathyQt4/Types>
+#include <QTpLogger/Types>
 
 namespace QTpLogger
 {
-
-enum EntityType
-{
-    EntityTypeUnknown,
-    EntityTypeContat,
-    EntityTypeRoom,
-    EntityTypeSelf
-};
 
 /*! \headerfile entity.h <QTpLogger/Entity>
  * \brief Wrapper class for TplEntity

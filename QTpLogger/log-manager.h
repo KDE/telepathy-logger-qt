@@ -25,23 +25,10 @@
 #include <QGlib/Object>
 #include "global.h"
 #include <TelepathyQt4/Types>
+#include <QTpLogger/Types>
 
 namespace QTpLogger
 {
-
-enum LogManagerError
-{
-    LogManagerErrorAddEvent
-};
-
-enum EventTypeMask
-{
-    EventTypeMaskText = 1 << 0,
-    EventTypeMaskAny = 0xffff
-};
-
-class PendingDates;
-class PendingEvents;
 
 //TODO
 /*

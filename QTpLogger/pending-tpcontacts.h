@@ -23,14 +23,12 @@
 
 #include <QTpLogger/LogManager>
 #include <QTpLogger/PendingOperation>
+#include <QTpLogger/Types>
 #include <QtCore/QList>
 #include <telepathy-glib/contact.h>
 
 namespace QTpLogger
 {
-
-typedef QList<TpContact> TpContactList;
-typedef QList<Tp::ContactPtr> ContactPtrList;
 
 class PendingTpContacts : public QTpLogger::PendingOperation
 {

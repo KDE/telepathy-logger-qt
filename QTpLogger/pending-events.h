@@ -30,8 +30,6 @@
 namespace QTpLogger
 {
 
-typedef QList<EventPtr> EventList;
-
 class PendingEvents : public QTpLogger::PendingOperation
 {
     Q_OBJECT
@@ -41,7 +39,7 @@ public:
     ~PendingEvents();
 
     virtual void start();
-    EventList events() const;
+    EventPtrList events() const;
 
 private:
     friend class LogManager;
