@@ -1,14 +1,8 @@
-* Fix exception handling in tpl-query-callback-template.h
-* Implement class FilterQuery
-* Implement SearchHit class
-* Test if values returned by Entry building queries are TplEntry or TplEntryText
-* Overload << operators to give a decent debug representation
-
 * Port to cmake (might be needed to do codegen for example)
 * Use codegen from Qtgstreamer project to generate needed code for QGlib
 * Change guard headers to something like _QTpLogger_entity_h_HEADER_GUARD_
 * Build library and export lib symbols 
-* Rename QTpLogger namespace to QTpl ?
+* Rename QTpLogger namespace to Tpl ?
 
 * Implement access to Clear log functionality, the gdbus bindings for Clear log operations will be released soon on telepathy-logger
 * Implement Call Event to be released soon
