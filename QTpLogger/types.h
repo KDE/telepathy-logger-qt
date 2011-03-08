@@ -44,8 +44,10 @@ enum EventTypeMask
 
 class PendingDates;
 class PendingEvents;
+class PendingEntities;
 
 typedef QList<Tp::ContactPtr> ContactPtrList;
+typedef QList<EntityPtr> EntityPtrList;
 typedef QList<EventPtr> EventPtrList;
 typedef QList<QDate> QDateList;
 

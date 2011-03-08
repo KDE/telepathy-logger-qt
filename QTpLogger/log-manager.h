@@ -61,8 +61,8 @@ public:
     PendingEvents *queryFilteredEvents(Tp::AccountPtr account, EntityPtr entity,
         EventTypeMask typeMask, uint numEvents, LogEventFilter filterFunction,
         void *filterFunctionUserData);
+    PendingEntities *queryEntities(Tp::AccountPtr account);
 
-    //PendingEntitiesQuery *queryEntities() const;
     //PendingSearch *search() const;
 };
 

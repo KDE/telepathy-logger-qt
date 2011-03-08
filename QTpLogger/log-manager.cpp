@@ -22,6 +22,7 @@
 #include "log-manager.h"
 #include "entity.h"
 #include "pending-dates.h"
+#include "pending-entities.h"
 #include "pending-events.h"
 #include <telepathy-logger/log-manager.h>
 #include <TelepathyQt4/Account>
@@ -59,34 +60,12 @@ PendingEvents *LogManager::queryFilteredEvents(Tp::AccountPtr account, EntityPtr
         filterFunction, filterFunctionUserData);
 }
 
+PendingEntities *LogManager::queryEntities(Tp::AccountPtr account)
+{
+    return new PendingEntities(LogManagerPtr(this), account);
+}
+
 #if 0
-PendingEventsQuery LogManager::queryFilteredEvents() const
-{
-    /*
-    void tpl_log_manager_get_filtered_events_async (TplLogManager *manager,
-        TpAccount *account,
-        TplEntity *target,
-        gint type_mask,
-        guint num_events,
-        TplLogEventFilter filter,
-        gpointer filter_user_data,
-        GAsyncReadyCallback callback,
-        gpointer user_data);
-    */
-    return 0;
-}
-
-PendingEntitiesQuery LogManager::queryEntities()
-{
-    /*
-    void tpl_log_manager_get_entities_async (TplLogManager *self,
-        TpAccount *account,
-        GAsyncReadyCallback callback,
-        gpointer user_data);
-    */
-    return 0;
-}
-
 PendingSearch LogManager::search()
 {
     /*
