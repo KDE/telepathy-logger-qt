@@ -40,9 +40,6 @@ struct LogSearchHit
 };
 */
 
-//TODO
-//typedef gboolean (*TplLogEventFilter) (TplEvent *event, gpointer user_data);
-
 /*! \headerfile log-manager.h <QTpLogger/LogManager>
  * \brief Wrapper class for TplLogManager
  */
@@ -68,8 +65,6 @@ public:
 
 } //namespace
 
-QTPLOGGER_REGISTER_TYPE(QTpLogger::LogManagerError)
-QTPLOGGER_REGISTER_TYPE(QTpLogger::EventTypeMask)
 QTPLOGGER_REGISTER_TYPE(QTpLogger::LogManager)
 
 #endif // __LOGMANAGER__

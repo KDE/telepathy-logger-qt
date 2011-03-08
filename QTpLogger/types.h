@@ -20,6 +20,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "global.h"
+
 namespace QTpLogger
 {
 
@@ -45,14 +47,21 @@ enum EventTypeMask
 class PendingDates;
 class PendingEvents;
 class PendingEntities;
+class PendingSearch;
+struct SearchHit;
 
 typedef QList<Tp::ContactPtr> ContactPtrList;
 typedef QList<EntityPtr> EntityPtrList;
 typedef QList<EventPtr> EventPtrList;
 typedef QList<QDate> QDateList;
+typedef QList<SearchHit> SearchHitList;
 
 typedef bool (*LogEventFilter)(EventPtr event, void *user_data);
 
 } //namespace
+
+QTPLOGGER_REGISTER_TYPE(QTpLogger::EntityType)
+QTPLOGGER_REGISTER_TYPE(QTpLogger::LogManagerError)
+QTPLOGGER_REGISTER_TYPE(QTpLogger::EventTypeMask)
 
 #endif // __ENTITY__

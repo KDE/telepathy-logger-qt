@@ -56,15 +56,12 @@ HEADERS += QTpLogger/chat-exists-query.h \
            QTpLogger/constants.h \
            QTpLogger/types.h \
            \
-           QTpLogger/debug.h \
-           \
            QTpLogger/query.h \
            QTpLogger/search-hit.h
 
 SOURCES += QTpLogger/chat-exists-query.cpp \
            QTpLogger/chats-for-account-query.cpp \
            QTpLogger/conversation-dates-query.cpp \
-           QTpLogger/debug.cpp \
            QTpLogger/filter-query.cpp \
            QTpLogger/keyword-query.cpp \
            QTpLogger/messages-for-date-query.cpp \

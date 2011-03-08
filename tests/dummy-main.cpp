@@ -28,7 +28,7 @@ using namespace QTpLogger;
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
-    QTpLogger::Debug e;
+    //QTpLogger::Debug e;
 
     if (argc < 3) {
         qWarning("Must specify a dbus object path as first parameter, and a search term as second!\n");
@@ -45,11 +45,11 @@ int main(int argc, char **argv)
         ChatsForAccountQuery q5(argv[1]);
 
         // Debugging/Example connections
-        QObject::connect(&q1, SIGNAL(completed(bool)), &e, SLOT(echo(bool)));
-        QObject::connect(&q2, SIGNAL(completed(QList<QDate>)), &e, SLOT(echo(QList<QDate>)));
-        QObject::connect(&q3, SIGNAL(completed(QList<Entry>)), &e, SLOT(echo(QList<Entry>)));
-        QObject::connect(&q4, SIGNAL(completed(QList<SearchHit>)), &e, SLOT(echo(QList<SearchHit>)));
-        QObject::connect(&q5, SIGNAL(completed(QList<Entity>)), &e, SLOT(echo(QList<Entity>)));
+        //QObject::connect(&q1, SIGNAL(completed(bool)), &e, SLOT(echo(bool)));
+        //QObject::connect(&q2, SIGNAL(completed(QList<QDate>)), &e, SLOT(echo(QList<QDate>)));
+        //QObject::connect(&q3, SIGNAL(completed(QList<Entry>)), &e, SLOT(echo(QList<Entry>)));
+        //QObject::connect(&q4, SIGNAL(completed(QList<SearchHit>)), &e, SLOT(echo(QList<SearchHit>)));
+        //QObject::connect(&q5, SIGNAL(completed(QList<Entity>)), &e, SLOT(echo(QList<Entity>)));
 
         // Perform all queries...
         q1.perform(argv[2], true);
@@ -62,7 +62,7 @@ int main(int argc, char **argv)
         return app.exec();
 
     } catch (const QGlib::Error &e) {
-        qDebug() << e.message();
+        //qDebug() << e.message();
         exit(1);
     }
 

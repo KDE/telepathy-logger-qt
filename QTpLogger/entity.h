@@ -49,7 +49,6 @@ public:
 
 } //namespace
 
-QTPLOGGER_REGISTER_TYPE(QTpLogger::EntityType)
 QTPLOGGER_REGISTER_TYPE(QTpLogger::Entity)
 
 #endif // __ENTITY__
