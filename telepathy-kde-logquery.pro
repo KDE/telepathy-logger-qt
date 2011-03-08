@@ -34,13 +34,7 @@ CONFIG += link_pkgconfig
 PKGCONFIG += telepathy-logger-0.2 telepathy-glib glib-2.0 QtGLib-2.0 TelepathyQt4
 
 # Input
-HEADERS += QTpLogger/chat-exists-query.h \
-           QTpLogger/chats-for-account-query.h \
-           QTpLogger/conversation-dates-query.h \
-           QTpLogger/messages-for-date-query.h \
-           QTpLogger/filter-query.h \
-           QTpLogger/keyword-query.h \
-           QTpLogger/query-callback-template.h \
+HEADERS += QTpLogger/query-callback-template.h \
            QTpLogger/query-private.h \
            \
            QTpLogger/entity.h \
@@ -59,13 +53,7 @@ HEADERS += QTpLogger/chat-exists-query.h \
            \
            QTpLogger/query.h
 
-SOURCES += QTpLogger/chat-exists-query.cpp \
-           QTpLogger/chats-for-account-query.cpp \
-           QTpLogger/conversation-dates-query.cpp \
-           QTpLogger/filter-query.cpp \
-           QTpLogger/keyword-query.cpp \
-           QTpLogger/messages-for-date-query.cpp \
-           QTpLogger/query.cpp \
+SOURCES += QTpLogger/query.cpp \
            QTpLogger/query-private.cpp \
            \
            QTpLogger/entity.cpp \
