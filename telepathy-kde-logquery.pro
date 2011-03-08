@@ -51,13 +51,13 @@ HEADERS += QTpLogger/chat-exists-query.h \
            QTpLogger/pending-dates.h \
            QTpLogger/pending-entities.h \
            QTpLogger/pending-events.h \
+           QTpLogger/pending-search.h \
            QTpLogger/pending-tpcontacts.h \
            QTpLogger/global.h \
            QTpLogger/constants.h \
            QTpLogger/types.h \
            \
-           QTpLogger/query.h \
-           QTpLogger/search-hit.h
+           QTpLogger/query.h
 
 SOURCES += QTpLogger/chat-exists-query.cpp \
            QTpLogger/chats-for-account-query.cpp \
@@ -66,7 +66,6 @@ SOURCES += QTpLogger/chat-exists-query.cpp \
            QTpLogger/keyword-query.cpp \
            QTpLogger/messages-for-date-query.cpp \
            QTpLogger/query.cpp \
-           QTpLogger/search-hit.cpp \
            QTpLogger/query-private.cpp \
            \
            QTpLogger/entity.cpp \
@@ -77,6 +76,7 @@ SOURCES += QTpLogger/chat-exists-query.cpp \
            QTpLogger/pending-dates.cpp \
            QTpLogger/pending-entities.cpp \
            QTpLogger/pending-events.cpp \
+           QTpLogger/pending-search.cpp \
            QTpLogger/pending-tpcontacts.cpp \
            \
            tests/dummy-main.cpp

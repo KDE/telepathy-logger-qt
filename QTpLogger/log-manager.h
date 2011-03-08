@@ -59,8 +59,7 @@ public:
         EventTypeMask typeMask, uint numEvents, LogEventFilter filterFunction,
         void *filterFunctionUserData);
     PendingEntities *queryEntities(Tp::AccountPtr account);
-
-    //PendingSearch *search() const;
+    PendingSearch *search(const QString &text, EventTypeMask typeMask);
 };
 
 } //namespace
