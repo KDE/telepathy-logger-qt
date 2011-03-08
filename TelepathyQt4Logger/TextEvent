@@ -1,0 +1,12 @@
+#ifndef _TelepathyQt4Logger_TextEvent_HEADER_GUARD_
+#define _TelepathyQt4Logger_TextEvent_HEADER_GUARD_
+
+#ifndef IN_TELEPATHY_QT4_LOGGER_HEADER
+#define IN_TELEPATHY_QT4_LOGGER_HEADER
+#endif
+
+#include <TelepathyQt4Logger/text-event.h>
+
+#undef IN_TELEPATHY_QT4_LOGGER_HEADER
+
+#endif

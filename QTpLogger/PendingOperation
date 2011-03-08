@@ -1,6 +1,0 @@
-#ifndef _TelepathyQt4_PendingOperation_HEADER_GUARD_
-#define _TelepathyQt4_PendingOperation_HEADER_GUARD_
-
-#include <QTpLogger/pending-operation.h>
-
-#endif

@@ -17,18 +17,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-//#include <QTpLogger/Log>
+//#include <TelepathyQt4Logger/Log>
 #include <QGlib/Error>
 
 #include <QApplication>
 #include <QtCore/QDebug>
 
-//using namespace QTpLogger;
+//using namespace Tpl;
 
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
-    //QTpLogger::Debug e;
+    //Tpl::Debug e;
 
     if (argc < 3) {
         qWarning("Must specify a dbus object path as first parameter, and a search term as second!\n");
