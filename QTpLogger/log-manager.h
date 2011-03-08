@@ -49,7 +49,6 @@ class LogManager : public QGlib::Object
 public:
     static LogManagerPtr instance();
 
-    //GType tpl_log_manager_get_type (void);
     bool exists(Tp::AccountPtr account, EntityPtr target, EventTypeMask type) const;
 
     PendingDates *queryDates(Tp::AccountPtr account, EntityPtr entity, EventTypeMask typeMask);

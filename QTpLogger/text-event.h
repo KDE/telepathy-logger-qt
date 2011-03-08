@@ -40,7 +40,6 @@ class TextEvent : public Event
 {
     QTPLOGGER_WRAPPER(TextEvent)
 public:
-    // GType tpl_text_event_get_type (void);
     TpChannelTextMessageType messageType();
     QString message();
 };

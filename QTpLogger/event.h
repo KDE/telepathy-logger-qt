@@ -38,7 +38,6 @@ class Event : public QGlib::Object
 {
     QTPLOGGER_WRAPPER(Event)
 public:
-    // GType tpl_event_get_type (void);
     QDateTime timestamp() const;
     QString accountPath() const;
     Tp::AccountPtr account() const;
