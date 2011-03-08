@@ -1,9 +1,5 @@
 .directory
-Makefile
-*~
-*.o
-QTpLogger-test
 *.tar.gz
 *.pro.user
-moc_*.cpp
 build
+Makefile

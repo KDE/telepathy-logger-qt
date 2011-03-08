@@ -20,6 +20,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QtCore/QObject>
+
 namespace QTpLogger
 {
 
@@ -34,7 +36,7 @@ public:
 class SearchHit
 {
 public:
-    SearchHit() {};
+    SearchHit() {}
 
 private:
     SearchHit(SearchHitPrivate *_d) : d(_d) {}

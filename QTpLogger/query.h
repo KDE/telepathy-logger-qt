@@ -30,6 +30,8 @@ class QueryPrivate;
 
 class Query : public QObject
 {
+Q_OBJECT
+
 public:
     explicit Query(const QString &dbusid, bool idIsEscaped = false);
     virtual ~Query();
