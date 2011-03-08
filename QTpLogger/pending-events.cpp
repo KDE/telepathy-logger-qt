@@ -40,12 +40,20 @@ struct QTPLOGGER_NO_EXPORT PendingEvents::Private
     EntityPtr entity;
     EventTypeMask typeMask;
     QDate date;
-    EventList events;
+
+    bool filtered;
+    uint numEvents;
+    LogEventFilter filterFunction;
+    void *filterFunctionUserData;
+
+    EventPtrList events;
 
     static void callback(void *logManager, void *result, PendingEvents *self);
+    static gboolean eventFilterMethod(TplEvent *event, gpointer *user_data);
 };
 
-PendingEvents::PendingEvents(LogManagerPtr manager, Tp::AccountPtr account, EntityPtr entity, EventTypeMask typeMask, const QDate &date)
+PendingEvents::PendingEvents(LogManagerPtr manager, Tp::AccountPtr account, EntityPtr entity,
+    EventTypeMask typeMask, const QDate &date)
     : PendingOperation(),
       mPriv(new Private())
 {
@@ -54,6 +62,24 @@ PendingEvents::PendingEvents(LogManagerPtr manager, Tp::AccountPtr account, Enti
     mPriv->entity = entity;
     mPriv->typeMask = typeMask;
     mPriv->date = date;
+    mPriv->filtered = false;
+    mPriv->filterFunction = 0;
+    mPriv->filterFunctionUserData = 0;
+}
+
+PendingEvents::PendingEvents(LogManagerPtr manager, Tp::AccountPtr account, EntityPtr entity,
+    EventTypeMask typeMask, uint numEvents, LogEventFilter filterFunction, void *filterFunctionUserData)
+    : PendingOperation(),
+      mPriv(new Private())
+{
+    mPriv->manager = manager;
+    mPriv->account = account;
+    mPriv->entity = entity;
+    mPriv->typeMask = typeMask;
+    mPriv->filtered = true;
+    mPriv->numEvents = numEvents;
+    mPriv->filterFunction = filterFunction;
+    mPriv->filterFunctionUserData = filterFunctionUserData;
 }
 
 PendingEvents::~PendingEvents()
@@ -63,29 +89,42 @@ PendingEvents::~PendingEvents()
 
 void PendingEvents::start()
 {
-    // TODO what to do with AccountPtr
-    GDate *gdate = g_date_new_dmy(
-        mPriv->date.day(),
-        (GDateMonth) mPriv->date.month(),
-        mPriv->date.year());
-    tpl_log_manager_get_events_for_date_async(mPriv->manager,
-        0, // mPriv->account
-        mPriv->entity,
-        mPriv->typeMask,
-        gdate,
-        (GAsyncReadyCallback) Private::callback,
-        this);
-    g_date_free(gdate);
+    if (mPriv->filtered) {
+        // TODO what to do with AccountPtr
+        tpl_log_manager_get_filtered_events_async(mPriv->manager,
+            0, // mPriv->account
+            mPriv->entity,
+            mPriv->typeMask,
+            mPriv->numEvents,
+            (TplLogEventFilter) Private::eventFilterMethod,
+            this,
+            (GAsyncReadyCallback) Private::callback,
+            this);
+    } else {
+        // TODO what to do with AccountPtr
+        GDate *gdate = g_date_new_dmy(
+            mPriv->date.day(),
+            (GDateMonth) mPriv->date.month(),
+            mPriv->date.year());
+        tpl_log_manager_get_events_for_date_async(mPriv->manager,
+            0, // mPriv->account
+            mPriv->entity,
+            mPriv->typeMask,
+            gdate,
+            (GAsyncReadyCallback) Private::callback,
+            this);
+        g_date_free(gdate);
+    }
 }
 
-EventList PendingEvents::events() const
+EventPtrList PendingEvents::events() const
 {
     if (!isFinished()) {
         qWarning() << "PendingEvents::events called before finished, returning empty";
-        return EventList();
+        return EventPtrList();
     } else if (!isValid()) {
         qWarning() << "PendingEvents::events called when not valid, returning empty";
-        return EventList();
+        return EventPtrList();
     }
 
     return mPriv->events;
@@ -105,7 +144,14 @@ void PendingEvents::Private::callback(void *logManager, void *result, PendingEve
 
     GList *events = NULL;
     GError *error = NULL;
-    gboolean success = tpl_log_manager_get_events_for_date_finish(TPL_LOG_MANAGER(logManager), G_ASYNC_RESULT(result), &events, &error);
+    gboolean success = FALSE;
+
+    if (self->mPriv->filtered) {
+        success = tpl_log_manager_get_filtered_events_finish(TPL_LOG_MANAGER(logManager), G_ASYNC_RESULT(result), &events, &error);
+    } else {
+        success = tpl_log_manager_get_events_for_date_finish(TPL_LOG_MANAGER(logManager), G_ASYNC_RESULT(result), &events, &error);
+    }
+
     if (error) {
         self->setFinishedWithError(QTPLOGGER_ERROR_INVALID_ARGUMENT, error->message);
         g_error_free(error);
@@ -133,4 +179,14 @@ void PendingEvents::Private::callback(void *logManager, void *result, PendingEve
     g_list_free(events);
 
     self->setFinished();
+}
+
+gboolean PendingEvents::Private::eventFilterMethod(TplEvent *event, gpointer *user_data)
+{
+    PendingEvents *self = (PendingEvents *) user_data;
+    if (!self) {
+        return FALSE;
+    }
+
+    return self->mPriv->filterFunction(EventPtr::wrap(event, false), self->mPriv->filterFunctionUserData);
 }

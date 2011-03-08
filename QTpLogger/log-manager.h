@@ -56,8 +56,12 @@ public:
     bool exists(Tp::AccountPtr account, EntityPtr target, EventTypeMask type) const;
 
     PendingDates *queryDates(Tp::AccountPtr account, EntityPtr entity, EventTypeMask typeMask);
-    PendingEvents *queryEvents(Tp::AccountPtr account, EntityPtr entity, EventTypeMask typeMask, QDate date);
-    //PendingEventsQuery *queryFilteredEvents() const;
+    PendingEvents *queryEvents(Tp::AccountPtr account, EntityPtr entity, EventTypeMask typeMask,
+        QDate date);
+    PendingEvents *queryFilteredEvents(Tp::AccountPtr account, EntityPtr entity,
+        EventTypeMask typeMask, uint numEvents, LogEventFilter filterFunction,
+        void *filterFunctionUserData);
+
     //PendingEntitiesQuery *queryEntities() const;
     //PendingSearch *search() const;
 };

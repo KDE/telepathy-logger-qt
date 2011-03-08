@@ -40,14 +40,23 @@ bool LogManager::exists(Tp::AccountPtr account, EntityPtr target, EventTypeMask 
     return tpl_log_manager_exists(object<TplLogManager>(), 0, target, (gint) type);
 }
 
-PendingDates *LogManager::queryDates(Tp::AccountPtr account, EntityPtr entity, EventTypeMask typeMask)
+PendingDates *LogManager::queryDates(Tp::AccountPtr account, EntityPtr entity,
+        EventTypeMask typeMask)
 {
     return new PendingDates(LogManagerPtr(this), account, entity, typeMask);
 }
 
-PendingEvents *LogManager::queryEvents(Tp::AccountPtr account, EntityPtr entity, EventTypeMask typeMask, QDate date)
+PendingEvents *LogManager::queryEvents(Tp::AccountPtr account, EntityPtr entity,
+        EventTypeMask typeMask, QDate date)
 {
     return new PendingEvents(LogManagerPtr(this), account, entity, typeMask, date);
+}
+
+PendingEvents *LogManager::queryFilteredEvents(Tp::AccountPtr account, EntityPtr entity,
+        EventTypeMask typeMask, uint numEvents, LogEventFilter filterFunction, void *filterFunctionUserData)
+{
+    return new PendingEvents(LogManagerPtr(this), account, entity, typeMask, numEvents,
+        filterFunction, filterFunctionUserData);
 }
 
 #if 0
