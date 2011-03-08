@@ -4,9 +4,6 @@
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
  * Copyright (C) 2011 Collabora Ltd. <http://www.collabora.co.uk/>
  *
- * @author Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
- * @author Mateu Batle <mateu.batle@collabora.co.uk>
- *
  * This library is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published
  * by the Free Software Foundation; either version 2.1 of the License, or
