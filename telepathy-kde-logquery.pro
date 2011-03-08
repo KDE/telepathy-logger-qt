@@ -34,8 +34,7 @@ CONFIG += link_pkgconfig
 PKGCONFIG += telepathy-logger-0.2 telepathy-glib glib-2.0 QtGLib-2.0 TelepathyQt4
 
 # Input
-HEADERS += QTpLogger/query-callback-template.h \
-           QTpLogger/query-private.h \
+HEADERS += QTpLogger/query-private.h \
            \
            QTpLogger/entity.h \
            QTpLogger/event.h \
