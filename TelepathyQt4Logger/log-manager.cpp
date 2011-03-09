@@ -26,6 +26,7 @@
 #include <TelepathyQt4Logger/PendingEntities>
 #include <TelepathyQt4Logger/PendingEvents>
 #include <TelepathyQt4Logger/PendingSearch>
+#include <TelepathyQt4Logger/utils.h>
 #include <telepathy-logger/log-manager.h>
 #include <telepathy-glib/account.h>
 
@@ -39,8 +40,8 @@ LogManagerPtr LogManager::instance()
 
 bool LogManager::exists(Tp::AccountPtr account, EntityPtr target, EventTypeMask type) const
 {
-    // TOOD convert Tp::AccountPtr in TplAccount ?
-    return tpl_log_manager_exists(object<TplLogManager>(), 0, target, (gint) type);
+    TpAccount *tpAccount = Utils::instance()->tpAccount(account);
+    return tpl_log_manager_exists(object<TplLogManager>(), tpAccount, target, (gint) type);
 }
 
 PendingDates *LogManager::queryDates(Tp::AccountPtr account, EntityPtr entity,
