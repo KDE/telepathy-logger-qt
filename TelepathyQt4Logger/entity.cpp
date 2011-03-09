@@ -32,9 +32,16 @@ EntityPtr Entity::create(const char *id, EntityType type, const char *alias, con
 
 EntityPtr Entity::create(Tp::ContactPtr contact, EntityType type)
 {
-    // TODO how to go from Tp::ContactPtr to TpContact
-    TplEntity *entity = tpl_entity_new_from_tp_contact(0, (TplEntityType) type);
+#if 0
+    // TODO how to go from Tp::ContactPtr to TpContact ?
+    //TplEntity *entity = tpl_entity_new_from_tp_contact(0, (TplEntityType) type);
     return EntityPtr::wrap(entity, false);
+#else
+    QString id = contact->id();
+    QString alias = contact->alias();
+    QString avatarToken = contact->avatarToken();
+    return Entity::create(id.toAscii(), type, alias.toAscii(), avatarToken.toAscii());
+#endif
 }
 
 EntityPtr Entity::create(const char *room_id)

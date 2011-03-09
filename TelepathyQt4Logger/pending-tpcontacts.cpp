@@ -140,7 +140,6 @@ void PendingTpContacts::start()
 
     Tp::ReferencedHandles::const_iterator it;
     for(it = handles.constBegin(); it != handles.constEnd(); it++) {
-        // todo use async version: tp_connection_get_contacts_by_handle
         TpHandle handle = *it;
         tp_connection_get_contacts_by_handle(tpConnection, 1, &handle, 0, NULL,
             Private::callback, this, NULL, NULL);
@@ -152,6 +151,10 @@ void PendingTpContacts::Private::callback(TpConnection *connection, guint n_cont
         TpContact * const *contacts, guint n_failed, const TpHandle *failed, const GError *error,
         gpointer user_data, GObject *weak_object)
 {
+    Q_UNUSED(connection);
+    Q_UNUSED(failed);
+    Q_UNUSED(weak_object);
+
     PendingTpContacts *self = (PendingTpContacts *) user_data;
 
     if (error != NULL) {

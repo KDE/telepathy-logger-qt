@@ -24,6 +24,7 @@
 #include <TelepathyQt4Logger/Entity>
 #include <TelepathyQt4Logger/LogManager>
 #include <TelepathyQt4Logger/PendingEntities>
+#include <TelepathyQt4Logger/utils.h>
 #include <glib/gerror.h>
 #include <glib/gdate.h>
 #include <telepathy-logger/log-manager.h>
@@ -54,9 +55,8 @@ PendingEntities::~PendingEntities()
 
 void PendingEntities::start()
 {
-    // TODO what to do with AccountPtr
     tpl_log_manager_get_entities_async(mPriv->manager,
-        0, // mPriv->account
+        Utils::instance()->tpAccount(mPriv->account),
         (GAsyncReadyCallback) Private::callback,
         this);
 }

@@ -24,6 +24,7 @@
 #include <TelepathyQt4Logger/Entity>
 #include <TelepathyQt4Logger/LogManager>
 #include <TelepathyQt4Logger/PendingDates>
+#include <TelepathyQt4Logger/utils.h>
 #include <glib/gerror.h>
 #include <glib/gdate.h>
 #include <telepathy-logger/log-manager.h>
@@ -58,9 +59,8 @@ PendingDates::~PendingDates()
 
 void PendingDates::start()
 {
-    // TODO what to do with AccountPtr
     tpl_log_manager_get_dates_async(mPriv->manager,
-        0, // mPriv->account
+        Utils::instance()->tpAccount(mPriv->account),
         mPriv->entity,
         mPriv->typeMask,
         (GAsyncReadyCallback) Private::callback,

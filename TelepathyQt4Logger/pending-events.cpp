@@ -24,6 +24,7 @@
 #include <TelepathyQt4Logger/Entity>
 #include <TelepathyQt4Logger/PendingEvents>
 #include <TelepathyQt4Logger/TextEvent>
+#include <TelepathyQt4Logger/utils.h>
 #include <glib/gerror.h>
 #include <glib/gdate.h>
 #include <telepathy-logger/log-manager.h>
@@ -89,9 +90,8 @@ PendingEvents::~PendingEvents()
 void PendingEvents::start()
 {
     if (mPriv->filtered) {
-        // TODO what to do with AccountPtr
         tpl_log_manager_get_filtered_events_async(mPriv->manager,
-            0, // mPriv->account
+            Utils::instance()->tpAccount(mPriv->account),
             mPriv->entity,
             mPriv->typeMask,
             mPriv->numEvents,
@@ -100,13 +100,12 @@ void PendingEvents::start()
             (GAsyncReadyCallback) Private::callback,
             this);
     } else {
-        // TODO what to do with AccountPtr
         GDate *gdate = g_date_new_dmy(
             mPriv->date.day(),
             (GDateMonth) mPriv->date.month(),
             mPriv->date.year());
         tpl_log_manager_get_events_for_date_async(mPriv->manager,
-            0, // mPriv->account
+            Utils::instance()->tpAccount(mPriv->account),
             mPriv->entity,
             mPriv->typeMask,
             gdate,

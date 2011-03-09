@@ -19,6 +19,7 @@
  */
 
 #include <TelepathyQt4/Account>
+#include <TelepathyQt4/AccountManager>
 #include <TelepathyQt4Logger/Entity>
 #include <TelepathyQt4Logger/LogManager>
 #include <TelepathyQt4Logger/PendingDates>
@@ -26,6 +27,7 @@
 #include <TelepathyQt4Logger/PendingEvents>
 #include <TelepathyQt4Logger/PendingSearch>
 #include <telepathy-logger/log-manager.h>
+#include <telepathy-glib/account.h>
 
 using namespace Tpl;
 

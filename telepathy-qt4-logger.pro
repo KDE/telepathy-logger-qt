@@ -61,6 +61,7 @@ HEADERS += TelepathyQt4Logger/query-private.h \
            TelepathyQt4Logger/global.h \
            TelepathyQt4Logger/constants.h \
            TelepathyQt4Logger/types.h \
+           TelepathyQt4Logger/utils.h \
            \
            TelepathyQt4Logger/query.h
 
@@ -77,6 +78,7 @@ SOURCES += TelepathyQt4Logger/query.cpp \
            TelepathyQt4Logger/pending-events.cpp \
            TelepathyQt4Logger/pending-search.cpp \
            TelepathyQt4Logger/pending-tpcontacts.cpp \
+           TelepathyQt4Logger/utils.cpp \
            \
            tests/dummy-main.cpp
 

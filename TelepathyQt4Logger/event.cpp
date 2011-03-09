@@ -20,6 +20,7 @@
 
 #include <TelepathyQt4/Account>
 #include <TelepathyQt4Logger/Event>
+#include <TelepathyQt4Logger/utils.h>
 #include <telepathy-logger/event.h>
 
 using namespace Tpl;
@@ -43,8 +44,7 @@ QString Event::accountPath() const
 Tp::AccountPtr Event::account() const
 {
     TpAccount *account = tpl_event_get_account(object<TplEvent>());
-    //TODO convert from TpAccount to Tp::AccountPtr
-    return Tp::AccountPtr();
+    return Utils::instance()->accountPtr(account);
 }
 
 EntityPtr Event::sender() const

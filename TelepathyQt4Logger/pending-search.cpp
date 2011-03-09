@@ -24,6 +24,7 @@
 #include <TelepathyQt4Logger/Entity>
 #include <TelepathyQt4Logger/LogManager>
 #include <TelepathyQt4Logger/PendingSearch>
+#include <TelepathyQt4Logger/utils.h>
 #include <glib/gerror.h>
 #include <glib/gdate.h>
 #include <telepathy-logger/log-manager.h>
@@ -56,7 +57,6 @@ PendingSearch::~PendingSearch()
 
 void PendingSearch::start()
 {
-    // TODO what to do with AccountPtr
     tpl_log_manager_search_async(mPriv->manager,
         mPriv->text.toAscii(),
         mPriv->typeMask,
@@ -107,8 +107,7 @@ void PendingSearch::Private::callback(void *logManager, void *result, PendingSea
     for (i = hits; i; i = i->next) {
         TplLogSearchHit *item = (TplLogSearchHit *) i->data;
         SearchHit hit;
-        // TODO convert TplAccount into Tp::AccountPtr
-        //hit.account = 0;
+        hit.account = Utils::instance()->accountPtr(item->account);
         hit.date = QDate(item->date->year, item->date->month, item->date->day);
         hit.target = EntityPtr::wrap(hit.target, false);
     }
