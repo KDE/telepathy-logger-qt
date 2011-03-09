@@ -33,9 +33,7 @@ CONFIG += link_pkgconfig
 PKGCONFIG += telepathy-logger-0.2 telepathy-glib glib-2.0 QtGLib-2.0 TelepathyQt4
 
 # Input
-HEADERS += TelepathyQt4Logger/query-private.h \
-           \
-           TelepathyQt4Logger/Entity \
+HEADERS += TelepathyQt4Logger/Entity \
            TelepathyQt4Logger/Event \
            TelepathyQt4Logger/TextEvent \
            TelepathyQt4Logger/LogManager \
@@ -61,14 +59,9 @@ HEADERS += TelepathyQt4Logger/query-private.h \
            TelepathyQt4Logger/global.h \
            TelepathyQt4Logger/constants.h \
            TelepathyQt4Logger/types.h \
-           TelepathyQt4Logger/utils.h \
-           \
-           TelepathyQt4Logger/query.h
+           TelepathyQt4Logger/utils.h
 
-SOURCES += TelepathyQt4Logger/query.cpp \
-           TelepathyQt4Logger/query-private.cpp \
-           \
-           TelepathyQt4Logger/entity.cpp \
+SOURCES += TelepathyQt4Logger/entity.cpp \
            TelepathyQt4Logger/event.cpp \
            TelepathyQt4Logger/text-event.cpp \
            TelepathyQt4Logger/log-manager.cpp \
