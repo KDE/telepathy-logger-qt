@@ -7,3 +7,4 @@ libtelepathy-qt4-logger.a
 tpl-tool
 *~
 CMakeCache.txt
+CMakeFiles
