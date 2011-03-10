@@ -97,12 +97,6 @@ include(MacroLogFeature)
 set (QT_MIN_VERSION "4.5.0")
 find_package(Qt4 REQUIRED)
 find_package(TelepathyQt4 REQUIRED)
-find_package(PythonLibrary REQUIRED)
-
-include_directories(${CMAKE_SOURCE_DIR}
-                    ${CMAKE_BINARY_DIR}
-                    ${QT_INCLUDES}
-                    ${TELEPATHY_QT4_INCLUDE_DIR})
 
 add_definitions(-DQT_NO_CAST_FROM_ASCII)
 
@@ -134,9 +128,9 @@ macro_log_feature(QT4_GLIB_SUPPORT "Qt4 Glib Support"
 
 find_package(GLIB2 REQUIRED)
 find_package(GObject REQUIRED)
-#find_package(DBus)
-#find_package(DBusGLib)
-#find_package(LibXml2)
+find_package(DBus)
+find_package(DBusGLib)
+find_package(LibXml2)
 find_package(QtGLib REQUIRED)
 find_package(TelepathyLogger REQUIRED)
 
@@ -144,7 +138,7 @@ find_package(TelepathyLogger REQUIRED)
 
 # Find telepathy-glib
 set(TELEPATHY_GLIB_MIN_VERSION 0.13.0)
-find_package(TelepathyGlib)
+find_package(TelepathyGlib REQUIRED)
 macro_log_feature(TELEPATHYGLIB_FOUND "Telepathy-glib"
                   "Glib bindings for Telepathy"
                   "http://telepathy.freedesktop.org/" FALSE "0.13.0"
@@ -152,6 +146,12 @@ macro_log_feature(TELEPATHYGLIB_FOUND "Telepathy-glib"
 
 # Activate debug symbols generation
 #set(CMAKE_CXX_FLAGS "-g -Wall")
+
+include_directories(${CMAKE_SOURCE_DIR}
+                    ${CMAKE_BINARY_DIR}
+                    ${QT_INCLUDES}
+                    ${TELEPATHY_QT4_INCLUDE_DIR}
+                    ${QTGLIB_INCLUDE_DIR})
 
 # Add the source subdirectories
 add_subdirectory(TelepathyQt4Logger)
