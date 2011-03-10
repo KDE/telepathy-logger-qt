@@ -1,0 +1,13 @@
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${prefix}/lib/
+includedir=${prefix}/include
+qt_config=include_source_dir lex yacc warn_on debug uic resources qt warn_on incremental link_prl def_files_disabled exceptions no_mocdepend stl qt_no_framework debug qt meegotouch link_pkgconfig create_pc create_prl mobility moc thread dbusadaptors dbusinterfaces opengl dll
+
+Name: Telepathy-Qt4-Logger
+Description: Qt4 utility library to access logs in the Telepathy framework
+Version: 0.1.0
+Libs: -L${libdir} -ltelepathy-qt4-logger -ltelepathy-qt4
+Libs.private: -L/usr/lib -L/usr/X11R6/lib -ltelepathy-qt4 -L/lib -ldbus-1 -pthread -lrt -lmeegotouchcore -lQtDBus -lQtCore -lpthread   
+Cflags:  -I${includedir}
+
