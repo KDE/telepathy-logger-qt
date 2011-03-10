@@ -3,3 +3,7 @@
 *.pro.user
 build
 Makefile
+libtelepathy-qt4-logger.a
+tpl-tool
+*~
+CMakeCache.txt
