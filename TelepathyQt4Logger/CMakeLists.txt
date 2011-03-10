@@ -1,98 +1,173 @@
-# Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
-#
-# @author Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
-#
-# This library is free software; you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License as published
-# by the Free Software Foundation; either version 2.1 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU Lesser General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/_gen")
 
-# Include Qt4 setup stuff and inhibit keywords.
-include(${QT_USE_FILE})
+# Set the required flags found in TelepathyDefaults
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${VISIBILITY_HIDDEN_FLAGS} ${COMPILER_COVERAGE_FLAGS} ${DEPRECATED_DECLARATIONS_FLAGS}")
+set(LD_FLAGS "${LD_FLAGS} ${VISIBILITY_HIDDEN_FLAGS} ${COMPILER_COVERAGE_FLAGS} ${DEPRECATED_DECLARATIONS_FLAGS}")
+
+# We are building telepathy-qt4-logger
+add_definitions(-DBUILDING_TELEPATHY_QT4_LOGGER)
 add_definitions (-DQT_NO_KEYWORDS)
 
-# Source code files.
-set (tp_q4_logger_CXX
-     chat-exists-query.cpp
-     chats-for-account-query.cpp
-     conversation-dates-query.cpp
-     filter-query.cpp
-     keyword-query.cpp
-     messages-for-date-query.cpp
-     query.cpp
-     query-private.cpp
-     search-hit.cpp
-     entry.cpp
-     entry-private.cpp
-     entry-text-private.cpp
-     entity-private.cpp
-     entity.cpp
-     debug.cpp
-)
+# Sources for Tp-Qt4-Logger
+set(telepathy_qt4_logger_SRCS
+    entity.cpp
+    event.cpp
+    log-manager.cpp
+    pending-dates.cpp
+    pending-entities.cpp
+    pending-events.cpp
+    pending-operation.cpp
+    pending-search.cpp
+    pending-tpcontacts.cpp
+    text-event.cpp
+    utils.cpp)
 
-# MOC source code files.
-set (tp_qt4_logger_MOC_SRCS
-     chat-exists-query.h
-     chats-for-account-query.h
-     conversation-dates-query.h
-     messages-for-date-query.h
-     filter-query.h
-     keyword-query.h
-     query.h
-     debug.h
-)
+# Exported headers for Tp-Qt4-Logger
+set(telepathy_qt4_logger_HEADERS
+    Constants
+    Entity
+    Event
+    Global
+    LogManager
+    PendingDates
+    PendingEntities
+    PendingEvents
+    PendingOperation
+    TextEvent
+    Types
+    constants.h 
+    entity.h
+    event.h 
+    global.h
+    log-manager.h
+    pending-dates.h
+    pending-entities.h
+    pending-events.h
+    pending-operation.h
+    pending-search.h
+    pending-tpcontacts.h
+    text-event.h
+    types.h
+    utils.h)
 
-# Automagically setup include paths for external deps.
-find_package(GLIB2 REQUIRED)
-find_package(GObject REQUIRED)
-find_package(DBus REQUIRED)
-find_package(DBusGLib REQUIRED)
-find_package(LibXml2 REQUIRED)
-find_package(TelepathyGlib REQUIRED)
-find_package(QtGLib REQUIRED)
-find_package(TelepathyLogger REQUIRED)
+# Headers file moc will be run on
+set(telepathy_qt4_logger_MOC_SRCS
+    pending-dates.h
+    pending-entities.h
+    pending-events.h
+    pending-operation.h
+    pending-search.h
+    pending-tpcontacts.h)
 
-# Make tpl-qt4 to include all the paths above.
-include_directories (
-    ${PROJECT_SOURCE_DIR}
-    ${GLIB2_INCLUDE_DIR}
-    ${GOBJECT_INCLUDE_DIR}
-    ${LIBXML2_INCLUDE_DIR}
-    ${DBUS_INCLUDE_DIR}
-    ${DBUS_GLIB_INCLUDE_DIR}
-    ${TELEPATHY_GLIB_INCLUDE_DIR}
-    ${TELEPATHY_LOGGER_INCLUDE_DIR}
-    ${QTGLIB_INCLUDE_DIR}
-)
+# Generated headers which will be installed and exported
+#set(telepathy_qt4_logger_gen_HEADERS
+#    ${CMAKE_CURRENT_BINARY_DIR}/_gen/constants.h
+#    ${CMAKE_CURRENT_BINARY_DIR}/_gen/types.h)
 
-# Compile MOC srcs.
-qt4_wrap_cpp (tp_qt4_logger_MOC_CXX
-    ${tp_qt4_logger_MOC_SRCS}
-)
+# The escape character in MSVC is ^
+if(MSVC)
+    set(TYPES_INCLUDE ^<TelepathyQt4Logger/Types^> )
+    set(GLOBAL_INCLUDE ^<TelepathyQt4Logger/Global^> )
+    set(CHANNEL_EXTRA_INCLUDES '^<TelepathyQt4Logger/Types^>,^<TelepathyQt4/Channel^>' )
+else(MSVC)
+    set(TYPES_INCLUDE '<TelepathyQt4Logger/Types>' )
+    set(GLOBAL_INCLUDE '<TelepathyQt4Logger/Global>' )
+    set(CHANNEL_EXTRA_INCLUDES '<TelepathyQt4Logger/Types>,<TelepathyQt4/Channel>' )
+endif(MSVC)
 
-# Compile and link as a shared object.
-add_library (telepathy-qt4-logger SHARED
-    ${tp_qt4_logger_MOC_CXX}
-    ${tp_q4_logger_CXX}
-)
+# Generate the spec files
+#set(gen_stable_spec_xml ${CMAKE_CURRENT_BINARY_DIR}/_gen/stable-spec.xml)
 
-# Link against all deps above (to check for linker errors)
-target_link_libraries (telepathy-qt4-logger
-    ${QT_LIBRARIES}
+#tpqt4_xincludator(stable-ifaces-includator ${CMAKE_CURRENT_SOURCE_DIR}/stable-interfaces.xml ${gen_stable_spec_xml})
+
+#tpqt4_constants_gen(stable-constants ${gen_stable_spec_xml} ${CMAKE_CURRENT_BINARY_DIR}/_gen/constants.h
+#                    --namespace=Tpl
+#                    --define-prefix=TP_QT4_LOGGER_
+#                    --must-define=IN_TELEPATHY_QT4_LOGGER_HEADER
+#                    DEPENDS stable-ifaces-includator)
+
+#tpqt4_types_gen(stable-typesgen ${gen_stable_spec_xml}
+#                ${CMAKE_CURRENT_BINARY_DIR}/_gen/types.h ${CMAKE_CURRENT_BINARY_DIR}/_gen/types-body.hpp
+#                Tpy TelepathyQt4Logger/types.h TelepathyQt4Logger/Types
+#                --must-define=IN_TELEPATHY_QT4_LOGGER_HEADER
+#                --visibility=TELEPATHY_QT4_LOGGER_EXPORT
+#                --extraincludes=${GLOBAL_INCLUDE}
+#                DEPENDS stable-constants)
+
+# Add the generated types to the library's sources
+#list(APPEND telepathy_qt4_logger_SRCS ${CMAKE_CURRENT_BINARY_DIR}/_gen/types.h)
+#list(APPEND telepathy_qt4_logger_SRCS ${CMAKE_CURRENT_BINARY_DIR}/_gen/types-body.hpp)
+
+# For each spec, generate a cli file and add it to the sources (including mocs).
+#set(SPECS
+#    channel)
+#foreach(spec ${SPECS})
+#    tpqt4_xincludator(${spec}-spec-xincludator ${CMAKE_CURRENT_SOURCE_DIR}/${spec}.xml ${CMAKE_CURRENT_BINARY_DIR}/_gen/spec-${spec}.xml
+#                      DEPENDS stable-typesgen)
+#    set(NEW_FILES
+#        ${CMAKE_CURRENT_BINARY_DIR}/_gen/cli-${spec}-body.hpp
+#        ${CMAKE_CURRENT_BINARY_DIR}/_gen/cli-${spec}.moc.hpp)
+#    list(APPEND telepathy_qt4_logger_SRCS ${NEW_FILES})
+#    list(APPEND telepathy_qt4_logger_generated_specs_mocs "moc-cli-${spec}.moc.hpp")
+#    set_source_files_properties(${NEW_FILES} PROPERTIES GENERATED true)
+#endforeach(spec ${SPECS})
+
+SET(telepathy_qt4_logger_generated_specs_mocs types.h)
+
+# Use the client generator for generating headers out of specs
+#tpqt4_client_generator(${gen_stable_spec_xml} channel clientchannel TelepathyQt4Logger/channel.h TelepathyQt4Logger/Channel Tpl::Client Tpl IN_TELEPATHY_QT4_LOGGER_HEADER TELEPATHY_QT4_LOGGER_EXPORT --mainiface=Tp::Client::ChannelInterface --extraincludes=${CHANNEL_EXTRA_INCLUDES} DEPENDS channel-spec-xincludator)
+
+# Create the library
+add_library(telepathy-qt4-logger STATIC ${telepathy_qt4_logger_SRCS})
+
+# generate client moc files
+foreach(moc_src ${telepathy_qt4_logger_MOC_SRCS})
+    set(generated_file _gen/${moc_src})
+    string(REPLACE ".h" ".moc.hpp" generated_file ${generated_file})
+    tpqt4_generate_moc_i_target_deps(${CMAKE_CURRENT_SOURCE_DIR}/${moc_src} ${CMAKE_CURRENT_BINARY_DIR}/${generated_file}
+                                     ${telepathy_qt4_logger_generated_specs_mocs})
+    list(APPEND telepathy_qt4_logger_SRCS ${CMAKE_CURRENT_BINARY_DIR}/${generated_file})
+    string(REPLACE ".h" ".moc.hpp" moc_src ${moc_src})
+    add_dependencies(telepathy-qt4-logger "moc-${moc_src}")
+endforeach(moc_src ${telepathy_qt4_logger_MOC_SRCS})
+
+# Link
+target_link_libraries(telepathy-qt4-logger
+    ${QT_QTCORE_LIBRARY}
     ${GLIB2_LIBRARIES}
     ${GOBJECT_LIBRARIES}
-    ${LIBXML2_LIBRARIES}
-    ${DBUS_LIBRARIES}
-    ${DBUS_GLIB_LIBRARIES}
+    #${QT_QTDBUS_LIBRARY}
+    #${DBUS_LIBRARIES}
+    #${LIBXML2_LIBRARIES}
+    #${DBUS_GLIB_LIBRARIES}
     ${TELEPATHY_GLIB_LIBRARIES}
     ${TELEPATHY_LOGGER_LIBRARIES}
-    ${QTGLIB_LIBRARIES}
-)
+    ${TELEPATHY_QT4_LIBRARIES}
+    ${QTGLIB_LIBRARIES})
+
+if (ENABLE_COMPILER_COVERAGE)
+    target_link_libraries(telepathy-qt4-logger gcov)
+endif (ENABLE_COMPILER_COVERAGE)
+
+# Set the correct version number
+set_target_properties(telepathy-qt4-logger PROPERTIES
+                      SOVERSION ${TP_QT4_LOGGER_ABI_VERSION}
+                      VERSION ${TP_QT4_LOGGER_LIBRARY_VERSION})
+
+# Install header files
+install(FILES ${telepathy_qt4_logger_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/telepathy-1.0/TelepathyQt4Logger COMPONENT headers)
+install(FILES ${telepathy_qt4_logger_gen_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/telepathy-1.0/TelepathyQt4Logger/_gen COMPONENT headers)
+
+# Install the library - watch out for the correct components
+if (WIN32)
+    install(TARGETS telepathy-qt4-logger RUNTIME DESTINATION ${LIB_INSTALL_DIR} COMPONENT mainlibrary
+                                  ARCHIVE DESTINATION ${LIB_INSTALL_DIR} COMPONENT headers)
+else (WIN32)
+    install(TARGETS telepathy-qt4-logger LIBRARY DESTINATION ${LIB_INSTALL_DIR} COMPONENT mainlibrary
+                                  ARCHIVE DESTINATION ${LIB_INSTALL_DIR} COMPONENT headers)
+endif (WIN32)
+
+# pkg-config file
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/TelepathyQt4Logger.pc.in ${CMAKE_CURRENT_BINARY_DIR}/TelepathyQt4Logger.pc)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/TelepathyQt4Logger-uninstalled.pc.in ${CMAKE_CURRENT_BINARY_DIR}/TelepathyQt4Logger-uninstalled.pc)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/TelepathyQt4Logger.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig COMPONENT headers)
