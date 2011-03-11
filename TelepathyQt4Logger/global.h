@@ -45,8 +45,8 @@
 //#include "enums.h"
 
 //registered in value.cpp
-QTELEPATHYQT4LOGGER_REGISTER_TYPE(QDate) //codegen: skip=true
-QTELEPATHYQT4LOGGER_REGISTER_TYPE(QDateTime) //codegen: skip=true
+//QTELEPATHYQT4LOGGER_REGISTER_TYPE(QDate) //codegen: skip=true
+//QTELEPATHYQT4LOGGER_REGISTER_TYPE(QDateTime) //codegen: skip=true
 
 #define QTELEPATHYQT4LOGGER_WRAPPER_TPLCLASS_DECLARATION(Class) \
     typedef struct _Tpl##Class Tpl##Class;

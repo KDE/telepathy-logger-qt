@@ -43,6 +43,7 @@ set(telepathy_qt4_logger_SRCS
     pending-tpcontacts.cpp
     text-event.cpp
     utils.cpp
+    init.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/gen.cpp)
 
 # Exported headers for Tp-Qt4-Logger
@@ -51,6 +52,7 @@ set(telepathy_qt4_logger_HEADERS
     Entity
     Event
     Global
+    Init
     LogManager
     PendingDates
     PendingEntities
@@ -62,6 +64,7 @@ set(telepathy_qt4_logger_HEADERS
     entity.h
     event.h 
     global.h
+    init.h
     log-manager.h
     pending-dates.h
     pending-entities.h
