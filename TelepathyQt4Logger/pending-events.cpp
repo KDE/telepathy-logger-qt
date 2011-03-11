@@ -25,6 +25,7 @@
 #include <TelepathyQt4Logger/PendingEvents>
 #include <TelepathyQt4Logger/TextEvent>
 #include <TelepathyQt4Logger/utils.h>
+#include <TelepathyQt4Logger/_gen/pending-events.moc.hpp>
 #include <glib/gerror.h>
 #include <glib/gdate.h>
 #include <telepathy-logger/log-manager.h>

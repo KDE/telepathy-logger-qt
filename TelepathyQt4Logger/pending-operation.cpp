@@ -22,6 +22,7 @@
 #include <QDebug>
 #include <QTimer>
 #include <TelepathyQt4Logger/PendingOperation>
+#include <TelepathyQt4Logger/_gen/pending-operation.moc.hpp>
 
 using namespace Tpl;
 

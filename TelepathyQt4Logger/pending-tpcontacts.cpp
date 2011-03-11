@@ -24,6 +24,7 @@
 #include <TelepathyQt4/ContactManager>
 #include <TelepathyQt4Logger/Constants>
 #include <TelepathyQt4Logger/pending-tpcontacts.h>
+#include <TelepathyQt4Logger/_gen/pending-tpcontacts.moc.hpp>
 #include <glib/gerror.h>
 #include <glib/gdate.h>
 #include <telepathy-logger/log-manager.h>
