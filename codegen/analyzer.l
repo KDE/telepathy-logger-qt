@@ -46,7 +46,7 @@ id      [a-zA-Z][a-zA-Z_0-9]*
 
 <REGISTER_TYPE,REGISTER_WRAPPER,ENUM,INSTRUCTION>{id} { yylval.Id = new QByteArray(yytext); return IDENTIFIER;  }
 
-Q[A-Z]+_REGISTER_TYPE\(  { yy_push_state(REGISTER_TYPE); return REGISTER_TYPE_BEGIN; }
+Q[A-Z0-9]+_REGISTER_TYPE\(  { yy_push_state(REGISTER_TYPE); return REGISTER_TYPE_BEGIN; }
 <REGISTER_TYPE>{
     ::                   { return SCOPE_RESOLUTION_OPERATOR; }
     \)                   { yy_pop_state(); return REGISTER_TYPE_END; }
@@ -54,9 +54,9 @@ Q[A-Z]+_REGISTER_TYPE\(  { yy_push_state(REGISTER_TYPE); return REGISTER_TYPE_BE
     .                    { yyerror(codegen, "Syntax error in QGLIB_REGISTER_TYPE"); }
 }
 
-Q[A-Z]+_WRAPPER\(         { yy_push_state(REGISTER_WRAPPER); return REGISTER_WRAPPER_BEGIN; }
-Q[A-Z]+_WRAPPER_DIFFERENT_C_CLASS\(  { yy_push_state(REGISTER_WRAPPER); return REGISTER_WRAPPER_BEGIN; }
-Q[A-Z]+_WRAPPER_FAKE_SUBCLASS\(      { yy_push_state(REGISTER_WRAPPER); return REGISTER_WRAPPER_SUBCLASS_BEGIN; }
+Q[A-Z0-9]+_WRAPPER\(         { yy_push_state(REGISTER_WRAPPER); return REGISTER_WRAPPER_BEGIN; }
+Q[A-Z0-9]+_WRAPPER_DIFFERENT_C_CLASS\(  { yy_push_state(REGISTER_WRAPPER); return REGISTER_WRAPPER_BEGIN; }
+Q[A-Z0-9]+_WRAPPER_FAKE_SUBCLASS\(      { yy_push_state(REGISTER_WRAPPER); return REGISTER_WRAPPER_SUBCLASS_BEGIN; }
 <REGISTER_WRAPPER>{
     ,                    { return COMMA; }
     \)                   { yy_pop_state(); return REGISTER_WRAPPER_END; }
