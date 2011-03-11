@@ -1,6 +1,2 @@
-* Port to cmake (might be needed to do codegen for example)
-* Use codegen from Qtgstreamer project to generate needed code for QGlib
-* Build library and export lib symbols 
-
 * Implement access to Clear log functionality, the gdbus bindings for Clear log operations will be released soon on telepathy-logger
 * Implement Call Event to be released soon
