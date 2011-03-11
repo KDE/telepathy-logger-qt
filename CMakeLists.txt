@@ -154,8 +154,8 @@ include_directories(${CMAKE_SOURCE_DIR}
 
 # Add the source subdirectories
 add_subdirectory(TelepathyQt4Logger)
-add_subdirectory(tests)
-#add_subdirectory(tools)
+#add_subdirectory(tests)
+add_subdirectory(tools)
 
 # Generate config.h
 configure_file(${CMAKE_SOURCE_DIR}/config.h.in ${CMAKE_BINARY_DIR}/config.h)
