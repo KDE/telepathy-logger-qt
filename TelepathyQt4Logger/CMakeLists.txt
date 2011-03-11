@@ -10,6 +10,8 @@ set(TelepathyQt4Logger_CODEGEN_HEADERS
 set(TelepathyQt4Logger_CODEGEN_INCLUDES
     -Itelepathy-logger/entity.h
     -Itelepathy-logger/log-manager.h
+    -Itelepathy-logger/event.h
+    -Itelepathy-logger/text-event.h
     -ITelepathyQt4Logger/Entity
     -ITelepathyQt4Logger/Event
     -ITelepathyQt4Logger/LogManager
