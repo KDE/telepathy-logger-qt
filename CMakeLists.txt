@@ -128,9 +128,9 @@ macro_log_feature(QT4_GLIB_SUPPORT "Qt4 Glib Support"
 
 find_package(GLIB2 REQUIRED)
 find_package(GObject REQUIRED)
-find_package(DBus)
-find_package(DBusGLib)
-find_package(LibXml2)
+find_package(DBus REQUIRED)
+find_package(DBusGLib REQUIRED)
+find_package(LibXml2 REQUIRED)
 find_package(QtGLib REQUIRED)
 find_package(TelepathyLogger REQUIRED)
 
@@ -139,10 +139,6 @@ find_package(TelepathyLogger REQUIRED)
 # Find telepathy-glib
 set(TELEPATHY_GLIB_MIN_VERSION 0.13.0)
 find_package(TelepathyGlib REQUIRED)
-macro_log_feature(TELEPATHYGLIB_FOUND "Telepathy-glib"
-                  "Glib bindings for Telepathy"
-                  "http://telepathy.freedesktop.org/" FALSE "0.13.0"
-                  "Needed, together with Qt Glib integration, to build most of the unit tests")
 
 # Activate debug symbols generation
 #set(CMAKE_CXX_FLAGS "-g -Wall")
