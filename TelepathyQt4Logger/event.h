@@ -33,7 +33,7 @@ namespace Tpl
  */
 class Event : public QGlib::Object
 {
-    TELEPATHY_QT4_LOGGER_WRAPPER(Event)
+    QTELEPATHYQT4LOGGER_WRAPPER(Event)
 public:
     QDateTime timestamp() const;
     QString accountPath() const;
@@ -45,6 +45,6 @@ public:
 
 } //namespace
 
-TELEPATHY_QT4_LOGGER_REGISTER_TYPE(Tpl::Event)
+QTELEPATHYQT4LOGGER_REGISTER_TYPE(Tpl::Event)
 
 #endif

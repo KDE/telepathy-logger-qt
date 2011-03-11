@@ -31,7 +31,7 @@ namespace Tpl
  */
 class LogManager : public QGlib::Object
 {
-    TELEPATHY_QT4_LOGGER_WRAPPER(LogManager)
+    QTELEPATHYQT4LOGGER_WRAPPER(LogManager)
 public:
     static LogManagerPtr instance();
 
@@ -49,6 +49,6 @@ public:
 
 } //namespace
 
-TELEPATHY_QT4_LOGGER_REGISTER_TYPE(Tpl::LogManager)
+QTELEPATHYQT4LOGGER_REGISTER_TYPE(Tpl::LogManager)
 
 #endif

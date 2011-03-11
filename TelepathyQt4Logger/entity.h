@@ -35,7 +35,7 @@ namespace Tpl
  */
 class Entity : public QGlib::Object
 {
-    TELEPATHY_QT4_LOGGER_WRAPPER(Entity)
+    QTELEPATHYQT4LOGGER_WRAPPER(Entity)
 public:
     static EntityPtr create(const char *id, EntityType type, const char *alias, const char *avatarToken);
     static EntityPtr create(Tp::ContactPtr contact, EntityType type);
@@ -49,6 +49,6 @@ public:
 
 } //namespace
 
-TELEPATHY_QT4_LOGGER_REGISTER_TYPE(Tpl::Entity)
+QTELEPATHYQT4LOGGER_REGISTER_TYPE(Tpl::Entity)
 
 #endif

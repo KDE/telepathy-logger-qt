@@ -33,7 +33,7 @@ namespace Tpl
  */
 class TextEvent : public Event
 {
-    TELEPATHY_QT4_LOGGER_WRAPPER(TextEvent)
+    QTELEPATHYQT4LOGGER_WRAPPER(TextEvent)
 public:
     Tp::ChannelTextMessageType messageType();
     QString message();
@@ -41,6 +41,6 @@ public:
 
 } //namespace
 
-TELEPATHY_QT4_LOGGER_REGISTER_TYPE(Tpl::TextEvent)
+QTELEPATHYQT4LOGGER_REGISTER_TYPE(Tpl::TextEvent)
 
 #endif
