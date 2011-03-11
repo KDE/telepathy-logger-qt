@@ -21,7 +21,9 @@
 #include <TelepathyQt4/Account>
 #include <TelepathyQt4Logger/Entity>
 #include <TelepathyQt4Logger/LogManager>
+#include <TelepathyQt4Logger/Init>
 #include <glib-object.h>
+#include <QGst/Init>
 
 class TplToolApplication : public QCoreApplication {
 public:
@@ -93,6 +95,7 @@ int main(int argc, char **argv)
     g_type_init();
 
     TplToolApplication app(argc, argv);
+    Tpl::init();
 
     if (!app.parseArgs()) {
         qDebug() << "Telepathy logger command line tool (qt4)";
