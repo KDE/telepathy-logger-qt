@@ -29,19 +29,22 @@ namespace Tpl
 
 enum EntityType
 {
+    //codegen: EntityTypeUnknown=ENTITY_UNKNOWN,EntityTypeContact=ENTITY_CONTACT,EntityTypeRoom=ENTITY_ROOM,EntityTypeSelf=ENTITY_SELF
     EntityTypeUnknown,
-    EntityTypeContat,
+    EntityTypeContact,
     EntityTypeRoom,
     EntityTypeSelf
 };
 
 enum LogManagerError
 {
+    //xodegen: LogManagerErrorAddEvent=TPL_LOG_MANAGER_ERROR_ADD_EVENT
     LogManagerErrorAddEvent
 };
 
 enum EventTypeMask
 {
+    //codegen: EventTypeMaskText=EVENT_MASK_TEXT,EventTypeMaskAny=EVENT_MASK_ANY
     EventTypeMaskText = 1 << 0,
     EventTypeMaskAny = 0xffff
 };

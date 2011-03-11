@@ -8,7 +8,13 @@ set(TelepathyQt4Logger_CODEGEN_HEADERS
     types.h)
 
 set(TelepathyQt4Logger_CODEGEN_INCLUDES
-    -Igst/gst.h
+    -Itelepathy-logger/entity.h
+    -Itelepathy-logger/log-manager.h
+    -ITelepathyQt4Logger/Entity
+    -ITelepathyQt4Logger/Event
+    -ITelepathyQt4Logger/LogManager
+    -ITelepathyQt4Logger/TextEvent
+    -ITelepathyQt4Logger/Types
     -IQGlib/Quark)
 
 # Add command to generate gen.cpp using codegen
@@ -34,7 +40,8 @@ set(telepathy_qt4_logger_SRCS
     pending-search.cpp
     pending-tpcontacts.cpp
     text-event.cpp
-    utils.cpp)
+    utils.cpp
+    ${CMAKE_CURRENT_BINARY_DIR}/gen.cpp)
 
 # Exported headers for Tp-Qt4-Logger
 set(telepathy_qt4_logger_HEADERS

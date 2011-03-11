@@ -152,6 +152,9 @@ include_directories(${CMAKE_SOURCE_DIR}
                     ${DBUS_GLIB_INCLUDE_DIR}
                     ${QTGLIB_INCLUDE_DIR})
 
+# Search codegen to see if it's installed somewhere
+#find_program(CODEGEN_BIN NAMES codegen PATHS /usr/bin /usr/local/bin ~/bin ./codegen ../codegen)
+
 # Macro to run codegen from the subdirs
 macro(run_codegen _dir_name _includes _headers)
     set(_prefixed_headers "")
@@ -167,7 +170,9 @@ macro(run_codegen _dir_name _includes _headers)
                        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/..)
 endmacro()
 
+
 # Add the source subdirectories
+add_subdirectory(codegen)
 add_subdirectory(TelepathyQt4Logger)
 #add_subdirectory(tests)
 add_subdirectory(tools)
