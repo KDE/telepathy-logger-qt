@@ -152,6 +152,21 @@ include_directories(${CMAKE_SOURCE_DIR}
                     ${DBUS_GLIB_INCLUDE_DIR}
                     ${QTGLIB_INCLUDE_DIR})
 
+# Macro to run codegen from the subdirs
+macro(run_codegen _dir_name _includes _headers)
+    set(_prefixed_headers "")
+    foreach(_header ${_headers})
+        list(APPEND _prefixed_headers ${_dir_name}/${_header})
+    endforeach()
+
+    add_custom_command(OUTPUT gen.cpp
+                       COMMAND codegen
+                       ARGS ${_includes} ${_prefixed_headers}
+                              > ${CMAKE_CURRENT_BINARY_DIR}/gen.cpp
+                       DEPENDS codegen ${_headers}
+                       WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/..)
+endmacro()
+
 # Add the source subdirectories
 add_subdirectory(TelepathyQt4Logger)
 #add_subdirectory(tests)
