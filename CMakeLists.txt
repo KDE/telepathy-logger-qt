@@ -98,7 +98,7 @@ set (QT_MIN_VERSION "4.5.0")
 find_package(Qt4 REQUIRED)
 find_package(TelepathyQt4 REQUIRED)
 
-add_definitions(-DQT_NO_CAST_FROM_ASCII)
+#add_definitions(-DQT_NO_CAST_FROM_ASCII)
 
 set(ENABLE_DEBUG_OUTPUT ON CACHE BOOL "If activated, compiles support for printing debug output to stderr")
 if (ENABLE_DEBUG_OUTPUT)
