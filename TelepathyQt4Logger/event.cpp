@@ -50,13 +50,13 @@ Tp::AccountPtr Event::account() const
 EntityPtr Event::sender() const
 {
     TplEntity *entity = tpl_event_get_sender(object<TplEvent>());
-    return EntityPtr::wrap(entity, false);
+    return EntityPtr::wrap(entity, true);
 }
 
 EntityPtr Event::receiver() const
 {
     TplEntity *entity = tpl_event_get_receiver(object<TplEvent>());
-    return EntityPtr::wrap(entity, false);
+    return EntityPtr::wrap(entity, true);
 }
 
 bool Event::operator==(Event& rhs) const
