@@ -33,7 +33,7 @@ CONFIG += link_pkgconfig
 PKGCONFIG += TelepathyQt4Logger TelepathyQt4 QtGLib-2.0 telepathy-logger-0.2
 
 # Input
-#HEADERS += tpl-tool.h
+HEADERS += tpl-tool.h
 
 SOURCES += tpl-tool.cpp
 
