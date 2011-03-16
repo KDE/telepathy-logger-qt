@@ -38,6 +38,16 @@ LogManagerPtr LogManager::instance()
     return LogManagerPtr::wrap(manager, false);
 }
 
+void LogManager::setAccountManagerPtr(Tp::AccountManagerPtr accountManager)
+{
+    Utils::instance()->setAccountManagerPtr(accountManager);
+}
+
+Tp::AccountManagerPtr LogManager::accountManagerPtr(Tp::AccountManagerPtr accountManager)
+{
+    return Utils::instance()->accountManagerPtr();
+}
+
 bool LogManager::exists(Tp::AccountPtr account, EntityPtr target, EventTypeMask type) const
 {
     TpAccount *tpAccount = Utils::instance()->tpAccount(account);

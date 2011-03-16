@@ -43,14 +43,14 @@ class Utils {
 public:
     static Utils *instance();
 
+    void setAccountManagerPtr(Tp::AccountManagerPtr accountManager);
     Tp::AccountManagerPtr accountManagerPtr();
     TpAccountManager *tpAccountManager();
 
     Tp::AccountPtr accountPtr(TpAccount *account);
+    Tp::AccountPtr accountPtr(const QString &objectPath);
     TpAccount *tpAccount(Tp::AccountPtr accountPtr);
 
-    //static TpContact *ToTpContact(Tp::ContactPtr contact);
-    //static Tp::ContactPtr ToTpContactPtr(TpContact *);
 private:
     Utils();
     ~Utils();

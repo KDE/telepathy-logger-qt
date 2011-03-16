@@ -35,6 +35,9 @@ class LogManager : public QGlib::Object
 public:
     static LogManagerPtr instance();
 
+    void setAccountManagerPtr(Tp::AccountManagerPtr accountManager);
+    Tp::AccountManagerPtr accountManagerPtr(Tp::AccountManagerPtr accountManager);
+
     bool exists(Tp::AccountPtr account, EntityPtr target, EventTypeMask type) const;
 
     PendingDates *queryDates(Tp::AccountPtr account, EntityPtr entity, EventTypeMask typeMask);

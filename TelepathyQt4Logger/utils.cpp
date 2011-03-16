@@ -50,6 +50,11 @@ Utils::~Utils()
 {
 }
 
+void Utils::setAccountManagerPtr(Tp::AccountManagerPtr accountManager)
+{
+    mAccountManagerPtr = accountManager;
+}
+
 Tp::AccountManagerPtr Utils::accountManagerPtr()
 {
     debugfn();
@@ -71,11 +76,22 @@ Tp::AccountPtr Utils::accountPtr(TpAccount *account)
 {
     debugfn() << "account=" << account;
 
+    if (!account) {
+        return Tp::AccountPtr();
+    }
+
     const gchar *objectPath = tp_proxy_get_object_path(account);
     debugfn() << "objectPath=" << objectPath;
     if (!objectPath) {
         return Tp::AccountPtr();
     }
+
+    return accountPtr(objectPath);
+}
+
+Tp::AccountPtr Utils::accountPtr(const QString &objectPath)
+{
+    debugfn() << "objectPath=" << objectPath;
 
     Tp::AccountPtr accountPtr = accountManagerPtr()->accountForPath(objectPath);
 
