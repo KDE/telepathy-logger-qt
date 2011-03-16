@@ -28,6 +28,8 @@
 #include <TelepathyQt4/Connection>
 #include <TelepathyQt4/PendingReady>
 #include <TelepathyQt4Logger/Entity>
+#include <TelepathyQt4Logger/Event>
+#include <TelepathyQt4Logger/TextEvent>
 #include <TelepathyQt4Logger/LogManager>
 #include <TelepathyQt4Logger/PendingDates>
 #include <TelepathyQt4Logger/PendingEntities>
@@ -216,6 +218,29 @@ bool TplToolApplication::parseArgs2()
 
         return true;
     } else if (args.at(1) == "events") {
+        Tpl::EntityPtr entity = entityPtr(args.at(3));
+        if (entity.isNull()) {
+            qWarning() << "Entity not found " << args.at(3);
+        }
+
+        QDate date = QDate::fromString(args.at(4), "yyyyMMdd");
+
+        Tpl::PendingEvents *pe = logManager->queryEvents(mAccountPtr, entity, Tpl::EventTypeMaskAny, date);
+        debugfn() << "PendingEvents=" << pe << "date=" << date;
+        if (!pe) {
+            qWarning() << "Error in PendingDates";
+            this->exit(-1);
+            return false;
+        }
+
+        connect(pe,
+                SIGNAL(finished(Tpl::PendingOperation*)),
+                this,
+                SLOT(onPendingEvents(Tpl::PendingOperation*)));
+
+        pe->start();
+
+        return true;
     } else if (args.at(1) == "filteredEvents") {
     }
 
@@ -300,8 +325,6 @@ void TplToolApplication::onPendingSearch(Tpl::PendingOperation *po)
         debugfn() << count++ << "account=" << hit->account.data() << "date=" << hit->date << "target=" << (hit->target ? hit->target->identifier() : "null");
     }
 
-    //delete ps;
-
     this->exit();
 }
 
@@ -324,8 +347,6 @@ void TplToolApplication::onPendingEntities(Tpl::PendingOperation *po)
         debugfn() << count++ << "entity id=" << entity->identifier() << "alias=" << entity->alias() << "type=" << entity->entityType() << "avatarToken=" << entity->avatarToken();
     }
 
-    //delete pe;
-
     this->exit();
 }
 
@@ -346,10 +367,48 @@ void TplToolApplication::onPendingDates(Tpl::PendingOperation *po)
     QDate date;
     Q_FOREACH(date, dates) {
 
-        debugfn() << count++ << "date " << date.toString();
+        debugfn() << count++ << "date " << date.toString("yyyyMMdd");
     }
 
-    //delete pd;
+    this->exit();
+}
+
+void TplToolApplication::onPendingEvents(Tpl::PendingOperation *po)
+{
+    Tpl::PendingEvents *pe = (Tpl::PendingEvents*) po;
+
+    if (pe->isError()) {
+        qWarning() << "error in PendingEvents";
+        exit(-1);
+        return;
+    }
+
+    Tpl::EventPtrList events = pe->events();
+    debugfn() << " Pending events " << events.size();
+
+    int count = 0;
+    QObject a;
+    Tpl::EventPtr event;
+    Q_FOREACH(event, events) {
+        Tpl::TextEventPtr textEvent = event.dynamicCast<Tpl::TextEvent>();
+        if (!textEvent.isNull()) {
+            debugfn() << count++ << "textEvent"
+                      << "timestamp=" << textEvent->timestamp().toString()
+                      << "sender=" << textEvent->sender()->identifier()
+                      << "receiver=" << textEvent->receiver()->identifier()
+                      << "message=" << textEvent->message()
+                      << "messageType=" << textEvent->messageType()
+                      << "account=" << (textEvent->account() ? textEvent->account()->objectPath() : "null")
+                      << "accountPath=" << textEvent->accountPath();
+        } else {
+            debugfn() << count++ << "event"
+                      << "timestamp=" << event->timestamp().toString()
+                      << "sender=" << event->sender()->identifier()
+                      << "receiver=" << event->receiver()->identifier()
+                      << "account=" << (event->account() ? event->account()->objectPath() : "null")
+                      << "accountPath=" << event->accountPath();
+        }
+    }
 
     this->exit();
 }

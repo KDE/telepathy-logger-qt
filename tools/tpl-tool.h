@@ -40,6 +40,7 @@ private Q_SLOTS:
     void onPendingSearch(Tpl::PendingOperation*);
     void onPendingEntities(Tpl::PendingOperation*);
     void onPendingDates(Tpl::PendingOperation*);
+    void onPendingEvents(Tpl::PendingOperation*);
 
 private:
     Tp::AccountManagerPtr mAccountManager;
