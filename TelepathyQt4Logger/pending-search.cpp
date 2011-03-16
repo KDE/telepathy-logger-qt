@@ -111,6 +111,7 @@ void PendingSearch::Private::callback(void *logManager, void *result, PendingSea
         hit.account = Utils::instance()->accountPtr(item->account);
         hit.date = QDate(item->date->year, item->date->month, item->date->day);
         hit.target = EntityPtr::wrap(hit.target, false);
+        self->mPriv->hits << hit;
     }
 
     tpl_log_manager_search_free(hits);
