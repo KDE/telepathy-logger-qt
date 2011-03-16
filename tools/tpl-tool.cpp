@@ -190,12 +190,15 @@ void TplToolApplication::onAccountManagerReady(Tp::PendingOperation *po)
     debugfn() << "po=" << po << "isError=" << po->isError();
 
     if (po->isError()) {
+        qWarning() << "error getting account mananger ready";
+        exit(-1);
         return;
     }
 
     Tpl::LogManagerPtr logManager = Tpl::LogManager::instance();
     if (logManager.isNull()) {
         qWarning() << "LogManager not found";
+        exit(-1);
         return;
     }
 
@@ -209,11 +212,15 @@ void TplToolApplication::onAccountReady(Tp::PendingOperation *po)
     debugfn() << "po=" << po << "isError=" << po->isError();
 
     if (po->isError()) {
+        qWarning() << "error getting account ready";
+        exit(-1);
         return;
     }
 
     Tp::ConnectionPtr connection = mAccountPtr->connection();
     if (connection.isNull()) {
+        qWarning() << "error null connection";
+        exit(-1);
         return;
     }
 
@@ -228,6 +235,8 @@ void TplToolApplication::onConnectionReady(Tp::PendingOperation *po)
     debugfn() << "po=" << po << "isError=" << po->isError();
 
     if (po->isError()) {
+        qWarning() << "error getting connection ready";
+        exit(-1);
         return;
     }
 
@@ -238,14 +247,21 @@ void TplToolApplication::onPendingSearch(Tpl::PendingOperation *po)
 {
     Tpl::PendingSearch *ps = (Tpl::PendingSearch*) po;
 
-    debugfn() << " search hits " << ps->hits().size();
+    if (ps->isError()) {
+        qWarning() << "error in search";
+        exit(-1);
+        return;
+    }
 
-    Tpl::SearchHit hit;
-    Q_FOREACH(hit, ps->hits()) {
-        //debugfn() << "account=" << hit.account << "date=" << hit.date << "target=" << hit.target ? hit.target->identifier() : "null";
-        debugfn() << "account=" << hit.account;
-        debugfn() << "date=" << hit.date;
-        debugfn() << "entity=" << (hit.target.isNull() ? "null" : hit.target->identifier());
+    Tpl::SearchHitList *hits = ps->hits();
+    debugfn() << " search hits " << hits->size();
+
+    Tpl::SearchHit *hit;
+    Q_FOREACH(hit, *hits) {
+        //debugfn() << "account=" << hit->account << "date=" << hit->date << "target=" << hit->target ? hit->target->identifier() : "null";
+        debugfn() << "account=" << hit->account;
+        debugfn() << "date=" << hit->date;
+        debugfn() << "entity=" << (hit->target.isNull() ? "null" : hit->target->identifier());
     }
 
     this->exit();
