@@ -53,6 +53,7 @@ PendingSearch::PendingSearch(LogManagerPtr manager, const QString &text, EventTy
 
 PendingSearch::~PendingSearch()
 {
+    qDeleteAll(mPriv->hits);
     delete mPriv;
 }
 
@@ -65,17 +66,17 @@ void PendingSearch::start()
         this);
 }
 
-SearchHitList PendingSearch::hits() const
+SearchHitList *PendingSearch::hits() const
 {
     if (!isFinished()) {
         qWarning() << "PendingSearch::dates called before finished, returning empty";
-        return SearchHitList();
+        return 0;
     } else if (!isValid()) {
         qWarning() << "PendingSearch::dates called when not valid, returning empty";
-        return SearchHitList();
+        return 0;
     }
 
-    return mPriv->hits;
+    return &mPriv->hits;
 }
 
 void PendingSearch::Private::callback(void *logManager, void *result, PendingSearch *self)
@@ -105,12 +106,20 @@ void PendingSearch::Private::callback(void *logManager, void *result, PendingSea
     }
 
     GList *i;
+    int count = 0;
     for (i = hits; i; i = i->next) {
         TplLogSearchHit *item = (TplLogSearchHit *) i->data;
-        SearchHit hit;
-        hit.account = Utils::instance()->accountPtr(item->account);
-        hit.date = QDate(item->date->year, item->date->month, item->date->day);
-        hit.target = EntityPtr::wrap(hit.target, false);
+        debugfn() << "hit " << count++ << "account=" << item->account
+                  << "date=" << g_date_get_day(item->date) << "/" << g_date_get_month(item->date) << "/" << g_date_get_year(item->date)
+                  << "target=" << item->target;
+        debugfn() << "target.id=" << tpl_entity_get_identifier(item->target);
+        debugfn() << "target.alias=" << tpl_entity_get_alias(item->target);
+        debugfn() << "target.type=" << tpl_entity_get_entity_type(item->target);
+        debugfn() << "target.avatar_token=" << tpl_entity_get_avatar_token(item->target);
+        SearchHit *hit = new SearchHit();
+        hit->account = Utils::instance()->accountPtr(item->account);
+        hit->date = QDate(item->date->year, item->date->month, item->date->day);
+        hit->target = EntityPtr::wrap(item->target, true);
         self->mPriv->hits << hit;
     }
 

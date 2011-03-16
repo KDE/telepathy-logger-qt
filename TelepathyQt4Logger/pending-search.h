@@ -43,7 +43,7 @@ public:
     ~PendingSearch();
 
     virtual void start();
-    SearchHitList hits() const;
+    SearchHitList *hits() const;
 \
 private:
     friend class LogManager;
