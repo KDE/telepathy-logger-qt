@@ -100,7 +100,7 @@ bool TplToolApplication::parseArgs1()
                (args.size() == 4 && args.at(1) == "exists") ||
                (args.size() == 3 && args.at(1) == "entities") ||
                (args.size() == 4 && args.at(1) == "dates") ||
-               (args.size() == 4 && args.at(1) == "events") ||
+               (args.size() == 5 && args.at(1) == "events") ||
                (args.size() == 5 && args.at(1) == "filteredEvents")) {
         Tp::AccountPtr account = accountPtr(args.at(2).toAscii());
         if (account.isNull()) {
@@ -135,7 +135,7 @@ bool TplToolApplication::parseArgs1()
     qDebug() << "tpl-tool exists <account> <entity>";
     qDebug() << "tpl-tool entities <account>";
     qDebug() << "tpl-tool dates <account> <entity>";
-    qDebug() << "tpl-tool events <account> <entity>";
+    qDebug() << "tpl-tool events <account> <entity> <date>";
     qDebug() << "tpl-tool filteredEvents <account> <entity> <numEvents>";
     qDebug() << "tpl-tool search <text>";
     this->exit(-1);
@@ -180,7 +180,7 @@ bool TplToolApplication::parseArgs2()
         Tpl::PendingEntities *pe = logManager->queryEntities(mAccountPtr);
         debugfn() << "PendingEntities=" << pe;
         if (!pe) {
-            qWarning() << "Error in search";
+            qWarning() << "Error in PendingEntities";
             this->exit(-1);
             return false;
         }
@@ -194,6 +194,27 @@ bool TplToolApplication::parseArgs2()
 
         return true;
     } else if (args.at(1) == "dates") {
+        Tpl::EntityPtr entity = entityPtr(args.at(3));
+        if (entity.isNull()) {
+            qWarning() << "Entity not found " << args.at(3);
+        }
+
+        Tpl::PendingDates *pd = logManager->queryDates(mAccountPtr, entity, Tpl::EventTypeMaskAny);
+        debugfn() << "PendingDates=" << pd;
+        if (!pd) {
+            qWarning() << "Error in PendingDates";
+            this->exit(-1);
+            return false;
+        }
+
+        connect(pd,
+                SIGNAL(finished(Tpl::PendingOperation*)),
+                this,
+                SLOT(onPendingDates(Tpl::PendingOperation*)));
+
+        pd->start();
+
+        return true;
     } else if (args.at(1) == "events") {
     } else if (args.at(1) == "filteredEvents") {
     }
@@ -304,6 +325,31 @@ void TplToolApplication::onPendingEntities(Tpl::PendingOperation *po)
     }
 
     //delete pe;
+
+    this->exit();
+}
+
+void TplToolApplication::onPendingDates(Tpl::PendingOperation *po)
+{
+    Tpl::PendingDates *pd = (Tpl::PendingDates*) po;
+
+    if (pd->isError()) {
+        qWarning() << "error in search";
+        exit(-1);
+        return;
+    }
+
+    Tpl::QDateList dates = pd->dates();
+    debugfn() << " Pending dates " << dates.size();
+
+    int count = 0;
+    QDate date;
+    Q_FOREACH(date, dates) {
+
+        debugfn() << count++ << "date " << date.toString();
+    }
+
+    //delete pd;
 
     this->exit();
 }
