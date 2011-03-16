@@ -37,7 +37,7 @@ QString Event::accountPath() const
 {
     const gchar *s = tpl_event_get_account_path(object<TplEvent>());
     QString str = QString::fromUtf8(s);
-    g_free((gpointer) s);
+    //g_free((gpointer) s);
     return str;
 }
 
