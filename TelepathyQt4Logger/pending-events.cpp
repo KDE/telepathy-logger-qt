@@ -166,10 +166,10 @@ void PendingEvents::Private::callback(void *logManager, void *result, PendingEve
     for (i = events; i; i = i->next) {
         TplEvent * item = (TplEvent *) i->data;
         if (TPL_IS_TEXT_EVENT(item)) {
-            TextEventPtr eventPtr = TextEventPtr::wrap(TPL_TEXT_EVENT(item), false);
+            TextEventPtr eventPtr = TextEventPtr::wrap(TPL_TEXT_EVENT(item), true);
             self->mPriv->events << eventPtr;
         } else if (TPL_IS_EVENT(item)) {
-            EventPtr eventPtr = EventPtr::wrap(TPL_EVENT(item), false);
+            EventPtr eventPtr = EventPtr::wrap(TPL_EVENT(item), true);
             self->mPriv->events << eventPtr;
         }
     }
