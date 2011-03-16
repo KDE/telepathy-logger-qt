@@ -176,12 +176,29 @@ bool TplToolApplication::parseArgs2()
         qDebug() << "tpl-tool exists " << args.at(2) << args.at(3) << " -> " << ret;
         this->exit();
         return true;
-    } else if (args.at(0) == "entities") {
-    } else if (args.at(0) == "dates") {
-    } else if (args.at(0) == "events") {
-    } else if (args.at(0) == "filteredEvents") {
+    } else if (args.at(1) == "entities") {
+        Tpl::PendingEntities *pe = logManager->queryEntities(mAccountPtr);
+        debugfn() << "PendingEntities=" << pe;
+        if (!pe) {
+            qWarning() << "Error in search";
+            this->exit(-1);
+            return false;
+        }
+
+        connect(pe,
+                SIGNAL(finished(Tpl::PendingOperation*)),
+                this,
+                SLOT(onPendingEntities(Tpl::PendingOperation*)));
+
+        pe->start();
+
+        return true;
+    } else if (args.at(1) == "dates") {
+    } else if (args.at(1) == "events") {
+    } else if (args.at(1) == "filteredEvents") {
     }
 
+    this->exit(-1);
     return false;
 }
 
@@ -256,13 +273,37 @@ void TplToolApplication::onPendingSearch(Tpl::PendingOperation *po)
     Tpl::SearchHitList *hits = ps->hits();
     debugfn() << " search hits " << hits->size();
 
+    int count = 0;
     Tpl::SearchHit *hit;
     Q_FOREACH(hit, *hits) {
-        //debugfn() << "account=" << hit->account << "date=" << hit->date << "target=" << hit->target ? hit->target->identifier() : "null";
-        debugfn() << "account=" << hit->account;
-        debugfn() << "date=" << hit->date;
-        debugfn() << "entity=" << (hit->target.isNull() ? "null" : hit->target->identifier());
+        debugfn() << count++ << "account=" << hit->account.data() << "date=" << hit->date << "target=" << (hit->target ? hit->target->identifier() : "null");
     }
+
+    //delete ps;
+
+    this->exit();
+}
+
+void TplToolApplication::onPendingEntities(Tpl::PendingOperation *po)
+{
+    Tpl::PendingEntities *pe = (Tpl::PendingEntities*) po;
+
+    if (pe->isError()) {
+        qWarning() << "error in search";
+        exit(-1);
+        return;
+    }
+
+    Tpl::EntityPtrList entities= pe->entities();
+    debugfn() << " Pending entities " << entities.size();
+
+    int count = 0;
+    Tpl::EntityPtr entity;
+    Q_FOREACH(entity, entities) {
+        debugfn() << count++ << "entity id=" << entity->identifier() << "alias=" << entity->alias() << "type=" << entity->entityType() << "avatarToken=" << entity->avatarToken();
+    }
+
+    //delete pe;
 
     this->exit();
 }

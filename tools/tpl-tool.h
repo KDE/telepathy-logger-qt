@@ -38,6 +38,7 @@ private Q_SLOTS:
     void onAccountReady(Tp::PendingOperation*);
     void onConnectionReady(Tp::PendingOperation*);
     void onPendingSearch(Tpl::PendingOperation*);
+    void onPendingEntities(Tpl::PendingOperation*);
 
 private:
     Tp::AccountManagerPtr mAccountManager;
