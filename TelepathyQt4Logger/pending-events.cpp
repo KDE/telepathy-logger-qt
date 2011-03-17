@@ -174,7 +174,7 @@ void PendingEvents::Private::callback(void *logManager, void *result, PendingEve
         }
     }
 
-    //g_list_foreach(dates, (GFunc) , NULL);
+    g_list_foreach(events, (GFunc) g_object_unref, NULL);
     g_list_free(events);
 
     self->setFinished();
