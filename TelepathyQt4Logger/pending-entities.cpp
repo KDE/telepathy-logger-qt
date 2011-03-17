@@ -104,10 +104,10 @@ void PendingEntities::Private::callback(void *logManager, void *result, PendingE
     GList *i;
     for (i = entities; i; i = i->next) {
         TplEntity * item = (TplEntity *) i->data;
-        self->mPriv->entities << EntityPtr::wrap(item, false);
+        self->mPriv->entities << EntityPtr::wrap(item, true);
     }
 
-    //g_list_foreach(dates, (GFunc) g_date_free, NULL);
+    g_list_foreach(entities, (GFunc) g_object_unref, NULL);
     g_list_free(entities);
 
     self->setFinished();
