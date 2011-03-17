@@ -96,7 +96,7 @@ void PendingEvents::start()
             mPriv->entity,
             mPriv->typeMask,
             mPriv->numEvents,
-            (TplLogEventFilter) Private::eventFilterMethod,
+            mPriv->filterFunction ? (TplLogEventFilter) Private::eventFilterMethod : 0,
             this,
             (GAsyncReadyCallback) Private::callback,
             this);
