@@ -161,7 +161,7 @@ bool TplToolApplication::parseArgs2()
 
     if (args.size() == 3 && args.at(1) == "contacts") {
         Tp::Contacts contacts = mAccountPtr->connection()->contactManager()->allKnownContacts();
-        debugfn() << "number of contacts = " << contacts.size();
+        qDebug() << "number of contacts = " << contacts.size();
 
         Tp::ContactPtr contact;
         int i = 0;
@@ -244,6 +244,27 @@ bool TplToolApplication::parseArgs2()
 
         return true;
     } else if (args.at(1) == "filteredEvents") {
+        Tpl::EntityPtr entity = entityPtr(args.at(3));
+        if (entity.isNull()) {
+            qWarning() << "Entity not found " << args.at(3);
+        }
+
+        Tpl::PendingEvents *pe = logManager->queryFilteredEvents(mAccountPtr, entity, Tpl::EventTypeMaskAny, args.at(4).toInt(), &TplToolApplication::eventFilterMethod, this);
+        debugfn() << "PendingEvents (filtered) =" << pe << "numEvents=" << args.at(4);
+        if (!pe) {
+            qWarning() << "Error in PendingDates";
+            this->exit(-1);
+            return false;
+        }
+
+        connect(pe,
+                SIGNAL(finished(Tpl::PendingOperation*)),
+                this,
+                SLOT(onPendingEvents(Tpl::PendingOperation*)));
+
+        pe->start();
+
+        return true;
     }
 
     this->exit(-1);
@@ -319,7 +340,7 @@ void TplToolApplication::onPendingSearch(Tpl::PendingOperation *po)
     }
 
     Tpl::SearchHitList hits = ps->hits();
-    debugfn() << " search hits " << hits.size();
+    qDebug() << " search hits " << hits.size();
 
     int count = 0;
     Tpl::SearchHit *hit;
@@ -343,12 +364,12 @@ void TplToolApplication::onPendingEntities(Tpl::PendingOperation *po)
     }
 
     Tpl::EntityPtrList entities= pe->entities();
-    debugfn() << " Pending entities " << entities.size();
+    qDebug() << " Pending entities " << entities.size();
 
     int count = 0;
     Tpl::EntityPtr entity;
     Q_FOREACH(entity, entities) {
-        debugfn() << count++ << "entity id=" << entity->identifier() << "alias=" << entity->alias() << "type=" << entity->entityType() << "avatarToken=" << entity->avatarToken();
+        qDebug() << count++ << "entity id=" << entity->identifier() << "alias=" << entity->alias() << "type=" << entity->entityType() << "avatarToken=" << entity->avatarToken();
     }
 
     this->exit();
@@ -365,13 +386,12 @@ void TplToolApplication::onPendingDates(Tpl::PendingOperation *po)
     }
 
     Tpl::QDateList dates = pd->dates();
-    debugfn() << " Pending dates " << dates.size();
+    qDebug() << " Pending dates " << dates.size();
 
     int count = 0;
     QDate date;
     Q_FOREACH(date, dates) {
-
-        debugfn() << count++ << "date " << date.toString(TPL_TOOL_DATE_FORMAT);
+        qDebug() << count++ << "date " << date.toString(TPL_TOOL_DATE_FORMAT);
     }
 
     this->exit();
@@ -388,7 +408,7 @@ void TplToolApplication::onPendingEvents(Tpl::PendingOperation *po)
     }
 
     Tpl::EventPtrList events = pe->events();
-    debugfn() << " Pending events " << events.size();
+    qDebug() << " Pending events " << events.size();
 
     int count = 0;
     QObject a;
@@ -415,6 +435,11 @@ void TplToolApplication::onPendingEvents(Tpl::PendingOperation *po)
     }
 
     this->exit();
+}
+
+bool TplToolApplication::eventFilterMethod(Tpl::EventPtr event, void *user_data)
+{
+    return true;
 }
 
 int main(int argc, char **argv)

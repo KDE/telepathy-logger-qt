@@ -43,6 +43,8 @@ private Q_SLOTS:
     void onPendingEvents(Tpl::PendingOperation*);
 
 private:
+    static bool eventFilterMethod(Tpl::EventPtr event, void *user_data);
+
     Tp::AccountManagerPtr mAccountManager;
     Tp::AccountPtr mAccountPtr;
 };
