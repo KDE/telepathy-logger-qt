@@ -66,17 +66,17 @@ void PendingSearch::start()
         this);
 }
 
-SearchHitList *PendingSearch::hits() const
+SearchHitList PendingSearch::hits() const
 {
     if (!isFinished()) {
         qWarning() << "PendingSearch::dates called before finished, returning empty";
-        return 0;
+        return SearchHitList();
     } else if (!isValid()) {
         qWarning() << "PendingSearch::dates called when not valid, returning empty";
-        return 0;
+        return SearchHitList();
     }
 
-    return &mPriv->hits;
+    return mPriv->hits;
 }
 
 void PendingSearch::Private::callback(void *logManager, void *result, PendingSearch *self)
@@ -110,12 +110,12 @@ void PendingSearch::Private::callback(void *logManager, void *result, PendingSea
     for (i = hits; i; i = i->next) {
         TplLogSearchHit *item = (TplLogSearchHit *) i->data;
         debugfn() << "hit " << count++ << "account=" << item->account
-                  << "date=" << g_date_get_day(item->date) << "/" << g_date_get_month(item->date) << "/" << g_date_get_year(item->date)
-                  << "target=" << item->target;
-        debugfn() << "target.id=" << tpl_entity_get_identifier(item->target);
-        debugfn() << "target.alias=" << tpl_entity_get_alias(item->target);
-        debugfn() << "target.type=" << tpl_entity_get_entity_type(item->target);
-        debugfn() << "target.avatar_token=" << tpl_entity_get_avatar_token(item->target);
+                  << "date=" << g_date_get_year(item->date) << g_date_get_month(item->date) << g_date_get_day(item->date)
+                  << "target=" << item->target
+                  << tpl_entity_get_identifier(item->target)
+                  << "/" << tpl_entity_get_alias(item->target)
+                  << "/" << tpl_entity_get_entity_type(item->target)
+                  << "/" << tpl_entity_get_avatar_token(item->target);
         SearchHit *hit = new SearchHit();
         hit->account = Utils::instance()->accountPtr(item->account);
         hit->date = QDate(item->date->year, item->date->month, item->date->day);
