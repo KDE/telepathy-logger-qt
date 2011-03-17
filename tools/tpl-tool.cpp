@@ -40,6 +40,8 @@
 #include <QGst/Init>
 #include <QDebug>
 
+#define TPL_TOOL_DATE_FORMAT "yyyyMMdd"
+
 TplToolApplication::TplToolApplication(int &argc, char **argv)
     : QCoreApplication(argc, argv)
 {
@@ -223,7 +225,7 @@ bool TplToolApplication::parseArgs2()
             qWarning() << "Entity not found " << args.at(3);
         }
 
-        QDate date = QDate::fromString(args.at(4), "yyyyMMdd");
+        QDate date = QDate::fromString(args.at(4), TPL_TOOL_DATE_FORMAT);
 
         Tpl::PendingEvents *pe = logManager->queryEvents(mAccountPtr, entity, Tpl::EventTypeMaskAny, date);
         debugfn() << "PendingEvents=" << pe << "date=" << date;
@@ -316,13 +318,15 @@ void TplToolApplication::onPendingSearch(Tpl::PendingOperation *po)
         return;
     }
 
-    Tpl::SearchHitList *hits = ps->hits();
-    debugfn() << " search hits " << hits->size();
+    Tpl::SearchHitList hits = ps->hits();
+    debugfn() << " search hits " << hits.size();
 
     int count = 0;
     Tpl::SearchHit *hit;
-    Q_FOREACH(hit, *hits) {
-        debugfn() << count++ << "account=" << hit->account.data() << "date=" << hit->date << "target=" << (hit->target ? hit->target->identifier() : "null");
+    Q_FOREACH(hit, hits) {
+        qDebug() << count++ << "account=" << hit->account.data() << (hit->account.isNull() ? "null" : hit->account->objectPath())
+                 << "date=" << hit->date.toString(TPL_TOOL_DATE_FORMAT)
+                 << "target=" << (hit->target ? hit->target->identifier() + "/" + hit->target->alias() + "/" + QString::number(hit->target->entityType()) + "/" + hit->target->avatarToken() : "null");
     }
 
     this->exit();
@@ -367,7 +371,7 @@ void TplToolApplication::onPendingDates(Tpl::PendingOperation *po)
     QDate date;
     Q_FOREACH(date, dates) {
 
-        debugfn() << count++ << "date " << date.toString("yyyyMMdd");
+        debugfn() << count++ << "date " << date.toString(TPL_TOOL_DATE_FORMAT);
     }
 
     this->exit();
@@ -392,7 +396,7 @@ void TplToolApplication::onPendingEvents(Tpl::PendingOperation *po)
     Q_FOREACH(event, events) {
         Tpl::TextEventPtr textEvent = event.dynamicCast<Tpl::TextEvent>();
         if (!textEvent.isNull()) {
-            debugfn() << count++ << "textEvent"
+            qDebug() << count++ << "textEvent"
                       << "timestamp=" << textEvent->timestamp().toString()
                       << "sender=" << textEvent->sender()->identifier()
                       << "receiver=" << textEvent->receiver()->identifier()
@@ -401,7 +405,7 @@ void TplToolApplication::onPendingEvents(Tpl::PendingOperation *po)
                       << "account=" << (textEvent->account() ? textEvent->account()->objectPath() : "null")
                       << "accountPath=" << textEvent->accountPath();
         } else {
-            debugfn() << count++ << "event"
+            qDebug() << count++ << "event"
                       << "timestamp=" << event->timestamp().toString()
                       << "sender=" << event->sender()->identifier()
                       << "receiver=" << event->receiver()->identifier()
