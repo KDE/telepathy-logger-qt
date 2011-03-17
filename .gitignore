@@ -8,4 +8,5 @@ tpl-tool
 *~
 CMakeCache.txt
 CMakeFiles
-doxygen
+doxygen.cfg
+*.user
