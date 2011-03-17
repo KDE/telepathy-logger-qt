@@ -34,6 +34,5 @@ QString TextEvent::message()
 {
     const gchar *s = tpl_text_event_get_message(object<TplTextEvent>());
     QString str = QString::fromUtf8(s);
-    g_free((gpointer) s);
     return str;
 }

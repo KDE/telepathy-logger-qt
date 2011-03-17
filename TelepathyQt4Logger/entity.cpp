@@ -54,7 +54,6 @@ QString Entity::alias() const
 {
     const gchar *s = tpl_entity_get_alias(object<TplEntity>());
     QString str = QString::fromUtf8(s);
-    g_free((gpointer) s);
     return str;
 }
 
@@ -62,7 +61,6 @@ QString Entity::identifier() const
 {
     const gchar *s = tpl_entity_get_identifier(object<TplEntity>());
     QString str = QString::fromUtf8(s);
-    g_free((gpointer) s);
     return str;
 }
 
@@ -76,6 +74,5 @@ QString Entity::avatarToken() const
 {
     const gchar *s = tpl_entity_get_avatar_token(object<TplEntity>());
     QString str = QString::fromUtf8(s);
-    g_free((gpointer) s);
     return str;
 }
