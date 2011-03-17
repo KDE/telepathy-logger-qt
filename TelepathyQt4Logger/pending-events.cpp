@@ -187,5 +187,5 @@ gboolean PendingEvents::Private::eventFilterMethod(TplEvent *event, gpointer *us
         return FALSE;
     }
 
-    return self->mPriv->filterFunction(EventPtr::wrap(event, false), self->mPriv->filterFunctionUserData);
+    return self->mPriv->filterFunction(EventPtr::wrap(event, true), self->mPriv->filterFunctionUserData);
 }
