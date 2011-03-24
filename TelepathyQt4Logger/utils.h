@@ -34,8 +34,8 @@
 
 #define debug()         qDebug() << "tp-qt4-tpl DEBUG: "
 #define debugfn()       qDebug() << "tp-qt4-tpl DEBUG: " << __func__ << " : "
-#define warning()       qWarning(); << "tp-qt4-tpl WARN: "
-#define warningfn()     qWarning(); << "tp-qt4-tpl WARN: " << __func__ << " : "
+#define warning()       qWarning() << "tp-qt4-tpl WARN: "
+#define warningfn()     qWarning() << "tp-qt4-tpl WARN: " << __func__ << " : "
 
 namespace Tpl {
 
