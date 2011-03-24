@@ -19,7 +19,9 @@
  */
 
 #include <TelepathyQt4/Account>
+#include <TelepathyQt4/Contact>
 #include <TelepathyQt4Logger/Entity>
+#include <TelepathyQt4Logger/utils.h>
 #include <telepathy-logger/entity.h>
 
 using namespace Tpl;
