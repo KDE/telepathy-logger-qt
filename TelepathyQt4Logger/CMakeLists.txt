@@ -197,3 +197,7 @@ endif (WIN32)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/TelepathyQt4Logger.pc.in ${CMAKE_CURRENT_BINARY_DIR}/TelepathyQt4Logger.pc)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/TelepathyQt4Logger-uninstalled.pc.in ${CMAKE_CURRENT_BINARY_DIR}/TelepathyQt4Logger-uninstalled.pc)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/TelepathyQt4Logger.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig COMPONENT headers)
+
+if (TELEPATHY_QT4_YELL_FOUND)
+    add_subdirectory(Models)
+endif (TELEPATHY_QT4_YELL_FOUND)

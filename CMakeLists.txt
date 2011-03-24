@@ -133,6 +133,10 @@ find_package(DBusGLib REQUIRED)
 find_package(LibXml2 REQUIRED)
 find_package(QtGLib REQUIRED)
 find_package(TelepathyLogger REQUIRED)
+find_package(TelepathyQt4Yell)
+macro_log_feature(TELEPATHY_QT4_YELL_FOUND "Qt Logger Models" 
+                  "Qt models for telepathy logger information"
+                  "http://cgit.freedesktop.org/telepathy/telepathy-qt4-yell/" FALSE "")
 
 #find_program(GLIB_GENMARSHAL glib-genmarshal)
 
