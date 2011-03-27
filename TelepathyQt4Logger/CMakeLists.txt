@@ -174,6 +174,7 @@ target_link_libraries(telepathy-qt4-logger
     ${QT_QTCORE_LIBRARY}
     ${GLIB2_LIBRARIES}
     ${GOBJECT_LIBRARIES}
+    -lgio-2.0
     ${QT_QTDBUS_LIBRARY}
     ${DBUS_LIBRARIES}
     ${LIBXML2_LIBRARIES}
