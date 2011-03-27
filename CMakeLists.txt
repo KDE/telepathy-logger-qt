@@ -161,6 +161,7 @@ include_directories(${CMAKE_SOURCE_DIR}
                     ${QT_INCLUDES}
                     ${TELEPATHY_QT4_INCLUDE_DIR}
                     ${TELEPATHY_LOGGER_INCLUDE_DIR}
+                    ${TELEPATHY_GLIB_INCLUDE_DIR}
                     ${GLIB2_INCLUDE_DIR}
                     ${DBUS_GLIB_INCLUDE_DIR}
                     ${QTGLIB_INCLUDE_DIR})
