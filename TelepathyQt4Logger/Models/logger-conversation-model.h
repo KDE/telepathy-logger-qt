@@ -35,7 +35,7 @@ class LoggerConversationModel : public QAbstractListModel
 
  public:
      LoggerConversationModel(const Tp::AccountPtr &account, const Tp::ContactPtr &contact, QObject *parent = 0);
-     ~LoggerConversationModel();
+     virtual ~LoggerConversationModel();
 
      int rowCount(const QModelIndex &parent = QModelIndex()) const;
      QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;

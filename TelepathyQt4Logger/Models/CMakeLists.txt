@@ -23,6 +23,7 @@ tpqt4_generate_mocs(${telepathy_qt4_logger_models_MOC_SRCS})
 
 # Create the library
 add_library(telepathy-qt4-logger-models STATIC ${telepathy_qt4_logger_models_SRCS} ${telepathy_qt4_logger_models_MOC_SRCS})
+add_dependencies(telepathy-qt4-logger-models telepathy-qt4-logger)
 
 # Link
 target_link_libraries(telepathy-qt4-logger-models

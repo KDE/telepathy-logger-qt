@@ -17,6 +17,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <TelepathyQt4Logger/Models/LoggerConversationModel>
+
+#include "TelepathyQt4Logger/Models/_gen/logger-conversation-model.moc.hpp"
+
 #include <QDebug>
 #include <TelepathyQt4/Account>
 #include <TelepathyQt4/Contact>
@@ -29,7 +33,6 @@
 #include <TelepathyQt4Logger/PendingDates>
 #include <TelepathyQt4Logger/PendingEvents>
 #include <TelepathyQt4Logger/Models/Global>
-#include <TelepathyQt4Logger/Models/LoggerConversationModel>
 #include <TelepathyQt4Yell/Models/ConversationItem>
 #include <TelepathyQt4Yell/Models/AbstractConversationModel>
 
