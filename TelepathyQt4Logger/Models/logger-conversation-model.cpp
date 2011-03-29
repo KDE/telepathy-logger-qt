@@ -50,7 +50,6 @@ struct TELEPATHY_QT4_LOGGER_NO_EXPORT LoggerConversationModel::Private
     Tp::ContactPtr mContact;
     Tpl::EntityPtr mEntity;
     Tpl::QDateList mDates;
-    QList<const Tpy::ConversationItem *> mItems;
 };
 
 LoggerConversationModel::Private::Private(const Tp::AccountPtr &account, const Tp::ContactPtr &contact)
@@ -64,7 +63,7 @@ LoggerConversationModel::Private::Private(const Tp::AccountPtr &account, const T
 }
 
 LoggerConversationModel::LoggerConversationModel(const Tp::AccountPtr &account, const Tp::ContactPtr &contact, QObject *parent)
-    : QAbstractListModel(parent),
+    : Tpy::AbstractConversationModel(parent),
       mPriv(new Private(account, contact))
 {
     qDebug() << "LoggerConversationModel::LoggerConversationModel";
@@ -115,31 +114,6 @@ void LoggerConversationModel::onPendingDatesFinished(Tpl::PendingOperation *op)
     mPriv->mDates = pendingDates->dates();
 
     fetchMoreBack();
-}
-
-int LoggerConversationModel::rowCount(const QModelIndex & /* parent */) const
-{
-    qDebug() << "LoggerConversationModel::rowCount" << mPriv->mItems.size();
-    return mPriv->mItems.size();
-}
-
-QVariant LoggerConversationModel::data(const QModelIndex &index, int role) const
-{
-    qDebug() << "LoggerConversationModel::data, row=" << index;
-
-    if (!index.isValid()) {
-        return QVariant();
-    }
-
-    if (index.row() >= MAX_ITEMS || index.row() < 0) {
-        return QVariant();
-    }
-
-    if (role == Tpy::AbstractConversationModel::TextRole) {
-        return mPriv->mItems.at(index.row());
-    }
-
-    return QVariant();
 }
 
 bool LoggerConversationModel::canFetchMoreBack() const
@@ -194,10 +168,13 @@ void LoggerConversationModel::fetchDate(const QDate &date) const
         return;
     }
     connect(pendingEvents, SIGNAL(finished(Tpl::PendingOperation*)), SLOT(onPendingEventsFinished(Tpl::PendingOperation*)));
+    pendingEvents->start();
 }
 
 void LoggerConversationModel::onPendingEventsFinished(Tpl::PendingOperation *op)
 {
+    qDebug() << "LoggerConversationModel::onPendingEventsFinished";
+
     Tpl::PendingEvents *pendingEvents = static_cast<Tpl::PendingEvents*> (op);
     if (!pendingEvents || pendingEvents->isError()) {
         return;
@@ -206,9 +183,12 @@ void LoggerConversationModel::onPendingEventsFinished(Tpl::PendingOperation *op)
     Tpl::EventPtrList eventList = pendingEvents->events();
     Tpl::EventPtr event;
 
+    QList<const Tpy::ConversationItem *> items;
+
     beginInsertRows(QModelIndex(), 0, eventList.size() - 1);
 
     Q_FOREACH(event, eventList) {
+        qDebug() << "LoggerConversationModel::onPendingEventsFinished: event added";
         Tpl::TextEventPtr textEvent = event.dynamicCast<Tpl::TextEvent>();
         if (!textEvent.isNull()) {
             Tpy::ConversationItem::Type messageType;
@@ -222,8 +202,12 @@ void LoggerConversationModel::onPendingEventsFinished(Tpl::PendingOperation *op)
             }
             Tpy::ConversationItem *item = new Tpy::ConversationItem(contact,
                    textEvent->timestamp(), textEvent->message(), messageType, this);
-            mPriv->mItems.insert(0, item);
+            items.append(item);
         }
+    }
+
+    if (items.size() > 0) {
+        this->insertItems(items);
     }
 
     endInsertRows();

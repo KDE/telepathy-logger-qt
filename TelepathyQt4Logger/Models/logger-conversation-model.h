@@ -26,10 +26,11 @@
 #include <TelepathyQt4Logger/PendingOperation>
 #include <TelepathyQt4Logger/Types>
 #include <TelepathyQt4Yell/Models/ConversationItem>
+#include <TelepathyQt4Yell/Models/AbstractConversationModel>
 
 namespace Tpl {
 
-class LoggerConversationModel : public QAbstractListModel
+class LoggerConversationModel : public Tpy::AbstractConversationModel
  {
      Q_OBJECT
 
@@ -37,11 +38,8 @@ class LoggerConversationModel : public QAbstractListModel
      LoggerConversationModel(const Tp::AccountPtr &account, const Tp::ContactPtr &contact, QObject *parent = 0);
      virtual ~LoggerConversationModel();
 
-     int rowCount(const QModelIndex &parent = QModelIndex()) const;
-     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
-
-     Q_INVOKABLE bool canFetchMoreBack() const;
-     Q_INVOKABLE void fetchMoreBack();
+     Q_INVOKABLE virtual bool canFetchMoreBack() const;
+     Q_INVOKABLE virtual void fetchMoreBack();
 
      virtual bool canFetchMore(const QModelIndex & index) const;
      virtual void fetchMore(const QModelIndex & index);
