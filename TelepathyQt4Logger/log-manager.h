@@ -20,6 +20,10 @@
 #ifndef _TelepathyQt4Logger_log_manager_h_HEADER_GUARD_
 #define _TelepathyQt4Logger_log_manager_h_HEADER_GUARD_
 
+#ifndef IN_TELEPATHY_QT4_LOGGER_HEADER
+#error IN_TELEPATHY_QT4_LOGGER_HEADER
+#endif
+
 #include <QGlib/Object>
 #include <TelepathyQt4Logger/Types>
 
