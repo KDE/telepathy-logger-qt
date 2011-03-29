@@ -19,10 +19,7 @@
 #ifndef _TelepathyQt4Logger_global_h_HEADER_GUARD_
 #define _TelepathyQt4Logger_global_h_HEADER_GUARD_
 
-#include <QGlib/type.h>
-#include <QtCore/QtGlobal>
-#include <QtCore/QDate>
-#include <QtCore/QSharedPointer>
+#include <QGlib/Global>
 
 /* defined by cmake when building this library */
 #if defined(TELEPATHY_QT4_LOGGER_EXPORTS)
@@ -41,18 +38,9 @@
 #define QTELEPATHYQT4LOGGER_REGISTER_TYPE(T) \
     QGLIB_REGISTER_TYPE_WITH_EXPORT_MACRO(T, TELEPATHY_QT4_LOGGER_EXPORT)
 
-//cyclic dependency, must include after defining the above
-//#include "enums.h"
-
-//registered in value.cpp
-//QTELEPATHYQT4LOGGER_REGISTER_TYPE(QDate) //codegen: skip=true
-//QTELEPATHYQT4LOGGER_REGISTER_TYPE(QDateTime) //codegen: skip=true
 
 #define QTELEPATHYQT4LOGGER_WRAPPER_TPLCLASS_DECLARATION(Class) \
     typedef struct _Tpl##Class Tpl##Class;
-
-#define QTELEPATHYQT4LOGGER_WRAPPER_DIFFERENT_TPLCLASS_DECLARATION(Class, CClass) \
-    typedef struct _Tpl##CClass Tpl##Class;
 
 #define QTELEPATHYQT4LOGGER_WRAPPER_REFPOINTER_DECLARATION(Class) \
     namespace Tpl { \
@@ -73,21 +61,9 @@ QTELEPATHYQT4LOGGER_WRAPPER_DECLARATION(LogManager)
 #undef QTELEPATHYQT4LOGGER_WRAPPER_REFPOINTER_DECLARATION
 #undef QTELEPATHYQT4LOGGER_WRAPPER_TPLCLASS_DECLARATION
 
+
 #define QTELEPATHYQT4LOGGER_WRAPPER(Class) \
     QGLIB_WRAPPER_DECLARATION_MACRO(Class, Class, Tpl, Class)
 
-#define QTELEPATHYQT4LOGGER_WRAPPER_DIFFERENT_C_CLASS(Class, CClass) \
-    QGLIB_WRAPPER_DECLARATION_MACRO(Class, CClass, Tpl, Class)
-
-#define QTELEPATHYQT4LOGGER_WRAPPER_FAKE_SUBCLASS(Sub, Class) \
-    QGLIB_WRAPPER_DECLARATION_MACRO(Sub##Class, Class, Tpl, Class)
-
-#define QTELEPATHYQT4LOGGER_REGISTER_SUBCLASS(BASECLASS, TYPE) \
-    namespace QGlib { \
-        template <> \
-        struct GetTypeImpl<Tpl::TYPE##BASECLASS> { \
-            inline operator Type() { return GetType<Tpl::BASECLASS>(); }; \
-        }; \
-    }
 
 #endif
