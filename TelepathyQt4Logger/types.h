@@ -38,7 +38,6 @@ enum EntityType
 
 enum LogManagerError
 {
-    //xodegen: LogManagerErrorAddEvent=TPL_LOG_MANAGER_ERROR_ADD_EVENT
     LogManagerErrorAddEvent
 };
 
