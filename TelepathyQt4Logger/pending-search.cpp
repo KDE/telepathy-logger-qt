@@ -60,7 +60,7 @@ PendingSearch::~PendingSearch()
 void PendingSearch::start()
 {
     tpl_log_manager_search_async(mPriv->manager,
-        mPriv->text.toAscii(),
+        mPriv->text.toUtf8(),
         mPriv->typeMask,
         (GAsyncReadyCallback) Private::callback,
         this);

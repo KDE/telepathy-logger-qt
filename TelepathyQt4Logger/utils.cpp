@@ -109,7 +109,7 @@ TpAccount *Utils::tpAccount(const Tp::AccountPtr & accountPtr)
         return 0;
     }
 
-    TpAccount * account = tp_account_manager_ensure_account(tpAccountManager(), objectPath.toAscii());
+    TpAccount * account = tp_account_manager_ensure_account(tpAccountManager(), objectPath.toUtf8());
     debugfn() << "account=" << account;
     return account;
 }

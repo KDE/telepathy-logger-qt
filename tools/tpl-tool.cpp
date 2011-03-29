@@ -58,7 +58,7 @@ Tp::AccountPtr TplToolApplication::accountPtr(const QString &id)
 {
     debugfn();
 
-    mAccountPtr = Tpl::Utils::instance()->accountPtr(id.toAscii());
+    mAccountPtr = Tpl::Utils::instance()->accountPtr(id);
     if (!mAccountPtr->isValid()) {
         return mAccountPtr;
     }
@@ -75,7 +75,7 @@ Tpl::EntityPtr TplToolApplication::entityPtr(const QString &id)
 {
     debugfn();
 
-    return Tpl::Entity::create(id.toAscii(), Tpl::EntityTypeContact, NULL, NULL);
+    return Tpl::Entity::create(id.toUtf8(), Tpl::EntityTypeContact, NULL, NULL);
 }
 
 bool TplToolApplication::parseArgs1()
@@ -106,7 +106,7 @@ bool TplToolApplication::parseArgs1()
                (args.size() == 4 && args.at(1) == "dates") ||
                (args.size() == 5 && args.at(1) == "events") ||
                (args.size() == 5 && args.at(1) == "filteredEvents")) {
-        Tp::AccountPtr account = accountPtr(args.at(2).toAscii());
+        Tp::AccountPtr account = accountPtr(args.at(2));
         if (account.isNull()) {
             qWarning() << "Account not found " << args.at(2);
         }

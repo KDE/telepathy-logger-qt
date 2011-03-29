@@ -42,7 +42,7 @@ EntityPtr Entity::create(const Tp::ContactPtr & contact, EntityType type)
     QString id = contact->id();
     QString alias = contact->alias();
     QString avatarToken = contact->avatarToken();
-    return Entity::create(id.toAscii(), type, alias.toAscii(), avatarToken.toAscii());
+    return Entity::create(id.toUtf8(), type, alias.toUtf8(), avatarToken.toUtf8());
 #endif
 }
 
