@@ -38,42 +38,44 @@ LogManagerPtr LogManager::instance()
     return LogManagerPtr::wrap(manager, false);
 }
 
-void LogManager::setAccountManagerPtr(Tp::AccountManagerPtr accountManager)
-{
-    Utils::instance()->setAccountManagerPtr(accountManager);
-}
-
-Tp::AccountManagerPtr LogManager::accountManagerPtr(Tp::AccountManagerPtr accountManager)
+Tp::AccountManagerPtr LogManager::accountManagerPtr() const
 {
     return Utils::instance()->accountManagerPtr();
 }
 
-bool LogManager::exists(Tp::AccountPtr account, EntityPtr target, EventTypeMask type) const
+void LogManager::setAccountManagerPtr(const Tp::AccountManagerPtr & accountManager)
+{
+    Utils::instance()->setAccountManagerPtr(accountManager);
+}
+
+bool LogManager::exists(const Tp::AccountPtr & account, const EntityPtr & target,
+        EventTypeMask type) const
 {
     TpAccount *tpAccount = Utils::instance()->tpAccount(account);
     return tpl_log_manager_exists(object<TplLogManager>(), tpAccount, target, (gint) type);
 }
 
-PendingDates *LogManager::queryDates(Tp::AccountPtr account, EntityPtr entity,
+PendingDates *LogManager::queryDates(const Tp::AccountPtr & account, const EntityPtr & entity,
         EventTypeMask typeMask)
 {
     return new PendingDates(LogManagerPtr(this), account, entity, typeMask);
 }
 
-PendingEvents *LogManager::queryEvents(Tp::AccountPtr account, EntityPtr entity,
-        EventTypeMask typeMask, QDate date)
+PendingEvents *LogManager::queryEvents(const Tp::AccountPtr & account, const EntityPtr & entity,
+        EventTypeMask typeMask, const QDate & date)
 {
     return new PendingEvents(LogManagerPtr(this), account, entity, typeMask, date);
 }
 
-PendingEvents *LogManager::queryFilteredEvents(Tp::AccountPtr account, EntityPtr entity,
-        EventTypeMask typeMask, uint numEvents, LogEventFilter filterFunction, void *filterFunctionUserData)
+PendingEvents *LogManager::queryFilteredEvents(const Tp::AccountPtr & account,
+        const EntityPtr & entity, EventTypeMask typeMask, uint numEvents,
+        LogEventFilter filterFunction, void *filterFunctionUserData)
 {
     return new PendingEvents(LogManagerPtr(this), account, entity, typeMask, numEvents,
         filterFunction, filterFunctionUserData);
 }
 
-PendingEntities *LogManager::queryEntities(Tp::AccountPtr account)
+PendingEntities *LogManager::queryEntities(const Tp::AccountPtr & account)
 {
     return new PendingEntities(LogManagerPtr(this), account);
 }

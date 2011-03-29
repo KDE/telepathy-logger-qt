@@ -43,7 +43,8 @@ struct TELEPATHY_QT4_LOGGER_NO_EXPORT PendingDates::Private
     static void callback(void *logManager, void *result, PendingDates *self);
 };
 
-PendingDates::PendingDates(LogManagerPtr manager, Tp::AccountPtr account, EntityPtr entity, EventTypeMask typeMask)
+PendingDates::PendingDates(const LogManagerPtr & manager, const Tp::AccountPtr & account,
+    const EntityPtr & entity, EventTypeMask typeMask)
     : PendingOperation(),
       mPriv(new Private())
 {

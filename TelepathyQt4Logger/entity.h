@@ -38,7 +38,7 @@ class Entity : public QGlib::Object
     QTELEPATHYQT4LOGGER_WRAPPER(Entity)
 public:
     static EntityPtr create(const char *id, EntityType type, const char *alias, const char *avatarToken);
-    static EntityPtr create(Tp::ContactPtr contact, EntityType type);
+    static EntityPtr create(const Tp::ContactPtr & contact, EntityType type);
     static EntityPtr create(const char *room_id);
 
     QString alias() const;

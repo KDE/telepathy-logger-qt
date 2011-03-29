@@ -48,7 +48,7 @@ public:
 private:
     friend class LogManager;
 
-    PendingSearch(LogManagerPtr manager, const QString &text, EventTypeMask typeMask);
+    PendingSearch(const LogManagerPtr & manager, const QString &text, EventTypeMask typeMask);
 
     struct Private;
     friend struct Private;

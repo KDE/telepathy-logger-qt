@@ -41,7 +41,7 @@ struct TELEPATHY_QT4_LOGGER_NO_EXPORT PendingEntities::Private
     static void callback(void *logManager, void *result, PendingEntities *self);
 };
 
-PendingEntities::PendingEntities(LogManagerPtr manager, Tp::AccountPtr account)
+PendingEntities::PendingEntities(const LogManagerPtr & manager, const Tp::AccountPtr & account)
     : PendingOperation(),
       mPriv(new Private())
 {

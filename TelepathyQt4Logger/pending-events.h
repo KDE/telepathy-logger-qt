@@ -42,11 +42,11 @@ public:
 private:
     friend class LogManager;
 
-    PendingEvents(LogManagerPtr manager, Tp::AccountPtr account, EntityPtr entity,
-            EventTypeMask typeMask, const QDate &date);
-    PendingEvents(LogManagerPtr manager, Tp::AccountPtr account, EntityPtr entity,
-            EventTypeMask typeMask, uint numEvents, LogEventFilter filterFunction,
-            void *filterFunctionUserData);
+    PendingEvents(const LogManagerPtr & manager, const Tp::AccountPtr & account,
+            const EntityPtr & entity, EventTypeMask typeMask, const QDate &date);
+    PendingEvents(const LogManagerPtr & manager, const Tp::AccountPtr & account,
+            const EntityPtr & entity, EventTypeMask typeMask, uint numEvents,
+            LogEventFilter filterFunction, void *filterFunctionUserData);
 
     struct Private;
     friend struct Private;

@@ -32,7 +32,7 @@ EntityPtr Entity::create(const char *id, EntityType type, const char *alias, con
     return EntityPtr::wrap(entity, false);
 }
 
-EntityPtr Entity::create(Tp::ContactPtr contact, EntityType type)
+EntityPtr Entity::create(const Tp::ContactPtr & contact, EntityType type)
 {
 #if 0
     // TODO how to go from Tp::ContactPtr to TpContact ?

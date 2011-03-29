@@ -35,8 +35,8 @@ class TextEvent : public Event
 {
     QTELEPATHYQT4LOGGER_WRAPPER(TextEvent)
 public:
-    Tp::ChannelTextMessageType messageType();
-    QString message();
+    Tp::ChannelTextMessageType messageType() const;
+    QString message() const;
 };
 
 } //namespace

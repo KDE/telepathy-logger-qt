@@ -50,7 +50,7 @@ Utils::~Utils()
 {
 }
 
-void Utils::setAccountManagerPtr(Tp::AccountManagerPtr accountManager)
+void Utils::setAccountManagerPtr(const Tp::AccountManagerPtr & accountManager)
 {
     mAccountManagerPtr = accountManager;
 }
@@ -99,7 +99,7 @@ Tp::AccountPtr Utils::accountPtr(const QString &objectPath)
     return accountPtr;
 }
 
-TpAccount *Utils::tpAccount(Tp::AccountPtr accountPtr)
+TpAccount *Utils::tpAccount(const Tp::AccountPtr & accountPtr)
 {
     debugfn() << "account=" << accountPtr;
 

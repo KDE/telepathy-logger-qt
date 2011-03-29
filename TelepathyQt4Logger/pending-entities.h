@@ -41,7 +41,7 @@ public:
 private:
     friend class LogManager;
 
-    PendingEntities(LogManagerPtr manager, Tp::AccountPtr account);
+    PendingEntities(const LogManagerPtr & manager, const Tp::AccountPtr & account);
 
     struct Private;
     friend struct Private;

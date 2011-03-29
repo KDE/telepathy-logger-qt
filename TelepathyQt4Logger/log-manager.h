@@ -35,18 +35,19 @@ class LogManager : public QGlib::Object
 public:
     static LogManagerPtr instance();
 
-    void setAccountManagerPtr(Tp::AccountManagerPtr accountManager);
-    Tp::AccountManagerPtr accountManagerPtr(Tp::AccountManagerPtr accountManager);
+    Tp::AccountManagerPtr accountManagerPtr() const;
+    void setAccountManagerPtr(const Tp::AccountManagerPtr & accountManager);
 
-    bool exists(Tp::AccountPtr account, EntityPtr target, EventTypeMask type) const;
+    bool exists(const Tp::AccountPtr & account, const EntityPtr & target, EventTypeMask type) const;
 
-    PendingDates *queryDates(Tp::AccountPtr account, EntityPtr entity, EventTypeMask typeMask);
-    PendingEvents *queryEvents(Tp::AccountPtr account, EntityPtr entity, EventTypeMask typeMask,
-        QDate date);
-    PendingEvents *queryFilteredEvents(Tp::AccountPtr account, EntityPtr entity,
+    PendingDates *queryDates(const Tp::AccountPtr & account, const EntityPtr & entity,
+        EventTypeMask typeMask);
+    PendingEvents *queryEvents(const Tp::AccountPtr & account, const EntityPtr & entity,
+        EventTypeMask typeMask, const QDate & date);
+    PendingEvents *queryFilteredEvents(const Tp::AccountPtr & account, const EntityPtr & entity,
         EventTypeMask typeMask, uint numEvents, LogEventFilter filterFunction,
         void *filterFunctionUserData);
-    PendingEntities *queryEntities(Tp::AccountPtr account);
+    PendingEntities *queryEntities(const Tp::AccountPtr & account);
     PendingSearch *search(const QString &text, EventTypeMask typeMask);
 };
 

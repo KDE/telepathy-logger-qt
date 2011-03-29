@@ -24,13 +24,12 @@
 
 using namespace Tpl;
 
-Tp::ChannelTextMessageType TextEvent::messageType()
+Tp::ChannelTextMessageType TextEvent::messageType() const
 {
-    Tp::ChannelTextMessageType mt = (Tp::ChannelTextMessageType) tpl_text_event_get_message_type(object<TplTextEvent>());
-    return mt;
+    return (Tp::ChannelTextMessageType) tpl_text_event_get_message_type(object<TplTextEvent>());
 }
 
-QString TextEvent::message()
+QString TextEvent::message() const
 {
     const gchar *s = tpl_text_event_get_message(object<TplTextEvent>());
     QString str = QString::fromUtf8(s);

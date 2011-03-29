@@ -53,8 +53,8 @@ struct TELEPATHY_QT4_LOGGER_NO_EXPORT PendingEvents::Private
     static gboolean eventFilterMethod(TplEvent *event, gpointer *user_data);
 };
 
-PendingEvents::PendingEvents(LogManagerPtr manager, Tp::AccountPtr account, EntityPtr entity,
-    EventTypeMask typeMask, const QDate &date)
+PendingEvents::PendingEvents(const LogManagerPtr & manager, const Tp::AccountPtr & account,
+    const EntityPtr & entity, EventTypeMask typeMask, const QDate &date)
     : PendingOperation(),
       mPriv(new Private())
 {
@@ -68,8 +68,9 @@ PendingEvents::PendingEvents(LogManagerPtr manager, Tp::AccountPtr account, Enti
     mPriv->filterFunctionUserData = 0;
 }
 
-PendingEvents::PendingEvents(LogManagerPtr manager, Tp::AccountPtr account, EntityPtr entity,
-    EventTypeMask typeMask, uint numEvents, LogEventFilter filterFunction, void *filterFunctionUserData)
+PendingEvents::PendingEvents(const LogManagerPtr & manager, const Tp::AccountPtr & account,
+    const EntityPtr & entity, EventTypeMask typeMask, uint numEvents,
+    LogEventFilter filterFunction, void *filterFunctionUserData)
     : PendingOperation(),
       mPriv(new Private())
 {

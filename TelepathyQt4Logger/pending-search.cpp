@@ -42,7 +42,7 @@ struct TELEPATHY_QT4_LOGGER_NO_EXPORT PendingSearch::Private
     static void callback(void *logManager, void *result, PendingSearch *self);
 };
 
-PendingSearch::PendingSearch(LogManagerPtr manager, const QString &text, EventTypeMask typeMask)
+PendingSearch::PendingSearch(const LogManagerPtr & manager, const QString &text, EventTypeMask typeMask)
     : PendingOperation(),
       mPriv(new Private())
 {

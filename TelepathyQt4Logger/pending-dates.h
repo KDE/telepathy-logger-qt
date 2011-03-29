@@ -42,7 +42,8 @@ public:
 private:
     friend class LogManager;
 
-    PendingDates(LogManagerPtr manager, Tp::AccountPtr account, EntityPtr entity, EventTypeMask typeMask);
+    PendingDates(const LogManagerPtr & manager, const Tp::AccountPtr & account,
+                 const EntityPtr & entity, EventTypeMask typeMask);
 
     struct Private;
     friend struct Private;
