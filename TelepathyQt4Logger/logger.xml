@@ -1,0 +1,12 @@
+<tp:spec
+  xmlns:tp="http://telepathy.freedesktop.org/wiki/DbusSpec#extensions-v0"
+  xmlns:xi="http://www.w3.org/2001/XInclude">
+
+<tp:title>Logger interfaces</tp:title>
+
+<xi:include href="../spec/Logger.xml"/>
+
+<xi:include href="../spec/generic-types.xml"/>
+<xi:include href="../spec/errors.xml"/>
+
+</tp:spec>
