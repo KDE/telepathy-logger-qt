@@ -49,6 +49,13 @@ enum EventTypeMask
     EventTypeMaskAny = 0xffff
 };
 
+enum CallEndReason
+{
+    CallEndReasonUnknown = 0,
+    CallEndReasonUserRequested,
+    CallEndReasonNoAnswer
+};
+
 class PendingDates;
 class PendingEvents;
 class PendingEntities;
@@ -68,5 +75,6 @@ typedef bool (*LogEventFilter)(EventPtr event, void *user_data);
 //QTELEPATHYQT4LOGGER_REGISTER_TYPE(Tpl::EntityType)
 //QTELEPATHYQT4LOGGER_REGISTER_TYPE(Tpl::LogManagerError)
 //QTELEPATHYQT4LOGGER_REGISTER_TYPE(Tpl::EventTypeMask)
+//QTELEPATHYQT4LOGGER_REGISTER_TYPE(Tpl::CallEndReason)
 
 #endif

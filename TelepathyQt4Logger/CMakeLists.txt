@@ -1,6 +1,7 @@
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/_gen")
 
 set(TelepathyQt4Logger_CODEGEN_HEADERS 
+    call-event.h
     entity.h
     event.h
     log-manager.h
@@ -8,10 +9,12 @@ set(TelepathyQt4Logger_CODEGEN_HEADERS
     types.h)
 
 set(TelepathyQt4Logger_CODEGEN_INCLUDES
+    -Itelepathy-logger/call-event.h
     -Itelepathy-logger/entity.h
     -Itelepathy-logger/log-manager.h
     -Itelepathy-logger/event.h
     -Itelepathy-logger/text-event.h
+    -ITelepathyQt4Logger/CallEvent
     -ITelepathyQt4Logger/Entity
     -ITelepathyQt4Logger/Event
     -ITelepathyQt4Logger/LogManager
@@ -32,6 +35,7 @@ add_definitions (-DQT_NO_KEYWORDS)
 
 # Sources for Tp-Qt4-Logger
 set(telepathy_qt4_logger_SRCS
+    call-event.cpp
     entity.cpp
     event.cpp
     log-manager.cpp
@@ -48,6 +52,7 @@ set(telepathy_qt4_logger_SRCS
 
 # Exported headers for Tp-Qt4-Logger
 set(telepathy_qt4_logger_HEADERS
+    CallEvent
     Constants
     Entity
     Event
@@ -60,6 +65,7 @@ set(telepathy_qt4_logger_HEADERS
     PendingOperation
     TextEvent
     Types
+    call-event.h
     constants.h 
     entity.h
     event.h 
