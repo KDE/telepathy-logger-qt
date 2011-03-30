@@ -44,6 +44,10 @@ class LoggerConversationModel : public Tpy::AbstractConversationModel
      virtual bool canFetchMore(const QModelIndex & index) const;
      virtual void fetchMore(const QModelIndex & index);
 
+Q_SIGNALS:
+     void backFetchable();
+     void backFetched(int numItems);
+
 private Q_SLOTS:
      void onPendingDatesFinished(Tpl::PendingOperation *op);
      void onPendingEventsFinished(Tpl::PendingOperation *op);

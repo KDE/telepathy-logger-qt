@@ -113,7 +113,7 @@ void LoggerConversationModel::onPendingDatesFinished(Tpl::PendingOperation *op)
 
     mPriv->mDates = pendingDates->dates();
 
-    fetchMoreBack();
+    Q_EMIT backFetchable();
 }
 
 bool LoggerConversationModel::canFetchMoreBack() const
@@ -211,4 +211,6 @@ void LoggerConversationModel::onPendingEventsFinished(Tpl::PendingOperation *op)
     }
 
     endInsertRows();
+
+    Q_EMIT backFetched(items.size());
 }
