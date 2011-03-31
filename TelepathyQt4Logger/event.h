@@ -44,7 +44,7 @@ public:
     Tp::AccountPtr account() const;
     EntityPtr sender() const;
     EntityPtr receiver() const;
-    bool operator==(Event& rhs) const;
+    bool equalTo(EventPtr &rhs) const;
 };
 
 } //namespace
