@@ -101,7 +101,6 @@ void LoggerConversationModel::setup() const
     connect(pendingDates,
             SIGNAL(finished(Tpl::PendingOperation*)),
             SLOT(onPendingDatesFinished(Tpl::PendingOperation*)));
-    pendingDates->start();
 }
 
 void LoggerConversationModel::onPendingDatesFinished(Tpl::PendingOperation *op)
@@ -168,7 +167,6 @@ void LoggerConversationModel::fetchDate(const QDate &date) const
         return;
     }
     connect(pendingEvents, SIGNAL(finished(Tpl::PendingOperation*)), SLOT(onPendingEventsFinished(Tpl::PendingOperation*)));
-    pendingEvents->start();
 }
 
 void LoggerConversationModel::onPendingEventsFinished(Tpl::PendingOperation *op)

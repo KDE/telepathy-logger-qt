@@ -38,7 +38,6 @@ class PendingOperation : public QObject
 public:
     virtual ~PendingOperation();
 
-    void start();
     bool isFinished() const;
     bool isValid() const;
     bool isError() const;
@@ -56,6 +55,7 @@ protected Q_SLOTS:
     void setFinishedWithError(const QString &name, const QString &message);
 
 private Q_SLOTS:
+    virtual void start();
     void emitFinished();
 
 private:

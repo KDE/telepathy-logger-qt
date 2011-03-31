@@ -125,8 +125,6 @@ bool TplToolApplication::parseArgs1()
                 this,
                 SLOT(onPendingSearch(Tpl::PendingOperation*)));
 
-        ps->start();
-
         return true;
     }
 
@@ -194,8 +192,6 @@ bool TplToolApplication::parseArgs2()
                 this,
                 SLOT(onPendingEntities(Tpl::PendingOperation*)));
 
-        pe->start();
-
         return true;
     } else if (args.at(1) == "dates") {
         Tpl::EntityPtr entity = entityPtr(args.at(3));
@@ -215,8 +211,6 @@ bool TplToolApplication::parseArgs2()
                 SIGNAL(finished(Tpl::PendingOperation*)),
                 this,
                 SLOT(onPendingDates(Tpl::PendingOperation*)));
-
-        pd->start();
 
         return true;
     } else if (args.at(1) == "events") {
@@ -240,8 +234,6 @@ bool TplToolApplication::parseArgs2()
                 this,
                 SLOT(onPendingEvents(Tpl::PendingOperation*)));
 
-        pe->start();
-
         return true;
     } else if (args.at(1) == "filteredEvents") {
         Tpl::EntityPtr entity = entityPtr(args.at(3));
@@ -261,8 +253,6 @@ bool TplToolApplication::parseArgs2()
                 SIGNAL(finished(Tpl::PendingOperation*)),
                 this,
                 SLOT(onPendingEvents(Tpl::PendingOperation*)));
-
-        pe->start();
 
         return true;
     }

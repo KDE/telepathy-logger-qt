@@ -40,8 +40,10 @@ class PendingEvents : public Tpl::PendingOperation
 public:
     ~PendingEvents();
 
-    virtual void start();
     EventPtrList events() const;
+
+private Q_SLOTS:
+    virtual void start();
 
 private:
     friend class LogManager;

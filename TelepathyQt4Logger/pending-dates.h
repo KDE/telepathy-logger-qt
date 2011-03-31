@@ -40,8 +40,10 @@ class PendingDates : public Tpl::PendingOperation
 public:
     ~PendingDates();
 
-    virtual void start();
     QDateList dates() const;
+
+private Q_SLOTS:
+    virtual void start();
 
 private:
     friend class LogManager;

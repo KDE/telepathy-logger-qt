@@ -74,6 +74,7 @@ PendingOperation::PendingOperation()
     : QObject(),
       mPriv(new Private())
 {
+    QTimer::singleShot(0, this, SLOT(start()));
 }
 
 /**
@@ -235,3 +236,7 @@ QString PendingOperation::errorMessage() const
  * \param operation This operation object, from which further information
  *                  may be obtained
  */
+
+void PendingOperation::start()
+{
+}

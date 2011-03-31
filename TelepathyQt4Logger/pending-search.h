@@ -46,8 +46,10 @@ class PendingSearch : public Tpl::PendingOperation
 public:
     ~PendingSearch();
 
-    virtual void start();
     SearchHitList hits() const;
+
+private Q_SLOTS:
+    virtual void start();
 \
 private:
     friend class LogManager;

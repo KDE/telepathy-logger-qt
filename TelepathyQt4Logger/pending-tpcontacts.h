@@ -39,10 +39,12 @@ public:
     //PendingTpContacts(ContactPtrList contactList);
     ~PendingTpContacts();
 
-    virtual void start();
     TpContact *tpContact() const;
     //TpContact **tpContactList() const;
     //uint numTpContacts() const;
+
+private Q_SLOTS:
+    virtual void start();
 
 private:
     struct Private;

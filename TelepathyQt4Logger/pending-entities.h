@@ -39,8 +39,10 @@ class PendingEntities: public Tpl::PendingOperation
 public:
     ~PendingEntities();
 
-    virtual void start();
     EntityPtrList entities() const;
+
+private Q_SLOTS:
+    virtual void start();
 
 private:
     friend class LogManager;
