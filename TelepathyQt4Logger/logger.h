@@ -27,4 +27,63 @@
 
 #include <TelepathyQt4Logger/_gen/cli-logger.h>
 
+#include <TelepathyQt4Logger/Types>
+#include <TelepathyQt4/OptionalInterfaceFactory>
+#include <TelepathyQt4/PendingOperation>
+
+#include <QDBusPendingCallWatcher>
+#include <QObject>
+
+namespace Tpl
+{
+
+#define TPL_DBUS_SRV_WELL_KNOWN_BUS_NAME \
+  "org.freedesktop.Telepathy.Logger"
+#define TPL_DBUS_SRV_OBJECT_PATH \
+  "/org/freedesktop/Telepathy/Logger"
+
+class Logger;
+
+typedef Tp::SharedPtr<Logger> LoggerPtr;
+
+class Logger : public Tp::StatelessDBusProxy
+{
+    Q_OBJECT
+
+public:
+    Logger();
+    ~Logger();
+
+    Tp::PendingOperation *clearLog();
+
+Q_SIGNALS:
+    void logCleared();
+
+private Q_SLOTS:
+    void onLogCleared(QDBusPendingCallWatcher *watcher);
+
+private:
+    Tpl::LoggerInterface *mInterface;
+    LoggerPtr mPtr;
+
+    QMap<QDBusPendingCallWatcher *, Tp::PendingOperation *> mOperationMap;
+};
+
+class PendingClearOp : public Tp::PendingOperation
+{
+    Q_OBJECT
+
+public:
+    PendingClearOp(const LoggerPtr &logger);
+    ~PendingClearOp() {};
+
+    void setError(const QString &errorName, const QString &errorMessage);
+    void finish();
+
+private:
+    QString errorName, errorMessage;
+};
+
+}
+
 #endif

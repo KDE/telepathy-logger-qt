@@ -5,7 +5,7 @@ set(TelepathyQt4Logger_CODEGEN_HEADERS
     entity.h
     event.h
     log-manager.h
-    logger-manager.h
+    logger.h
     text-event.h
     types.h)
 
@@ -19,7 +19,7 @@ set(TelepathyQt4Logger_CODEGEN_INCLUDES
     -ITelepathyQt4Logger/Entity
     -ITelepathyQt4Logger/Event
     -ITelepathyQt4Logger/LogManager
-    -ITelepathyQt4Logger/LoggerManager
+    -ITelepathyQt4Logger/Logger
     -ITelepathyQt4Logger/TextEvent
     -ITelepathyQt4Logger/Types
     -IQGlib/Quark)
@@ -41,7 +41,7 @@ set(telepathy_qt4_logger_SRCS
     entity.cpp
     event.cpp
     log-manager.cpp
-    logger-manager.cpp
+    logger.cpp
     pending-dates.cpp
     pending-entities.cpp
     pending-events.cpp
@@ -63,7 +63,6 @@ set(telepathy_qt4_logger_HEADERS
     Init
     Logger
     LogManager
-    LoggerManager
     PendingDates
     PendingEntities
     PendingEvents
@@ -77,7 +76,6 @@ set(telepathy_qt4_logger_HEADERS
     global.h
     init.h
     log-manager.h
-    logger-manager.h
     logger.h
     pending-dates.h
     pending-entities.h

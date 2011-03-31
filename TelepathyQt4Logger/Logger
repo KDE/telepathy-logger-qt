@@ -18,13 +18,15 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef _TelepathyQt4Logger_logger_h_HEADER_GUARD_
-#define _TelepathyQt4Logger_logger_h_HEADER_GUARD_
+#ifndef _TelepathyQt4Logger_Logger_HEADER_GUARD_
+#define _TelepathyQt4Logger_Logger_HEADER_GUARD_
 
 #ifndef IN_TELEPATHY_QT4_LOGGER_HEADER
 #define IN_TELEPATHY_QT4_LOGGER_HEADER
 #endif
 
 #include <TelepathyQt4Logger/logger.h>
+
+#undef IN_TELEPATHY_QT4_LOGGER_HEADER
 
 #endif
