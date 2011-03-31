@@ -10,3 +10,4 @@ CMakeCache.txt
 CMakeFiles
 doxygen.cfg
 *.user
+*.pyc
