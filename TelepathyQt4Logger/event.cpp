@@ -27,9 +27,10 @@ using namespace Tpl;
 
 QDateTime Event::timestamp() const
 {
-    gint64 t = tpl_event_get_timestamp(object<TplEvent>());
+    // FIXME See http://bugs.freedesktop.org/show_bug.cgi?id=21690
+    uint seconds = (uint) tpl_event_get_timestamp(object<TplEvent>());
     QDateTime dateTime;
-    dateTime.setTime_t(t);
+    dateTime.setTime_t(seconds);
     return dateTime;
 }
 
