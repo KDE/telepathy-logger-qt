@@ -21,6 +21,7 @@
 #include <QDebug>
 #include <TelepathyQt4/Account>
 #include <TelepathyQt4Logger/Constants>
+#include <TelepathyQt4Logger/CallEvent>
 #include <TelepathyQt4Logger/Entity>
 #include <TelepathyQt4Logger/PendingEvents>
 #include <TelepathyQt4Logger/TextEvent>
@@ -31,6 +32,7 @@
 #include <telepathy-logger/log-manager.h>
 #include <telepathy-logger/event.h>
 #include <telepathy-logger/text-event.h>
+#include <telepathy-logger/call-event.h>
 
 using namespace Tpl;
 
@@ -168,6 +170,9 @@ void PendingEvents::Private::callback(void *logManager, void *result, PendingEve
         TplEvent * item = (TplEvent *) i->data;
         if (TPL_IS_TEXT_EVENT(item)) {
             TextEventPtr eventPtr = TextEventPtr::wrap(TPL_TEXT_EVENT(item), true);
+            self->mPriv->events << eventPtr;
+        } else if (TPL_IS_CALL_EVENT(item)) {
+            CallEventPtr eventPtr = CallEventPtr::wrap(TPL_CALL_EVENT(item), true);
             self->mPriv->events << eventPtr;
         } else if (TPL_IS_EVENT(item)) {
             EventPtr eventPtr = EventPtr::wrap(TPL_EVENT(item), true);
