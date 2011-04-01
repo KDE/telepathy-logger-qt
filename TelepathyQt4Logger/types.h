@@ -69,7 +69,7 @@ typedef QList<Tp::ContactPtr> ContactPtrList;
 typedef QList<EntityPtr> EntityPtrList;
 typedef QList<EventPtr> EventPtrList;
 typedef QList<QDate> QDateList;
-typedef QList<SearchHit*> SearchHitList;
+typedef QList<SearchHit> SearchHitList;
 
 typedef bool (*LogEventFilter)(EventPtr event, void *user_data);
 

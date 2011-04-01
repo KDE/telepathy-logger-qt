@@ -333,11 +333,11 @@ void TplToolApplication::onPendingSearch(Tpl::PendingOperation *po)
     qDebug() << " search hits " << hits.size();
 
     int count = 0;
-    Tpl::SearchHit *hit;
-    Q_FOREACH(hit, hits) {
-        qDebug() << count++ << "account=" << hit->account.data() << (hit->account.isNull() ? "null" : hit->account->objectPath())
-                 << "date=" << hit->date.toString(TPL_TOOL_DATE_FORMAT)
-                 << "target=" << (hit->target ? hit->target->identifier() + "/" + hit->target->alias() + "/" + QString::number(hit->target->entityType()) + "/" + hit->target->avatarToken() : "null");
+
+    Q_FOREACH(const Tpl::SearchHit &hit, hits) {
+        qDebug() << count++ << "account=" << hit.account.data() << (hit.account.isNull() ? "null" : hit.account->objectPath())
+                 << "date=" << hit.date.toString(TPL_TOOL_DATE_FORMAT)
+                 << "target=" << (hit.target ? hit.target->identifier() + "/" + hit.target->alias() + "/" + QString::number(hit.target->entityType()) + "/" + hit.target->avatarToken() : "null");
     }
 
     this->exit();

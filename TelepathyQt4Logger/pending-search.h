@@ -33,9 +33,9 @@ namespace Tpl
 
 struct SearchHit
 {
-  Tp::AccountPtr account;
-  EntityPtr target;
-  QDate date;
+    Tp::AccountPtr account;
+    EntityPtr target;
+    QDate date;
 };
 
 class PendingSearch : public Tpl::PendingOperation

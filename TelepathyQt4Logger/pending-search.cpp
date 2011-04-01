@@ -53,7 +53,6 @@ PendingSearch::PendingSearch(const LogManagerPtr & manager, const QString &text,
 
 PendingSearch::~PendingSearch()
 {
-    qDeleteAll(mPriv->hits);
     delete mPriv;
 }
 
@@ -116,10 +115,10 @@ void PendingSearch::Private::callback(void *logManager, void *result, PendingSea
                   << "/" << tpl_entity_get_alias(item->target)
                   << "/" << tpl_entity_get_entity_type(item->target)
                   << "/" << tpl_entity_get_avatar_token(item->target);
-        SearchHit *hit = new SearchHit();
-        hit->account = Utils::instance()->accountPtr(item->account);
-        hit->date = QDate(item->date->year, item->date->month, item->date->day);
-        hit->target = EntityPtr::wrap(item->target, true);
+        SearchHit hit;
+        hit.account = Utils::instance()->accountPtr(item->account);
+        hit.date = QDate(item->date->year, item->date->month, item->date->day);
+        hit.target = EntityPtr::wrap(item->target, true);
         self->mPriv->hits << hit;
     }
 
