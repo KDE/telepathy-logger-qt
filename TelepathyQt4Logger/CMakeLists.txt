@@ -47,7 +47,6 @@ set(telepathy_qt4_logger_SRCS
     pending-events.cpp
     pending-operation.cpp
     pending-search.cpp
-    pending-tpcontacts.cpp
     text-event.cpp
     utils.cpp
     init.cpp
@@ -82,7 +81,6 @@ set(telepathy_qt4_logger_HEADERS
     pending-events.h
     pending-operation.h
     pending-search.h
-    pending-tpcontacts.h
     text-event.h
     types.h
     utils.h)
@@ -94,7 +92,6 @@ set(telepathy_qt4_logger_MOC_SRCS
     pending-events.h
     pending-operation.h
     pending-search.h
-    pending-tpcontacts.h
     logger.h)
 
 # Generated headers which will be installed and exported
