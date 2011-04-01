@@ -28,6 +28,8 @@
 #include <TelepathyQt4Logger/_gen/cli-logger.h>
 
 #include <TelepathyQt4Logger/Types>
+#include <TelepathyQt4Logger/PendingLogger>
+#include <TelepathyQt4/Account>
 #include <TelepathyQt4/OptionalInterfaceFactory>
 #include <TelepathyQt4/PendingOperation>
 
@@ -42,11 +44,14 @@ namespace Tpl
 #define TPL_DBUS_SRV_OBJECT_PATH \
   "/org/freedesktop/Telepathy/Logger"
 
+#define LOGGER_CONTACT 1
+#define LOGGER_ROOM 2
+
 class Logger;
 
 typedef Tp::SharedPtr<Logger> LoggerPtr;
 
-class Logger : public Tp::StatelessDBusProxy
+class TELEPATHY_QT4_LOGGER_EXPORT Logger : public Tp::StatelessDBusProxy
 {
     Q_OBJECT
 
@@ -55,6 +60,9 @@ public:
     ~Logger();
 
     Tp::PendingOperation *clearLog();
+    Tp::PendingOperation *clearAccount(const Tp::AccountPtr &account);
+    Tp::PendingOperation *clearContact(const Tp::AccountPtr &account, const QString &objectId);
+    Tp::PendingOperation *clearRoom(const Tp::AccountPtr &account, const QString &objectId);
 
 Q_SIGNALS:
     void logCleared();
@@ -67,21 +75,6 @@ private:
     LoggerPtr mPtr;
 
     QMap<QDBusPendingCallWatcher *, Tp::PendingOperation *> mOperationMap;
-};
-
-class PendingClearOp : public Tp::PendingOperation
-{
-    Q_OBJECT
-
-public:
-    PendingClearOp(const LoggerPtr &logger);
-    ~PendingClearOp() {};
-
-    void setError(const QString &errorName, const QString &errorMessage);
-    void finish();
-
-private:
-    QString errorName, errorMessage;
 };
 
 }

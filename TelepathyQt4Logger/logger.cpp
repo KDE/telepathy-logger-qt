@@ -23,30 +23,7 @@
 
 namespace Tpl {
 
-PendingClearOp::PendingClearOp(const LoggerPtr &logger)
-    : Tp::PendingOperation(logger)
-{
-}
-
-void PendingClearOp::setError(const QString &errorName, const QString &errorMessage)
-{
-    Q_ASSERT(this->errorName.isEmpty());
-    Q_ASSERT(this->errorMessage.isEmpty());
-
-    Q_ASSERT(!errorName.isEmpty());
-
-    this->errorName = errorName;
-    this->errorMessage = errorMessage;
-}
-
-void PendingClearOp::finish()
-{
-    if (errorName.isEmpty()) {
-        setFinished();
-    } else {
-        setFinishedWithError(errorName, errorMessage);
-    }
-}
+typedef Tp::SharedPtr<Logger> LoggerPtr;
 
 Logger::Logger() :
     Tp::StatelessDBusProxy(QDBusConnection::sessionBus(), QLatin1String(TPL_DBUS_SRV_WELL_KNOWN_BUS_NAME), QLatin1String(TPL_DBUS_SRV_WELL_KNOWN_BUS_NAME), Tp::Feature()),
@@ -71,7 +48,55 @@ Tp::PendingOperation *Logger::clearLog()
             SLOT(onLogCleared(QDBusPendingCallWatcher*)));
 
 
-    PendingClearOp *operation = new PendingClearOp(mPtr);
+    PendingLogger *operation = new PendingLogger(mPtr);
+    mOperationMap.insert(watcher, operation);
+    return operation;
+}
+
+Tp::PendingOperation *Logger::clearAccount(const Tp::AccountPtr &account)
+{
+    QDBusObjectPath path = QDBusObjectPath(account->objectPath());
+    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(
+                mInterface->ClearAccount(path));
+
+    connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)),
+            this,
+            SLOT(onLogCleared(QDBusPendingCallWatcher*)));
+
+
+    PendingLogger *operation = new PendingLogger(mPtr);
+    mOperationMap.insert(watcher, operation);
+    return operation;
+}
+
+Tp::PendingOperation *Logger::clearContact(const Tp::AccountPtr &account, const QString &objectId)
+{
+    QDBusObjectPath path = QDBusObjectPath(account->objectPath());
+    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(
+                mInterface->ClearEntity(path, objectId, LOGGER_CONTACT));
+
+    connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)),
+            this,
+            SLOT(onLogCleared(QDBusPendingCallWatcher*)));
+
+
+    PendingLogger *operation = new PendingLogger(mPtr);
+    mOperationMap.insert(watcher, operation);
+    return operation;
+}
+
+Tp::PendingOperation *Logger::clearRoom(const Tp::AccountPtr &account, const QString &objectId)
+{
+    QDBusObjectPath path = QDBusObjectPath(account->objectPath());
+    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(
+                mInterface->ClearEntity(path, objectId, LOGGER_ROOM));
+
+    connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)),
+            this,
+            SLOT(onLogCleared(QDBusPendingCallWatcher*)));
+
+
+    PendingLogger *operation = new PendingLogger(mPtr);
     mOperationMap.insert(watcher, operation);
     return operation;
 }
@@ -89,7 +114,7 @@ void Logger::onLogCleared(QDBusPendingCallWatcher *watcher)
     }
 
     if(mOperationMap.contains(watcher)) {
-        PendingClearOp *pendingOp = static_cast<PendingClearOp *>(mOperationMap.value(watcher));
+        PendingLogger *pendingOp = static_cast<PendingLogger *>(mOperationMap.value(watcher));
         if(pendingOp) {
             if(!reply.isError()) {
                 pendingOp->finish();

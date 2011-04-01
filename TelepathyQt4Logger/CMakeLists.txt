@@ -45,6 +45,7 @@ set(telepathy_qt4_logger_SRCS
     pending-dates.cpp
     pending-entities.cpp
     pending-events.cpp
+    pending-logger.cpp
     pending-operation.cpp
     pending-search.cpp
     text-event.cpp
@@ -65,6 +66,7 @@ set(telepathy_qt4_logger_HEADERS
     PendingDates
     PendingEntities
     PendingEvents
+    PendingLogger
     PendingOperation
     TextEvent
     Types
@@ -79,6 +81,7 @@ set(telepathy_qt4_logger_HEADERS
     pending-dates.h
     pending-entities.h
     pending-events.h
+    pending-logger.h
     pending-operation.h
     pending-search.h
     text-event.h
