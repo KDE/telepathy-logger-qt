@@ -29,11 +29,11 @@ namespace Tpl {
 typedef Tp::SharedPtr<Logger> LoggerPtr;
 
 Logger::Logger() :
-    Tp::StatelessDBusProxy(QDBusConnection::sessionBus(), QLatin1String(TPL_DBUS_SRV_WELL_KNOWN_BUS_NAME), QLatin1String(TPL_DBUS_SRV_WELL_KNOWN_BUS_NAME), Tp::Feature()),
+    Tp::StatelessDBusProxy(QDBusConnection::sessionBus(), QLatin1String(TPL_DBUS_SRV_WELL_KNOWN_BUS_NAME), QLatin1String(TPL_DBUS_SRV_OBJECT_PATH), Tp::Feature()),
     mInterface(0)
 {
     mInterface = new Tpl::LoggerInterface(QDBusConnection::sessionBus(),
-                                                       TPL_DBUS_SRV_WELL_KNOWN_BUS_NAME, TPL_DBUS_SRV_WELL_KNOWN_BUS_NAME);
+                                                       TPL_DBUS_SRV_WELL_KNOWN_BUS_NAME, TPL_DBUS_SRV_OBJECT_PATH);
     mPtr = LoggerPtr(this);
 }
 
