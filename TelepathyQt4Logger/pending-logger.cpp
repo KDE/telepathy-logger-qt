@@ -18,6 +18,7 @@
  */
 
 #include <TelepathyQt4Logger/PendingLogger>
+#include <TelepathyQt4Logger/_gen/pending-logger.moc.hpp>
 
 namespace Tpl {
 

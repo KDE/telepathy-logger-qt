@@ -93,6 +93,7 @@ set(telepathy_qt4_logger_MOC_SRCS
     pending-dates.h
     pending-entities.h
     pending-events.h
+    pending-logger.h
     pending-operation.h
     pending-search.h
     logger.h)
