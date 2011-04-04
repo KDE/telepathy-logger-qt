@@ -44,9 +44,6 @@ namespace Tpl
 #define TPL_DBUS_SRV_OBJECT_PATH \
   "/org/freedesktop/Telepathy/Logger"
 
-#define LOGGER_CONTACT 1
-#define LOGGER_ROOM 2
-
 class Logger;
 
 typedef Tp::SharedPtr<Logger> LoggerPtr;

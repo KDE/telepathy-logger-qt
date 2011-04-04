@@ -76,7 +76,7 @@ Tp::PendingOperation *Logger::clearContact(const Tp::AccountPtr &account, const 
 {
     QDBusObjectPath path = QDBusObjectPath(account->objectPath());
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(
-                mInterface->ClearEntity(path, objectId, LOGGER_CONTACT));
+                mInterface->ClearEntity(path, objectId, EntityTypeContact));
 
     connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)),
             this,
@@ -92,7 +92,7 @@ Tp::PendingOperation *Logger::clearRoom(const Tp::AccountPtr &account, const QSt
 {
     QDBusObjectPath path = QDBusObjectPath(account->objectPath());
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(
-                mInterface->ClearEntity(path, objectId, LOGGER_ROOM));
+                mInterface->ClearEntity(path, objectId, EntityTypeRoom));
 
     connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)),
             this,
