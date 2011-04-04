@@ -26,15 +26,9 @@
 #endif
 
 #include <TelepathyQt4Logger/_gen/cli-logger.h>
-
 #include <TelepathyQt4Logger/Types>
-#include <TelepathyQt4Logger/PendingLogger>
 #include <TelepathyQt4/Account>
-#include <TelepathyQt4/OptionalInterfaceFactory>
 #include <TelepathyQt4/PendingOperation>
-
-#include <QDBusPendingCallWatcher>
-#include <QObject>
 
 namespace Tpl
 {
