@@ -55,17 +55,9 @@ public:
     Tp::PendingOperation *clearContact(const Tp::AccountPtr &account, const QString &objectId);
     Tp::PendingOperation *clearRoom(const Tp::AccountPtr &account, const QString &objectId);
 
-Q_SIGNALS:
-    void logCleared();
-
-private Q_SLOTS:
-    void onLogCleared(QDBusPendingCallWatcher *watcher);
-
 private:
     Tpl::LoggerInterface *mInterface;
     LoggerPtr mPtr;
-
-    QMap<QDBusPendingCallWatcher *, Tp::PendingOperation *> mOperationMap;
 };
 
 }

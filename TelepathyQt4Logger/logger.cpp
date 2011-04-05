@@ -22,6 +22,7 @@
 #include <TelepathyQt4Logger/_gen/logger.moc.hpp>
 #include <TelepathyQt4Logger/_gen/cli-logger-body.hpp>
 #include <TelepathyQt4Logger/_gen/cli-logger.moc.hpp>
+
 #include <QDBusPendingReply>
 #include <QDebug>
 
@@ -30,105 +31,47 @@ namespace Tpl {
 typedef Tp::SharedPtr<Logger> LoggerPtr;
 
 Logger::Logger() :
-    Tp::StatelessDBusProxy(QDBusConnection::sessionBus(), QLatin1String(TPL_DBUS_SRV_WELL_KNOWN_BUS_NAME), QLatin1String(TPL_DBUS_SRV_OBJECT_PATH), Tp::Feature()),
+    Tp::StatelessDBusProxy(QDBusConnection::sessionBus(), 
+        QLatin1String(TPL_DBUS_SRV_WELL_KNOWN_BUS_NAME), 
+	QLatin1String(TPL_DBUS_SRV_OBJECT_PATH), 
+	Tp::Feature()),
     mInterface(0)
 {
     mInterface = new Tpl::LoggerInterface(QDBusConnection::sessionBus(),
-                                                       TPL_DBUS_SRV_WELL_KNOWN_BUS_NAME, TPL_DBUS_SRV_OBJECT_PATH);
+        TPL_DBUS_SRV_WELL_KNOWN_BUS_NAME, TPL_DBUS_SRV_OBJECT_PATH);
     mPtr = LoggerPtr(this);
 }
 
 Logger::~Logger()
 {
-
 }
 
 Tp::PendingOperation *Logger::clearLog()
 {
-    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(
-                mInterface->Clear());
-    connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)),
-            this,
-            SLOT(onLogCleared(QDBusPendingCallWatcher*)));
-
-
-    PendingLogger *operation = new PendingLogger(mPtr);
-    mOperationMap.insert(watcher, operation);
+    PendingLogger *operation = new PendingLogger(mPtr, mInterface);
+    operation->clearLog();
     return operation;
 }
 
 Tp::PendingOperation *Logger::clearAccount(const Tp::AccountPtr &account)
 {
-    QDBusObjectPath path = QDBusObjectPath(account->objectPath());
-    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(
-                mInterface->ClearAccount(path));
-
-    connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)),
-            this,
-            SLOT(onLogCleared(QDBusPendingCallWatcher*)));
-
-
-    PendingLogger *operation = new PendingLogger(mPtr);
-    mOperationMap.insert(watcher, operation);
+    PendingLogger *operation = new PendingLogger(mPtr, mInterface);
+    operation->clearAccount(account);
     return operation;
 }
 
 Tp::PendingOperation *Logger::clearContact(const Tp::AccountPtr &account, const QString &objectId)
 {
-    QDBusObjectPath path = QDBusObjectPath(account->objectPath());
-    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(
-                mInterface->ClearEntity(path, objectId, EntityTypeContact));
-
-    connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)),
-            this,
-            SLOT(onLogCleared(QDBusPendingCallWatcher*)));
-
-
-    PendingLogger *operation = new PendingLogger(mPtr);
-    mOperationMap.insert(watcher, operation);
+    PendingLogger *operation = new PendingLogger(mPtr, mInterface);
+    operation->clearContact(account, objectId);
     return operation;
 }
 
 Tp::PendingOperation *Logger::clearRoom(const Tp::AccountPtr &account, const QString &objectId)
 {
-    QDBusObjectPath path = QDBusObjectPath(account->objectPath());
-    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(
-                mInterface->ClearEntity(path, objectId, EntityTypeRoom));
-
-    connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)),
-            this,
-            SLOT(onLogCleared(QDBusPendingCallWatcher*)));
-
-
-    PendingLogger *operation = new PendingLogger(mPtr);
-    mOperationMap.insert(watcher, operation);
+    PendingLogger *operation = new PendingLogger(mPtr, mInterface);
+    operation->clearRoom(account, objectId);
     return operation;
-}
-
-void Logger::onLogCleared(QDBusPendingCallWatcher *watcher)
-{
-    QDBusPendingReply<> reply = *watcher;
-
-    if (!reply.isError()) {
-        qDebug() << "Logger:onLogCleared: Log has been cleared";
-        Q_EMIT logCleared();
-    } else {
-        qWarning().nospace() << "Logger:onLogCleared:  Clear log failed with " <<
-            reply.error().name() << ":" << reply.error().message();
-    }
-
-    if(mOperationMap.contains(watcher)) {
-        PendingLogger *pendingOp = static_cast<PendingLogger *>(mOperationMap.value(watcher));
-        if(pendingOp) {
-            if(!reply.isError()) {
-                pendingOp->finish();
-            } else {
-                pendingOp->setError(reply.error().name(), reply.error().message());
-                pendingOp->finish();
-            }
-            mOperationMap.remove(watcher);
-        }
-    }
 }
 
 }

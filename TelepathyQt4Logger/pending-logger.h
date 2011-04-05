@@ -29,8 +29,6 @@
 #include <TelepathyQt4Logger/Types>
 #include <TelepathyQt4/PendingOperation>
 
-#include <QDBusPendingCallWatcher>
-
 #include <QObject>
 
 namespace Tpl
@@ -38,19 +36,29 @@ namespace Tpl
 
 class Logger;
 
-class TELEPATHY_QT4_LOGGER_EXPORT PendingLogger : public Tp::PendingOperation
+class TELEPATHY_QT4_LOGGER_NO_EXPORT PendingLogger : public Tp::PendingOperation
 {
     Q_OBJECT
 
 public:
-    PendingLogger(const Tp::SharedPtr<Logger> &logger);
+    PendingLogger(const Tp::SharedPtr<Logger> &logger, Tpl::LoggerInterface *interface);
     ~PendingLogger() {};
 
+    void clearLog();
+    void clearAccount(const Tp::AccountPtr &account);
+    void clearContact(const Tp::AccountPtr &account, const QString &objectId);
+    void clearRoom(const Tp::AccountPtr &account, const QString &objectId);
+
+protected:
     void setError(const QString &errorName, const QString &errorMessage);
     void finish();
 
+private Q_SLOTS:
+    void onLogCleared(QDBusPendingCallWatcher *watcher);
+
 private:
     QString errorName, errorMessage;
+    Tpl::LoggerInterface *mInterface;
 };
 
 }

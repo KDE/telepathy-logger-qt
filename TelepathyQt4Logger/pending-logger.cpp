@@ -22,8 +22,9 @@
 
 namespace Tpl {
 
-PendingLogger::PendingLogger(const Tp::SharedPtr<Logger> &logger)
-    : Tp::PendingOperation(logger)
+PendingLogger::PendingLogger(const Tp::SharedPtr<Logger> &logger, Tpl::LoggerInterface *interface)
+    : Tp::PendingOperation(logger),
+      mInterface(interface)
 {
 }
 
@@ -45,6 +46,68 @@ void PendingLogger::finish()
     } else {
         setFinishedWithError(errorName, errorMessage);
     }
+}
+
+void PendingLogger::clearLog()
+{
+    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(
+                mInterface->Clear());
+    connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)),
+            this,
+            SLOT(onLogCleared(QDBusPendingCallWatcher*)));
+}
+
+void PendingLogger::clearAccount(const Tp::AccountPtr &account)
+{
+    QDBusObjectPath path = QDBusObjectPath(account->objectPath());
+    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(
+                mInterface->ClearAccount(path));
+
+    connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)),
+            this,
+            SLOT(onLogCleared(QDBusPendingCallWatcher*)));
+}
+
+void PendingLogger::clearContact(const Tp::AccountPtr &account, const QString &objectId)
+{
+    QDBusObjectPath path = QDBusObjectPath(account->objectPath());
+    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(
+                mInterface->ClearEntity(path, objectId, EntityTypeContact));
+
+    connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)),
+            this,
+            SLOT(onLogCleared(QDBusPendingCallWatcher*)));
+}
+
+void PendingLogger::clearRoom(const Tp::AccountPtr &account, const QString &objectId)
+{
+    QDBusObjectPath path = QDBusObjectPath(account->objectPath());
+    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(
+                mInterface->ClearEntity(path, objectId, EntityTypeRoom));
+
+    connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)),
+            this,
+            SLOT(onLogCleared(QDBusPendingCallWatcher*)));
+}
+
+void PendingLogger::onLogCleared(QDBusPendingCallWatcher *watcher)
+{
+    QDBusPendingReply<> reply = *watcher;
+
+    if (!reply.isError()) {
+        qDebug() << "PendingLogger:onLogCleared: Log has been cleared";
+    } else {
+        qWarning().nospace() << "PendingLogger:onLogCleared:  Clear log failed with " <<
+            reply.error().name() << ":" << reply.error().message();
+    }
+
+    if(!reply.isError()) {
+        finish();
+    } else {
+        setError(reply.error().name(), reply.error().message());
+        finish();
+    }
+
 }
 
 }
