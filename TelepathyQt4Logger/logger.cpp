@@ -30,46 +30,60 @@ namespace Tpl {
 
 typedef Tp::SharedPtr<Logger> LoggerPtr;
 
+struct TELEPATHY_QT4_LOGGER_NO_EXPORT Logger::Private
+{
+    Private(Logger *self);
+
+    Tpl::LoggerInterface *mInterface;
+    LoggerPtr mPtr;
+};
+
+Logger::Private::Private(Logger *self)
+{
+    mInterface = new Tpl::LoggerInterface(QDBusConnection::sessionBus(),
+        TPL_DBUS_SRV_WELL_KNOWN_BUS_NAME,
+        TPL_DBUS_SRV_OBJECT_PATH);
+    mPtr = LoggerPtr(self);
+}
+
 Logger::Logger() :
     Tp::StatelessDBusProxy(QDBusConnection::sessionBus(), 
         QLatin1String(TPL_DBUS_SRV_WELL_KNOWN_BUS_NAME), 
 	QLatin1String(TPL_DBUS_SRV_OBJECT_PATH), 
 	Tp::Feature()),
-    mInterface(0)
+    mPriv(new Private(this))
 {
-    mInterface = new Tpl::LoggerInterface(QDBusConnection::sessionBus(),
-        TPL_DBUS_SRV_WELL_KNOWN_BUS_NAME, TPL_DBUS_SRV_OBJECT_PATH);
-    mPtr = LoggerPtr(this);
 }
 
 Logger::~Logger()
 {
+    delete mPriv;
 }
 
 Tp::PendingOperation *Logger::clearLog() const
 {
-    PendingLogger *operation = new PendingLogger(mPtr, mInterface);
+    PendingLogger *operation = new PendingLogger(mPriv->mPtr, mPriv->mInterface);
     operation->clearLog();
     return operation;
 }
 
 Tp::PendingOperation *Logger::clearAccount(const Tp::AccountPtr &account) const
 {
-    PendingLogger *operation = new PendingLogger(mPtr, mInterface);
+    PendingLogger *operation = new PendingLogger(mPriv->mPtr, mPriv->mInterface);
     operation->clearAccount(account);
     return operation;
 }
 
 Tp::PendingOperation *Logger::clearContact(const Tp::AccountPtr &account, const QString &objectId) const
 {
-    PendingLogger *operation = new PendingLogger(mPtr, mInterface);
+    PendingLogger *operation = new PendingLogger(mPriv->mPtr, mPriv->mInterface);
     operation->clearContact(account, objectId);
     return operation;
 }
 
 Tp::PendingOperation *Logger::clearRoom(const Tp::AccountPtr &account, const QString &objectId) const
 {
-    PendingLogger *operation = new PendingLogger(mPtr, mInterface);
+    PendingLogger *operation = new PendingLogger(mPriv->mPtr, mPriv->mInterface);
     operation->clearRoom(account, objectId);
     return operation;
 }

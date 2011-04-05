@@ -40,8 +40,6 @@ namespace Tpl
 
 class Logger;
 
-typedef Tp::SharedPtr<Logger> LoggerPtr;
-
 class TELEPATHY_QT4_LOGGER_EXPORT Logger : public Tp::StatelessDBusProxy
 {
     Q_OBJECT
@@ -56,8 +54,9 @@ public:
     Tp::PendingOperation *clearRoom(const Tp::AccountPtr &account, const QString &objectId) const;
 
 private:
-    Tpl::LoggerInterface *mInterface;
-    LoggerPtr mPtr;
+    struct Private;
+    friend struct Private;
+    Private *mPriv;
 };
 
 }
