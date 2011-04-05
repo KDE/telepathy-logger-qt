@@ -50,10 +50,10 @@ public:
     Logger();
     ~Logger();
 
-    Tp::PendingOperation *clearLog();
-    Tp::PendingOperation *clearAccount(const Tp::AccountPtr &account);
-    Tp::PendingOperation *clearContact(const Tp::AccountPtr &account, const QString &objectId);
-    Tp::PendingOperation *clearRoom(const Tp::AccountPtr &account, const QString &objectId);
+    Tp::PendingOperation *clearLog() const;
+    Tp::PendingOperation *clearAccount(const Tp::AccountPtr &account) const;
+    Tp::PendingOperation *clearContact(const Tp::AccountPtr &account, const QString &objectId) const;
+    Tp::PendingOperation *clearRoom(const Tp::AccountPtr &account, const QString &objectId) const;
 
 private:
     Tpl::LoggerInterface *mInterface;

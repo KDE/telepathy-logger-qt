@@ -46,28 +46,28 @@ Logger::~Logger()
 {
 }
 
-Tp::PendingOperation *Logger::clearLog()
+Tp::PendingOperation *Logger::clearLog() const
 {
     PendingLogger *operation = new PendingLogger(mPtr, mInterface);
     operation->clearLog();
     return operation;
 }
 
-Tp::PendingOperation *Logger::clearAccount(const Tp::AccountPtr &account)
+Tp::PendingOperation *Logger::clearAccount(const Tp::AccountPtr &account) const
 {
     PendingLogger *operation = new PendingLogger(mPtr, mInterface);
     operation->clearAccount(account);
     return operation;
 }
 
-Tp::PendingOperation *Logger::clearContact(const Tp::AccountPtr &account, const QString &objectId)
+Tp::PendingOperation *Logger::clearContact(const Tp::AccountPtr &account, const QString &objectId) const
 {
     PendingLogger *operation = new PendingLogger(mPtr, mInterface);
     operation->clearContact(account, objectId);
     return operation;
 }
 
-Tp::PendingOperation *Logger::clearRoom(const Tp::AccountPtr &account, const QString &objectId)
+Tp::PendingOperation *Logger::clearRoom(const Tp::AccountPtr &account, const QString &objectId) const
 {
     PendingLogger *operation = new PendingLogger(mPtr, mInterface);
     operation->clearRoom(account, objectId);
