@@ -19,6 +19,10 @@
 #ifndef _TelepathyQt4Logger_Models_logger_conversation_model_h_HEADER_GUARD_
 #define _TelepathyQt4Logger_Models_logger_conversation_model_h_HEADER_GUARD_
 
+#ifndef IN_TELEPATHY_QT4_LOGGER_MODELS_HEADER
+#error IN_TELEPATHY_QT4_LOGGER_MODELS_HEADER
+#endif
+
 #include <QAbstractListModel>
 #include <QStringList>
 #include <TelepathyQt4/Types>
@@ -31,34 +35,37 @@
 namespace Tpl {
 
 class LoggerConversationModel : public Tpy::AbstractConversationModel
- {
-     Q_OBJECT
+{
+    Q_OBJECT
+    Q_PROPERTY(bool backFetching READ backFetching NOTIFY backFetchingChanged)
 
- public:
-     LoggerConversationModel(const Tp::AccountPtr &account, const Tp::ContactPtr &contact, QObject *parent = 0);
-     virtual ~LoggerConversationModel();
+public:
+    LoggerConversationModel(const Tp::AccountPtr &account, const Tp::ContactPtr &contact, QObject *parent = 0);
+    virtual ~LoggerConversationModel();
 
-     Q_INVOKABLE virtual bool canFetchMoreBack() const;
-     Q_INVOKABLE virtual void fetchMoreBack();
+    Q_INVOKABLE virtual bool canFetchMoreBack() const;
+    Q_INVOKABLE virtual void fetchMoreBack();
+    virtual bool backFetching() const;
 
-     virtual bool canFetchMore(const QModelIndex & index) const;
-     virtual void fetchMore(const QModelIndex & index);
+    virtual bool canFetchMore(const QModelIndex & index) const;
+    virtual void fetchMore(const QModelIndex & index);
 
 Q_SIGNALS:
-     void backFetchable();
-     void backFetched(int numItems);
+    void backFetchable();
+    void backFetched(int numItems);
+    void backFetchingChanged() const;
 
 private Q_SLOTS:
-     void onPendingDatesFinished(Tpl::PendingOperation *op);
-     void onPendingEventsFinished(Tpl::PendingOperation *op);
+    void onPendingDatesFinished(Tpl::PendingOperation *op);
+    void onPendingEventsFinished(Tpl::PendingOperation *op);
 
  private:
-     void setup() const;
-     void fetchDate(const QDate &date) const;
+    void setup() const;
+    void fetchDate(const QDate &date) const;
 
-     struct Private;
-     friend struct Private;
-     Private *mPriv;
+    struct Private;
+    friend struct Private;
+    Private *mPriv;
 };
 
 }

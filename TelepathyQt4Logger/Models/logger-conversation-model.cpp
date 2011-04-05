@@ -50,11 +50,13 @@ struct TELEPATHY_QT4_LOGGER_NO_EXPORT LoggerConversationModel::Private
     Tp::ContactPtr mContact;
     Tpl::EntityPtr mEntity;
     Tpl::QDateList mDates;
+    bool mBackFetching;
 };
 
 LoggerConversationModel::Private::Private(const Tp::AccountPtr &account, const Tp::ContactPtr &contact)
     : mAccount(account),
-      mContact(contact)
+      mContact(contact),
+      mBackFetching(false)
 {
     mEntity = Tpl::Entity::create(mContact, Tpl::EntityTypeContact);
     if (mEntity.isNull()) {
@@ -125,6 +127,11 @@ void LoggerConversationModel::fetchMoreBack()
 {
     qDebug() << "LoggerConversationModel::fetchMoreBack";
 
+    if (mPriv->mBackFetching) {
+        qWarning() << "LoggerConversationModel::fetchMoreBack: already fetching";
+        return;
+    }
+
     if (mPriv->mDates.size() <= 0) {
         return;
     }
@@ -145,6 +152,11 @@ void LoggerConversationModel::fetchMore(const QModelIndex & index)
 
 void LoggerConversationModel::fetchDate(const QDate &date) const
 {
+    if (mPriv->mBackFetching) {
+        qWarning() << "LoggerConversationModel::fetchDate: already fetching";
+        return;
+    }
+
     if (mPriv->mAccount.isNull()) {
         return;
     }
@@ -166,6 +178,8 @@ void LoggerConversationModel::fetchDate(const QDate &date) const
     if (!pendingEvents) {
         return;
     }
+    mPriv->mBackFetching = true;
+    Q_EMIT backFetchingChanged();
     connect(pendingEvents, SIGNAL(finished(Tpl::PendingOperation*)), SLOT(onPendingEventsFinished(Tpl::PendingOperation*)));
 }
 
@@ -175,6 +189,8 @@ void LoggerConversationModel::onPendingEventsFinished(Tpl::PendingOperation *op)
 
     Tpl::PendingEvents *pendingEvents = static_cast<Tpl::PendingEvents*> (op);
     if (!pendingEvents || pendingEvents->isError()) {
+        mPriv->mBackFetching = false;
+        Q_EMIT backFetchingChanged();
         return;
     }
 
@@ -210,5 +226,12 @@ void LoggerConversationModel::onPendingEventsFinished(Tpl::PendingOperation *op)
 
     endInsertRows();
 
+    mPriv->mBackFetching = false;
+    Q_EMIT backFetchingChanged();
     Q_EMIT backFetched(items.size());
+}
+
+bool LoggerConversationModel::backFetching() const
+{
+    return mPriv->mBackFetching;
 }
