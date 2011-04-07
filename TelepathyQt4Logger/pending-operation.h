@@ -55,7 +55,6 @@ protected Q_SLOTS:
     void setFinishedWithError(const QString &name, const QString &message);
 
 private Q_SLOTS:
-    virtual void start();
     void emitFinished();
 
 private:

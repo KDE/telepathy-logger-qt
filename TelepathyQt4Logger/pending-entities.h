@@ -41,7 +41,7 @@ public:
     EntityPtrList entities() const;
 
 private Q_SLOTS:
-    virtual void start();
+    void start();
 
 private:
     friend class LogManager;

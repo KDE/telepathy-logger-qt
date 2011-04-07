@@ -42,7 +42,7 @@ public:
     EventPtrList events() const;
 
 private Q_SLOTS:
-    virtual void start();
+    void start();
 
 private:
     friend class LogManager;
