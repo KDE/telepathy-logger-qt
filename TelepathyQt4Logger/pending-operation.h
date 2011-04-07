@@ -25,7 +25,7 @@
 #error IN_TELEPATHY_QT4_LOGGER_HEADER
 #endif
 
-#include <QObject>
+#include <QtCore/QObject>
 
 namespace Tpl
 {

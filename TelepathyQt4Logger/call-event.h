@@ -19,10 +19,7 @@
 #ifndef _TelepathyQt4Logger_call_event_h_HEADER_GUARD_
 #define _TelepathyQt4Logger_call_event_h_HEADER_GUARD_
 
-#include <QGlib/Object>
-#include <TelepathyQt4/Constants>
 #include <TelepathyQt4Logger/Event>
-#include <TelepathyQt4Logger/Types>
 
 namespace Tpl
 {

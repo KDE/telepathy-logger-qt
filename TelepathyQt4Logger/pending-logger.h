@@ -29,8 +29,6 @@
 #include <TelepathyQt4Logger/Types>
 #include <TelepathyQt4/PendingOperation>
 
-#include <QObject>
-
 namespace Tpl
 {
 

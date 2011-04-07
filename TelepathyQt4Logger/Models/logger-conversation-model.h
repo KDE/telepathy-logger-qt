@@ -23,14 +23,9 @@
 #error IN_TELEPATHY_QT4_LOGGER_MODELS_HEADER
 #endif
 
-#include <QAbstractListModel>
-#include <QStringList>
-#include <TelepathyQt4/Types>
-#include <TelepathyQt4Logger/Entity>
-#include <TelepathyQt4Logger/PendingOperation>
-#include <TelepathyQt4Logger/Types>
-#include <TelepathyQt4Yell/Models/ConversationItem>
 #include <TelepathyQt4Yell/Models/AbstractConversationModel>
+#include <TelepathyQt4/Types>
+#include <TelepathyQt4Logger/PendingOperation>
 
 namespace Tpl {
 

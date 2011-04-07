@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <TelepathyQt4/Account>
 #include <TelepathyQt4Logger/TextEvent>
+
 #include <telepathy-logger/text-event.h>
 
 using namespace Tpl;

@@ -18,11 +18,13 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include <QDebug>
+#include <TelepathyQt4Logger/PendingEvents>
+
+#include <QtCore/QDebug>
 #include <TelepathyQt4/Account>
+#include <TelepathyQt4Logger/LogManager>
 #include <TelepathyQt4Logger/CallEvent>
 #include <TelepathyQt4Logger/Entity>
-#include <TelepathyQt4Logger/PendingEvents>
 #include <TelepathyQt4Logger/TextEvent>
 #include <TelepathyQt4Logger/utils.h>
 #include <TelepathyQt4Logger/_gen/pending-events.moc.hpp>

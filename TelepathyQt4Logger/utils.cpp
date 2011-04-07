@@ -17,12 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <TelepathyQt4Logger/utils.h>
+
 #include <TelepathyQt4/AccountManager>
 #include <TelepathyQt4/Connection>
 #include <TelepathyQt4/Contact>
 #include <TelepathyQt4/ContactManager>
 #include <TelepathyQt4/ReferencedHandles>
-#include <TelepathyQt4Logger/utils.h>
 #include <telepathy-glib/connection.h>
 #include <telepathy-glib/contact.h>
 #include <telepathy-glib/dbus.h>

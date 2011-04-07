@@ -25,9 +25,7 @@
 #endif
 
 #include <QGlib/Object>
-#include <TelepathyQt4Logger/Entity>
 #include <TelepathyQt4Logger/Types>
-#include <QtCore/QString>
 
 namespace Tpl
 {

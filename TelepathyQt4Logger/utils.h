@@ -22,7 +22,7 @@
 #include <TelepathyQt4/Types>
 #include <telepathy-glib/account-manager.h>
 #include <telepathy-glib/account.h>
-#include <QDebug>
+#include <QtCore/QDebug>
 
 #if __GNUC__ >= 2
 #  define __func__ __PRETTY_FUNCTION__

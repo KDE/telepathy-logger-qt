@@ -17,9 +17,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <TelepathyQt4/Account>
-#include <telepathy-logger/call-event.h>
 #include <TelepathyQt4Logger/CallEvent>
+
+#include <TelepathyQt4Logger/Entity>
+#include <telepathy-logger/call-event.h>
 
 using namespace Tpl;
 

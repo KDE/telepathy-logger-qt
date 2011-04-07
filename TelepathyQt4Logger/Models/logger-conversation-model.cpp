@@ -21,7 +21,7 @@
 
 #include "TelepathyQt4Logger/Models/_gen/logger-conversation-model.moc.hpp"
 
-#include <QDebug>
+#include <QtCore/QDebug>
 #include <TelepathyQt4/Account>
 #include <TelepathyQt4/Contact>
 #include <TelepathyQt4/ContactManager>
@@ -34,7 +34,6 @@
 #include <TelepathyQt4Logger/PendingEvents>
 #include <TelepathyQt4Logger/Models/Global>
 #include <TelepathyQt4Yell/Models/ConversationItem>
-#include <TelepathyQt4Yell/Models/AbstractConversationModel>
 
 #define MAX_ITEMS 1000
 

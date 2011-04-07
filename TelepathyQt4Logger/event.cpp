@@ -18,8 +18,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <TelepathyQt4/Account>
 #include <TelepathyQt4Logger/Event>
+
+#include <TelepathyQt4/Account>
+#include <TelepathyQt4Logger/Entity>
 #include <TelepathyQt4Logger/utils.h>
 #include <telepathy-logger/event.h>
 

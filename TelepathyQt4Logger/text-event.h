@@ -24,9 +24,8 @@
 #error IN_TELEPATHY_QT4_LOGGER_HEADER
 #endif
 
-#include <QGlib/Object>
 #include <TelepathyQt4Logger/Event>
-#include <TelepathyQt4Logger/Types>
+#include <TelepathyQt4/Constants>
 
 namespace Tpl
 {

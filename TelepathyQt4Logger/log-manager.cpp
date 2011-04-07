@@ -18,10 +18,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <TelepathyQt4Logger/LogManager>
+
 #include <TelepathyQt4/Account>
 #include <TelepathyQt4/AccountManager>
 #include <TelepathyQt4Logger/Entity>
-#include <TelepathyQt4Logger/LogManager>
 #include <TelepathyQt4Logger/PendingDates>
 #include <TelepathyQt4Logger/PendingEntities>
 #include <TelepathyQt4Logger/PendingEvents>

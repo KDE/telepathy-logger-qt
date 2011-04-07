@@ -18,15 +18,15 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include <QDebug>
+#include <TelepathyQt4Logger/PendingEntities>
+
+#include <QtCore/QDebug>
 #include <TelepathyQt4/Account>
 #include <TelepathyQt4Logger/Entity>
 #include <TelepathyQt4Logger/LogManager>
-#include <TelepathyQt4Logger/PendingEntities>
 #include <TelepathyQt4Logger/utils.h>
 #include <TelepathyQt4Logger/_gen/pending-entities.moc.hpp>
 #include <glib/gerror.h>
-#include <glib/gdate.h>
 #include <telepathy-logger/log-manager.h>
 
 using namespace Tpl;

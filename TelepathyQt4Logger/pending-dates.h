@@ -25,7 +25,6 @@
 #error IN_TELEPATHY_QT4_LOGGER_HEADER
 #endif
 
-#include <TelepathyQt4Logger/LogManager>
 #include <TelepathyQt4Logger/PendingOperation>
 #include <TelepathyQt4Logger/Types>
 
