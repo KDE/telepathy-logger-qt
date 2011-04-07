@@ -20,7 +20,6 @@
 
 #include <QDebug>
 #include <TelepathyQt4/Account>
-#include <TelepathyQt4Logger/Constants>
 #include <TelepathyQt4Logger/Entity>
 #include <TelepathyQt4Logger/LogManager>
 #include <TelepathyQt4Logger/PendingEntities>
@@ -78,12 +77,12 @@ EntityPtrList PendingEntities::entities() const
 void PendingEntities::Private::callback(void *logManager, void *result, PendingEntities *self)
 {
     if (!TPL_IS_LOG_MANAGER(logManager)) {
-        self->setFinishedWithError(TELEPATHY_QT4_LOGGER_ERROR_INVALID_ARGUMENT, "Invalid log manager in callback");
+        self->setFinishedWithError(TP_QT4_ERROR_INVALID_ARGUMENT, "Invalid log manager in callback");
         return;
     }
 
     if (!G_IS_ASYNC_RESULT(result)) {
-        self->setFinishedWithError(TELEPATHY_QT4_LOGGER_ERROR_INVALID_ARGUMENT, "Invalid async result in callback");
+        self->setFinishedWithError(TP_QT4_ERROR_INVALID_ARGUMENT, "Invalid async result in callback");
         return;
     }
 
@@ -91,13 +90,13 @@ void PendingEntities::Private::callback(void *logManager, void *result, PendingE
     GError *error = NULL;
     gboolean success = tpl_log_manager_get_entities_finish(TPL_LOG_MANAGER(logManager), G_ASYNC_RESULT(result), &entities, &error);
     if (error) {
-        self->setFinishedWithError(TELEPATHY_QT4_LOGGER_ERROR_INVALID_ARGUMENT, error->message);
+        self->setFinishedWithError(TP_QT4_ERROR_INVALID_ARGUMENT, error->message);
         g_error_free(error);
         return;
     }
 
     if (!success) {
-        self->setFinishedWithError(TELEPATHY_QT4_LOGGER_ERROR_INVALID_ARGUMENT, "Query failed without specific error");
+        self->setFinishedWithError(TP_QT4_ERROR_INVALID_ARGUMENT, "Query failed without specific error");
         return;
     }
 

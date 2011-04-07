@@ -25,7 +25,6 @@
 #endif
 
 #include <QGlib/Object>
-#include <TelepathyQt4/Constants>
 #include <TelepathyQt4Logger/Event>
 #include <TelepathyQt4Logger/Types>
 

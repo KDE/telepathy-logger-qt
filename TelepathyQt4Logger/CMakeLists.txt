@@ -56,7 +56,6 @@ set(telepathy_qt4_logger_SRCS
 # Exported headers for Tp-Qt4-Logger
 set(telepathy_qt4_logger_HEADERS
     CallEvent
-    Constants
     Entity
     Event
     Global
@@ -71,7 +70,6 @@ set(telepathy_qt4_logger_HEADERS
     TextEvent
     Types
     call-event.h
-    constants.h 
     entity.h
     event.h 
     global.h
