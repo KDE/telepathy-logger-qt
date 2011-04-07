@@ -27,7 +27,7 @@ namespace Tpl
 /*! \headerfile call-event.h <TelepathyQt4Logger/CallEvent>
  * \brief Wrapper class for TplCallEvent
  */
-class CallEvent : public Event
+class TELEPATHY_QT4_LOGGER_EXPORT CallEvent : public Event
 {
     QTELEPATHYQT4LOGGER_WRAPPER(CallEvent)
 public:

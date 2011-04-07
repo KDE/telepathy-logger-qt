@@ -31,7 +31,7 @@
 namespace Tpl
 {
 
-class PendingDates : public Tpl::PendingOperation
+class TELEPATHY_QT4_LOGGER_EXPORT PendingDates : public Tpl::PendingOperation
 {
     Q_OBJECT
     Q_DISABLE_COPY(PendingDates);

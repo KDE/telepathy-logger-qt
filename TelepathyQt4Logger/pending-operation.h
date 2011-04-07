@@ -26,11 +26,12 @@
 #endif
 
 #include <QtCore/QObject>
+#include <TelepathyQt4Logger/Global>
 
 namespace Tpl
 {
 
-class PendingOperation : public QObject
+class TELEPATHY_QT4_LOGGER_EXPORT PendingOperation : public QObject
 {
     Q_OBJECT
     Q_DISABLE_COPY(PendingOperation)

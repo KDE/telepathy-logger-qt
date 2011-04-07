@@ -26,7 +26,7 @@
 #include <QGlib/Global>
 
 /* defined by cmake when building this library */
-#if defined(TELEPATHY_QT4_LOGGER_EXPORTS)
+#if defined(BUILDING_TELEPATHY_QT4_LOGGER)
 # define TELEPATHY_QT4_LOGGER_EXPORT Q_DECL_EXPORT
 #else
 # define TELEPATHY_QT4_LOGGER_EXPORT Q_DECL_IMPORT

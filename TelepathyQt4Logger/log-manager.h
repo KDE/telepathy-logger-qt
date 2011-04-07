@@ -33,7 +33,7 @@ namespace Tpl
 /*! \headerfile log-manager.h <TelepathyQt4Logger/LogManager>
  * \brief Wrapper class for TplLogManager
  */
-class LogManager : public QGlib::Object
+class TELEPATHY_QT4_LOGGER_EXPORT LogManager : public QGlib::Object
 {
     QTELEPATHYQT4LOGGER_WRAPPER(LogManager)
 public:

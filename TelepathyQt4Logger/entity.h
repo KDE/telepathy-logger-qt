@@ -33,7 +33,7 @@ namespace Tpl
 /*! \headerfile entity.h <TelepathyQt4Logger/Entity>
  * \brief Wrapper class for TplEntity
  */
-class Entity : public QGlib::Object
+class TELEPATHY_QT4_LOGGER_EXPORT Entity : public QGlib::Object
 {
     QTELEPATHYQT4LOGGER_WRAPPER(Entity)
 public:

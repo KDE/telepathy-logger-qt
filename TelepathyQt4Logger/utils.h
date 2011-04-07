@@ -19,6 +19,7 @@
 #ifndef _TelepathyQt4Logger_utils_h_HEADER_GUARD_
 #define _TelepathyQt4Logger_utils_h_HEADER_GUARD_
 
+#include <TelepathyQt4Logger/Global>
 #include <TelepathyQt4/Types>
 #include <telepathy-glib/account-manager.h>
 #include <telepathy-glib/account.h>
@@ -39,7 +40,7 @@
 
 namespace Tpl {
 
-class Utils {
+class TELEPATHY_QT4_LOGGER_NO_EXPORT Utils {
 public:
     static Utils *instance();
 

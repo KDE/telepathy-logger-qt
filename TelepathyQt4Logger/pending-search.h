@@ -30,14 +30,14 @@
 namespace Tpl
 {
 
-struct SearchHit
+struct TELEPATHY_QT4_LOGGER_EXPORT SearchHit
 {
     Tp::AccountPtr account;
     EntityPtr target;
     QDate date;
 };
 
-class PendingSearch : public Tpl::PendingOperation
+class TELEPATHY_QT4_LOGGER_EXPORT PendingSearch : public Tpl::PendingOperation
 {
     Q_OBJECT
     Q_DISABLE_COPY(PendingSearch);

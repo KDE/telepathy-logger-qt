@@ -33,7 +33,7 @@ namespace Tpl
 /*! \headerfile event.h <TelepathyQt4Logger/Event>
  * \brief Wrapper class for TplEvent
  */
-class Event : public QGlib::Object
+class TELEPATHY_QT4_LOGGER_EXPORT Event : public QGlib::Object
 {
     QTELEPATHYQT4LOGGER_WRAPPER(Event)
 public:

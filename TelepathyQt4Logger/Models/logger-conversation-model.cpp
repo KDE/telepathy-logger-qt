@@ -32,14 +32,13 @@
 #include <TelepathyQt4Logger/LogManager>
 #include <TelepathyQt4Logger/PendingDates>
 #include <TelepathyQt4Logger/PendingEvents>
-#include <TelepathyQt4Logger/Models/Global>
 #include <TelepathyQt4Yell/Models/ConversationItem>
 
 #define MAX_ITEMS 1000
 
 using namespace Tpl;
 
-struct TELEPATHY_QT4_LOGGER_NO_EXPORT LoggerConversationModel::Private
+struct TELEPATHY_QT4_LOGGER_MODELS_NO_EXPORT LoggerConversationModel::Private
 {
     Private(const Tp::AccountPtr &account, const Tp::ContactPtr &contact);
     void setup() const;

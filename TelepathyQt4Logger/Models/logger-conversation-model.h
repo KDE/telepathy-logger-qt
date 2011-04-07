@@ -23,13 +23,15 @@
 #error IN_TELEPATHY_QT4_LOGGER_MODELS_HEADER
 #endif
 
+#include <TelepathyQt4Logger/Models/Global>
 #include <TelepathyQt4Yell/Models/AbstractConversationModel>
 #include <TelepathyQt4/Types>
 #include <TelepathyQt4Logger/PendingOperation>
 
 namespace Tpl {
 
-class LoggerConversationModel : public Tpy::AbstractConversationModel
+class TELEPATHY_QT4_LOGGER_MODELS_EXPORT LoggerConversationModel
+    : public Tpy::AbstractConversationModel
 {
     Q_OBJECT
     Q_PROPERTY(bool backFetching READ backFetching NOTIFY backFetchingChanged)

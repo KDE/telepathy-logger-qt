@@ -31,7 +31,7 @@
 namespace Tpl
 {
 
-class PendingEvents : public Tpl::PendingOperation
+class TELEPATHY_QT4_LOGGER_EXPORT PendingEvents : public Tpl::PendingOperation
 {
     Q_OBJECT
     Q_DISABLE_COPY(PendingEvents);

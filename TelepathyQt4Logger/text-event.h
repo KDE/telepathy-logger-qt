@@ -33,7 +33,7 @@ namespace Tpl
 /*! \headerfile text-event.h <TelepathyQt4Logger/TextEvent>
  * \brief Wrapper class for TplTextEvent
  */
-class TextEvent : public Event
+class TELEPATHY_QT4_LOGGER_EXPORT TextEvent : public Event
 {
     QTELEPATHYQT4LOGGER_WRAPPER(TextEvent)
 public:
