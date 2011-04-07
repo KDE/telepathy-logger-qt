@@ -65,7 +65,6 @@ set(telepathy_qt4_logger_HEADERS
     PendingDates
     PendingEntities
     PendingEvents
-    PendingLogger
     PendingOperation
     TextEvent
     Types
@@ -79,7 +78,6 @@ set(telepathy_qt4_logger_HEADERS
     pending-dates.h
     pending-entities.h
     pending-events.h
-    pending-logger.h
     pending-operation.h
     pending-search.h
     text-event.h
