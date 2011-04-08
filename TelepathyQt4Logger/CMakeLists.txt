@@ -191,8 +191,8 @@ set_target_properties(telepathy-qt4-logger PROPERTIES
                       VERSION ${TP_QT4_LOGGER_LIBRARY_VERSION})
 
 # Install header files
-install(FILES ${telepathy_qt4_logger_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/telepathy-1.0/TelepathyQt4Logger COMPONENT headers)
-install(FILES ${telepathy_qt4_logger_gen_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/telepathy-1.0/TelepathyQt4Logger/_gen COMPONENT headers)
+install(FILES ${telepathy_qt4_logger_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/telepathy-logger-0.2/TelepathyQt4Logger COMPONENT headers)
+install(FILES ${telepathy_qt4_logger_gen_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/telepathy-logger-0.2/TelepathyQt4Logger/_gen COMPONENT headers)
 
 # Install the library - watch out for the correct components
 if (WIN32)

@@ -60,6 +60,6 @@ endif (WIN32)
 
 # Install headers
 install(FILES ${telepathy_qt4_logger_models_HEADERS}
-    DESTINATION ${INCLUDE_INSTALL_DIR}/telepathy-1.0/TelepathyQt4Logger/Models
+    DESTINATION ${INCLUDE_INSTALL_DIR}/telepathy-logger-0.2/TelepathyQt4Logger/Models
     COMPONENT models_headers)
 
