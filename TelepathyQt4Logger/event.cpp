@@ -61,7 +61,7 @@ EntityPtr Event::receiver() const
     return EntityPtr::wrap(entity, true);
 }
 
-bool Event::equalTo(EventPtr &rhs) const
+bool Event::equalTo(const EventPtr & rhs) const
 {
     return tpl_event_equal (object<TplEvent>(), rhs->object<TplEvent>());
 }
