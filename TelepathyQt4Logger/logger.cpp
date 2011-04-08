@@ -27,6 +27,9 @@
 #include <QDBusPendingReply>
 #include <QDebug>
 
+#define TPL_DBUS_SRV_WELL_KNOWN_BUS_NAME "org.freedesktop.Telepathy.Logger"
+#define TPL_DBUS_SRV_OBJECT_PATH         "/org/freedesktop/Telepathy/Logger"
+
 namespace Tpl {
 
 typedef Tp::SharedPtr<Logger> LoggerPtr;

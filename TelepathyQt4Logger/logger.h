@@ -33,11 +33,6 @@
 namespace Tpl
 {
 
-#define TPL_DBUS_SRV_WELL_KNOWN_BUS_NAME \
-  "org.freedesktop.Telepathy.Logger"
-#define TPL_DBUS_SRV_OBJECT_PATH \
-  "/org/freedesktop/Telepathy/Logger"
-
 class Logger;
 
 class TELEPATHY_QT4_LOGGER_EXPORT Logger : public Tp::StatelessDBusProxy
