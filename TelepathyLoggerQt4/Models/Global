@@ -1,13 +1,13 @@
-#ifndef _TelepathyQt4Logger_Models_Global_HEADER_GUARD_
-#define _TelepathyQt4Logger_Models_Global_HEADER_GUARD_
+#ifndef _TelepathyLoggerQt4_Models_Global_HEADER_GUARD_
+#define _TelepathyLoggerQt4_Models_Global_HEADER_GUARD_
 
 #ifndef IN_TELEPATHY_LOGGER_QT4_MODELS_HEADER
 #define IN_TELEPATHY_LOGGER_QT4_MODELS_HEADER
 #endif
 
-#include <TelepathyQt4Logger/Models/global.h>
+#include <TelepathyLoggerQt4/Models/global.h>
 
 #undef IN_TELEPATHY_LOGGER_QT4_MODELS_HEADER
 
-#endif // _TelepathyQt4Logger_Models_Global_HEADER_GUARD_
+#endif // _TelepathyLoggerQt4_Models_Global_HEADER_GUARD_
 // vim:set ft=cpp:

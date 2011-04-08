@@ -1,5 +1,5 @@
 /*
- * This file is part of TelepathyQt4Logger
+ * This file is part of TelepathyLoggerQt4
  *
  * Copyright (C) 2010 Collabora Ltd. <http://www.collabora.co.uk/>
  *
@@ -18,14 +18,14 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef _TelepathyQt4Logger_Logger_HEADER_GUARD_
-#define _TelepathyQt4Logger_Logger_HEADER_GUARD_
+#ifndef _TelepathyLoggerQt4_Logger_HEADER_GUARD_
+#define _TelepathyLoggerQt4_Logger_HEADER_GUARD_
 
 #ifndef IN_TELEPATHY_LOGGER_QT4_HEADER
 #define IN_TELEPATHY_LOGGER_QT4_HEADER
 #endif
 
-#include <TelepathyQt4Logger/logger.h>
+#include <TelepathyLoggerQt4/logger.h>
 
 #undef IN_TELEPATHY_LOGGER_QT4_HEADER
 
