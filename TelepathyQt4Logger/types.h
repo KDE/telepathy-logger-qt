@@ -71,7 +71,7 @@ typedef QList<EventPtr> EventPtrList;
 typedef QList<QDate> QDateList;
 typedef QList<SearchHit> SearchHitList;
 
-typedef bool (*LogEventFilter)(EventPtr event, void *user_data);
+typedef bool (*LogEventFilter)(const EventPtr &event, void *user_data);
 
 } //namespace
 

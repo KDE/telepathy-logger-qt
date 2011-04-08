@@ -427,7 +427,7 @@ void TplToolApplication::onPendingEvents(Tpl::PendingOperation *po)
     this->exit();
 }
 
-bool TplToolApplication::eventFilterMethod(Tpl::EventPtr event, void *user_data)
+bool TplToolApplication::eventFilterMethod(const Tpl::EventPtr &event, void *user_data)
 {
     return true;
 }
