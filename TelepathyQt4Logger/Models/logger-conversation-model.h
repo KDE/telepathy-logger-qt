@@ -40,6 +40,17 @@ public:
     LoggerConversationModel(const Tp::AccountPtr &account, const Tp::ContactPtr &contact, QObject *parent = 0);
     virtual ~LoggerConversationModel();
 
+    /*
+        Next methods are very similar to canFetchMore / fetchMore already present in Qt models.
+        The difference is that already existing methods work just for scrolling forwards.
+        For scrolling backwards, neither the views nor the models have a way to support
+        on-demand feeding of information, since it is not a normal use case.
+        However for chat history, normally you see the last portion (newest information) and
+        you might want to scroll backwards to feed more data in in reverse chronological order.
+
+        backFetching is a new method that checks if there is an already exiting request being
+        executed. We prevent to execute multiple requests concurrently.
+     */
     Q_INVOKABLE virtual bool canFetchMoreBack() const;
     Q_INVOKABLE virtual void fetchMoreBack();
     virtual bool backFetching() const;
