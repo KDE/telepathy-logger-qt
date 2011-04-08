@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <TelepathyQt4Logger/PendingLogger>
+#include <TelepathyQt4Logger/pending-logger.h>
 #include <TelepathyQt4Logger/_gen/pending-logger.moc.hpp>
 
 namespace Tpl {

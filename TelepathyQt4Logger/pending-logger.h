@@ -21,10 +21,6 @@
 #ifndef _TelepathyQt4Logger_pending_logger_h_HEADER_GUARD_
 #define _TelepathyQt4Logger_pending_logger_h_HEADER_GUARD_
 
-#ifndef IN_TELEPATHY_QT4_LOGGER_HEADER
-#error IN_TELEPATHY_QT4_LOGGER_HEADER
-#endif
-
 #include <TelepathyQt4Logger/Logger>
 #include <TelepathyQt4Logger/Types>
 #include <TelepathyQt4/PendingOperation>

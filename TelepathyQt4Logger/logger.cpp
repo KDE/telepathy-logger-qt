@@ -19,7 +19,7 @@
 
 #include <TelepathyQt4Logger/Logger>
 
-#include <TelepathyQt4Logger/PendingLogger>
+#include <TelepathyQt4Logger/pending-logger.h>
 #include <TelepathyQt4Logger/_gen/logger.moc.hpp>
 #include <TelepathyQt4Logger/_gen/cli-logger-body.hpp>
 #include <TelepathyQt4Logger/_gen/cli-logger.moc.hpp>
