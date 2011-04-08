@@ -18,15 +18,15 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef _TelepathyQt4Logger_logger_h_HEADER_GUARD_
-#define _TelepathyQt4Logger_logger_h_HEADER_GUARD_
+#ifndef _TelepathyLoggerQt4_logger_h_HEADER_GUARD_
+#define _TelepathyLoggerQt4_logger_h_HEADER_GUARD_
 
-#ifndef IN_TELEPATHY_QT4_LOGGER_HEADER
-#error IN_TELEPATHY_QT4_LOGGER_HEADER
+#ifndef IN_TELEPATHY_LOGGER_QT4_HEADER
+#error IN_TELEPATHY_LOGGER_QT4_HEADER
 #endif
 
-#include <TelepathyQt4Logger/_gen/cli-logger.h>
-#include <TelepathyQt4Logger/Types>
+#include <TelepathyLoggerQt4/_gen/cli-logger.h>
+#include <TelepathyLoggerQt4/Types>
 #include <TelepathyQt4/Account>
 #include <TelepathyQt4/PendingOperation>
 
@@ -35,7 +35,7 @@ namespace Tpl
 
 class Logger;
 
-class TELEPATHY_QT4_LOGGER_EXPORT Logger : public Tp::StatelessDBusProxy
+class TELEPATHY_LOGGER_QT4_EXPORT Logger : public Tp::StatelessDBusProxy
 {
     Q_OBJECT
 

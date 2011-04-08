@@ -18,11 +18,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef _TelepathyQt4Logger_pending_logger_h_HEADER_GUARD_
-#define _TelepathyQt4Logger_pending_logger_h_HEADER_GUARD_
+#ifndef _TelepathyLoggerQt4_pending_logger_h_HEADER_GUARD_
+#define _TelepathyLoggerQt4_pending_logger_h_HEADER_GUARD_
 
-#include <TelepathyQt4Logger/Logger>
-#include <TelepathyQt4Logger/Types>
+#include <TelepathyLoggerQt4/Logger>
+#include <TelepathyLoggerQt4/Types>
 #include <TelepathyQt4/PendingOperation>
 
 namespace Tpl
@@ -30,7 +30,7 @@ namespace Tpl
 
 class Logger;
 
-class TELEPATHY_QT4_LOGGER_NO_EXPORT PendingLogger : public Tp::PendingOperation
+class TELEPATHY_LOGGER_QT4_NO_EXPORT PendingLogger : public Tp::PendingOperation
 {
     Q_OBJECT
 

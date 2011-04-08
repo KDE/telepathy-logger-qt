@@ -1,5 +1,5 @@
 /*
- * This file is part of TelepathyQt4Logger
+ * This file is part of TelepathyLoggerQt4
  *
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
  * Copyright (C) 2011 Collabora Ltd. <http://www.collabora.co.uk/>
@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <TelepathyQt4Logger/TextEvent>
+#include <TelepathyLoggerQt4/TextEvent>
 
 #include <telepathy-logger/text-event.h>
 

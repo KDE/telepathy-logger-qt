@@ -1,5 +1,5 @@
 /*
- * This file is part of TelepathyQt4Logger
+ * This file is part of TelepathyLoggerQt4
  *
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
  * Copyright (C) 2011 Collabora Ltd. <http://www.collabora.co.uk/>
@@ -18,11 +18,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <TelepathyQt4Logger/Event>
+#include <TelepathyLoggerQt4/Event>
 
 #include <TelepathyQt4/Account>
-#include <TelepathyQt4Logger/Entity>
-#include <TelepathyQt4Logger/utils.h>
+#include <TelepathyLoggerQt4/Entity>
+#include <TelepathyLoggerQt4/utils.h>
 #include <telepathy-logger/event.h>
 
 using namespace Tpl;

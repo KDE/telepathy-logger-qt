@@ -1,5 +1,5 @@
 /*
- * This file is part of TelepathyQt4Logger
+ * This file is part of TelepathyLoggerQt4
  *
  * Copyright (C) 2011 Collabora Ltd. <http://www.collabora.co.uk/>
  *
@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <TelepathyQt4Logger/pending-logger.h>
-#include <TelepathyQt4Logger/_gen/pending-logger.moc.hpp>
+#include <TelepathyLoggerQt4/pending-logger.h>
+#include <TelepathyLoggerQt4/_gen/pending-logger.moc.hpp>
 
 namespace Tpl {
 

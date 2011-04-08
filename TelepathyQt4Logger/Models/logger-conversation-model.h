@@ -1,5 +1,5 @@
 /*
- * This file is part of TelepathyQt4Logger
+ * This file is part of TelepathyLoggerQt4
  *
  * Copyright (C) 2011 Collabora Ltd. <http://www.collabora.co.uk/>
  *
@@ -16,21 +16,21 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef _TelepathyQt4Logger_Models_logger_conversation_model_h_HEADER_GUARD_
-#define _TelepathyQt4Logger_Models_logger_conversation_model_h_HEADER_GUARD_
+#ifndef _TelepathyLoggerQt4_Models_logger_conversation_model_h_HEADER_GUARD_
+#define _TelepathyLoggerQt4_Models_logger_conversation_model_h_HEADER_GUARD_
 
-#ifndef IN_TELEPATHY_QT4_LOGGER_MODELS_HEADER
-#error IN_TELEPATHY_QT4_LOGGER_MODELS_HEADER
+#ifndef IN_TELEPATHY_LOGGER_QT4_MODELS_HEADER
+#error IN_TELEPATHY_LOGGER_QT4_MODELS_HEADER
 #endif
 
-#include <TelepathyQt4Logger/Models/Global>
+#include <TelepathyLoggerQt4/Models/Global>
 #include <TelepathyQt4Yell/Models/AbstractConversationModel>
 #include <TelepathyQt4/Types>
-#include <TelepathyQt4Logger/PendingOperation>
+#include <TelepathyLoggerQt4/PendingOperation>
 
 namespace Tpl {
 
-class TELEPATHY_QT4_LOGGER_MODELS_EXPORT LoggerConversationModel
+class TELEPATHY_LOGGER_QT4_MODELS_EXPORT LoggerConversationModel
     : public Tpy::AbstractConversationModel
 {
     Q_OBJECT

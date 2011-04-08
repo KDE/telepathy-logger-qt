@@ -1,5 +1,5 @@
 /*
- * This file is part of TelepathyQt4Logger
+ * This file is part of TelepathyLoggerQt4
  *
  * Copyright (C) 2011 Collabora Ltd. <http://www.collabora.co.uk/>
  *
@@ -19,7 +19,7 @@
 
 #include "tpl-tool.h"
 #include <tools/_gen/tpl-tool.moc.hpp>
-#include <TelepathyQt4Logger/utils.h>
+#include <TelepathyLoggerQt4/utils.h>
 #include <QApplication>
 #include <TelepathyQt4/Account>
 #include <TelepathyQt4/AccountSet>
@@ -27,15 +27,15 @@
 #include <TelepathyQt4/ContactManager>
 #include <TelepathyQt4/Connection>
 #include <TelepathyQt4/PendingReady>
-#include <TelepathyQt4Logger/Entity>
-#include <TelepathyQt4Logger/Event>
-#include <TelepathyQt4Logger/TextEvent>
-#include <TelepathyQt4Logger/LogManager>
-#include <TelepathyQt4Logger/PendingDates>
-#include <TelepathyQt4Logger/PendingEntities>
-#include <TelepathyQt4Logger/PendingEvents>
-#include <TelepathyQt4Logger/PendingSearch>
-#include <TelepathyQt4Logger/Init>
+#include <TelepathyLoggerQt4/Entity>
+#include <TelepathyLoggerQt4/Event>
+#include <TelepathyLoggerQt4/TextEvent>
+#include <TelepathyLoggerQt4/LogManager>
+#include <TelepathyLoggerQt4/PendingDates>
+#include <TelepathyLoggerQt4/PendingEntities>
+#include <TelepathyLoggerQt4/PendingEvents>
+#include <TelepathyLoggerQt4/PendingSearch>
+#include <TelepathyLoggerQt4/Init>
 #include <glib-object.h>
 #include <QGst/Init>
 #include <QDebug>

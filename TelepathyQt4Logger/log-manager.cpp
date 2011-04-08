@@ -1,5 +1,5 @@
 /*
- * This file is part of TelepathyQt4Logger
+ * This file is part of TelepathyLoggerQt4
  *
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
  * Copyright (C) 2011 Collabora Ltd. <http://www.collabora.co.uk/>
@@ -18,16 +18,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <TelepathyQt4Logger/LogManager>
+#include <TelepathyLoggerQt4/LogManager>
 
 #include <TelepathyQt4/Account>
 #include <TelepathyQt4/AccountManager>
-#include <TelepathyQt4Logger/Entity>
-#include <TelepathyQt4Logger/PendingDates>
-#include <TelepathyQt4Logger/PendingEntities>
-#include <TelepathyQt4Logger/PendingEvents>
-#include <TelepathyQt4Logger/PendingSearch>
-#include <TelepathyQt4Logger/utils.h>
+#include <TelepathyLoggerQt4/Entity>
+#include <TelepathyLoggerQt4/PendingDates>
+#include <TelepathyLoggerQt4/PendingEntities>
+#include <TelepathyLoggerQt4/PendingEvents>
+#include <TelepathyLoggerQt4/PendingSearch>
+#include <TelepathyLoggerQt4/utils.h>
 #include <telepathy-logger/log-manager.h>
 #include <telepathy-glib/account.h>
 

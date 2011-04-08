@@ -1,5 +1,5 @@
 /*
- * This file is part of TelepathyQt4Logger
+ * This file is part of TelepathyLoggerQt4
  *
  * Copyright (C) 2011 Collabora Ltd. <http://www.collabora.co.uk/>
  *
@@ -17,12 +17,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <TelepathyQt4Logger/Logger>
+#include <TelepathyLoggerQt4/Logger>
 
-#include <TelepathyQt4Logger/pending-logger.h>
-#include <TelepathyQt4Logger/_gen/logger.moc.hpp>
-#include <TelepathyQt4Logger/_gen/cli-logger-body.hpp>
-#include <TelepathyQt4Logger/_gen/cli-logger.moc.hpp>
+#include <TelepathyLoggerQt4/pending-logger.h>
+#include <TelepathyLoggerQt4/_gen/logger.moc.hpp>
+#include <TelepathyLoggerQt4/_gen/cli-logger-body.hpp>
+#include <TelepathyLoggerQt4/_gen/cli-logger.moc.hpp>
 
 #include <QDBusPendingReply>
 #include <QDebug>
@@ -32,7 +32,7 @@
 
 namespace Tpl {
 
-struct TELEPATHY_QT4_LOGGER_NO_EXPORT Logger::Private
+struct TELEPATHY_LOGGER_QT4_NO_EXPORT Logger::Private
 {
     Private(Logger *self);
 

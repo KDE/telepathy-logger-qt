@@ -1,5 +1,5 @@
 /*
- * This file is part of TelepathyQt4Logger
+ * This file is part of TelepathyLoggerQt4
  *
  * Copyright (C) 2011 Collabora Ltd. <http://www.collabora.co.uk/>
  *
@@ -17,28 +17,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <TelepathyQt4Logger/Models/LoggerConversationModel>
+#include <TelepathyLoggerQt4/Models/LoggerConversationModel>
 
-#include "TelepathyQt4Logger/Models/_gen/logger-conversation-model.moc.hpp"
+#include "TelepathyLoggerQt4/Models/_gen/logger-conversation-model.moc.hpp"
 
 #include <QtCore/QDebug>
 #include <TelepathyQt4/Account>
 #include <TelepathyQt4/Contact>
 #include <TelepathyQt4/ContactManager>
 #include <TelepathyQt4/Connection>
-#include <TelepathyQt4Logger/Entity>
-#include <TelepathyQt4Logger/Event>
-#include <TelepathyQt4Logger/TextEvent>
-#include <TelepathyQt4Logger/LogManager>
-#include <TelepathyQt4Logger/PendingDates>
-#include <TelepathyQt4Logger/PendingEvents>
+#include <TelepathyLoggerQt4/Entity>
+#include <TelepathyLoggerQt4/Event>
+#include <TelepathyLoggerQt4/TextEvent>
+#include <TelepathyLoggerQt4/LogManager>
+#include <TelepathyLoggerQt4/PendingDates>
+#include <TelepathyLoggerQt4/PendingEvents>
 #include <TelepathyQt4Yell/Models/ConversationItem>
 
 #define MAX_ITEMS 1000
 
 using namespace Tpl;
 
-struct TELEPATHY_QT4_LOGGER_MODELS_NO_EXPORT LoggerConversationModel::Private
+struct TELEPATHY_LOGGER_QT4_MODELS_NO_EXPORT LoggerConversationModel::Private
 {
     Private(const Tp::AccountPtr &account, const Tp::ContactPtr &contact);
     void setup() const;

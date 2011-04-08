@@ -1,5 +1,5 @@
 /*
- * This file is part of TelepathyQt4Logger
+ * This file is part of TelepathyLoggerQt4
  *
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
  * Copyright (C) 2011 Collabora Ltd. <http://www.collabora.co.uk/>
@@ -17,25 +17,25 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef _TelepathyQt4Logger_text_event_h_HEADER_GUARD_
-#define _TelepathyQt4Logger_text_event_h_HEADER_GUARD_
+#ifndef _TelepathyLoggerQt4_text_event_h_HEADER_GUARD_
+#define _TelepathyLoggerQt4_text_event_h_HEADER_GUARD_
 
-#ifndef IN_TELEPATHY_QT4_LOGGER_HEADER
-#error IN_TELEPATHY_QT4_LOGGER_HEADER
+#ifndef IN_TELEPATHY_LOGGER_QT4_HEADER
+#error IN_TELEPATHY_LOGGER_QT4_HEADER
 #endif
 
-#include <TelepathyQt4Logger/Event>
+#include <TelepathyLoggerQt4/Event>
 #include <TelepathyQt4/Constants>
 
 namespace Tpl
 {
 
-/*! \headerfile text-event.h <TelepathyQt4Logger/TextEvent>
+/*! \headerfile text-event.h <TelepathyLoggerQt4/TextEvent>
  * \brief Wrapper class for TplTextEvent
  */
-class TELEPATHY_QT4_LOGGER_EXPORT TextEvent : public Event
+class TELEPATHY_LOGGER_QT4_EXPORT TextEvent : public Event
 {
-    QTELEPATHYQT4LOGGER_WRAPPER(TextEvent)
+    QTELEPATHYLOGGERQT4_WRAPPER(TextEvent)
 public:
     Tp::ChannelTextMessageType messageType() const;
     QString message() const;
@@ -43,6 +43,6 @@ public:
 
 } //namespace
 
-QTELEPATHYQT4LOGGER_REGISTER_TYPE(Tpl::TextEvent)
+QTELEPATHYLOGGERQT4_REGISTER_TYPE(Tpl::TextEvent)
 
 #endif

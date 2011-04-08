@@ -1,5 +1,5 @@
 /*
- * This file is part of TelepathyQt4Logger
+ * This file is part of TelepathyLoggerQt4
  *
  * Copyright (C) 2011 Collabora Ltd. <http://www.collabora.co.uk/>
  *
@@ -16,10 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef _TelepathyQt4Logger_utils_h_HEADER_GUARD_
-#define _TelepathyQt4Logger_utils_h_HEADER_GUARD_
+#ifndef _TelepathyLoggerQt4_utils_h_HEADER_GUARD_
+#define _TelepathyLoggerQt4_utils_h_HEADER_GUARD_
 
-#include <TelepathyQt4Logger/Global>
+#include <TelepathyLoggerQt4/Global>
 #include <TelepathyQt4/Types>
 #include <telepathy-glib/account-manager.h>
 #include <telepathy-glib/account.h>
@@ -40,7 +40,7 @@
 
 namespace Tpl {
 
-class TELEPATHY_QT4_LOGGER_NO_EXPORT Utils {
+class TELEPATHY_LOGGER_QT4_NO_EXPORT Utils {
 public:
     static Utils *instance();
 

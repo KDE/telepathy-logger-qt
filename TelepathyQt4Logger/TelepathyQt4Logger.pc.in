@@ -3,9 +3,9 @@ exec_prefix=${CMAKE_INSTALL_PREFIX}
 libdir=${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}
 includedir=${CMAKE_INSTALL_PREFIX}/${INCLUDE_INSTALL_DIR}
 
-Name: Telepathy-Qt4-Logger
+Name: Telepathy-Logger-Qt4
 Description: Qt4 utility library to access logs in the Telepathy framework
 Version: ${PACKAGE_VERSION}
 Requires.private: QtCore >= 4.5, TelepathyQt4 >= 0.5
-Libs: -L${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR} -ltelepathy-qt4-logger
+Libs: -L${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR} -ltelepathy-logger-qt4
 Cflags: -I${CMAKE_INSTALL_PREFIX}/${INCLUDE_INSTALL_DIR}/telepathy-logger-0.2

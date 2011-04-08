@@ -1,5 +1,5 @@
 /*
- * This file is part of TelepathyQt4Logger
+ * This file is part of TelepathyLoggerQt4
  *
  * Copyright (C) 2011 Collabora Ltd. <http://www.collabora.co.uk/>
  *
@@ -16,24 +16,24 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef _TelepathyQt4Logger_call_event_h_HEADER_GUARD_
-#define _TelepathyQt4Logger_call_event_h_HEADER_GUARD_
+#ifndef _TelepathyLoggerQt4_call_event_h_HEADER_GUARD_
+#define _TelepathyLoggerQt4_call_event_h_HEADER_GUARD_
 
-#ifndef IN_TELEPATHY_QT4_LOGGER_HEADER
-#error IN_TELEPATHY_QT4_LOGGER_HEADER
+#ifndef IN_TELEPATHY_LOGGER_QT4_HEADER
+#error IN_TELEPATHY_LOGGER_QT4_HEADER
 #endif
 
-#include <TelepathyQt4Logger/Event>
+#include <TelepathyLoggerQt4/Event>
 
 namespace Tpl
 {
 
-/*! \headerfile call-event.h <TelepathyQt4Logger/CallEvent>
+/*! \headerfile call-event.h <TelepathyLoggerQt4/CallEvent>
  * \brief Wrapper class for TplCallEvent
  */
-class TELEPATHY_QT4_LOGGER_EXPORT CallEvent : public Event
+class TELEPATHY_LOGGER_QT4_EXPORT CallEvent : public Event
 {
-    QTELEPATHYQT4LOGGER_WRAPPER(CallEvent)
+    QTELEPATHYLOGGERQT4_WRAPPER(CallEvent)
 public:
     QTime duration() const;
     EntityPtr endActor() const;
@@ -43,6 +43,6 @@ public:
 
 } //namespace
 
-QTELEPATHYQT4LOGGER_REGISTER_TYPE(Tpl::CallEvent)
+QTELEPATHYLOGGERQT4_REGISTER_TYPE(Tpl::CallEvent)
 
 #endif

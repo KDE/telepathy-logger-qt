@@ -1,5 +1,5 @@
 /*
- * This file is part of TelepathyQt4Logger
+ * This file is part of TelepathyLoggerQt4
  *
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
  * Copyright (C) 2011 Collabora Ltd. <http://www.collabora.co.uk/>
@@ -17,25 +17,25 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef _TelepathyQt4Logger_log_manager_h_HEADER_GUARD_
-#define _TelepathyQt4Logger_log_manager_h_HEADER_GUARD_
+#ifndef _TelepathyLoggerQt4_log_manager_h_HEADER_GUARD_
+#define _TelepathyLoggerQt4_log_manager_h_HEADER_GUARD_
 
-#ifndef IN_TELEPATHY_QT4_LOGGER_HEADER
-#error IN_TELEPATHY_QT4_LOGGER_HEADER
+#ifndef IN_TELEPATHY_LOGGER_QT4_HEADER
+#error IN_TELEPATHY_LOGGER_QT4_HEADER
 #endif
 
 #include <QGlib/Object>
-#include <TelepathyQt4Logger/Types>
+#include <TelepathyLoggerQt4/Types>
 
 namespace Tpl
 {
 
-/*! \headerfile log-manager.h <TelepathyQt4Logger/LogManager>
+/*! \headerfile log-manager.h <TelepathyLoggerQt4/LogManager>
  * \brief Wrapper class for TplLogManager
  */
-class TELEPATHY_QT4_LOGGER_EXPORT LogManager : public QGlib::Object
+class TELEPATHY_LOGGER_QT4_EXPORT LogManager : public QGlib::Object
 {
-    QTELEPATHYQT4LOGGER_WRAPPER(LogManager)
+    QTELEPATHYLOGGERQT4_WRAPPER(LogManager)
 public:
     static LogManagerPtr instance();
 
@@ -57,6 +57,6 @@ public:
 
 } //namespace
 
-QTELEPATHYQT4LOGGER_REGISTER_TYPE(Tpl::LogManager)
+QTELEPATHYLOGGERQT4_REGISTER_TYPE(Tpl::LogManager)
 
 #endif

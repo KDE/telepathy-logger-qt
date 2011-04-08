@@ -1,5 +1,5 @@
 /*
- * This file is part of TelepathyQt4Logger
+ * This file is part of TelepathyLoggerQt4
  *
  * Copyright (C) 2011 Collabora Ltd. <http://www.collabora.co.uk/>
  * Copyright (C) 2011 Nokia Corporation
@@ -19,15 +19,15 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include <TelepathyQt4Logger/PendingOperation>
+#include <TelepathyLoggerQt4/PendingOperation>
 
-#include <TelepathyQt4Logger/_gen/pending-operation.moc.hpp>
+#include <TelepathyLoggerQt4/_gen/pending-operation.moc.hpp>
 #include <QtCore/QDebug>
 #include <QtCore/QTimer>
 
 using namespace Tpl;
 
-struct TELEPATHY_QT4_LOGGER_NO_EXPORT PendingOperation::Private
+struct TELEPATHY_LOGGER_QT4_NO_EXPORT PendingOperation::Private
 {
     Private()
         : finished(false)

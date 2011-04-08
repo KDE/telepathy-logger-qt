@@ -1,5 +1,5 @@
 /*
- * This file is part of TelepathyQt4Logger
+ * This file is part of TelepathyLoggerQt4
  *
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
  * Copyright (C) 2011 Collabora Ltd. <http://www.collabora.co.uk/>
@@ -17,25 +17,25 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef _TelepathyQt4Logger_entity_h_HEADER_GUARD_
-#define _TelepathyQt4Logger_entity_h_HEADER_GUARD_
+#ifndef _TelepathyLoggerQt4_entity_h_HEADER_GUARD_
+#define _TelepathyLoggerQt4_entity_h_HEADER_GUARD_
 
-#ifndef IN_TELEPATHY_QT4_LOGGER_HEADER
-#error IN_TELEPATHY_QT4_LOGGER_HEADER
+#ifndef IN_TELEPATHY_LOGGER_QT4_HEADER
+#error IN_TELEPATHY_LOGGER_QT4_HEADER
 #endif
 
 #include <QGlib/Object>
-#include <TelepathyQt4Logger/Types>
+#include <TelepathyLoggerQt4/Types>
 
 namespace Tpl
 {
 
-/*! \headerfile entity.h <TelepathyQt4Logger/Entity>
+/*! \headerfile entity.h <TelepathyLoggerQt4/Entity>
  * \brief Wrapper class for TplEntity
  */
-class TELEPATHY_QT4_LOGGER_EXPORT Entity : public QGlib::Object
+class TELEPATHY_LOGGER_QT4_EXPORT Entity : public QGlib::Object
 {
-    QTELEPATHYQT4LOGGER_WRAPPER(Entity)
+    QTELEPATHYLOGGERQT4_WRAPPER(Entity)
 public:
     static EntityPtr create(const char *id, EntityType type, const char *alias, const char *avatarToken);
     static EntityPtr create(const Tp::ContactPtr & contact, EntityType type);
@@ -49,6 +49,6 @@ public:
 
 } //namespace
 
-QTELEPATHYQT4LOGGER_REGISTER_TYPE(Tpl::Entity)
+QTELEPATHYLOGGERQT4_REGISTER_TYPE(Tpl::Entity)
 
 #endif

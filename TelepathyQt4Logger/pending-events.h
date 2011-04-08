@@ -1,5 +1,5 @@
 /*
- * This file is part of TelepathyQt4Logger
+ * This file is part of TelepathyLoggerQt4
  *
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
  * Copyright (C) 2011 Collabora Ltd. <http://www.collabora.co.uk/>
@@ -18,20 +18,20 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-#ifndef _TelepathyQt4Logger_pending_events_h_HEADER_GUARD_
-#define _TelepathyQt4Logger_pending_events_h_HEADER_GUARD_
+#ifndef _TelepathyLoggerQt4_pending_events_h_HEADER_GUARD_
+#define _TelepathyLoggerQt4_pending_events_h_HEADER_GUARD_
 
-#ifndef IN_TELEPATHY_QT4_LOGGER_HEADER
-#error IN_TELEPATHY_QT4_LOGGER_HEADER
+#ifndef IN_TELEPATHY_LOGGER_QT4_HEADER
+#error IN_TELEPATHY_LOGGER_QT4_HEADER
 #endif
 
-#include <TelepathyQt4Logger/PendingOperation>
-#include <TelepathyQt4Logger/Types>
+#include <TelepathyLoggerQt4/PendingOperation>
+#include <TelepathyLoggerQt4/Types>
 
 namespace Tpl
 {
 
-class TELEPATHY_QT4_LOGGER_EXPORT PendingEvents : public Tpl::PendingOperation
+class TELEPATHY_LOGGER_QT4_EXPORT PendingEvents : public Tpl::PendingOperation
 {
     Q_OBJECT
     Q_DISABLE_COPY(PendingEvents);

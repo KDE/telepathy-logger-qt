@@ -1,4 +1,4 @@
-project(TelepathyQt4Logger)
+project(TelepathyLoggerQt4)
 
 cmake_minimum_required(VERSION 2.6)
 
@@ -38,29 +38,29 @@ endif(POLICY CMP0011)
 #   set nano_version to 0
 #   make the release, tag it
 #   set nano_version to 1
-set(TP_QT4_LOGGER_MAJOR_VERSION 0)
-set(TP_QT4_LOGGER_MINOR_VERSION 1)
-set(TP_QT4_LOGGER_MICRO_VERSION 0)
-set(TP_QT4_LOGGER_NANO_VERSION  0)
+set(TP_LOGGER_QT4_MAJOR_VERSION 0)
+set(TP_LOGGER_QT4_MINOR_VERSION 1)
+set(TP_LOGGER_QT4_MICRO_VERSION 0)
+set(TP_LOGGER_QT4_NANO_VERSION  0)
 
 # This value contains the library's SOVERSION. This value is to be increased everytime an API/ABI break
 # occurs, and will be used for the SOVERSION of the generated shared libraries.
-set(TP_QT4_LOGGER_ABI_VERSION 0)
+set(TP_LOGGER_QT4_ABI_VERSION 0)
 # This variable is used for the library's long version. It is generated dynamically, so don't change its
-# value! Change TP_QT4_LOGGER_ABI_VERSION and TP_QT4_LOGGER_*_VERSION instead.
-if (${TP_QT4_LOGGER_NANO_VERSION} EQUAL 0)
-    set(TP_QT4_LOGGER_LIBRARY_VERSION ${TP_QT4_LOGGER_ABI_VERSION}.${TP_QT4_LOGGER_MAJOR_VERSION}.${TP_QT4_LOGGER_MINOR_VERSION}.${TP_QT4_LOGGER_MICRO_VERSION})
-else (${TP_QT4_LOGGER_NANO_VERSION} EQUAL 0)
-    set(TP_QT4_LOGGER_LIBRARY_VERSION ${TP_QT4_LOGGER_ABI_VERSION}.${TP_QT4_LOGGER_MAJOR_VERSION}.${TP_QT4_LOGGER_MINOR_VERSION}.${TP_QT4_LOGGER_MICRO_VERSION}.${TP_QT4_NANO_VERSION})
-endif (${TP_QT4_LOGGER_NANO_VERSION} EQUAL 0)
+# value! Change TP_LOGGER_QT4_ABI_VERSION and TP_LOGGER_QT4_*_VERSION instead.
+if (${TP_LOGGER_QT4_NANO_VERSION} EQUAL 0)
+    set(TP_LOGGER_QT4_LIBRARY_VERSION ${TP_LOGGER_QT4_ABI_VERSION}.${TP_LOGGER_QT4_MAJOR_VERSION}.${TP_LOGGER_QT4_MINOR_VERSION}.${TP_LOGGER_QT4_MICRO_VERSION})
+else (${TP_LOGGER_QT4_NANO_VERSION} EQUAL 0)
+    set(TP_LOGGER_QT4_LIBRARY_VERSION ${TP_LOGGER_QT4_ABI_VERSION}.${TP_LOGGER_QT4_MAJOR_VERSION}.${TP_LOGGER_QT4_MINOR_VERSION}.${TP_LOGGER_QT4_MICRO_VERSION}.${TP_QT4_NANO_VERSION})
+endif (${TP_LOGGER_QT4_NANO_VERSION} EQUAL 0)
 
-set(PACKAGE_NAME telepathy-qt4-logger)
+set(PACKAGE_NAME telepathy-logger-qt4)
 
-if (${TP_QT4_LOGGER_NANO_VERSION} EQUAL 0)
-    set(PACKAGE_VERSION ${TP_QT4_LOGGER_MAJOR_VERSION}.${TP_QT4_LOGGER_MINOR_VERSION}.${TP_QT4_LOGGER_MICRO_VERSION})
-else (${TP_QT4_LOGGER_NANO_VERSION} EQUAL 0)
-    set(PACKAGE_VERSION ${TP_QT4_LOGGER_MAJOR_VERSION}.${TP_QT4_LOGGER_MINOR_VERSION}.${TP_QT4_LOGGER_MICRO_VERSION}.${TP_QT4_LOGGER_NANO_VERSION})
-endif (${TP_QT4_LOGGER_NANO_VERSION} EQUAL 0)
+if (${TP_LOGGER_QT4_NANO_VERSION} EQUAL 0)
+    set(PACKAGE_VERSION ${TP_LOGGER_QT4_MAJOR_VERSION}.${TP_LOGGER_QT4_MINOR_VERSION}.${TP_LOGGER_QT4_MICRO_VERSION})
+else (${TP_LOGGER_QT4_NANO_VERSION} EQUAL 0)
+    set(PACKAGE_VERSION ${TP_LOGGER_QT4_MAJOR_VERSION}.${TP_LOGGER_QT4_MINOR_VERSION}.${TP_LOGGER_QT4_MICRO_VERSION}.${TP_LOGGER_QT4_NANO_VERSION})
+endif (${TP_LOGGER_QT4_NANO_VERSION} EQUAL 0)
 
 # where to look first for cmake modules, before ${CMAKE_ROOT}/Modules/ is
 # checked
@@ -69,19 +69,19 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 # Default build type is RelWithDebInfo for release versions and Debug for developement
 # versions
 if(NOT CMAKE_BUILD_TYPE)
-    if(TP_QT4_LOGGER_NANO_VERSION EQUAL 0)
+    if(TP_LOGGER_QT4_NANO_VERSION EQUAL 0)
         set(CMAKE_BUILD_TYPE RelWithDebInfo)
-    else(TP_QT4_LOGGER_NANO_VERSION EQUAL 0)
+    else(TP_LOGGER_QT4_NANO_VERSION EQUAL 0)
         set(CMAKE_BUILD_TYPE Debug)
-    endif(TP_QT4_LOGGER_NANO_VERSION EQUAL 0)
+    endif(TP_LOGGER_QT4_NANO_VERSION EQUAL 0)
 endif(NOT CMAKE_BUILD_TYPE)
 
 # This file contains all the needed initialization macros
 include(TelepathyDefaults)
 
-# TelepathyQt4Logger specific defines needed to trigger deprecation warnings
+# TelepathyLoggerQt4 specific defines needed to trigger deprecation warnings
 if (CXX_DEPRECATED_DECLARATIONS)
-    set(DEPRECATED_DECLARATIONS_FLAGS "${DEPRECATED_DECLARATIONS_FLAGS} -DTELEPATHY_QT4_LOGGER_DEPRECATED_WARNINGS")
+    set(DEPRECATED_DECLARATIONS_FLAGS "${DEPRECATED_DECLARATIONS_FLAGS} -DTELEPATHY_LOGGER_QT4_DEPRECATED_WARNINGS")
 endif (CXX_DEPRECATED_DECLARATIONS)
 
 # This file contains all macros used in the buildsystem
@@ -187,7 +187,7 @@ endmacro()
 
 # Add the source subdirectories
 add_subdirectory(codegen)
-add_subdirectory(TelepathyQt4Logger)
+add_subdirectory(TelepathyLoggerQt4)
 #add_subdirectory(tests)
 add_subdirectory(tools)
 
@@ -208,7 +208,7 @@ macro_display_feature_log()
 
 add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/FIXME.out
                    COMMAND egrep
-                   ARGS -A 5 '[F]IXME|[T]ODO|[X]XX' ${CMAKE_SOURCE_DIR}/TelepathyQt4Logger/*.[ch]*
+                   ARGS -A 5 '[F]IXME|[T]ODO|[X]XX' ${CMAKE_SOURCE_DIR}/TelepathyLoggerQt4/*.[ch]*
                         > FIXME.out || true)
 add_custom_target(check-local DEPENDS ${CMAKE_BINARY_DIR}/FIXME.out)
 

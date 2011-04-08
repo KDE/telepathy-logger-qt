@@ -535,7 +535,7 @@ WARN_LOGFILE           = doxygen.log
 # directories like "/usr/src/myproject". Separate the files or directories 
 # with spaces.
 
-INPUT                  = ${abs_top_srcdir}/TelepathyQt4Logger ${abs_top_builddir}/TelepathyQt4Logger
+INPUT                  = ${abs_top_srcdir}/TelepathyLoggerQt4 ${abs_top_builddir}/TelepathyLoggerQt4
 
 # This tag can be used to specify the character encoding of the source files 
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is 
@@ -1431,12 +1431,12 @@ DOT_CLEANUP            = YES
 SEARCHENGINE           = NO
 
 GENERATE_QHP           = ${GENERATE_QHP}
-QHP_NAMESPACE          = "org.freedesktop.Telepathy.Qt4.Logger"
+QHP_NAMESPACE          = "org.freedesktop.Telepathy.Logger.Qt4"
 QHP_VIRTUAL_FOLDER     = "${PROJECT_NAME}-${PACKAGE_VERSION}"
-QCH_FILE               = ${abs_top_builddir}/doc/help/telepathy-qt4-logger.qch
+QCH_FILE               = ${abs_top_builddir}/doc/help/telepathy-logger-qt4.qch
 QHG_LOCATION           = ${QHELPGENERATOR_EXECUTABLE}"
 
-### TelepathyQt4Logger Settings
+### TelepathyLoggerQt4 Settings
 ALIASES = \
 	"intern=\par<b>Internal use only.</b>" \
 	"reimp=\par<b>Reimplemented from superclass.</b>" \
@@ -1448,7 +1448,7 @@ ALIASES = \
 	"faq=\xrefitem FAQ \"F.A.Q.\" \"F.A.Q.\"" \
 	"authors=\xrefitem authors \"Author(s)\" \"Authors\"" \
 	"maintainers=\xrefitem maintainers \"Maintainer(s)\" \"Maintainers\"" \
-	"glossary=\xrefitem glossary \"TelepathyQt4Logger Glossary\" \"TelepathyQt4Logger Glossary\"" \
+	"glossary=\xrefitem glossary \"TelepathyLoggerQt4 Glossary\" \"TelepathyLoggerQt4 Glossary\"" \
 	"acronym=\b "\
 	"licenses=\xrefitem licenses \"License(s)\" \"Licenses\"" \
 	"short=@brief "\
@@ -1464,7 +1464,7 @@ ALIASES = \
 	"qpl=<a href=\"http://www.trolltech.com/products/qt/licenses\">QPL</a>"
 
 PREDEFINED = DOXYGEN_SHOULD_SKIP_THIS \
-	TELEPATHY_QT4_LOGGER_EXPORT="" \
-	TELEPATHY_QT4_LOGGER_NO_EXPORT="" \
+	TELEPATHY_LOGGER_QT4_EXPORT="" \
+	TELEPATHY_LOGGER_QT4_NO_EXPORT="" \
 	Q_SLOTS="slots" \
 	Q_SIGNALS="signals"

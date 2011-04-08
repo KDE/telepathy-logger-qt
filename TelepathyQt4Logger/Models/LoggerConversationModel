@@ -1,13 +1,13 @@
 #ifndef _TelepathyQt4Logger_Models_LoggerConversationModel_HEADER_GUARD_
 #define _TelepathyQt4Logger_Models_LoggerConversationModel_HEADER_GUARD_
 
-#ifndef IN_TELEPATHY_QT4_LOGGER_MODELS_HEADER
-#define IN_TELEPATHY_QT4_LOGGER_MODELS_HEADER
+#ifndef IN_TELEPATHY_LOGGER_QT4_MODELS_HEADER
+#define IN_TELEPATHY_LOGGER_QT4_MODELS_HEADER
 #endif
 
 #include <TelepathyQt4Logger/Models/logger-conversation-model.h>
 
-#undef IN_TELEPATHY_QT4_LOGGER_MODELS_HEADER
+#undef IN_TELEPATHY_LOGGER_QT4_MODELS_HEADER
 
 #endif // _TelepathyQt4Logger_Models_LoggerConversationModel_HEADER_GUARD_
 

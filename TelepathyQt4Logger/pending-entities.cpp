@@ -1,5 +1,5 @@
 /*
- * This file is part of TelepathyQt4Logger
+ * This file is part of TelepathyLoggerQt4
  *
  * Copyright (C) 2011 Collabora Ltd. <http://www.collabora.co.uk/>
  *
@@ -18,20 +18,20 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include <TelepathyQt4Logger/PendingEntities>
+#include <TelepathyLoggerQt4/PendingEntities>
 
 #include <QtCore/QDebug>
 #include <TelepathyQt4/Account>
-#include <TelepathyQt4Logger/Entity>
-#include <TelepathyQt4Logger/LogManager>
-#include <TelepathyQt4Logger/utils.h>
-#include <TelepathyQt4Logger/_gen/pending-entities.moc.hpp>
+#include <TelepathyLoggerQt4/Entity>
+#include <TelepathyLoggerQt4/LogManager>
+#include <TelepathyLoggerQt4/utils.h>
+#include <TelepathyLoggerQt4/_gen/pending-entities.moc.hpp>
 #include <glib/gerror.h>
 #include <telepathy-logger/log-manager.h>
 
 using namespace Tpl;
 
-struct TELEPATHY_QT4_LOGGER_NO_EXPORT PendingEntities::Private
+struct TELEPATHY_LOGGER_QT4_NO_EXPORT PendingEntities::Private
 {
     LogManagerPtr manager;
     Tp::AccountPtr account;
