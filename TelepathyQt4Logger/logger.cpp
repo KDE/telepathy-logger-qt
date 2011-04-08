@@ -32,8 +32,6 @@
 
 namespace Tpl {
 
-typedef Tp::SharedPtr<Logger> LoggerPtr;
-
 struct TELEPATHY_QT4_LOGGER_NO_EXPORT Logger::Private
 {
     Private(Logger *self);
@@ -48,6 +46,11 @@ Logger::Private::Private(Logger *self)
         TPL_DBUS_SRV_WELL_KNOWN_BUS_NAME,
         TPL_DBUS_SRV_OBJECT_PATH);
     mPtr = LoggerPtr(self);
+}
+
+LoggerPtr Logger::create()
+{
+    return LoggerPtr(new Logger());
 }
 
 Logger::Logger() :

@@ -59,12 +59,14 @@ enum CallEndReason
     CallEndReasonNoAnswer
 };
 
+class Logger;
 class PendingDates;
 class PendingEvents;
 class PendingEntities;
 class PendingSearch;
 struct SearchHit;
 
+typedef Tp::SharedPtr<Logger> LoggerPtr;
 typedef QList<Tp::ContactPtr> ContactPtrList;
 typedef QList<EntityPtr> EntityPtrList;
 typedef QList<EventPtr> EventPtrList;
@@ -79,5 +81,4 @@ typedef bool (*LogEventFilter)(const EventPtr &event, void *user_data);
 //QTELEPATHYQT4LOGGER_REGISTER_TYPE(Tpl::LogManagerError)
 //QTELEPATHYQT4LOGGER_REGISTER_TYPE(Tpl::EventTypeMask)
 //QTELEPATHYQT4LOGGER_REGISTER_TYPE(Tpl::CallEndReason)
-
 #endif

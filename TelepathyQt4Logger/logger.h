@@ -40,7 +40,8 @@ class TELEPATHY_QT4_LOGGER_EXPORT Logger : public Tp::StatelessDBusProxy
     Q_OBJECT
 
 public:
-    Logger();
+    static LoggerPtr create();
+
     ~Logger();
 
     Tp::PendingOperation *clearLog() const;
@@ -49,6 +50,7 @@ public:
     Tp::PendingOperation *clearRoom(const Tp::AccountPtr &account, const QString &objectId) const;
 
 private:
+    Logger();
     struct Private;
     friend struct Private;
     Private *mPriv;
