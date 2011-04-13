@@ -238,3 +238,6 @@ QString PendingOperation::errorMessage() const
  *                  may be obtained
  */
 
+void PendingOperation::start()
+{
+}

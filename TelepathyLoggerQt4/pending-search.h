@@ -48,8 +48,8 @@ public:
     SearchHitList hits() const;
 
 private Q_SLOTS:
-    void start();
-
+    virtual void start();
+\
 private:
     friend class LogManager;
 
