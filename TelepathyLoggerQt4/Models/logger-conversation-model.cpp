@@ -27,12 +27,13 @@
 #include <TelepathyQt4/ContactManager>
 #include <TelepathyQt4/Connection>
 #include <TelepathyLoggerQt4/Entity>
-#include <TelepathyLoggerQt4/Event>
 #include <TelepathyLoggerQt4/TextEvent>
+#include <TelepathyLoggerQt4/CallEvent>
 #include <TelepathyLoggerQt4/LogManager>
 #include <TelepathyLoggerQt4/PendingDates>
 #include <TelepathyLoggerQt4/PendingEvents>
-#include <TelepathyQt4Yell/Models/ConversationItem>
+#include <TelepathyQt4Yell/Models/TextEventItem>
+#include <TelepathyQt4Yell/Models/CallEventItem>
 
 #define MAX_ITEMS 1000
 
@@ -195,25 +196,81 @@ void LoggerConversationModel::onPendingEventsFinished(Tpl::PendingOperation *op)
     Tpl::EventPtrList eventList = pendingEvents->events();
     Tpl::EventPtr event;
 
-    QList<const Tpy::ConversationItem *> items;
+    QList<const Tpy::EventItem *> items;
 
     beginInsertRows(QModelIndex(), 0, eventList.size() - 1);
 
     Q_FOREACH(event, eventList) {
         qDebug() << "LoggerConversationModel::onPendingEventsFinished: event added";
         Tpl::TextEventPtr textEvent = event.dynamicCast<Tpl::TextEvent>();
-        if (!textEvent.isNull()) {
-            Tpy::ConversationItem::Type messageType;
-            Tp::ContactPtr contact;
-            if (textEvent->sender()->identifier() == mPriv->mContact->id()) {
-                messageType = Tpy::ConversationItem::INCOMING_MESSAGE;
-                contact = mPriv->mContact;
-            } else {
-                messageType = Tpy::ConversationItem::OUTGOING_MESSAGE;
-                contact = mPriv->mContact->manager()->connection()->selfContact();
+        Tpl::CallEventPtr callEvent = event.dynamicCast<Tpl::CallEvent>();
+
+        Tp::ContactPtr sender;
+        if (!event->sender().isNull()) {
+            if (event->sender()->identifier() == mPriv->mContact->id()) {
+                sender = mPriv->mContact;
+            } else if (event->sender()->identifier() == mPriv->mContact->manager()->connection()->selfContact()->id()) {
+                sender = mPriv->mContact->manager()->connection()->selfContact();
             }
-            Tpy::ConversationItem *item = new Tpy::ConversationItem(contact,
-                   textEvent->timestamp(), textEvent->message(), messageType, this);
+            if (sender.isNull()) {
+                qDebug() << "LoggerConversationModel::onPendingEventsFinished: unknown sender " << event->sender()->identifier();
+            }
+        }
+
+        Tp::ContactPtr receiver;
+        if (!event->receiver().isNull()) {
+            if (event->receiver()->identifier() == mPriv->mContact->id()) {
+                receiver = mPriv->mContact;
+            } else if (event->receiver()->identifier() == mPriv->mContact->manager()->connection()->selfContact()->id()) {
+                receiver = mPriv->mContact->manager()->connection()->selfContact();
+            }
+            if (receiver.isNull()) {
+                qDebug() << "LoggerConversationModel::onPendingEventsFinished: unknown receiver " << event->receiver()->identifier();
+            }
+        }
+
+        if (!textEvent.isNull()) {
+            Tpy::TextEventItem::MessageOrigin messageOrigin;
+            if (textEvent->sender()->identifier() == mPriv->mContact->id()) {
+                messageOrigin = Tpy::TextEventItem::MessageOriginIncoming;
+            } else {
+                messageOrigin = Tpy::TextEventItem::MessageOriginOutgoing;
+                //contact = mPriv->mContact->manager()->connection()->selfContact();
+            }
+            Tpy::TextEventItem *item = new Tpy::TextEventItem(
+                sender, receiver, textEvent->timestamp(), textEvent->message(),
+                messageOrigin, textEvent->messageType(), this);
+            items.append(item);
+        } else if (!callEvent.isNull()) {
+            // convert from Tpl::CallEndReason to Tpy::CallStateChangeReason (very similar)
+            Tpy::CallStateChangeReason stateChangeReason = Tpy::CallStateChangeReasonUnknown;
+            Tpl::CallEndReason endReason = callEvent->endReason();
+            if (endReason == Tpl::CallEndReasonNoAnswer) {
+                stateChangeReason = Tpy::CallStateChangeReasonNoAnswer;
+            } else if (endReason == Tpl::CallEndReasonUserRequested) {
+                stateChangeReason = Tpy::CallStateChangeReasonUserRequested;
+            } if (endReason == Tpl::CallEndReasonUnknown) {
+                stateChangeReason = Tpy::CallStateChangeReasonUnknown;
+            } else {
+                // Unknown Tpl::CallEndReason enum
+                Q_ASSERT(true);
+            }
+
+            Tp::ContactPtr endActor;
+            if (!callEvent->endActor().isNull()) {
+                if (callEvent->endActor()->identifier() == mPriv->mContact->id()) {
+                    endActor = mPriv->mContact;
+                } else if (callEvent->endActor()->identifier() == mPriv->mContact->manager()->connection()->selfContact()->id()) {
+                    endActor = mPriv->mContact->manager()->connection()->selfContact();
+                }
+                if (receiver.isNull()) {
+                    qDebug() << "LoggerConversationModel::onPendingEventsFinished: unknown endActor " << callEvent->endActor()->identifier();
+                }
+            }
+
+            Tpy::CallEventItem *item = new Tpy::CallEventItem(
+                sender, receiver, callEvent->timestamp(), callEvent->duration(),
+                endActor, stateChangeReason, callEvent->detailedEndReason(), this);
             items.append(item);
         }
     }
