@@ -30,6 +30,7 @@
 #include <TelepathyLoggerQt4/Entity>
 #include <TelepathyLoggerQt4/Event>
 #include <TelepathyLoggerQt4/TextEvent>
+#include <TelepathyLoggerQt4/CallEvent>
 #include <TelepathyLoggerQt4/LogManager>
 #include <TelepathyLoggerQt4/PendingDates>
 #include <TelepathyLoggerQt4/PendingEntities>
@@ -405,6 +406,7 @@ void TplToolApplication::onPendingEvents(Tpl::PendingOperation *po)
     Tpl::EventPtr event;
     Q_FOREACH(event, events) {
         Tpl::TextEventPtr textEvent = event.dynamicCast<Tpl::TextEvent>();
+        Tpl::CallEventPtr callEvent = event.dynamicCast<Tpl::CallEvent>();
         if (!textEvent.isNull()) {
             qDebug() << count++ << "textEvent"
                       << "timestamp=" << textEvent->timestamp().toString()
@@ -414,6 +416,17 @@ void TplToolApplication::onPendingEvents(Tpl::PendingOperation *po)
                       << "messageType=" << textEvent->messageType()
                       << "account=" << (textEvent->account() ? textEvent->account()->objectPath() : "null")
                       << "accountPath=" << textEvent->accountPath();
+        } else if (!callEvent.isNull()) {
+            qDebug() << count++ << "callEvent"
+                      << "timestamp=" << callEvent->timestamp().toString()
+                      << "sender=" << callEvent->sender()->identifier()
+                      << "receiver=" << callEvent->receiver()->identifier()
+                      << "duraton=" << callEvent->duration()
+                      << "endActor=" << callEvent->endActor()->identifier()
+                      << "endReason=" << callEvent->endReason()
+                      << "detailedEndReason=" << callEvent->detailedEndReason()
+                      << "account=" << (callEvent->account() ? callEvent->account()->objectPath() : "null")
+                      << "accountPath=" << callEvent->accountPath();
         } else {
             qDebug() << count++ << "event"
                       << "timestamp=" << event->timestamp().toString()
