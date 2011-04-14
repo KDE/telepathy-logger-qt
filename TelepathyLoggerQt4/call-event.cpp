@@ -27,8 +27,13 @@ using namespace Tpl;
 QTime CallEvent::duration() const
 {
     GTimeSpan timeSpan = tpl_call_event_get_duration(object<TplCallEvent>());
-    QTime ret;
-    ret.addMSecs(timeSpan / 1000);
+    int hh = timeSpan / 3600;
+    timeSpan = timeSpan % 3600;
+    int mm = timeSpan / 60;
+    int ss = timeSpan % 60;
+    int ms = 0;
+    // FIXME there is no timespan type in Qt yet, use QTime in the meanwhile
+    QTime ret(hh,mm,ss,ms);
     return ret;
 }
 
