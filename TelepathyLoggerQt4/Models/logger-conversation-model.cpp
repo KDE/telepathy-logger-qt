@@ -230,16 +230,9 @@ void LoggerConversationModel::onPendingEventsFinished(Tpl::PendingOperation *op)
         }
 
         if (!textEvent.isNull()) {
-            Tpy::TextEventItem::MessageOrigin messageOrigin;
-            if (textEvent->sender()->identifier() == mPriv->mContact->id()) {
-                messageOrigin = Tpy::TextEventItem::MessageOriginIncoming;
-            } else {
-                messageOrigin = Tpy::TextEventItem::MessageOriginOutgoing;
-                //contact = mPriv->mContact->manager()->connection()->selfContact();
-            }
             Tpy::TextEventItem *item = new Tpy::TextEventItem(
                 sender, receiver, textEvent->timestamp(), textEvent->message(),
-                messageOrigin, textEvent->messageType(), this);
+                textEvent->messageType(), this);
             items.append(item);
         } else if (!callEvent.isNull()) {
             // convert from Tpl::CallEndReason to Tpy::CallStateChangeReason (very similar)
