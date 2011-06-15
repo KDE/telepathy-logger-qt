@@ -35,8 +35,10 @@ struct TELEPATHY_LOGGER_QT4_NO_EXPORT PendingEntities::Private
 {
     LogManagerPtr manager;
     Tp::AccountPtr account;
+    TpAccount *tpAccount;
     EntityPtrList entities;
 
+    static void onAccountPrepared(void *logManager, void *result, PendingEntities *self);
     static void callback(void *logManager, void *result, PendingEntities *self);
 };
 
@@ -46,6 +48,7 @@ PendingEntities::PendingEntities(const LogManagerPtr & manager, const Tp::Accoun
 {
     mPriv->manager = manager;
     mPriv->account = account;
+    mPriv->tpAccount = 0;
 }
 
 PendingEntities::~PendingEntities()
@@ -55,10 +58,22 @@ PendingEntities::~PendingEntities()
 
 void PendingEntities::start()
 {
-    tpl_log_manager_get_entities_async(mPriv->manager,
-        Utils::instance()->tpAccount(mPriv->account),
+    mPriv->tpAccount = Utils::instance()->tpAccount(mPriv->account);
+    if (!mPriv->tpAccount) {
+        setFinishedWithError(TP_QT4_ERROR_INVALID_ARGUMENT, "Invalid account");
+        return;
+    }
+
+    GQuark features[] = { TP_ACCOUNT_FEATURE_CORE, 0 };
+    tp_account_prepare_async(mPriv->tpAccount, features, (GAsyncReadyCallback) Private::onAccountPrepared, this);
+}
+
+void PendingEntities::Private::onAccountPrepared(void *logManager, void *result, PendingEntities *self)
+{
+    tpl_log_manager_get_entities_async(self->mPriv->manager,
+        self->mPriv->tpAccount,
         (GAsyncReadyCallback) Private::callback,
-        this);
+        self);
 }
 
 EntityPtrList PendingEntities::entities() const

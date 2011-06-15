@@ -36,10 +36,12 @@ struct TELEPATHY_LOGGER_QT4_NO_EXPORT PendingDates::Private
 {
     LogManagerPtr manager;
     Tp::AccountPtr account;
+    TpAccount *tpAccount;
     EntityPtr entity;
     EventTypeMask typeMask;
     QDateList dates;
 
+    static void onAccountPrepared(void *logManager, void *result, PendingDates *self);
     static void callback(void *logManager, void *result, PendingDates *self);
 };
 
@@ -50,6 +52,7 @@ PendingDates::PendingDates(const LogManagerPtr & manager, const Tp::AccountPtr &
 {
     mPriv->manager = manager;
     mPriv->account = account;
+    mPriv->tpAccount = 0;
     mPriv->entity = entity;
     mPriv->typeMask = typeMask;
 }
@@ -61,12 +64,24 @@ PendingDates::~PendingDates()
 
 void PendingDates::start()
 {
-    tpl_log_manager_get_dates_async(mPriv->manager,
-        Utils::instance()->tpAccount(mPriv->account),
-        mPriv->entity,
-        mPriv->typeMask,
+    mPriv->tpAccount = Utils::instance()->tpAccount(mPriv->account);
+    if (!mPriv->tpAccount) {
+        setFinishedWithError(TP_QT4_ERROR_INVALID_ARGUMENT, "Invalid account");
+        return;
+    }
+
+    GQuark features[] = { TP_ACCOUNT_FEATURE_CORE, 0 };
+    tp_account_prepare_async(mPriv->tpAccount, features, (GAsyncReadyCallback) Private::onAccountPrepared, this);
+}
+
+void PendingDates::Private::onAccountPrepared(void *logManager, void *result, PendingDates *self)
+{
+    tpl_log_manager_get_dates_async(self->mPriv->manager,
+        self->mPriv->tpAccount,
+        self->mPriv->entity,
+        self->mPriv->typeMask,
         (GAsyncReadyCallback) Private::callback,
-        this);
+        self);
 }
 
 QDateList PendingDates::dates() const

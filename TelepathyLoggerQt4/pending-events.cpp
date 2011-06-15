@@ -41,6 +41,7 @@ struct TELEPATHY_LOGGER_QT4_NO_EXPORT PendingEvents::Private
 {
     LogManagerPtr manager;
     Tp::AccountPtr account;
+    TpAccount *tpAccount;
     EntityPtr entity;
     EventTypeMask typeMask;
     QDate date;
@@ -52,6 +53,7 @@ struct TELEPATHY_LOGGER_QT4_NO_EXPORT PendingEvents::Private
 
     EventPtrList events;
 
+    static void onAccountPrepared(void *logManager, void *result, PendingEvents *self);
     static void callback(void *logManager, void *result, PendingEvents *self);
     static gboolean eventFilterMethod(TplEvent *event, gpointer *user_data);
 };
@@ -63,6 +65,7 @@ PendingEvents::PendingEvents(const LogManagerPtr & manager, const Tp::AccountPtr
 {
     mPriv->manager = manager;
     mPriv->account = account;
+    mPriv->tpAccount = 0;
     mPriv->entity = entity;
     mPriv->typeMask = typeMask;
     mPriv->date = date;
@@ -94,28 +97,40 @@ PendingEvents::~PendingEvents()
 
 void PendingEvents::start()
 {
-    if (mPriv->filtered) {
-        tpl_log_manager_get_filtered_events_async(mPriv->manager,
-            Utils::instance()->tpAccount(mPriv->account),
-            mPriv->entity,
-            mPriv->typeMask,
-            mPriv->numEvents,
-            mPriv->filterFunction ? (TplLogEventFilter) Private::eventFilterMethod : 0,
-            this,
+    mPriv->tpAccount = Utils::instance()->tpAccount(mPriv->account);
+    if (!mPriv->tpAccount) {
+        setFinishedWithError(TP_QT4_ERROR_INVALID_ARGUMENT, "Invalid account");
+        return;
+    }
+
+    GQuark features[] = { TP_ACCOUNT_FEATURE_CORE, 0 };
+    tp_account_prepare_async(mPriv->tpAccount, features, (GAsyncReadyCallback) Private::onAccountPrepared, this);
+}
+
+void PendingEvents::Private::onAccountPrepared(void *logManager, void *result, PendingEvents *self)
+{
+    if (self->mPriv->filtered) {
+        tpl_log_manager_get_filtered_events_async(self->mPriv->manager,
+            self->mPriv->tpAccount,
+            self->mPriv->entity,
+            self->mPriv->typeMask,
+            self->mPriv->numEvents,
+            self->mPriv->filterFunction ? (TplLogEventFilter) Private::eventFilterMethod : 0,
+            self,
             (GAsyncReadyCallback) Private::callback,
-            this);
+            self);
     } else {
         GDate *gdate = g_date_new_dmy(
-            mPriv->date.day(),
-            (GDateMonth) mPriv->date.month(),
-            mPriv->date.year());
-        tpl_log_manager_get_events_for_date_async(mPriv->manager,
-            Utils::instance()->tpAccount(mPriv->account),
-            mPriv->entity,
-            mPriv->typeMask,
+            self->mPriv->date.day(),
+            (GDateMonth) self->mPriv->date.month(),
+            self->mPriv->date.year());
+        tpl_log_manager_get_events_for_date_async(self->mPriv->manager,
+            self->mPriv->tpAccount,
+            self->mPriv->entity,
+            self->mPriv->typeMask,
             gdate,
             (GAsyncReadyCallback) Private::callback,
-            this);
+            self);
         g_date_free(gdate);
     }
 }
