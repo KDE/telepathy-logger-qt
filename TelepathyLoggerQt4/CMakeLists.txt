@@ -34,6 +34,7 @@ set(LD_FLAGS "${LD_FLAGS} ${VISIBILITY_HIDDEN_FLAGS} ${COMPILER_COVERAGE_FLAGS} 
 # We are building telepathy-logger-qt4
 add_definitions(-DBUILDING_TELEPATHY_LOGGER_QT4)
 add_definitions (-DQT_NO_KEYWORDS)
+add_definitions(-fPIC)
 
 # Sources for Tp-Logger-Qt4
 set(telepathy_logger_qt4_SRCS

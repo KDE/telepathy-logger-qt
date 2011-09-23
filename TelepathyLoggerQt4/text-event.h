@@ -39,6 +39,7 @@ class TELEPATHY_LOGGER_QT4_EXPORT TextEvent : public Event
 public:
     Tp::ChannelTextMessageType messageType() const;
     QString message() const;
+    QString messageToken() const;
 };
 
 } //namespace

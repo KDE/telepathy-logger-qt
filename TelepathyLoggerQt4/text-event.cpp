@@ -35,3 +35,10 @@ QString TextEvent::message() const
     QString str = QString::fromUtf8(s);
     return str;
 }
+
+QString TextEvent::messageToken() const
+{
+    const gchar *s = tpl_text_event_get_message_token(object<TplTextEvent>());
+    QString str = QString::fromUtf8(s);
+    return str;
+}

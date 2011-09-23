@@ -97,6 +97,29 @@ QDateList PendingDates::dates() const
     return mPriv->dates;
 }
 
+const Tp::AccountPtr PendingDates::account() const
+{
+    if (!isFinished()) {
+        qWarning() << "PendingDates::account called before finished";
+    } else if (!isValid()) {
+        qWarning() << "PendingDates::account called when not valid";
+    }
+
+    return mPriv->account;
+}
+
+const EntityPtr PendingDates::entity() const
+{
+    if (!isFinished()) {
+        qWarning() << "PendingDates::entity called before finished";
+    } else if (!isValid()) {
+        qWarning() << "PendingDates::entity called when not valid";
+    }
+
+    return mPriv->entity;
+}
+
+
 void PendingDates::Private::callback(void *logManager, void *result, PendingDates *self)
 {
     if (!TPL_IS_LOG_MANAGER(logManager)) {

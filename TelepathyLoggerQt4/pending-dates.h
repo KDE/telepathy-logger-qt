@@ -40,6 +40,8 @@ public:
     ~PendingDates();
 
     QDateList dates() const;
+    const Tp::AccountPtr account() const;
+    const Tpl::EntityPtr entity() const;
 
 private Q_SLOTS:
     virtual void start();
