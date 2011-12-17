@@ -20,7 +20,7 @@
 
 #include <TelepathyLoggerQt4/Entity>
 
-#include <TelepathyQt4/Contact>
+#include <TelepathyQt/Contact>
 #include <TelepathyLoggerQt4/utils.h>
 #include <telepathy-logger/entity.h>
 

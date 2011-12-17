@@ -25,7 +25,7 @@
 
 #include <TelepathyLoggerQt4/Models/Global>
 #include <TelepathyQt4Yell/Models/AbstractConversationModel>
-#include <TelepathyQt4/Types>
+#include <TelepathyQt/Types>
 #include <TelepathyLoggerQt4/PendingOperation>
 
 namespace Tpl {

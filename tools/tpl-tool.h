@@ -18,7 +18,7 @@
  */
 
 #include <QApplication>
-#include <TelepathyQt4/Account>
+#include <TelepathyQt/Account>
 #include <TelepathyLoggerQt4/Entity>
 #include <TelepathyLoggerQt4/PendingOperation>
 

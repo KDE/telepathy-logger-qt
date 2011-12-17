@@ -21,7 +21,7 @@
 #include <TelepathyLoggerQt4/PendingEvents>
 
 #include <QtCore/QDebug>
-#include <TelepathyQt4/Account>
+#include <TelepathyQt/Account>
 #include <TelepathyLoggerQt4/LogManager>
 #include <TelepathyLoggerQt4/CallEvent>
 #include <TelepathyLoggerQt4/Entity>
@@ -99,7 +99,7 @@ void PendingEvents::start()
 {
     mPriv->tpAccount = Utils::instance()->tpAccount(mPriv->account);
     if (!mPriv->tpAccount) {
-        setFinishedWithError(TP_QT4_ERROR_INVALID_ARGUMENT, "Invalid account");
+        setFinishedWithError(TP_QT_ERROR_INVALID_ARGUMENT, "Invalid account");
         return;
     }
 
@@ -151,12 +151,12 @@ EventPtrList PendingEvents::events() const
 void PendingEvents::Private::callback(void *logManager, void *result, PendingEvents *self)
 {
     if (!TPL_IS_LOG_MANAGER(logManager)) {
-        self->setFinishedWithError(TP_QT4_ERROR_INVALID_ARGUMENT, "Invalid log manager in callback");
+        self->setFinishedWithError(TP_QT_ERROR_INVALID_ARGUMENT, "Invalid log manager in callback");
         return;
     }
 
     if (!G_IS_ASYNC_RESULT(result)) {
-        self->setFinishedWithError(TP_QT4_ERROR_INVALID_ARGUMENT, "Invalid async result in callback");
+        self->setFinishedWithError(TP_QT_ERROR_INVALID_ARGUMENT, "Invalid async result in callback");
         return;
     }
 
@@ -171,13 +171,13 @@ void PendingEvents::Private::callback(void *logManager, void *result, PendingEve
     }
 
     if (error) {
-        self->setFinishedWithError(TP_QT4_ERROR_INVALID_ARGUMENT, error->message);
+        self->setFinishedWithError(TP_QT_ERROR_INVALID_ARGUMENT, error->message);
         g_error_free(error);
         return;
     }
 
     if (!success) {
-        self->setFinishedWithError(TP_QT4_ERROR_INVALID_ARGUMENT, "Query failed without specific error");
+        self->setFinishedWithError(TP_QT_ERROR_INVALID_ARGUMENT, "Query failed without specific error");
         return;
     }
 

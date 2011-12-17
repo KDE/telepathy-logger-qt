@@ -25,7 +25,7 @@
 #endif
 
 #include <TelepathyLoggerQt4/Event>
-#include <TelepathyQt4/Constants>
+#include <TelepathyQt/Constants>
 
 namespace Tpl
 {

@@ -22,10 +22,10 @@
 #include "TelepathyLoggerQt4/Models/_gen/logger-conversation-model.moc.hpp"
 
 #include <QtCore/QDebug>
-#include <TelepathyQt4/Account>
-#include <TelepathyQt4/Contact>
-#include <TelepathyQt4/ContactManager>
-#include <TelepathyQt4/Connection>
+#include <TelepathyQt/Account>
+#include <TelepathyQt/Contact>
+#include <TelepathyQt/ContactManager>
+#include <TelepathyQt/Connection>
 #include <TelepathyLoggerQt4/Entity>
 #include <TelepathyLoggerQt4/TextEvent>
 #include <TelepathyLoggerQt4/CallEvent>

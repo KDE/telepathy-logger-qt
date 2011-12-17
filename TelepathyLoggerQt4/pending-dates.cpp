@@ -21,7 +21,7 @@
 #include <TelepathyLoggerQt4/PendingDates>
 
 #include <QtCore/QDebug>
-#include <TelepathyQt4/Account>
+#include <TelepathyQt/Account>
 #include <TelepathyLoggerQt4/Entity>
 #include <TelepathyLoggerQt4/LogManager>
 #include <TelepathyLoggerQt4/utils.h>
@@ -66,7 +66,7 @@ void PendingDates::start()
 {
     mPriv->tpAccount = Utils::instance()->tpAccount(mPriv->account);
     if (!mPriv->tpAccount) {
-        setFinishedWithError(TP_QT4_ERROR_INVALID_ARGUMENT, "Invalid account");
+        setFinishedWithError(TP_QT_ERROR_INVALID_ARGUMENT, "Invalid account");
         return;
     }
 
@@ -123,12 +123,12 @@ const EntityPtr PendingDates::entity() const
 void PendingDates::Private::callback(void *logManager, void *result, PendingDates *self)
 {
     if (!TPL_IS_LOG_MANAGER(logManager)) {
-        self->setFinishedWithError(TP_QT4_ERROR_INVALID_ARGUMENT, "Invalid log manager in callback");
+        self->setFinishedWithError(TP_QT_ERROR_INVALID_ARGUMENT, "Invalid log manager in callback");
         return;
     }
 
     if (!G_IS_ASYNC_RESULT(result)) {
-        self->setFinishedWithError(TP_QT4_ERROR_INVALID_ARGUMENT, "Invalid async result in callback");
+        self->setFinishedWithError(TP_QT_ERROR_INVALID_ARGUMENT, "Invalid async result in callback");
         return;
     }
 
@@ -136,13 +136,13 @@ void PendingDates::Private::callback(void *logManager, void *result, PendingDate
     GError *error = NULL;
     gboolean success = tpl_log_manager_get_dates_finish(TPL_LOG_MANAGER(logManager), G_ASYNC_RESULT(result), &dates, &error);
     if (error) {
-        self->setFinishedWithError(TP_QT4_ERROR_INVALID_ARGUMENT, error->message);
+        self->setFinishedWithError(TP_QT_ERROR_INVALID_ARGUMENT, error->message);
         g_error_free(error);
         return;
     }
 
     if (!success) {
-        self->setFinishedWithError(TP_QT4_ERROR_INVALID_ARGUMENT, "Query failed without specific error");
+        self->setFinishedWithError(TP_QT_ERROR_INVALID_ARGUMENT, "Query failed without specific error");
         return;
     }
 

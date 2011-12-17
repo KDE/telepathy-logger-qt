@@ -23,7 +23,7 @@
 
 #include <TelepathyLoggerQt4/Logger>
 #include <TelepathyLoggerQt4/Types>
-#include <TelepathyQt4/PendingOperation>
+#include <TelepathyQt/PendingOperation>
 
 namespace Tpl
 {

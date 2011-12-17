@@ -24,7 +24,7 @@
 #endif
 
 #include <TelepathyLoggerQt4/Global>
-#include <TelepathyQt4/Types>
+#include <TelepathyQt/Types>
 #include <QtCore/QList>
 #include <QtCore/QDate>
 

@@ -20,7 +20,7 @@
 #define _TelepathyLoggerQt4_utils_h_HEADER_GUARD_
 
 #include <TelepathyLoggerQt4/Global>
-#include <TelepathyQt4/Types>
+#include <TelepathyQt/Types>
 #include <telepathy-glib/account-manager.h>
 #include <telepathy-glib/account.h>
 #include <QtCore/QDebug>

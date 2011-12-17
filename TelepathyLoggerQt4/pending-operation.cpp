@@ -41,7 +41,7 @@ struct TELEPATHY_LOGGER_QT4_NO_EXPORT PendingOperation::Private
 
 /**
  * \class PendingOperation
- * \headerfile TelepathyQt4/pending-operation.h <TelepathyQt4/PendingOperation>
+ * \headerfile TelepathyQt/pending-operation.h <TelepathyQt/PendingOperation>
  *
  * \brief Abstract base class for pending asynchronous operations.
  *

@@ -20,8 +20,8 @@
 
 #include <TelepathyLoggerQt4/LogManager>
 
-#include <TelepathyQt4/Account>
-#include <TelepathyQt4/AccountManager>
+#include <TelepathyQt/Account>
+#include <TelepathyQt/AccountManager>
 #include <TelepathyLoggerQt4/Entity>
 #include <TelepathyLoggerQt4/PendingDates>
 #include <TelepathyLoggerQt4/PendingEntities>
