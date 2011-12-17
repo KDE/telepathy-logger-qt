@@ -25,6 +25,9 @@ tpqt4_generate_mocs(${telepathy_logger_qt4_models_MOC_SRCS})
 add_library(telepathy-logger-qt4-models STATIC ${telepathy_logger_qt4_models_SRCS} ${telepathy_logger_qt4_models_MOC_SRCS})
 add_dependencies(telepathy-logger-qt4-models telepathy-logger-qt4)
 
+# Include directories
+include_directories(${TELEPATHY_QT4_YELL_INCLUDE_DIR})
+
 # Link
 target_link_libraries(telepathy-logger-qt4-models
     telepathy-logger-qt4
@@ -37,6 +40,7 @@ target_link_libraries(telepathy-logger-qt4-models
     #${TELEPATHY_LOGGER_LIBRARIES}
     #${TELEPATHY_LOGGER_QT4_LIBRARY}
     #${TELEPATHY_QT4_LIBRARIES}
+    #${TELEPATHY_QT4_YELL_LIBRARIES}
     #${QTGLIB_LIBRARIES}
 )
 
