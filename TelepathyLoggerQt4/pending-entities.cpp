@@ -2,6 +2,7 @@
  * This file is part of TelepathyLoggerQt4
  *
  * Copyright (C) 2011 Collabora Ltd. <http://www.collabora.co.uk/>
+ * Copyright (C) 2012 David Edmundson <kde@davidedmundson.co.uk>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -88,6 +89,12 @@ EntityPtrList PendingEntities::entities() const
 
     return mPriv->entities;
 }
+
+Tp::AccountPtr PendingEntities::account() const
+{
+    return mPriv->account;
+}
+
 
 void PendingEntities::Private::callback(void *logManager, void *result, PendingEntities *self)
 {
