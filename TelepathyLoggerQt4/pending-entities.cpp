@@ -27,7 +27,7 @@
 #include <TelepathyLoggerQt4/LogManager>
 #include <TelepathyLoggerQt4/utils.h>
 #include <TelepathyLoggerQt4/_gen/pending-entities.moc.hpp>
-#include <glib/gerror.h>
+#include <glib.h>
 #include <telepathy-logger/log-manager.h>
 
 using namespace Tpl;
