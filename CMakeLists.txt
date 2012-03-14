@@ -186,7 +186,7 @@ endmacro()
 add_subdirectory(codegen)
 add_subdirectory(TelepathyLoggerQt4)
 #add_subdirectory(tests)
-add_subdirectory(tools)
+#add_subdirectory(tools)
 
 # Generate config.h
 configure_file(${CMAKE_SOURCE_DIR}/config.h.in ${CMAKE_BINARY_DIR}/config.h)
