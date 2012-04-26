@@ -96,7 +96,7 @@ include(MacroLogFeature)
 # Find qt4 version >= 4.5
 set (QT_MIN_VERSION "4.5.0")
 find_package(Qt4 REQUIRED)
-set (TELEPATHYQT4_MIN_VERSION "0.5.14")
+set (TELEPATHYQT4_MIN_VERSION "0.9.1")
 find_package(TelepathyQt4 ${TELEPATHYQT4_MIN_VERSION} REQUIRED)
 
 #add_definitions(-DQT_NO_CAST_FROM_ASCII)
