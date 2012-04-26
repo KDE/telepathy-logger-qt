@@ -24,6 +24,7 @@
 #endif
 
 #include <TelepathyLoggerQt4/Event>
+#include <TelepathyQt/Constants>
 
 namespace Tpl
 {
@@ -37,7 +38,7 @@ class TELEPATHY_LOGGER_QT4_EXPORT CallEvent : public Event
 public:
     QTime duration() const;
     EntityPtr endActor() const;
-    CallEndReason endReason() const;
+    Tp::CallStateChangeReason endReason() const;
     QString detailedEndReason() const;
 };
 

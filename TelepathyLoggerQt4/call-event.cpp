@@ -43,9 +43,9 @@ EntityPtr CallEvent::endActor() const
     return EntityPtr::wrap(entity, true);
 }
 
-CallEndReason CallEvent::endReason() const
+Tp::CallStateChangeReason CallEvent::endReason() const
 {
-    CallEndReason er = (CallEndReason) tpl_call_event_get_end_reason(object<TplCallEvent>());
+    Tp::CallStateChangeReason er = (Tp::CallStateChangeReason) tpl_call_event_get_end_reason(object<TplCallEvent>());
     return er;
 }
 

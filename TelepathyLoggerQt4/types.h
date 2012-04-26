@@ -52,13 +52,6 @@ enum EventTypeMask
     EventTypeMaskAny = 0xffff
 };
 
-enum CallEndReason
-{
-    CallEndReasonUnknown = 0,
-    CallEndReasonUserRequested,
-    CallEndReasonNoAnswer
-};
-
 class Logger;
 class PendingDates;
 class PendingEvents;
