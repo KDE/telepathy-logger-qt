@@ -24,6 +24,7 @@
 #include <TelepathyQt/Account>
 #include <TelepathyLoggerQt4/Entity>
 #include <TelepathyLoggerQt4/LogManager>
+#include <TelepathyLoggerQt4/SearchHit>
 #include <TelepathyLoggerQt4/utils.h>
 #include <TelepathyLoggerQt4/_gen/pending-search.moc.hpp>
 #include <glib.h>
@@ -114,10 +115,7 @@ void PendingSearch::Private::callback(void *logManager, void *result, PendingSea
                   << "/" << tpl_entity_get_alias(item->target)
                   << "/" << tpl_entity_get_entity_type(item->target)
                   << "/" << tpl_entity_get_avatar_token(item->target);
-        SearchHit hit;
-        hit.account = Utils::instance()->accountPtr(item->account);
-        hit.date = QDate(item->date->year, item->date->month, item->date->day);
-        hit.target = EntityPtr::wrap(item->target, true);
+        SearchHit hit(Utils::instance()->accountPtr(item->account), EntityPtr::wrap(item->target, true), QDate(item->date->year, item->date->month, item->date->day));
         self->mPriv->hits << hit;
     }
 

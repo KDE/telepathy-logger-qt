@@ -2,6 +2,7 @@
  * This file is part of TelepathyLoggerQt4
  *
  * Copyright (C) 2011 Collabora Ltd. <http://www.collabora.co.uk/>
+ * Copyright (C) 2012 David Edmundson <kde@davidedmundson.co.uk>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -17,37 +18,29 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-#ifndef _TelepathyLoggerQt4_pending_search_h_HEADER_GUARD_
-#define _TelepathyLoggerQt4_pending_search_h_HEADER_GUARD_
+#ifndef _TelepathyLoggerQt4_search_hit_h_HEADER_GUARD_
+#define _TelepathyLoggerQt4_search_hit_h_HEADER_GUARD_
 
 #ifndef IN_TELEPATHY_LOGGER_QT4_HEADER
 #error IN_TELEPATHY_LOGGER_QT4_HEADER
 #endif
 
+#include <TelepathyQt/Types>
 #include <TelepathyLoggerQt4/PendingOperation>
 #include <TelepathyLoggerQt4/Entity>
 
 namespace Tpl
 {
 
-class TELEPATHY_LOGGER_QT4_EXPORT PendingSearch : public Tpl::PendingOperation
+class TELEPATHY_LOGGER_QT4_EXPORT SearchHit
 {
-    Q_OBJECT
-    Q_DISABLE_COPY(PendingSearch);
-
 public:
-    ~PendingSearch();
-
-    SearchHitList hits() const;
-
-private Q_SLOTS:
-    virtual void start();
+    SearchHit(const Tp::AccountPtr &account, const EntityPtr &target, const QDate &date);
+    Tp::AccountPtr account() const;
+    EntityPtr target() const;
+    QDate date() const;
 
 private:
-    friend class LogManager;
-
-    PendingSearch(const LogManagerPtr & manager, const QString &text, EventTypeMask typeMask);
-
     struct Private;
     friend struct Private;
     Private *mPriv;

@@ -49,6 +49,7 @@ set(telepathy_logger_qt4_SRCS
     pending-logger.cpp
     pending-operation.cpp
     pending-search.cpp
+    search-hit.cpp
     text-event.cpp
     utils.cpp
     init.cpp
@@ -67,6 +68,7 @@ set(telepathy_logger_qt4_HEADERS
     PendingEntities
     PendingEvents
     PendingOperation
+    SearchHit
     TextEvent
     Types
     call-event.h
@@ -81,9 +83,10 @@ set(telepathy_logger_qt4_HEADERS
     pending-events.h
     pending-operation.h
     pending-search.h
+    search-hit.h
     text-event.h
     types.h
-    utils.h)
+    )
 
 # Headers file moc will be run on
 set(telepathy_logger_qt4_MOC_SRCS

@@ -2,6 +2,7 @@
  * This file is part of TelepathyLoggerQt4
  *
  * Copyright (C) 2011 Collabora Ltd. <http://www.collabora.co.uk/>
+ * Copyright (C) 2012 David Edmundson <kde@davidedmundson.co.uk>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -17,42 +18,44 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-#ifndef _TelepathyLoggerQt4_pending_search_h_HEADER_GUARD_
-#define _TelepathyLoggerQt4_pending_search_h_HEADER_GUARD_
 
-#ifndef IN_TELEPATHY_LOGGER_QT4_HEADER
-#error IN_TELEPATHY_LOGGER_QT4_HEADER
-#endif
+#include <TelepathyLoggerQt4/SearchHit>
 
-#include <TelepathyLoggerQt4/PendingOperation>
+#include <TelepathyQt/Account>
 #include <TelepathyLoggerQt4/Entity>
+#include <QDate>
 
-namespace Tpl
+using namespace Tpl;
+
+struct TELEPATHY_LOGGER_QT4_NO_EXPORT SearchHit::Private
 {
-
-class TELEPATHY_LOGGER_QT4_EXPORT PendingSearch : public Tpl::PendingOperation
-{
-    Q_OBJECT
-    Q_DISABLE_COPY(PendingSearch);
-
-public:
-    ~PendingSearch();
-
-    SearchHitList hits() const;
-
-private Q_SLOTS:
-    virtual void start();
-
-private:
-    friend class LogManager;
-
-    PendingSearch(const LogManagerPtr & manager, const QString &text, EventTypeMask typeMask);
-
-    struct Private;
-    friend struct Private;
-    Private *mPriv;
+    Tp::AccountPtr account;
+    EntityPtr target;
+    QDate date;
 };
 
-} // Tpl
+SearchHit::SearchHit(const Tp::AccountPtr &account, const Tpl::EntityPtr &target, const QDate &date) :
+    mPriv(new Private())
+{
+    mPriv->account = account;
+    mPriv->target = target;
+    mPriv->date = date;
+}
 
-#endif
+Tp::AccountPtr SearchHit::account() const
+{
+    return mPriv->account;
+}
+
+EntityPtr SearchHit::target() const
+{
+    return mPriv->target;
+}
+
+QDate SearchHit::date() const
+{
+    return mPriv->date;
+}
+
+
+
