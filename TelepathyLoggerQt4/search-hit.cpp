@@ -27,7 +27,7 @@
 
 using namespace Tpl;
 
-struct TELEPATHY_LOGGER_QT4_NO_EXPORT SearchHit::Private
+struct TELEPATHY_LOGGER_QT4_NO_EXPORT SearchHit::Private : public QSharedData
 {
     Tp::AccountPtr account;
     EntityPtr target;
@@ -40,6 +40,21 @@ SearchHit::SearchHit(const Tp::AccountPtr &account, const Tpl::EntityPtr &target
     mPriv->account = account;
     mPriv->target = target;
     mPriv->date = date;
+}
+
+SearchHit::SearchHit(const SearchHit &other)
+    : mPriv(other.mPriv)
+{
+}
+
+SearchHit & SearchHit::operator=(const SearchHit &other)
+{
+    mPriv = other.mPriv;
+    return *this;
+}
+
+SearchHit::~SearchHit()
+{
 }
 
 Tp::AccountPtr SearchHit::account() const

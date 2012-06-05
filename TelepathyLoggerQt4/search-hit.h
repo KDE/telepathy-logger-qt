@@ -29,6 +29,8 @@
 #include <TelepathyLoggerQt4/PendingOperation>
 #include <TelepathyLoggerQt4/Entity>
 
+#include <QtCore/QSharedDataPointer>
+
 namespace Tpl
 {
 
@@ -36,14 +38,17 @@ class TELEPATHY_LOGGER_QT4_EXPORT SearchHit
 {
 public:
     SearchHit(const Tp::AccountPtr &account, const EntityPtr &target, const QDate &date);
+    SearchHit(const SearchHit &other);
+    SearchHit & operator=(const SearchHit &other);
+    ~SearchHit();
+
     Tp::AccountPtr account() const;
     EntityPtr target() const;
     QDate date() const;
 
 private:
     struct Private;
-    friend struct Private;
-    Private *mPriv;
+    QSharedDataPointer<Private> mPriv;
 };
 
 } // Tpl
