@@ -68,6 +68,7 @@ set(telepathy_logger_qt4_HEADERS
     PendingEntities
     PendingEvents
     PendingOperation
+    PendingSearch
     SearchHit
     TextEvent
     Types
