@@ -40,6 +40,7 @@ public:
     Tp::ChannelTextMessageType messageType() const;
     QString message() const;
     QString messageToken() const;
+    QDateTime editTimestamp() const;
 };
 
 } //namespace

@@ -42,3 +42,13 @@ QString TextEvent::messageToken() const
     QString str = QString::fromUtf8(s);
     return str;
 }
+
+QDateTime TextEvent::editTimestamp() const
+{
+    // FIXME See http://bugs.freedesktop.org/show_bug.cgi?id=21690
+    uint seconds = (uint) tpl_text_event_get_edit_timestamp(object<TplTextEvent>());
+    QDateTime dateTime;
+    dateTime.setTime_t(seconds);
+    return dateTime;
+}
+
