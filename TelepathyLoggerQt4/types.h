@@ -47,8 +47,9 @@ enum LogManagerError
 
 enum EventTypeMask
 {
-    //codegen: EventTypeMaskText=EVENT_MASK_TEXT,EventTypeMaskAny=EVENT_MASK_ANY
+    //codegen: EventTypeMaskText=EVENT_MASK_TEXT,EventTypeMaskCall=EVENT_MASK_CALL,EventTypeMaskAny=EVENT_MASK_ANY
     EventTypeMaskText = 1 << 0,
+    EventTypeMaskCall = 1 << 1,
     EventTypeMaskAny = 0xffff
 };
 
