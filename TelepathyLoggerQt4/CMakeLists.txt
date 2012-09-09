@@ -5,7 +5,6 @@ set(TelepathyLoggerQt4_CODEGEN_HEADERS
     entity.h
     event.h
     log-manager.h
-    logger.h
     text-event.h
     types.h)
 
@@ -19,7 +18,6 @@ set(TelepathyLoggerQt4_CODEGEN_INCLUDES
     -ITelepathyLoggerQt4/Entity
     -ITelepathyLoggerQt4/Event
     -ITelepathyLoggerQt4/LogManager
-    -ITelepathyLoggerQt4/Logger
     -ITelepathyLoggerQt4/TextEvent
     -ITelepathyLoggerQt4/Types
     -IQGlib/Quark)
@@ -42,11 +40,10 @@ set(telepathy_logger_qt4_SRCS
     entity.cpp
     event.cpp
     log-manager.cpp
-    logger.cpp
     pending-dates.cpp
     pending-entities.cpp
     pending-events.cpp
-    pending-logger.cpp
+    pending-clear.cpp
     pending-operation.cpp
     pending-search.cpp
     search-hit.cpp
@@ -62,7 +59,6 @@ set(telepathy_logger_qt4_HEADERS
     Event
     Global
     Init
-    Logger
     LogManager
     PendingDates
     PendingEntities
@@ -78,7 +74,6 @@ set(telepathy_logger_qt4_HEADERS
     global.h
     init.h
     log-manager.h
-    logger.h
     pending-dates.h
     pending-entities.h
     pending-events.h
@@ -94,10 +89,9 @@ set(telepathy_logger_qt4_MOC_SRCS
     pending-dates.h
     pending-entities.h
     pending-events.h
-    pending-logger.h
+    pending-clear.h
     pending-operation.h
-    pending-search.h
-    logger.h)
+    pending-search.h)
 
 # Generated headers which will be installed and exported
 set(telepathy_logger_qt4_gen_HEADERS
@@ -155,7 +149,7 @@ endforeach(spec ${SPECS})
 #SET(telepathy_logger_qt4_generated_specs_mocs types.h)
 
 # Use the client generator for generating headers out of specs
-tpqt4_client_generator(${gen_stable_spec_xml} logger clientlogger TelepathyLoggerQt4/logger.h TelepathyLoggerQt4/Logger Tpl Tpl IN_TELEPATHY_LOGGER_QT4_HEADER TELEPATHY_LOGGER_QT4_EXPORT DEPENDS logger-spec-xincludator )
+tpqt4_client_generator(${gen_stable_spec_xml} logger clientlogger TelepathyLoggerQt4/log-manager.h TelepathyLoggerQt4/LogManager Tpl Tpl IN_TELEPATHY_LOGGER_QT4_HEADER TELEPATHY_LOGGER_QT4_EXPORT DEPENDS logger-spec-xincludator )
 
 # Create the library
 add_library(telepathy-logger-qt4 ${telepathy_logger_qt4_SRCS})

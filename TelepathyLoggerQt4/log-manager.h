@@ -25,6 +25,7 @@
 #endif
 
 #include <QGlib/Object>
+#include <TelepathyLoggerQt4/_gen/cli-logger.h>
 #include <TelepathyLoggerQt4/Types>
 
 namespace Tpl
@@ -53,6 +54,10 @@ public:
         void *filterFunctionUserData);
     PendingEntities *queryEntities(const Tp::AccountPtr & account);
     PendingSearch *search(const QString &text, EventTypeMask typeMask);
+
+    PendingOperation *clearHistory();
+    PendingOperation *clearAccountHistory(const Tp::AccountPtr &account);
+    PendingOperation *clearEntityHistory(const Tp::AccountPtr &account, const Tpl::EntityPtr &entity);
 };
 
 } //namespace

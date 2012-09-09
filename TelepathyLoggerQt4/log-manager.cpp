@@ -27,9 +27,14 @@
 #include <TelepathyLoggerQt4/PendingEntities>
 #include <TelepathyLoggerQt4/PendingEvents>
 #include <TelepathyLoggerQt4/PendingSearch>
+#include <TelepathyLoggerQt4/pending-clear.h>
 #include <TelepathyLoggerQt4/utils.h>
+
 #include <telepathy-logger/log-manager.h>
 #include <telepathy-glib/account.h>
+
+#include <_gen/cli-logger-body.hpp>
+#include <_gen/cli-logger.moc.hpp>
 
 using namespace Tpl;
 
@@ -84,4 +89,37 @@ PendingEntities *LogManager::queryEntities(const Tp::AccountPtr & account)
 PendingSearch *LogManager::search(const QString &text, EventTypeMask typeMask)
 {
     return new PendingSearch(LogManagerPtr(this), text, typeMask);
+}
+
+PendingOperation *LogManager::clearHistory()
+{
+    PendingClear *operation = new PendingClear();
+
+    operation->clearLog();
+
+    return operation;
+}
+
+PendingOperation *LogManager::clearAccountHistory(const Tp::AccountPtr &account)
+{
+    PendingClear *operation = new PendingClear();
+
+    operation->clearAccount(account);
+
+    return operation;
+}
+
+PendingOperation *LogManager::clearEntityHistory(const Tp::AccountPtr &account, const EntityPtr &entity)
+{
+    PendingClear *operation = new PendingClear();
+
+    if (entity->entityType() == EntityTypeContact) {
+        operation->clearContact(account, entity->identifier());
+    } else if (entity->entityType() == EntityTypeRoom) {
+        operation->clearRoom(account, entity->identifier());
+    } else {
+        return 0;
+    }
+
+    return operation;
 }

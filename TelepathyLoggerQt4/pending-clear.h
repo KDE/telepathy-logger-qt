@@ -18,42 +18,40 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef _TelepathyLoggerQt4_logger_h_HEADER_GUARD_
-#define _TelepathyLoggerQt4_logger_h_HEADER_GUARD_
+#ifndef _TelepathyLoggerQt4_pending_log_manager_h_HEADER_GUARD_
+#define _TelepathyLoggerQt4_pending_log_manager_h_HEADER_GUARD_
 
-#ifndef IN_TELEPATHY_LOGGER_QT4_HEADER
-#error IN_TELEPATHY_LOGGER_QT4_HEADER
-#endif
-
-#include <TelepathyLoggerQt4/_gen/cli-logger.h>
-#include <TelepathyLoggerQt4/Types>
-#include <TelepathyQt/Account>
-#include <TelepathyQt/PendingOperation>
+#include <TelepathyLoggerQt4/LogManager>
+#include <TelepathyLoggerQt4/PendingOperation>
 
 namespace Tpl
 {
 
 class Logger;
 
-class TELEPATHY_LOGGER_QT4_EXPORT Logger : public Tp::StatelessDBusProxy
+class TELEPATHY_LOGGER_QT4_NO_EXPORT PendingClear : public Tpl::PendingOperation
 {
     Q_OBJECT
 
 public:
-    static LoggerPtr create();
+    PendingClear();
+    ~PendingClear() {};
 
-    ~Logger();
+    void clearLog();
+    void clearAccount(const Tp::AccountPtr &account);
+    void clearContact(const Tp::AccountPtr &account, const QString &objectId);
+    void clearRoom(const Tp::AccountPtr &account, const QString &objectId);
 
-    Tp::PendingOperation *clearLog() const;
-    Tp::PendingOperation *clearAccount(const Tp::AccountPtr &account) const;
-    Tp::PendingOperation *clearContact(const Tp::AccountPtr &account, const QString &objectId) const;
-    Tp::PendingOperation *clearRoom(const Tp::AccountPtr &account, const QString &objectId) const;
+protected:
+    void setError(const QString &errorName, const QString &errorMessage);
+    void finish();
+
+private Q_SLOTS:
+    void onLogCleared(QDBusPendingCallWatcher *watcher);
 
 private:
-    Logger();
-    struct Private;
-    friend struct Private;
-    Private *mPriv;
+    QString errorName, errorMessage;
+    Tpl::LoggerInterface *mInterface;
 };
 
 }

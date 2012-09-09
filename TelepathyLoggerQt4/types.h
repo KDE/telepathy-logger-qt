@@ -57,6 +57,7 @@ class Logger;
 class PendingDates;
 class PendingEvents;
 class PendingEntities;
+class PendingOperation;
 class PendingSearch;
 struct SearchHit;
 

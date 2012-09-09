@@ -17,18 +17,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <TelepathyLoggerQt4/pending-logger.h>
-#include <TelepathyLoggerQt4/_gen/pending-logger.moc.hpp>
+#include <TelepathyLoggerQt4/pending-clear.h>
+#include <TelepathyLoggerQt4/_gen/pending-clear.moc.hpp>
+#include <QGlib/refpointer.h>
+
+#include <TelepathyQt/Account>
+
+#define TPL_DBUS_SRV_WELL_KNOWN_BUS_NAME "org.freedesktop.Telepathy.Logger"
+#define TPL_DBUS_SRV_OBJECT_PATH         "/org/freedesktop/Telepathy/Logger"
 
 namespace Tpl {
 
-PendingLogger::PendingLogger(const Tp::SharedPtr<Logger> &logger, Tpl::LoggerInterface *interface)
-    : Tp::PendingOperation(logger),
-      mInterface(interface)
+PendingClear::PendingClear()
+    : Tpl::PendingOperation()
 {
+    mInterface = new Tpl::LoggerInterface(QDBusConnection::sessionBus(),
+        TPL_DBUS_SRV_WELL_KNOWN_BUS_NAME,
+        TPL_DBUS_SRV_OBJECT_PATH);
 }
 
-void PendingLogger::setError(const QString &errorName, const QString &errorMessage)
+void PendingClear::setError(const QString &errorName, const QString &errorMessage)
 {
     Q_ASSERT(this->errorName.isEmpty());
     Q_ASSERT(this->errorMessage.isEmpty());
@@ -39,7 +47,7 @@ void PendingLogger::setError(const QString &errorName, const QString &errorMessa
     this->errorMessage = errorMessage;
 }
 
-void PendingLogger::finish()
+void PendingClear::finish()
 {
     if (errorName.isEmpty()) {
         setFinished();
@@ -48,7 +56,7 @@ void PendingLogger::finish()
     }
 }
 
-void PendingLogger::clearLog()
+void PendingClear::clearLog()
 {
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(
                 mInterface->Clear());
@@ -57,7 +65,7 @@ void PendingLogger::clearLog()
             SLOT(onLogCleared(QDBusPendingCallWatcher*)));
 }
 
-void PendingLogger::clearAccount(const Tp::AccountPtr &account)
+void PendingClear::clearAccount(const Tp::AccountPtr &account)
 {
     QDBusObjectPath path = QDBusObjectPath(account->objectPath());
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(
@@ -68,7 +76,7 @@ void PendingLogger::clearAccount(const Tp::AccountPtr &account)
             SLOT(onLogCleared(QDBusPendingCallWatcher*)));
 }
 
-void PendingLogger::clearContact(const Tp::AccountPtr &account, const QString &objectId)
+void PendingClear::clearContact(const Tp::AccountPtr &account, const QString &objectId)
 {
     QDBusObjectPath path = QDBusObjectPath(account->objectPath());
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(
@@ -79,7 +87,7 @@ void PendingLogger::clearContact(const Tp::AccountPtr &account, const QString &o
             SLOT(onLogCleared(QDBusPendingCallWatcher*)));
 }
 
-void PendingLogger::clearRoom(const Tp::AccountPtr &account, const QString &objectId)
+void PendingClear::clearRoom(const Tp::AccountPtr &account, const QString &objectId)
 {
     QDBusObjectPath path = QDBusObjectPath(account->objectPath());
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(
@@ -90,7 +98,7 @@ void PendingLogger::clearRoom(const Tp::AccountPtr &account, const QString &obje
             SLOT(onLogCleared(QDBusPendingCallWatcher*)));
 }
 
-void PendingLogger::onLogCleared(QDBusPendingCallWatcher *watcher)
+void PendingClear::onLogCleared(QDBusPendingCallWatcher *watcher)
 {
     QDBusPendingReply<> reply = *watcher;
 
