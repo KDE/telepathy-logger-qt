@@ -22,7 +22,7 @@ import xml.dom.minidom
 from getopt import gnu_getopt
 
 from libtpcodegen import NS_TP, get_descendant_text, get_by_path
-from libqt4codegen import binding_from_usage, binding_from_decl, extract_arg_or_member_info, format_docstring, gather_externals, gather_custom_lists, get_qt4_name, get_headerfile_cmd
+from libqtcodegen import binding_from_usage, binding_from_decl, extract_arg_or_member_info, format_docstring, gather_externals, gather_custom_lists, get_qt_name, get_headerfile_cmd, RefRegistry
 
 class BrokenSpecException(Exception):
     pass
@@ -128,6 +128,7 @@ class Generator(object):
         self.required_arrays = []
         self.to_declare = []
         self.depinfos = {}
+        self.refs = RefRegistry(self.spec)
 
     def __call__(self):
         # Emit comment header
@@ -228,7 +229,7 @@ namespace %s
 """ % self.namespace)
 
         self.impl("""\
-TELEPATHY_QT4_NO_EXPORT void _registerTypes()
+TP_QT_NO_EXPORT void _registerTypes()
 {
     static bool registered = false;
     if (registered)
@@ -237,7 +238,7 @@ TELEPATHY_QT4_NO_EXPORT void _registerTypes()
 
 """)
 
-        # Emit Qt4 metatype declarations
+        # Emit Qt metatype declarations
 
         self.to_declare.sort()
 
@@ -295,7 +296,7 @@ TELEPATHY_QT4_NO_EXPORT void _registerTypes()
 %s\
  *
  * Generic list type with %s elements. Convertible with
- * %s, but needed to have a discrete type in the Qt4 type system.
+ * %s, but needed to have a discrete type in the Qt type system.
  */
 """ % (val, get_headerfile_cmd(self.realinclude, self.prettyinclude), array_of, real))
             self.decl(self.faketype(val, real))
@@ -374,7 +375,7 @@ TELEPATHY_QT4_NO_EXPORT void _registerTypes()
             self.required_custom.remove(type)
 
     def output_by_depinfo(self, depinfo):
-        names, docstrings, bindings = extract_arg_or_member_info(get_by_path(depinfo.el, 'member'), self.custom_lists, self.externals, None, '     * ', ('    /**', '     */'))
+        names, docstrings, bindings = extract_arg_or_member_info(get_by_path(depinfo.el, 'member'), self.custom_lists, self.externals, None, self.refs, '     * ', ('    /**', '     */'))
         members = len(names)
 
         if depinfo.el.localName == 'struct':
@@ -395,7 +396,7 @@ struct %(visibility)s %(name)s
 """ % {
         'name' : depinfo.binding.val,
         'headercmd': get_headerfile_cmd(self.realinclude, self.prettyinclude),
-        'docstring' : format_docstring(depinfo.el),
+        'docstring' : format_docstring(depinfo.el, self.refs),
         'visibility': self.visibility,
         })
 
@@ -481,10 +482,10 @@ struct %(visibility)s %(name)s
 %s\
  *
  * Mapping type generated from the specification. Convertible with
- * %s, but needed to have a discrete type in the Qt4 type system.
+ * %s, but needed to have a discrete type in the Qt type system.
 %s\
  */
-""" % (depinfo.binding.val, get_headerfile_cmd(self.realinclude, self.prettyinclude), realtype, format_docstring(depinfo.el)))
+""" % (depinfo.binding.val, get_headerfile_cmd(self.realinclude, self.prettyinclude), realtype, format_docstring(depinfo.el, self.refs)))
             self.decl(self.faketype(depinfo.binding.val, realtype))
         else:
             raise WTF(depinfo.el.localName)
