@@ -89,6 +89,7 @@ include(TpQtMacros)
 
 include(Doxygen)
 include(MacroLogFeature)
+include(MacroWriteBasicCMakeVersionFile)
 
 # external dependencies
 
