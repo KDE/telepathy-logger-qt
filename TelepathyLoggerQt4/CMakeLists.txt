@@ -113,21 +113,23 @@ endif(MSVC)
 # Generate the spec files
 set(gen_stable_spec_xml ${CMAKE_CURRENT_BINARY_DIR}/_gen/stable-spec.xml)
 
-tpqt4_xincludator(stable-ifaces-includator ${CMAKE_CURRENT_SOURCE_DIR}/stable-interfaces.xml ${gen_stable_spec_xml})
+tpqt_xincludator(stable-ifaces-includator ${CMAKE_CURRENT_SOURCE_DIR}/stable-interfaces.xml ${gen_stable_spec_xml})
 
-tpqt4_constants_gen(stable-constants ${gen_stable_spec_xml} ${CMAKE_CURRENT_BINARY_DIR}/_gen/constants.h
-                    --namespace=Tpl
-                    --define-prefix=TP_LOGGER_QT4_
-                    --must-define=IN_TELEPATHY_LOGGER_QT4_HEADER
-                    DEPENDS stable-ifaces-includator)
+add_custom_target(all-generated-sources)
 
-tpqt4_types_gen(stable-typesgen ${gen_stable_spec_xml}
-                ${CMAKE_CURRENT_BINARY_DIR}/_gen/types.h ${CMAKE_CURRENT_BINARY_DIR}/_gen/types-body.hpp
-                Tpl TelepathyLoggerQt4/types.h TelepathyLoggerQt4/Types
-                --must-define=IN_TELEPATHY_LOGGER_QT4_HEADER
-                --visibility=TELEPATHY_LOGGER_QT4_EXPORT
-                --extraincludes=${GLOBAL_INCLUDE}
-                DEPENDS stable-constants)
+tpqt_constants_gen(stable-constants ${gen_stable_spec_xml} ${CMAKE_CURRENT_BINARY_DIR}/_gen/constants.h
+                   --namespace=Tpl
+                   --define-prefix=TP_LOGGER_QT4_
+                   --must-define=IN_TELEPATHY_LOGGER_QT4_HEADER
+                   DEPENDS stable-ifaces-includator)
+
+tpqt_types_gen(stable-typesgen ${gen_stable_spec_xml}
+               ${CMAKE_CURRENT_BINARY_DIR}/_gen/types.h ${CMAKE_CURRENT_BINARY_DIR}/_gen/types-body.hpp
+               Tpl TelepathyLoggerQt4/types.h TelepathyLoggerQt4/Types
+               --must-define=IN_TELEPATHY_LOGGER_QT4_HEADER
+               --visibility=TELEPATHY_LOGGER_QT4_EXPORT
+               --extraincludes=${GLOBAL_INCLUDE}
+               DEPENDS stable-constants)
 
 # Add the generated types to the library's sources
 list(APPEND telepathy_logger_qt4_SRCS ${CMAKE_CURRENT_BINARY_DIR}/_gen/types.h)
@@ -137,7 +139,7 @@ list(APPEND telepathy_logger_qt4_SRCS ${CMAKE_CURRENT_BINARY_DIR}/_gen/types-bod
 set(SPECS
     logger)
 foreach(spec ${SPECS})
-    tpqt4_xincludator(${spec}-spec-xincludator ${CMAKE_CURRENT_SOURCE_DIR}/${spec}.xml ${CMAKE_CURRENT_BINARY_DIR}/_gen/spec-${spec}.xml DEPENDS stable-typesgen)
+    tpqt_xincludator(${spec}-spec-xincludator ${CMAKE_CURRENT_SOURCE_DIR}/${spec}.xml ${CMAKE_CURRENT_BINARY_DIR}/_gen/spec-${spec}.xml DEPENDS stable-typesgen)
     set(NEW_FILES
         ${CMAKE_CURRENT_BINARY_DIR}/_gen/cli-${spec}-body.hpp
         ${CMAKE_CURRENT_BINARY_DIR}/_gen/cli-${spec}.moc.hpp)
@@ -149,7 +151,13 @@ endforeach(spec ${SPECS})
 #SET(telepathy_logger_qt4_generated_specs_mocs types.h)
 
 # Use the client generator for generating headers out of specs
-tpqt4_client_generator(${gen_stable_spec_xml} logger clientlogger TelepathyLoggerQt4/log-manager.h TelepathyLoggerQt4/LogManager Tpl Tpl IN_TELEPATHY_LOGGER_QT4_HEADER TELEPATHY_LOGGER_QT4_EXPORT DEPENDS logger-spec-xincludator )
+tpqt_client_generator(logger clientlogger TelepathyLoggerQt4/LogManager Tpl
+                      --typesnamespace=Tpl
+                      --realinclude=TelepathyLoggerQt4/log-manager.h
+                      --prettyinclude=TelepathyLoggerQt4/LogManager
+                      --must-define=IN_TELEPATHY_LOGGER_QT4_HEADER
+                      --visibility=TELEPATHY_LOGGER_QT4_EXPORT
+                      DEPENDS logger-spec-xincludator )
 
 # Create the library
 add_library(telepathy-logger-qt4 ${telepathy_logger_qt4_SRCS})
@@ -158,8 +166,8 @@ add_library(telepathy-logger-qt4 ${telepathy_logger_qt4_SRCS})
 foreach(moc_src ${telepathy_logger_qt4_MOC_SRCS})
     set(generated_file _gen/${moc_src})
     string(REPLACE ".h" ".moc.hpp" generated_file ${generated_file})
-    tpqt4_generate_moc_i_target_deps(${CMAKE_CURRENT_SOURCE_DIR}/${moc_src} ${CMAKE_CURRENT_BINARY_DIR}/${generated_file}
-                                     ${telepathy_logger_qt4_generated_specs_mocs})
+    tpqt_generate_moc_i_target_deps(${CMAKE_CURRENT_SOURCE_DIR}/${moc_src} ${CMAKE_CURRENT_BINARY_DIR}/${generated_file}
+                                    ${telepathy_logger_qt4_generated_specs_mocs})
     list(APPEND telepathy_logger_qt4_SRCS ${CMAKE_CURRENT_BINARY_DIR}/${generated_file})
     string(REPLACE ".h" ".moc.hpp" moc_src ${moc_src})
     add_dependencies(telepathy-logger-qt4 "moc-${moc_src}")
