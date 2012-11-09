@@ -85,17 +85,18 @@ if (CXX_DEPRECATED_DECLARATIONS)
 endif (CXX_DEPRECATED_DECLARATIONS)
 
 # This file contains all macros used in the buildsystem
-include(TpQt4Macros)
+include(TpQtMacros)
 
 include(Doxygen)
 include(MacroLogFeature)
+include(MacroWriteBasicCMakeVersionFile)
 
 # external dependencies
 
 # Required dependencies
 # Find qt4 version >= 4.5
 set (QT_MIN_VERSION "4.5.0")
-find_package(Qt4 REQUIRED)
+find_package(Qt REQUIRED)
 set (TELEPATHYQT4_MIN_VERSION "0.9.1")
 find_package(TelepathyQt4 ${TELEPATHYQT4_MIN_VERSION} REQUIRED)
 
