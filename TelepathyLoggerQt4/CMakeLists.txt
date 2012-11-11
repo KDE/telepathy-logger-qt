@@ -160,7 +160,7 @@ tpqt_client_generator(logger clientlogger TelepathyLoggerQt4/LogManager Tpl
                       DEPENDS logger-spec-xincludator )
 
 # Create the library
-add_library(telepathy-logger-qt4 SHARED ${telepathy_logger_qt4_SRCS})
+add_library(telepathy-logger-qt4 ${telepathy_logger_qt4_SRCS})
 
 # generate client moc files
 foreach(moc_src ${telepathy_logger_qt4_MOC_SRCS})
