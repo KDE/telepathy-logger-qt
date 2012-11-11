@@ -158,7 +158,7 @@ endforeach(spec ${SPECS})
 tpqt4_client_generator(${gen_stable_spec_xml} logger clientlogger TelepathyLoggerQt4/logger.h TelepathyLoggerQt4/Logger Tpl Tpl IN_TELEPATHY_LOGGER_QT4_HEADER TELEPATHY_LOGGER_QT4_EXPORT DEPENDS logger-spec-xincludator )
 
 # Create the library
-add_library(telepathy-logger-qt4 SHARED ${telepathy_logger_qt4_SRCS})
+add_library(telepathy-logger-qt4 ${telepathy_logger_qt4_SRCS})
 
 # generate client moc files
 foreach(moc_src ${telepathy_logger_qt4_MOC_SRCS})
