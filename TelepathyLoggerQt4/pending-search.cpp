@@ -115,7 +115,11 @@ void PendingSearch::Private::callback(void *logManager, void *result, PendingSea
                   << "/" << tpl_entity_get_alias(item->target)
                   << "/" << tpl_entity_get_entity_type(item->target)
                   << "/" << tpl_entity_get_avatar_token(item->target);
-        SearchHit hit(Utils::instance()->accountPtr(item->account), EntityPtr::wrap(item->target, true), QDate(item->date->year, item->date->month, item->date->day));
+	QDate date;
+	if (item->date) {
+	    date.setDate(item->date->year, item->date->month, item->date->day);
+	}
+        SearchHit hit(Utils::instance()->accountPtr(item->account), EntityPtr::wrap(item->target, true), date);
         self->mPriv->hits << hit;
     }
 
