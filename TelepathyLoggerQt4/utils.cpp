@@ -28,6 +28,7 @@
 #include <telepathy-glib/contact.h>
 #include <telepathy-glib/dbus.h>
 #include <telepathy-glib/proxy.h>
+#include <telepathy-glib/simple-client-factory.h>
 
 using namespace Tpl;
 
@@ -110,7 +111,18 @@ TpAccount *Utils::tpAccount(const Tp::AccountPtr & accountPtr)
         return 0;
     }
 
-    TpAccount * account = tp_account_manager_ensure_account(tpAccountManager(), objectPath.toUtf8());
+    GError *error = NULL;
+    TpAccount * account = tp_simple_client_factory_ensure_account(tp_proxy_get_factory(tpAccountManager()),
+                                                                  objectPath.toUtf8(),
+                                                                  NULL,
+                                                                  &error);
+
+    if (account == NULL) {
+        debugfn() << "failed to create account:" << error->message;
+        g_clear_error(&error);
+        return NULL;
+    }
+
     debugfn() << "account=" << account;
     return account;
 }
