@@ -148,7 +148,7 @@ find_package(TelepathyLogger REQUIRED)
 #find_program(GLIB_GENMARSHAL glib-genmarshal)
 
 # Find telepathy-glib
-set(TELEPATHY_GLIB_MIN_VERSION 0.13.0)
+set(TELEPATHY_GLIB_MIN_VERSION 0.16.0)
 find_package(TelepathyGlib REQUIRED)
 
 # Activate debug symbols generation
