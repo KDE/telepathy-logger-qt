@@ -70,7 +70,7 @@ void PendingDates::start()
     }
 
     GQuark features[] = { TP_ACCOUNT_FEATURE_CORE, 0 };
-    tp_account_prepare_async(mPriv->tpAccount, features, (GAsyncReadyCallback) Private::onAccountPrepared, this);
+    tp_proxy_prepare_async(mPriv->tpAccount, features, (GAsyncReadyCallback) Private::onAccountPrepared, this);
 }
 
 void PendingDates::Private::onAccountPrepared(void *logManager, void *result, PendingDates *self)
