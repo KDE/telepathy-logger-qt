@@ -79,11 +79,6 @@ endif(NOT CMAKE_BUILD_TYPE)
 # This file contains all the needed initialization macros
 include(TelepathyDefaults)
 
-# TelepathyLoggerQt4 specific defines needed to trigger deprecation warnings
-if (CXX_DEPRECATED_DECLARATIONS)
-    set(DEPRECATED_DECLARATIONS_FLAGS "${DEPRECATED_DECLARATIONS_FLAGS} -DTELEPATHY_LOGGER_QT4_DEPRECATED_WARNINGS")
-endif (CXX_DEPRECATED_DECLARATIONS)
-
 # This file contains all macros used in the buildsystem
 include(TpQt4Macros)
 
