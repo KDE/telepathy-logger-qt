@@ -52,3 +52,22 @@ QDateTime TextEvent::editTimestamp() const
     return dateTime;
 }
 
+QString TextEvent::supersedesToken() const
+{
+    const gchar *s = tpl_text_event_get_supersedes_token(object<TplTextEvent>());
+    QString str = QString::fromUtf8(s);
+    return str;
+}
+
+
+QList< TextEventPtr > TextEvent::supersedes() const
+{
+    GList *tplEvents = tpl_text_event_get_supersedes(object<TplTextEvent>());
+    GList *iter;
+    QList<TextEventPtr> events;
+    for (iter = tplEvents; iter; iter = g_list_next(iter)) {
+        events << TextEventPtr::wrap((TplTextEvent*) iter->data, true);
+    }
+
+    return events;
+}

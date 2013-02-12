@@ -39,8 +39,8 @@ endif(POLICY CMP0011)
 #   make the release, tag it
 #   set nano_version to 1
 set(TP_LOGGER_QT4_MAJOR_VERSION 0)
-set(TP_LOGGER_QT4_MINOR_VERSION 5)
-set(TP_LOGGER_QT4_MICRO_VERSION 60)
+set(TP_LOGGER_QT4_MINOR_VERSION 7)
+set(TP_LOGGER_QT4_MICRO_VERSION 95)
 set(TP_LOGGER_QT4_NANO_VERSION  0)
 
 # This value contains the library's SOVERSION. This value is to be increased everytime an API/ABI break
@@ -143,7 +143,7 @@ find_package(DBus REQUIRED)
 find_package(DBusGLib REQUIRED)
 find_package(LibXml2 REQUIRED)
 find_package(QtGLib REQUIRED)
-find_package(TelepathyLogger REQUIRED)
+find_package(TelepathyLogger 0.8.0 REQUIRED)
 
 #find_program(GLIB_GENMARSHAL glib-genmarshal)
 

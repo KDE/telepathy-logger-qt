@@ -41,6 +41,8 @@ public:
     QString message() const;
     QString messageToken() const;
     QDateTime editTimestamp() const;
+    QString supersedesToken() const;
+    QList<TextEventPtr> supersedes() const;
 };
 
 } //namespace

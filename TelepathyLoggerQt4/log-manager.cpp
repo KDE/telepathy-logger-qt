@@ -23,6 +23,7 @@
 #include <TelepathyQt/Account>
 #include <TelepathyQt/AccountManager>
 #include <TelepathyLoggerQt4/Entity>
+#include <TelepathyLoggerQt4/LogWalker>
 #include <TelepathyLoggerQt4/PendingDates>
 #include <TelepathyLoggerQt4/PendingEntities>
 #include <TelepathyLoggerQt4/PendingEvents>
@@ -122,4 +123,21 @@ PendingOperation *LogManager::clearEntityHistory(const Tp::AccountPtr &account, 
     }
 
     return operation;
+}
+
+LogWalkerPtr LogManager::queryWalkFilteredEvents(const Tp::AccountPtr& account,
+        const EntityPtr& entity, EventTypeMask typeMask, LogEventFilter filterFunction,
+        void* filterFunctionUserData)
+{
+    TpAccount *tpAccount = Utils::instance()->tpAccount(account);
+    if (!tpAccount) {
+        qWarning() << "Invalid account";
+        return LogWalkerPtr();
+    }
+
+    TplLogWalker *tpWalker = tpl_log_manager_walk_filtered_events(
+                                LogManagerPtr(this), tpAccount, entity,
+                                (gint) typeMask, (TplLogEventFilter) filterFunction,
+                                filterFunctionUserData);
+    return LogWalkerPtr::wrap(tpWalker, false);
 }

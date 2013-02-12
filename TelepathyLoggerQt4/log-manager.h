@@ -3,6 +3,7 @@
  *
  * Copyright (C) 2011 Stefano Sanfilippo <stefano.k.sanfilippo@gmail.com>
  * Copyright (C) 2011 Collabora Ltd. <http://www.collabora.co.uk/>
+ * Copyright (C) 2013 Dan Vrátil <dvratil@redhat.com>
  *
  * This library is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published
@@ -58,6 +59,10 @@ public:
     PendingOperation *clearHistory();
     PendingOperation *clearAccountHistory(const Tp::AccountPtr &account);
     PendingOperation *clearEntityHistory(const Tp::AccountPtr &account, const Tpl::EntityPtr &entity);
+
+    Tpl::LogWalkerPtr queryWalkFilteredEvents(const Tp::AccountPtr &account,
+        const Tpl::EntityPtr &entity, EventTypeMask typeMask, LogEventFilter filterFunction,
+        void *filterFunctionUserData);
 };
 
 } //namespace

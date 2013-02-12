@@ -54,6 +54,7 @@ enum EventTypeMask
 };
 
 class Logger;
+class LogWalker;
 class PendingDates;
 class PendingEvents;
 class PendingEntities;

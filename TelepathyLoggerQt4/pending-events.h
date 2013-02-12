@@ -46,12 +46,14 @@ private Q_SLOTS:
 
 private:
     friend class LogManager;
+    friend class LogWalker;
 
     PendingEvents(const LogManagerPtr & manager, const Tp::AccountPtr & account,
             const EntityPtr & entity, EventTypeMask typeMask, const QDate &date);
     PendingEvents(const LogManagerPtr & manager, const Tp::AccountPtr & account,
             const EntityPtr & entity, EventTypeMask typeMask, uint numEvents,
             LogEventFilter filterFunction, void *filterFunctionUserData);
+    PendingEvents(const LogWalkerPtr & logWalker, uint numEvents);
 
     struct Private;
     friend struct Private;

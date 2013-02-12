@@ -23,6 +23,7 @@
 #include <QtCore/QDebug>
 #include <TelepathyQt/Account>
 #include <TelepathyLoggerQt4/LogManager>
+#include <TelepathyLoggerQt4/LogWalker>
 #include <TelepathyLoggerQt4/CallEvent>
 #include <TelepathyLoggerQt4/Entity>
 #include <TelepathyLoggerQt4/TextEvent>
@@ -39,6 +40,7 @@ using namespace Tpl;
 struct TELEPATHY_LOGGER_QT4_NO_EXPORT PendingEvents::Private
 {
     LogManagerPtr manager;
+    LogWalkerPtr logWalker;
     Tp::AccountPtr account;
     TpAccount *tpAccount;
     EntityPtr entity;
@@ -53,8 +55,9 @@ struct TELEPATHY_LOGGER_QT4_NO_EXPORT PendingEvents::Private
     EventPtrList events;
 
     static void onAccountPrepared(void *logManager, void *result, PendingEvents *self);
-    static void callback(void *logManager, void *result, PendingEvents *self);
+    static void callback(void *caller, void *result, PendingEvents *self);
     static gboolean eventFilterMethod(TplEvent *event, gpointer *user_data);
+    static void storeAndFreeEvent(TplEvent *event, PendingEvents *self);
 };
 
 PendingEvents::PendingEvents(const LogManagerPtr & manager, const Tp::AccountPtr & account,
@@ -89,6 +92,16 @@ PendingEvents::PendingEvents(const LogManagerPtr & manager, const Tp::AccountPtr
     mPriv->filterFunctionUserData = filterFunctionUserData;
 }
 
+PendingEvents::PendingEvents(const LogWalkerPtr& logWalker, uint numEvents)
+{
+    mPriv->logWalker = logWalker;
+    mPriv->numEvents = numEvents;
+    mPriv->typeMask = Tpl::EventTypeMaskAny;
+    mPriv->filtered = false;
+    mPriv->filterFunction = 0;
+    mPriv->filterFunctionUserData = 0;
+}
+
 PendingEvents::~PendingEvents()
 {
     delete mPriv;
@@ -96,14 +109,18 @@ PendingEvents::~PendingEvents()
 
 void PendingEvents::start()
 {
-    mPriv->tpAccount = Utils::instance()->tpAccount(mPriv->account);
-    if (!mPriv->tpAccount) {
-        setFinishedWithError(TP_QT_ERROR_INVALID_ARGUMENT, "Invalid account");
-        return;
-    }
+    if (mPriv->account) {
+        mPriv->tpAccount = Utils::instance()->tpAccount(mPriv->account);
+        if (!mPriv->tpAccount) {
+            setFinishedWithError(TP_QT_ERROR_INVALID_ARGUMENT, "Invalid account");
+            return;
+        }
 
-    GQuark features[] = { TP_ACCOUNT_FEATURE_CORE, 0 };
-    tp_proxy_prepare_async(mPriv->tpAccount, features, (GAsyncReadyCallback) Private::onAccountPrepared, this);
+        GQuark features[] = { TP_ACCOUNT_FEATURE_CORE, 0 };
+        tp_proxy_prepare_async(mPriv->tpAccount, features, (GAsyncReadyCallback) Private::onAccountPrepared, this);
+    } else if (mPriv->logWalker) {
+        tpl_log_walker_get_events_async(mPriv->logWalker, mPriv->numEvents, (GAsyncReadyCallback) Private::callback, this);
+    }
 }
 
 void PendingEvents::Private::onAccountPrepared(void *logManager, void *result, PendingEvents *self)
@@ -147,13 +164,8 @@ EventPtrList PendingEvents::events() const
     return mPriv->events;
 }
 
-void PendingEvents::Private::callback(void *logManager, void *result, PendingEvents *self)
+void PendingEvents::Private::callback(void *caller, void *result, PendingEvents *self)
 {
-    if (!TPL_IS_LOG_MANAGER(logManager)) {
-        self->setFinishedWithError(TP_QT_ERROR_INVALID_ARGUMENT, "Invalid log manager in callback");
-        return;
-    }
-
     if (!G_IS_ASYNC_RESULT(result)) {
         self->setFinishedWithError(TP_QT_ERROR_INVALID_ARGUMENT, "Invalid async result in callback");
         return;
@@ -162,11 +174,17 @@ void PendingEvents::Private::callback(void *logManager, void *result, PendingEve
     GList *events = NULL;
     GError *error = NULL;
     gboolean success = FALSE;
-
-    if (self->mPriv->filtered) {
-        success = tpl_log_manager_get_filtered_events_finish(TPL_LOG_MANAGER(logManager), G_ASYNC_RESULT(result), &events, &error);
+    if (TPL_IS_LOG_MANAGER(caller)) {
+        if (self->mPriv->filtered) {
+            success = tpl_log_manager_get_filtered_events_finish(TPL_LOG_MANAGER(caller), G_ASYNC_RESULT(result), &events, &error);
+        } else {
+            success = tpl_log_manager_get_events_for_date_finish(TPL_LOG_MANAGER(caller), G_ASYNC_RESULT(result), &events, &error);
+        }
+    } else if (TPL_IS_LOG_WALKER(caller)) {
+        success = tpl_log_walker_get_events_finish(TPL_LOG_WALKER(caller), G_ASYNC_RESULT(result), &events, &error);
     } else {
-        success = tpl_log_manager_get_events_for_date_finish(TPL_LOG_MANAGER(logManager), G_ASYNC_RESULT(result), &events, &error);
+        self->setFinishedWithError(TP_QT_ERROR_INVALID_ARGUMENT, "Invalid callback caller");
+        return;
     }
 
     if (error) {
@@ -180,25 +198,26 @@ void PendingEvents::Private::callback(void *logManager, void *result, PendingEve
         return;
     }
 
-    GList *i;
-    for (i = events; i; i = i->next) {
-        TplEvent * item = (TplEvent *) i->data;
-        if (TPL_IS_TEXT_EVENT(item)) {
-            TextEventPtr eventPtr = TextEventPtr::wrap(TPL_TEXT_EVENT(item), true);
-            self->mPriv->events << eventPtr;
-        } else if (TPL_IS_CALL_EVENT(item)) {
-            CallEventPtr eventPtr = CallEventPtr::wrap(TPL_CALL_EVENT(item), true);
-            self->mPriv->events << eventPtr;
-        } else if (TPL_IS_EVENT(item)) {
-            EventPtr eventPtr = EventPtr::wrap(TPL_EVENT(item), true);
-            self->mPriv->events << eventPtr;
-        }
-    }
-
-    g_list_foreach(events, (GFunc) g_object_unref, NULL);
+    g_list_foreach(events, (GFunc) &storeAndFreeEvent, self);
     g_list_free(events);
 
     self->setFinished();
+}
+
+void PendingEvents::Private::storeAndFreeEvent(TplEvent *tplEvent, PendingEvents *self)
+{
+    if (TPL_IS_TEXT_EVENT(tplEvent)) {
+        TextEventPtr eventPtr = TextEventPtr::wrap(TPL_TEXT_EVENT(tplEvent), true);
+        self->mPriv->events << eventPtr;
+    } else if (TPL_IS_CALL_EVENT(tplEvent)) {
+        CallEventPtr eventPtr  = CallEventPtr::wrap(TPL_CALL_EVENT(tplEvent), true);
+        self->mPriv->events << eventPtr;
+    } else if (TPL_IS_EVENT(tplEvent)) {
+        EventPtr eventPtr = EventPtr::wrap(TPL_EVENT(tplEvent), true);
+        self->mPriv->events << eventPtr;
+    }
+
+    g_object_unref(tplEvent);
 }
 
 gboolean PendingEvents::Private::eventFilterMethod(TplEvent *event, gpointer *user_data)

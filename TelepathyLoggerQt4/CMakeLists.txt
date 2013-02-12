@@ -1,6 +1,6 @@
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/_gen")
 
-set(TelepathyLoggerQt4_CODEGEN_HEADERS 
+set(TelepathyLoggerQt4_CODEGEN_HEADERS
     call-event.h
     entity.h
     event.h
@@ -40,12 +40,14 @@ set(telepathy_logger_qt4_SRCS
     entity.cpp
     event.cpp
     log-manager.cpp
+    log-walker.cpp
     pending-dates.cpp
     pending-entities.cpp
     pending-events.cpp
     pending-clear.cpp
     pending-operation.cpp
     pending-search.cpp
+    pending-log-walker-operation.cpp
     search-hit.cpp
     text-event.cpp
     utils.cpp
@@ -60,6 +62,7 @@ set(telepathy_logger_qt4_HEADERS
     Global
     Init
     LogManager
+    LogWalker
     PendingDates
     PendingEntities
     PendingEvents
@@ -91,7 +94,9 @@ set(telepathy_logger_qt4_MOC_SRCS
     pending-events.h
     pending-clear.h
     pending-operation.h
-    pending-search.h)
+    pending-search.h
+    pending-log-walker-operation.h
+    )
 
 # Generated headers which will be installed and exported
 set(telepathy_logger_qt4_gen_HEADERS
