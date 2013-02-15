@@ -262,5 +262,5 @@ install(EXPORT TelepathyLoggerQt4Targets
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/TelepathyLoggerQt4ConfigVersion.cmake
               ${CMAKE_CURRENT_BINARY_DIR}/TelepathyLoggerQt4Config.cmake
-        DESTINATION $${LIB_INSTALL_DIR}/cmake/TelepathyLoggerQt4
+        DESTINATION ${LIB_INSTALL_DIR}/cmake/TelepathyLoggerQt4
         COMPONENT headers)
