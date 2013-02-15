@@ -73,7 +73,7 @@ set(telepathy_logger_qt4_HEADERS
     Types
     call-event.h
     entity.h
-    event.h 
+    event.h
     global.h
     init.h
     log-manager.h
@@ -229,12 +229,6 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/TelepathyLoggerQt4-uninstalled.pc.in 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/TelepathyLoggerQt4.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig COMPONENT headers)
 
 # cmake file
-# Find out the correct installation directory
-if (USE_COMMON_CMAKE_PACKAGE_CONFIG_DIR)
-   set(_TelepathyLoggerQt4Config_INSTALL_DIR ${LIB_INSTALL_DIR}/cmake/TelepathyLoggerQt4)
-else (USE_COMMON_CMAKE_PACKAGE_CONFIG_DIR)
-   set(_TelepathyLoggerQt4Config_INSTALL_DIR ${LIB_INSTALL_DIR}/TelepathyLoggerQt4/cmake)
-endif (USE_COMMON_CMAKE_PACKAGE_CONFIG_DIR)
 
 include(TpQtMacros)
 # CMake Version and config files
@@ -263,10 +257,10 @@ macro_write_basic_cmake_version_file(${CMAKE_CURRENT_BINARY_DIR}/TelepathyLogger
 
 
 install(EXPORT TelepathyLoggerQt4Targets
-        DESTINATION ${_TelepathyLoggerQt4Config_INSTALL_DIR}
+        DESTINATION $${LIB_INSTALL_DIR}/cmake/TelepathyLoggerQt4
         COMPONENT headers)
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/TelepathyLoggerQt4ConfigVersion.cmake
               ${CMAKE_CURRENT_BINARY_DIR}/TelepathyLoggerQt4Config.cmake
-        DESTINATION ${_TelepathyLoggerQt4Config_INSTALL_DIR}
+        DESTINATION $${LIB_INSTALL_DIR}/cmake/TelepathyLoggerQt4
         COMPONENT headers)

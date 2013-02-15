@@ -1,6 +1,6 @@
 project(TelepathyLoggerQt4)
 
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.6.3)
 
 # CMake policies are used for backwards compatibilty. Setting a policy to a behavior lets newer
 # CMake versions where some behaviors changed behave in a way or another. In our specific case,
