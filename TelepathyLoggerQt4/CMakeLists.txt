@@ -257,7 +257,7 @@ macro_write_basic_cmake_version_file(${CMAKE_CURRENT_BINARY_DIR}/TelepathyLogger
 
 
 install(EXPORT TelepathyLoggerQt4Targets
-        DESTINATION $${LIB_INSTALL_DIR}/cmake/TelepathyLoggerQt4
+        DESTINATION ${LIB_INSTALL_DIR}/cmake/TelepathyLoggerQt4
         COMPONENT headers)
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/TelepathyLoggerQt4ConfigVersion.cmake
