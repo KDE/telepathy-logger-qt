@@ -41,6 +41,6 @@ find_library(QTGLIB_LIBRARIES
    )
 
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(QtGLib-2.0 DEFAULT_MSG QTGLIB_LIBRARIES QTGLIB_INCLUDE_DIR)
+find_package_handle_standard_args(QtGLib DEFAULT_MSG QTGLIB_LIBRARIES QTGLIB_INCLUDE_DIR)
 
 mark_as_advanced(QTGLIB_INCLUDE_DIR QTGLIB_LIBRARIES)

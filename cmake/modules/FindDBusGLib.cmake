@@ -17,11 +17,11 @@ endif(DBUS_GLIB_INCLUDE_DIR AND DBUS_GLIB_LIBRARIES)
 
 find_package(PkgConfig)
 if(PKG_CONFIG_FOUND)
-    if (DBusGLib_FIND_VERSION_EXACT)
-        pkg_check_modules(PC_DBUS_GLIB QUIET dbus-glib=${DBusGLib_FIND_VERSION})
-    else (DBusGLib_FIND_VERSION_EXACT)
-        pkg_check_modules(PC_DBUS_GLIB QUIET dbus-glib>=${DBusGLib_FIND_VERSION})
-    endif (DBusGLib_FIND_VERSION_EXACT)
+    if (DBusGLib_FIND_VERSION)
+        pkg_check_modules(PC_DBUS_GLIB QUIET dbus-glib-1>=${DBusGLib_FIND_VERSION})
+    else (DBusGLib_FIND_VERSION)
+        pkg_check_modules(PC_DBUS_GLIB QUIET dbus-glib-1)
+    endif (DBusGLib_FIND_VERSION)
 endif(PKG_CONFIG_FOUND)
 
 find_path(DBUS_GLIB_INCLUDE_DIR
@@ -44,5 +44,4 @@ find_library(DBUS_GLIB_LIBRARIES
 )
 
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(DBUS_GLIB DEFAULT_MSG
-                                  DBUS_GLIB_LIBRARIES DBUS_GLIB_INCLUDE_DIR)
+find_package_handle_standard_args(DBusGLib DEFAULT_MSG DBUS_GLIB_LIBRARIES DBUS_GLIB_INCLUDE_DIR)

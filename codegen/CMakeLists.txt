@@ -1,10 +1,16 @@
 find_package(FLEX)
-macro_log_feature(FLEX_FOUND "Flex" "Required to build codegen, a helper code generator"
-                             "http://flex.sourceforge.net/" TRUE)
+set_package_properties(FLEX PROPERTIES
+                       DESCRIPTION "The Fast Lexical Analyzer"
+                       URL "http://flex.sourceforge.net"
+                       TYPE REQUIRED
+                       PURPOSE "Required to build codegen, a helper code generator")
 
 find_package(BISON)
-macro_log_feature(BISON_FOUND "Bison" "Required to build codegen, a helper code generator"
-                              "http://www.gnu.org/software/bison/" TRUE)
+set_package_properties(BISON PROPERTIES
+                       DESCRIPTION "GNU parser generator"
+                       URL "http://www.gnu.org/software/bison/"
+                       TYPE REQUIRED
+                       PURPOSE "Required to build codegen, a helper code generator")
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR} ${QT_INCLUDE_DIR})
 

@@ -1,6 +1,6 @@
 project(TelepathyLoggerQt4)
 
-cmake_minimum_required(VERSION 2.6.3)
+cmake_minimum_required(VERSION 2.8.6 FATAL_ERROR)
 
 # CMake policies are used for backwards compatibilty. Setting a policy to a behavior lets newer
 # CMake versions where some behaviors changed behave in a way or another. In our specific case,
@@ -78,6 +78,7 @@ endif(NOT CMAKE_BUILD_TYPE)
 
 # This file contains all the needed initialization macros
 include(TelepathyDefaults)
+include(FeatureSummary)
 
 # TelepathyLoggerQt4 specific defines needed to trigger deprecation warnings
 if (CXX_DEPRECATED_DECLARATIONS)
@@ -88,7 +89,6 @@ endif (CXX_DEPRECATED_DECLARATIONS)
 include(TpQtMacros)
 
 include(Doxygen)
-include(MacroLogFeature)
 include(MacroWriteBasicCMakeVersionFile)
 
 # external dependencies
@@ -96,9 +96,18 @@ include(MacroWriteBasicCMakeVersionFile)
 # Required dependencies
 # Find qt4 version >= 4.5
 set (QT_MIN_VERSION "4.5.0")
-find_package(Qt REQUIRED)
+find_package(Qt ${QT_MIN_VERSION} REQUIRED)
+set_package_properties(Qt PROPERTIES
+                       DESCRIPTION "Qt 4 Framework"
+                       URL "http://www.qt-project.org"
+                       TYPE REQUIRED)
+
 set (TELEPATHYQT4_MIN_VERSION "0.9.1")
 find_package(TelepathyQt4 ${TELEPATHYQT4_MIN_VERSION} REQUIRED)
+set_package_properties(TelepathyQt4 PROPERTIES
+                       DESCRIPTION "Qt bindings for Telepathy"
+                       URL "http://telepathy.freedesktop.org"
+                       TYPE REQUIRED)
 
 #add_definitions(-DQT_NO_CAST_FROM_ASCII)
 
@@ -115,6 +124,10 @@ if(${PYTHON_SHORT_VERSION} VERSION_GREATER ${REQUIRED_PY} OR ${PYTHON_SHORT_VERS
 else(${PYTHON_SHORT_VERSION} VERSION_GREATER ${REQUIRED_PY} OR ${PYTHON_SHORT_VERSION} VERSION_EQUAL ${REQUIRED_PY})
     message(SEND_ERROR "Python >= ${REQUIRED_PY} is required")
 endif(${PYTHON_SHORT_VERSION} VERSION_GREATER ${REQUIRED_PY} OR ${PYTHON_SHORT_VERSION} VERSION_EQUAL ${REQUIRED_PY})
+set_package_properties(PythonLibrary PROPERTIES
+                       DESCRIPTION "Python Library"
+                       URL "http://www.python.org"
+                       TYPE REQUIRED)
 
 # Check for Qt4 Glib support
 include(CheckCXXSourceCompiles)
@@ -132,24 +145,64 @@ int main()
 return 0;
 }"
 QT4_GLIB_SUPPORT)
-macro_log_feature(QT4_GLIB_SUPPORT "Qt4 Glib Support"
-                  "QtCore library using Glib's main event loop"
-                  "http://qt.nokia.com/" FALSE ""
-                  "Needed, together with Telepathy-Glib, to build most of the unit tests")
+if (QT4_GLIB_SUPPORT)
+    message(STATUS "Qt was compiled with GLib support enabled")
+else ()
+    message(FATAL_ERROR "Qt was not compiled with GLib support enabled")
+endif()
 
 find_package(GLIB2 REQUIRED)
+set_package_properties(GLIB2 PROPERTIES
+                       DESCRIPTION "A library containing many useful C routines"
+                       URL "http://developer.gnome.org/glib/"
+                       TYPE REQUIRED)
+
 find_package(GObject REQUIRED)
+set_package_properties(GObject PROPERTIES
+                       DESCRIPTION "GLib Object System"
+                       URL "http://developer.gnome.org/glib/"
+                       TYPE REQUIRED)
+
 find_package(DBus REQUIRED)
+set_package_properties(DBus PROPERTIES
+                       DESCRIPTION "Inter-process communication system"
+                       URL "http://dbus.freedesktop.org"
+                       TYPE REQUIRED)
+
 find_package(DBusGLib REQUIRED)
+set_package_properties(DBusGLib PROPERTIES
+                       DESCRIPTION "GLib bindings for DBus"
+                       URL "http://dbus.freedesktop.org"
+                       TYPE REQUIRED)
+
 find_package(LibXml2 REQUIRED)
+set_package_properties(LibXml2 PROPERTIES
+                       DESCRIPTION "XML C parser and toolkit"
+                       URL "http://www.xmlsoft.org"
+                       TYPE REQUIRED)
+
 find_package(QtGLib REQUIRED)
-find_package(TelepathyLogger 0.8.0 REQUIRED)
+set_package_properties(QtGLib PROPERTIES
+                       DESCRIPTION "Qt bindings for GLib, part of QtGStreamer"
+                       URL "http://www.qt-project.org"
+                       TYPE REQUIRED)
+
+set(TELEPATHY_LOGGER_MIN_VERSION 0.8.0)
+find_package(TelepathyLogger ${TELEPATHY_LOGGER_MIN_VERSION} REQUIRED)
+set_package_properties(TelepathyLogger PROPERTIES
+                       DESCRIPTION "Daemon for logging Telepathy conversations"
+                       URL "http://telepathy.freedesktop.org"
+                       TYPE REQUIRED)
 
 #find_program(GLIB_GENMARSHAL glib-genmarshal)
 
 # Find telepathy-glib
 set(TELEPATHY_GLIB_MIN_VERSION 0.16.0)
-find_package(TelepathyGlib REQUIRED)
+find_package(TelepathyGlib ${TELEPATHY_GLIB_MIN_VERSION} REQUIRED)
+set_package_properties(TelepathyGlib PROPERTIES
+                       DESCRIPTION "Glib bindings for Telepathy"
+                       URL "http://telepathy.freedesktop.org"
+                       TYPE REQUIRED)
 
 # Activate debug symbols generation
 #set(CMAKE_CXX_FLAGS "-g -Wall")
@@ -201,9 +254,6 @@ configure_file(
 add_custom_target(uninstall
     "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
 
-# Display the feature log
-macro_display_feature_log()
-
 add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/FIXME.out
                    COMMAND egrep
                    ARGS -A 5 '[F]IXME|[T]ODO|[X]XX' ${CMAKE_SOURCE_DIR}/TelepathyLoggerQt4/*.[ch]*
@@ -211,3 +261,5 @@ add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/FIXME.out
 add_custom_target(check-local DEPENDS ${CMAKE_BINARY_DIR}/FIXME.out)
 
 include(TelepathyDist)
+
+feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
