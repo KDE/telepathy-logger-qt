@@ -5,6 +5,7 @@ set(TelepathyLoggerQt4_CODEGEN_HEADERS
     entity.h
     event.h
     log-manager.h
+    log-walker.h
     text-event.h
     types.h)
 
@@ -12,12 +13,14 @@ set(TelepathyLoggerQt4_CODEGEN_INCLUDES
     -Itelepathy-logger/call-event.h
     -Itelepathy-logger/entity.h
     -Itelepathy-logger/log-manager.h
+    -Itelepathy-logger/log-walker.h
     -Itelepathy-logger/event.h
     -Itelepathy-logger/text-event.h
     -ITelepathyLoggerQt4/CallEvent
     -ITelepathyLoggerQt4/Entity
     -ITelepathyLoggerQt4/Event
     -ITelepathyLoggerQt4/LogManager
+    -ITelepathyLoggerQt4/LogWalker
     -ITelepathyLoggerQt4/TextEvent
     -ITelepathyLoggerQt4/Types
     -IQGlib/Quark)
@@ -77,6 +80,7 @@ set(telepathy_logger_qt4_HEADERS
     global.h
     init.h
     log-manager.h
+    log-walker.h
     pending-dates.h
     pending-entities.h
     pending-events.h
