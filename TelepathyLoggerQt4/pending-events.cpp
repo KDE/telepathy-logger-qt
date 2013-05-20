@@ -93,6 +93,8 @@ PendingEvents::PendingEvents(const LogManagerPtr & manager, const Tp::AccountPtr
 }
 
 PendingEvents::PendingEvents(const LogWalkerPtr& logWalker, uint numEvents)
+    : PendingOperation(),
+      mPriv(new Private())
 {
     mPriv->logWalker = logWalker;
     mPriv->numEvents = numEvents;
