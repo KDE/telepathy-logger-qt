@@ -39,8 +39,8 @@ endif(POLICY CMP0011)
 #   make the release, tag it
 #   set nano_version to 1
 set(TP_LOGGER_QT4_MAJOR_VERSION 0)
-set(TP_LOGGER_QT4_MINOR_VERSION 7)
-set(TP_LOGGER_QT4_MICRO_VERSION 95)
+set(TP_LOGGER_QT4_MINOR_VERSION 8)
+set(TP_LOGGER_QT4_MICRO_VERSION 0)
 set(TP_LOGGER_QT4_NANO_VERSION  0)
 
 # This value contains the library's SOVERSION. This value is to be increased everytime an API/ABI break
