@@ -29,6 +29,9 @@ namespace Tpl
 
 class Logger;
 
+/**
+ * \internal
+ */
 class TELEPATHY_LOGGER_QT4_NO_EXPORT PendingClear : public Tpl::PendingOperation
 {
     Q_OBJECT

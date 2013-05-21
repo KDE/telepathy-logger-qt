@@ -30,14 +30,26 @@
 namespace Tpl
 {
 
+/**
+ * \headerfile pending-search.h <TelepathyLoggerQt4/PendingSearch>
+ * \brief An operation for retrieving search results.
+ */
 class TELEPATHY_LOGGER_QT4_EXPORT PendingSearch : public Tpl::PendingOperation
 {
     Q_OBJECT
     Q_DISABLE_COPY(PendingSearch);
 
 public:
+    /**
+     * \brief Destructor.
+     */
     ~PendingSearch();
 
+    /**
+     * \brief Returns list of search hits.
+     *
+     * It's an error to call this method before the finished() signal is amitted.
+     */
     SearchHitList hits() const;
 
 private Q_SLOTS:

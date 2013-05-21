@@ -31,16 +31,36 @@
 namespace Tpl
 {
 
+/**
+ * \headerfile pending-dates.h <TelepathyLoggerQt4/PendingDates>
+ * \brief An operation for retrieving logged dates.
+ */
 class TELEPATHY_LOGGER_QT4_EXPORT PendingDates : public Tpl::PendingOperation
 {
     Q_OBJECT
     Q_DISABLE_COPY(PendingDates);
 
 public:
+    /**
+     * \brief Destructor.
+     */
     ~PendingDates();
 
+    /**
+     * \brief Returns list of all dates retrieved from the log store.
+     *
+     * It's an error to call this method before the finished() signal is emitted.
+     */
     QDateList dates() const;
+
+    /**
+     * \brief Returns account that has been queried
+     */
     const Tp::AccountPtr account() const;
+
+    /**
+     * \brief Returns entity that has been queried.
+     */
     const Tpl::EntityPtr entity() const;
 
 private Q_SLOTS:

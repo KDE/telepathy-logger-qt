@@ -30,19 +30,46 @@
 namespace Tpl
 {
 
-/*! \headerfile text-event.h <TelepathyLoggerQt4/TextEvent>
- * \brief Wrapper class for TplTextEvent
+/*!
+ * \headerfile text-event.h <TelepathyLoggerQt4/TextEvent>
+ * \brief A subclass of Event representing a text log event.
  */
 class TELEPATHY_LOGGER_QT4_EXPORT TextEvent : public Event
 {
-    QTELEPATHYLOGGERQT4_WRAPPER(TextEvent)
 public:
+
+    /*!
+     * \brief Returns the type of the message.
+     */
     Tp::ChannelTextMessageType messageType() const;
+
+    /*!
+     * \brief Returns content of the message.
+     */
     QString message() const;
+
+    /*!
+     * \brief Returns token of the message.
+     */
     QString messageToken() const;
+
+    /*!
+     * \brief Returns timestamp when the message was sent or delivered.
+     */
     QDateTime editTimestamp() const;
+
+    /*!
+     * \brief Returns token of a message this message supersedes.
+     */
     QString supersedesToken() const;
+
+    /*!
+     * \brief Returns a list of messages this messages supersedes.
+     */
     QList<TextEventPtr> supersedes() const;
+
+private:
+    QTELEPATHYLOGGERQT4_WRAPPER(TextEvent)
 };
 
 } //namespace

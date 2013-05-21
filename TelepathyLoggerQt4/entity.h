@@ -30,21 +30,61 @@
 namespace Tpl
 {
 
-/*! \headerfile entity.h <TelepathyLoggerQt4/Entity>
- * \brief Wrapper class for TplEntity
+/**
+ * \headerfile entity.h <TelepathyLoggerQt4/Entity>
+ * \brief An object representing a contact or room.
  */
 class TELEPATHY_LOGGER_QT4_EXPORT Entity : public QGlib::Object
 {
-    QTELEPATHYLOGGERQT4_WRAPPER(Entity)
 public:
-    static EntityPtr create(const char *id, EntityType type, const char *alias, const char *avatarToken);
+    /**
+     * \brief Constructs a new entity
+     *
+     * \param id
+     * \param type
+     * \param alias
+     * \param avatarToken
+     */
+    static EntityPtr create(const char *id, EntityType type, const char *alias,
+                            const char *avatarToken);
+
+    /**
+     * \brief Constructs a new entity from Tp::Contact
+     *
+     * \param contact
+     * \param type
+     */
     static EntityPtr create(const Tp::ContactPtr & contact, EntityType type);
+
+    /**
+     * \brief Constructs a new for a room
+     *
+     * \param room_id
+     */
     static EntityPtr create(const char *room_id);
 
+    /**
+     * \brief Returns entity's alias
+     */
     QString alias() const;
+
+    /**
+     * \brief Returns entity's unique identifier
+     */
     QString identifier() const;
+
+    /**
+     * \brief Returns whether the entity is a contact, a room or account owner
+     */
     EntityType entityType() const;
+
+    /**
+     * \brief Returns entity's avatar token
+     */
     QString avatarToken() const;
+
+private:
+    QTELEPATHYLOGGERQT4_WRAPPER(Entity)
 };
 
 } //namespace

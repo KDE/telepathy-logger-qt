@@ -31,28 +31,139 @@
 namespace Tpl
 {
 
+/**
+ * \headerfile pending-operation.h <TelepathyLoggerQt4/PendingOperation>
+ * \brief Abstract base class for pending asynchronous operations.
+ *
+ * This class represents an incomplete asynchronous operation, such as a
+ * D-Bus method call. When the operation has finished, it emits
+ * #finished(). The slot or slots connected to the #finished() signal may obtain
+ * additional information from the PendingOperation.
+ *
+ * For pending operations that produce a result, another subclass of
+ * PendingOperation can be used, with additional methods that provide that
+ * result to the library user.
+ *
+ * After #finished() is emitted, the PendingOperation is automatically
+ * deleted using deleteLater(), so library users must not explicitly
+ * delete this object.
+ *
+ * The design is loosely based on KDE's KJob.
+ */
 class TELEPATHY_LOGGER_QT4_EXPORT PendingOperation : public QObject
 {
     Q_OBJECT
     Q_DISABLE_COPY(PendingOperation)
 
 public:
+
+    /**
+     * \brief Class destructor.
+     */
     virtual ~PendingOperation();
 
+    /**
+     * \brief Returns whether or not the request has finished processing.
+     *
+     * finished() is emitted when this changes from <code>false</code> to
+     * <code>true</code>.
+     *
+     * Equivalent to <code>(isValid() || isError())</code>.
+     *
+     * \sa finished()
+     *
+     * \return <code>true</code> if the request has finished
+     */
     bool isFinished() const;
+
+    /**
+     * \brief Returns whether or not the request completed successfully.
+     *
+     * If the request has not yet finished processing (isFinished() returns
+     * <code>false</code>), this cannot yet be known, and <code>false</code>
+     * will be returned.
+     *
+     * Equivalent to <code>(isFinished() && !#isError())</code>.
+     *
+     * \return <code>true</code> iff the request has finished processing AND
+     *         has completed successfully.
+     */
     bool isValid() const;
+
+    /**
+     * \brief Returns whether or not the request resulted in an error.
+     *
+     * If the request has not yet finished processing (isFinished() returns
+     * <code>false</code>), this cannot yet be known, and <code>false</code>
+     * will be returned.
+     *
+     * Equivalent to <code>(isFinished() && !#isValid())</code>.
+     *
+     * \return <code>true</code> iff the request has finished processing AND
+     *         has resulted in an error.
+     */
     bool isError() const;
+
+
+    /**
+     * \brief If isError() would return true, returns the D-Bus error with which
+     * the operation failed.
+     *
+     * If the operation succeeded or has not yet
+     * finished, returns an empty string.
+     *
+     * \return a D-Bus error name or an empty string
+     */
     QString errorName() const;
+
+    /**
+     * \brief If isError() would return true, returns a debugging message associated
+     * with the error.
+     *
+     * The message may be an empty string. Otherwise, return an
+     * empty string.
+     *
+     * \return a debugging message or an empty string
+     */
     QString errorMessage() const;
 
 Q_SIGNALS:
+    /**
+     * \brief Emitted when the pending operation finishes.
+     *
+     * Emitted when #isFinished() changes from <code>false</code> to <code>true</code>.
+     *
+     * \param operation This operation object, from which further information
+     *                  may be obtained
+     */
     void finished(Tpl::PendingOperation *operation);
 
 protected:
+    /**
+     * \brief Protected constructor.
+     *
+     * Only subclasses of this class may be constructed.
+     *
+     * \param object The object on which this pending operation takes place
+     */
     PendingOperation();
 
 protected Q_SLOTS:
+    /**
+     * \brief Record that this pending operation has finished successfully.
+     *
+     * Will emit the #finished() signal next time the event loop runs.
+     */
     void setFinished();
+
+    /**
+     * \brief Record that this pending operation has finished with an error.
+     *
+     * Will emit the #finished() signal next time the event loop runs.
+     *
+     * \param name A D-Bus error name, which must be non-empty
+     * \param message A debugging message
+     */
     void setFinishedWithError(const QString &name, const QString &message);
 
 private Q_SLOTS:

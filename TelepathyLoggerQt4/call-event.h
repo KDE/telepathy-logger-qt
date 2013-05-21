@@ -29,17 +29,37 @@
 namespace Tpl
 {
 
-/*! \headerfile call-event.h <TelepathyLoggerQt4/CallEvent>
- * \brief Wrapper class for TplCallEvent
+/*!
+ * \headerfile call-event.h <TelepathyLoggerQt4/CallEvent>
+ * \brief Represents a call log event.
  */
 class TELEPATHY_LOGGER_QT4_EXPORT CallEvent : public Event
 {
-    QTELEPATHYLOGGERQT4_WRAPPER(CallEvent)
 public:
+
+    /*!
+     * \brief Returns the call duration
+     */
     QTime duration() const;
+
+    /*!
+     * \brief Returns the actor that caused the call to end
+     */
     EntityPtr endActor() const;
+
+    /*!
+     * \brief Returns the reason for which this call was ended.
+     */
     Tp::CallStateChangeReason endReason() const;
+
+    /*!
+     * \brief Returns a string representing a D-Bus error that gives more details about
+     *         the end reason
+     */
     QString detailedEndReason() const;
+
+private:
+    QTELEPATHYLOGGERQT4_WRAPPER(CallEvent)
 };
 
 } //namespace

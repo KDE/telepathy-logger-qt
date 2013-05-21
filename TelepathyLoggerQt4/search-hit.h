@@ -34,16 +34,51 @@
 namespace Tpl
 {
 
+
+/**
+ * \headerfile search-hit.h <TelepathyLoggerQt4/SearchHit>
+ * \brief A single search match.
+ */
 class TELEPATHY_LOGGER_QT4_EXPORT SearchHit
 {
 public:
+    /**
+     * \brief Constructs a new search hit
+     * \param account
+     * \param target
+     * \param date
+     */
     SearchHit(const Tp::AccountPtr &account, const EntityPtr &target, const QDate &date);
+
+    /**
+     * \brief Copy constructor.
+     * \param other
+     */
     SearchHit(const SearchHit &other);
+
+    /**
+     * \brief Assignment operator.
+     */
     SearchHit & operator=(const SearchHit &other);
+
+    /**
+     * \brief Destructor.
+     */
     ~SearchHit();
 
+    /**
+     * \brief Returns an account that the matching event is associated with.
+     */
     Tp::AccountPtr account() const;
+
+    /**
+     * \brief Returns an entity that the matching event is associated with.
+     */
     EntityPtr target() const;
+
+    /**
+     * \brief Returns an entity that the matching event is associated with.
+     */
     QDate date() const;
 
 private:

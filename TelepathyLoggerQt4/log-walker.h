@@ -32,13 +32,14 @@ namespace Tpl {
 class PendingOperation;
 class PendingEvents;
 
-/*! \headerfile log-manager.h <TelepathyLoggerQt4/LogWalker>
- * \brief Wrapper class for TplLogWalker
+/*!
+ * \headerfile log-manager.h <TelepathyLoggerQt4/LogWalker>
+ * \brief The LogWalker object allows the user to sequentially iterate over the logs.
+ *
+ * \since 0.8.0
  */
 class TELEPATHY_LOGGER_QT4_EXPORT LogWalker : public QGlib::Object
 {
-    QTELEPATHYLOGGERQT4_WRAPPER(LogWalker)
-
   public:
     /**
      * \brief Whether the walker points to the most recent event in logs.
@@ -49,8 +50,6 @@ class TELEPATHY_LOGGER_QT4_EXPORT LogWalker : public QGlib::Object
      *
      * \return Returns true if walker is pointing at the most recent event,
      * otherwise false.
-     *
-     * \since 0.8.0
      */
     bool isStart();
 
@@ -62,8 +61,6 @@ class TELEPATHY_LOGGER_QT4_EXPORT LogWalker : public QGlib::Object
      * when it has returned all the events from the logs.
      *
      * \return Returns true if walker has run out of events, otherwise false.
-     *
-     * \since 0.8.0
      */
     bool isEnd();
 
@@ -75,8 +72,6 @@ class TELEPATHY_LOGGER_QT4_EXPORT LogWalker : public QGlib::Object
      * \param numEvents Amount of events to retrieve
      * \return Returns PendingOperation that will emit finished() when requested
      * events are received or an error occurs.
-     *
-     * \since 0.8.0
      */
     PendingEvents* queryEvents(uint numEvents);
 
@@ -89,11 +84,11 @@ class TELEPATHY_LOGGER_QT4_EXPORT LogWalker : public QGlib::Object
      * \param numEvents Amount of events to rewind by
      * \return Returns a PendingOperation that will emit finished() when
      * walker has been rewound of an error occurs.
-     *
-     * \since 0.8.0
      */
     PendingOperation* rewind(uint numEvents);
 
+  private:
+    QTELEPATHYLOGGERQT4_WRAPPER(LogWalker)
 };
 
 } //Tpl

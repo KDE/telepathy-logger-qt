@@ -31,15 +31,31 @@
 namespace Tpl
 {
 
+/**
+ * \headerfile pending-entities.h <TelepathyLoggerQt4/PendingEntities>
+ * \brief An operation for retrieving entities for which logs exist.
+ */
 class TELEPATHY_LOGGER_QT4_EXPORT PendingEntities: public Tpl::PendingOperation
 {
     Q_OBJECT
     Q_DISABLE_COPY(PendingEntities);
 
 public:
+    /**
+     * \brief Destructor.
+     */
     ~PendingEntities();
 
+    /**
+     * \brief Returns list of entities retrieved from logger store.
+     *
+     * It's an error to call this method before the finished() signal is emitted.
+     */
     EntityPtrList entities() const;
+
+    /**
+     * \brief Returns account that has been queried.
+     */
     Tp::AccountPtr account() const;
 
 private Q_SLOTS:

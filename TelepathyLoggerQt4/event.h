@@ -30,19 +30,52 @@
 namespace Tpl
 {
 
-/*! \headerfile event.h <TelepathyLoggerQt4/Event>
- * \brief Wrapper class for TplEvent
+/*!
+ * \headerfile event.h <TelepathyLoggerQt4/Event>
+ * \brief The TPLogger log event represents a generic log event, which will be
+ * specialized by subclasses.
  */
 class TELEPATHY_LOGGER_QT4_EXPORT Event : public QGlib::Object
 {
-    QTELEPATHYLOGGERQT4_WRAPPER(Event)
 public:
+
+    /*!
+     * \brief Returns a timestamp when the event has been logged.
+     */
     QDateTime timestamp() const;
+
+    /*!
+     *\brief Returns account path of the account the event is associated to.
+     */
     QString accountPath() const;
+
+    /*!
+     * \brief Returns the account the event is associated to.
+     */
     Tp::AccountPtr account() const;
+
+    /*!
+     * \brief Returns the entity that originated the log event.
+     */
     EntityPtr sender() const;
+
+    /*!
+     * \brief Returns the entity thas was destination for the log event.
+     */
     EntityPtr receiver() const;
+
+    /*!
+     * \brief Equivalent to operator==().
+     */
     bool equalTo(const EventPtr & rhs) const;
+
+    /*!
+     * \brief Comparison operator.
+     */
+    bool operator==(const EventPtr & rhs ) const;
+
+private:
+    QTELEPATHYLOGGERQT4_WRAPPER(Event)
 };
 
 } //namespace

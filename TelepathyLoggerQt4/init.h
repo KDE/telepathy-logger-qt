@@ -28,7 +28,8 @@
 namespace Tpl
 {
 
-/*! \headerfile init.h <TelepathyLoggerQt4/Init>
+/*!
+ * \headerfile init.h <TelepathyLoggerQt4/Init>
  * \brief Initialization of the telepathy logger qt4 bindings
  */
 
