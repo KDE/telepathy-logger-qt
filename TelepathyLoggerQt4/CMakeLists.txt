@@ -26,7 +26,7 @@ set(TelepathyLoggerQt4_CODEGEN_INCLUDES
 )
 
 # Add command to generate gen.cpp using codegen
-#run_codegen("TelepathyLoggerQt4" "${TelepathyLoggerQt4_CODEGEN_INCLUDES}" "${TelepathyLoggerQt4_CODEGEN_HEADERS}")
+run_codegen("TelepathyLoggerQt4" "${TelepathyLoggerQt4_CODEGEN_INCLUDES}" "${TelepathyLoggerQt4_CODEGEN_HEADERS}")
 
 # Set the required flags found in TelepathyDefaults
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${VISIBILITY_HIDDEN_FLAGS} ${COMPILER_COVERAGE_FLAGS} ${DEPRECATED_DECLARATIONS_FLAGS}")
@@ -34,8 +34,7 @@ set(LD_FLAGS "${LD_FLAGS} ${VISIBILITY_HIDDEN_FLAGS} ${COMPILER_COVERAGE_FLAGS} 
 
 # We are building telepathy-logger-qt4
 add_definitions(-DBUILDING_TELEPATHY_LOGGER_QT4)
-add_definitions (-DQT_NO_KEYWORDS)
-add_definitions(-fPIC)
+add_definitions(-DQT_NO_KEYWORDS)
 
 # Sources for Tp-Logger-Qt4
 set(telepathy_logger_qt4_SRCS
@@ -202,7 +201,7 @@ endif (ENABLE_COMPILER_COVERAGE)
 # Set the correct version number
 set_target_properties(telepathy-logger-qt4 PROPERTIES
                       SOVERSION ${TP_LOGGER_QT4_ABI_VERSION}
-                      VERSION ${TP_LOGGER_QT4_LIBRARY_VERSION})
+                      VERSION ${TP_LOGGER_QT4_VERSION})
 
 # Install header files
 install(FILES ${telepathy_logger_qt4_HEADERS}
@@ -230,13 +229,6 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/TelepathyLoggerQt4.pc.in ${CMAKE_CURR
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/TelepathyLoggerQt4-uninstalled.pc.in ${CMAKE_CURRENT_BINARY_DIR}/TelepathyLoggerQt4-uninstalled.pc)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/TelepathyLoggerQt4.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig COMPONENT headers)
 
-# cmake file
-
-include(TpQtMacros)
-# CMake Version and config files
-include(MacroWriteBasicCMakeVersionFile)
-
-
 macro(make_install_path_absolute out in)
    if (IS_ABSOLUTE "${in}")
       set(${out} "${in}")
@@ -255,7 +247,7 @@ configure_file(TelepathyLoggerQt4Config.cmake.in "${CMAKE_CURRENT_BINARY_DIR}/Te
 
 # this file is used by to check if the installed version can be used.
 macro_write_basic_cmake_version_file(${CMAKE_CURRENT_BINARY_DIR}/TelepathyLoggerQt4ConfigVersion.cmake
-                                     ${PACKAGE_VERSION})
+                                     ${TP_LOGGER_QT4_MAJOR_VERSION} ${TP_LOGGER_QT4_MINOR_VERSION} ${QT_LOGGER_QT4_MICRO_VERSION})
 
 
 install(EXPORT TelepathyLoggerQt4Targets
