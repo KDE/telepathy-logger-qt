@@ -32,6 +32,7 @@
 #include <TelepathyLoggerQt4/utils.h>
 
 #include <telepathy-logger/log-manager.h>
+#include <telepathy-logger/entity.h>
 #include <telepathy-glib/account.h>
 
 #include <_gen/cli-logger-body.hpp>
@@ -42,7 +43,7 @@ using namespace Tpl;
 LogManagerPtr LogManager::instance()
 {
     TplLogManager *manager = tpl_log_manager_dup_singleton();
-    return LogManagerPtr::wrap(manager, false);
+    return TPLoggerQtWrapper::wrap2<TplLogManager, LogManager>(manager, false);
 }
 
 Tp::AccountManagerPtr LogManager::accountManagerPtr() const
@@ -59,7 +60,8 @@ bool LogManager::exists(const Tp::AccountPtr & account, const EntityPtr & target
         EventTypeMask type) const
 {
     TpAccount *tpAccount = Utils::instance()->tpAccount(account);
-    return tpl_log_manager_exists(object<TplLogManager>(), tpAccount, target, (gint) type);
+    return tpl_log_manager_exists(object<TplLogManager>(), tpAccount,
+                                  TPLoggerQtWrapper::unwrap<TplEntity, Entity>(target), (gint) type);
 }
 
 PendingDates *LogManager::queryDates(const Tp::AccountPtr & account, const EntityPtr & entity,
@@ -136,8 +138,9 @@ LogWalkerPtr LogManager::queryWalkFilteredEvents(const Tp::AccountPtr& account,
     }
 
     TplLogWalker *tpWalker = tpl_log_manager_walk_filtered_events(
-                                LogManagerPtr(this), tpAccount, entity,
+                                object<TplLogManager>(), tpAccount,
+                                TPLoggerQtWrapper::unwrap<TplEntity, Entity>(entity),
                                 (gint) typeMask, (TplLogEventFilter) filterFunction,
                                 filterFunctionUserData);
-    return LogWalkerPtr::wrap(tpWalker, false);
+    return TPLoggerQtWrapper::wrap<TplLogWalker, LogWalker>(tpWalker, false);
 }

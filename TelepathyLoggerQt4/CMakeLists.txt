@@ -23,10 +23,10 @@ set(TelepathyLoggerQt4_CODEGEN_INCLUDES
     -ITelepathyLoggerQt4/LogWalker
     -ITelepathyLoggerQt4/TextEvent
     -ITelepathyLoggerQt4/Types
-    -IQGlib/Quark)
+)
 
 # Add command to generate gen.cpp using codegen
-run_codegen("TelepathyLoggerQt4" "${TelepathyLoggerQt4_CODEGEN_INCLUDES}" "${TelepathyLoggerQt4_CODEGEN_HEADERS}")
+#run_codegen("TelepathyLoggerQt4" "${TelepathyLoggerQt4_CODEGEN_INCLUDES}" "${TelepathyLoggerQt4_CODEGEN_HEADERS}")
 
 # Set the required flags found in TelepathyDefaults
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${VISIBILITY_HIDDEN_FLAGS} ${COMPILER_COVERAGE_FLAGS} ${DEPRECATED_DECLARATIONS_FLAGS}")
@@ -54,8 +54,7 @@ set(telepathy_logger_qt4_SRCS
     search-hit.cpp
     text-event.cpp
     utils.cpp
-    init.cpp
-    ${CMAKE_CURRENT_BINARY_DIR}/gen.cpp)
+    init.cpp)
 
 # Exported headers for Tp-Logger-Qt4
 set(telepathy_logger_qt4_HEADERS
@@ -66,6 +65,7 @@ set(telepathy_logger_qt4_HEADERS
     Init
     LogManager
     LogWalker
+    Object
     PendingDates
     PendingEntities
     PendingEvents
@@ -81,6 +81,7 @@ set(telepathy_logger_qt4_HEADERS
     init.h
     log-manager.h
     log-walker.h
+    object.h
     pending-dates.h
     pending-entities.h
     pending-events.h
@@ -192,7 +193,7 @@ target_link_libraries(telepathy-logger-qt4
     ${TELEPATHY_GLIB_LIBRARIES}
     ${TELEPATHY_LOGGER_LIBRARIES}
     ${TELEPATHY_QT4_LIBRARIES}
-    ${QTGLIB_LIBRARIES})
+)
 
 if (ENABLE_COMPILER_COVERAGE)
     target_link_libraries(telepathy-logger-qt4 gcov)

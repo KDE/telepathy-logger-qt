@@ -23,7 +23,6 @@
 #error IN_TELEPATHY_LOGGER_QT4_HEADER
 #endif
 
-#include <TelepathyLoggerQt4/Global>
 #include <TelepathyQt/Types>
 #include <QtCore/QList>
 #include <QtCore/QDate>
@@ -59,6 +58,13 @@ enum EventTypeMask
     EventTypeMaskAny = 0xffff   /**< Special value to select all type of Tpl::Event **/
 };
 
+class CallEvent;
+class Entity;
+class Event;
+class LogManager;
+class LogWalker;
+class TextEvent;
+
 class Logger;
 class LogWalker;
 class PendingDates;
@@ -68,7 +74,14 @@ class PendingOperation;
 class PendingSearch;
 struct SearchHit;
 
-typedef Tp::SharedPtr<Logger> LoggerPtr;
+typedef QSharedPointer<CallEvent> CallEventPtr;
+typedef QSharedPointer<Entity> EntityPtr;
+typedef QSharedPointer<Event> EventPtr;
+typedef LogManager* LogManagerPtr;
+typedef QSharedPointer<LogWalker> LogWalkerPtr;
+typedef QSharedPointer<TextEvent> TextEventPtr;
+
+typedef QSharedPointer<Logger> LoggerPtr;
 typedef QList<Tp::ContactPtr> ContactPtrList;
 typedef QList<EntityPtr> EntityPtrList;
 typedef QList<EventPtr> EventPtrList;
@@ -78,5 +91,15 @@ typedef QList<SearchHit> SearchHitList;
 typedef bool (*LogEventFilter)(const EventPtr &event, void *user_data);
 
 } //namespace
+
+struct _TplCallEvent;
+struct _TplEntity;
+struct _TplEvent;
+struct _TplLogManager;
+struct _TplLogWalker;
+struct _TplTextEvent;
+
+
+#include <TelepathyLoggerQt4/Global>
 
 #endif

@@ -66,7 +66,7 @@ QList< TextEventPtr > TextEvent::supersedes() const
     GList *iter;
     QList<TextEventPtr> events;
     for (iter = tplEvents; iter; iter = g_list_next(iter)) {
-        events << TextEventPtr::wrap((TplTextEvent*) iter->data, true);
+        events << TPLoggerQtWrapper::wrap<TplTextEvent, TextEvent>((TplTextEvent*) iter->data, true);
     }
 
     return events;

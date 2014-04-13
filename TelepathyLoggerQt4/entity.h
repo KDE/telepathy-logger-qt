@@ -24,7 +24,7 @@
 #error IN_TELEPATHY_LOGGER_QT4_HEADER
 #endif
 
-#include <QGlib/Object>
+#include <TelepathyLoggerQt4/Object>
 #include <TelepathyLoggerQt4/Types>
 
 namespace Tpl
@@ -34,7 +34,7 @@ namespace Tpl
  * \headerfile entity.h <TelepathyLoggerQt4/Entity>
  * \brief An object representing a contact or room.
  */
-class TELEPATHY_LOGGER_QT4_EXPORT Entity : public QGlib::Object
+class TELEPATHY_LOGGER_QT4_EXPORT Entity: public Object
 {
 public:
     /**
@@ -88,7 +88,5 @@ private:
 };
 
 } //namespace
-
-QTELEPATHYLOGGERQT4_REGISTER_TYPE(Tpl::Entity)
 
 #endif

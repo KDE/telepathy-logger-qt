@@ -25,9 +25,9 @@
 #error IN_TELEPATHY_LOGGER_QT4_HEADER
 #endif
 
-#include <QGlib/Object>
 #include <TelepathyLoggerQt4/_gen/cli-logger.h>
 #include <TelepathyLoggerQt4/Types>
+#include <TelepathyLoggerQt4/Object>
 
 namespace Tpl
 {
@@ -36,7 +36,7 @@ namespace Tpl
  * \headerfile log-manager.h <TelepathyLoggerQt4/LogManager>
  * \brief The LogManager object allows user to fetch logs and make searches.
  */
-class TELEPATHY_LOGGER_QT4_EXPORT LogManager : public QGlib::Object
+class TELEPATHY_LOGGER_QT4_EXPORT LogManager: public Tpl::Object
 {
 public:
     /*!
@@ -183,7 +183,5 @@ private:
 };
 
 } //namespace
-
-QTELEPATHYLOGGERQT4_REGISTER_TYPE(Tpl::LogManager)
 
 #endif

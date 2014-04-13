@@ -58,7 +58,8 @@ PendingSearch::~PendingSearch()
 
 void PendingSearch::start()
 {
-    tpl_log_manager_search_async(mPriv->manager,
+    tpl_log_manager_search_async(
+        TPLoggerQtWrapper::unwrap<TplLogManager, LogManager>(mPriv->manager),
         mPriv->text.toUtf8(),
         mPriv->typeMask,
         (GAsyncReadyCallback) Private::callback,
@@ -119,7 +120,7 @@ void PendingSearch::Private::callback(void *logManager, void *result, PendingSea
 	if (item->date) {
 	    date.setDate(item->date->year, item->date->month, item->date->day);
 	}
-        SearchHit hit(Utils::instance()->accountPtr(item->account), EntityPtr::wrap(item->target, true), date);
+        SearchHit hit(Utils::instance()->accountPtr(item->account), TPLoggerQtWrapper::wrap<TplEntity, Entity>(item->target, true), date);
         self->mPriv->hits << hit;
     }
 

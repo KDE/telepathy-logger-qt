@@ -29,12 +29,12 @@ using namespace Tpl;
 
 bool LogWalker::isStart()
 {
-    return tpl_log_walker_is_start(LogWalkerPtr(this));
+    return tpl_log_walker_is_start(object<TplLogWalker>());
 }
 
 bool LogWalker::isEnd()
 {
-    return tpl_log_walker_is_end(LogWalkerPtr(this));
+    return tpl_log_walker_is_end(object<TplLogWalker>());
 }
 
 PendingEvents* LogWalker::queryEvents(uint numEvents)

@@ -24,8 +24,8 @@
 #error IN_TELEPATHY_LOGGER_QT4_HEADER
 #endif
 
-#include <QGlib/Object>
 #include <TelepathyLoggerQt4/Types>
+#include <TelepathyLoggerQt4/Object>
 
 namespace Tpl {
 
@@ -38,7 +38,7 @@ class PendingEvents;
  *
  * \since 0.8.0
  */
-class TELEPATHY_LOGGER_QT4_EXPORT LogWalker : public QGlib::Object
+class TELEPATHY_LOGGER_QT4_EXPORT LogWalker: public Tpl::Object
 {
   public:
     /**
@@ -92,7 +92,5 @@ class TELEPATHY_LOGGER_QT4_EXPORT LogWalker : public QGlib::Object
 };
 
 } //Tpl
-
-QTELEPATHYLOGGERQT4_REGISTER_TYPE(Tpl::LogWalker)
 
 #endif

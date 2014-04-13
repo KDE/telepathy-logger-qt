@@ -24,8 +24,7 @@
 #error IN_TELEPATHY_LOGGER_QT4_HEADER
 #endif
 
-#include <QGlib/Object>
-#include <TelepathyLoggerQt4/Types>
+#include <TelepathyLoggerQt4/Object>
 
 namespace Tpl
 {
@@ -35,7 +34,7 @@ namespace Tpl
  * \brief The TPLogger log event represents a generic log event, which will be
  * specialized by subclasses.
  */
-class TELEPATHY_LOGGER_QT4_EXPORT Event : public QGlib::Object
+class TELEPATHY_LOGGER_QT4_EXPORT Event: public Object
 {
 public:
 
@@ -79,7 +78,5 @@ private:
 };
 
 } //namespace
-
-QTELEPATHYLOGGERQT4_REGISTER_TYPE(Tpl::Event)
 
 #endif
