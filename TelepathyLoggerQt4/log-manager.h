@@ -25,6 +25,13 @@
 #error IN_TELEPATHY_LOGGER_QT4_HEADER
 #endif
 
+#ifndef TPLQT_TPL_IS_VERSION
+#define TPLQT_TPL_IS_VERSION(maj, min, patch) \
+   (TPLQT_TPL_VERSION_MAJOR > maj) \
+|| (TPLQT_TPL_VERSION_MAJOR == maj && TPLQT_TPL_VERSION_MINOR > min) \
+|| (TPLQT_TPL_VERSION_MAJOR == maj && TPLQT_TPL_VERSION_MINOR == min && TPLQT_TPL_VERSION_PATCH >= patch)
+#endif
+
 #include <QGlib/Object>
 #include <TelepathyLoggerQt4/_gen/cli-logger.h>
 #include <TelepathyLoggerQt4/Types>
@@ -177,6 +184,38 @@ public:
     Tpl::LogWalkerPtr queryWalkFilteredEvents(const Tp::AccountPtr &account,
         const Tpl::EntityPtr &entity, EventTypeMask typeMask, LogEventFilter filterFunction,
         void *filterFunctionUserData = 0);
+
+#if TPLQT_TPL_IS_VERSION(0, 9, 0)
+    /**
+     * \brief Disables logging for given \p account and \p entity
+     *
+     * \param account
+     * \param entity
+     *
+     * \return true if operation succeeds
+     */
+    bool disableForEntity(const Tp::AccountPtr &account, const EntityPtr &entity);
+
+    /**
+     * \brief Enables logging for given \p account and \p entity
+     *
+     * \param account
+     * \param entity
+     *
+     * \return true if operation succeeds
+     */
+    bool enableForEntity(const Tp::AccountPtr &account, const EntityPtr &entity);
+
+    /**
+     * \brief Checks if logging is disabled for given \p account and \p entity
+     *
+     * \param account
+     * \param entity
+     *
+     * \return true if logging is disabled for given \p account and \p entity
+     */
+    bool isDisabledForEntity(const Tp::AccountPtr &account, const EntityPtr &entity);
+#endif
 
 private:
     QTELEPATHYLOGGERQT4_WRAPPER(LogManager)

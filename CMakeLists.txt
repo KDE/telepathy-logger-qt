@@ -194,6 +194,10 @@ set_package_properties(TelepathyLogger PROPERTIES
                        URL "http://telepathy.freedesktop.org"
                        TYPE REQUIRED)
 
+add_definitions(-DTPLQT_TPL_VERSION_MAJOR=${TELEPATHY_LOGGER_VERSION_MAJOR})
+add_definitions(-DTPLQT_TPL_VERSION_MINOR=${TELEPATHY_LOGGER_VERSION_MINOR})
+add_definitions(-DTPLQT_TPL_VERSION_PATCH=${TELEPATHY_LOGGER_VERSION_PATCH})
+
 #find_program(GLIB_GENMARSHAL glib-genmarshal)
 
 # Find telepathy-glib

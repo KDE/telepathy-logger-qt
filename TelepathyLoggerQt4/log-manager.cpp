@@ -141,3 +141,40 @@ LogWalkerPtr LogManager::queryWalkFilteredEvents(const Tp::AccountPtr& account,
                                 filterFunctionUserData);
     return LogWalkerPtr::wrap(tpWalker, false);
 }
+
+#if TPLQT_TPL_IS_VERSION(0, 9, 0)
+bool LogManager::disableForEntity(const Tp::AccountPtr &account, const EntityPtr &entity)
+{
+    TpAccount *tpAccount = Utils::instance()->tpAccount(account);
+    if (!tpAccount) {
+        qWarning() << "Invalid account";
+        return false;
+    }
+    tpl_log_manager_disable_for_entity(LogManagerPtr(this), tpAccount, entity);
+
+    return true;
+}
+
+bool LogManager::enableForEntity(const Tp::AccountPtr &account, const EntityPtr &entity)
+{
+    TpAccount *tpAccount = Utils::instance()->tpAccount(account);
+    if (!tpAccount) {
+        qWarning() << "Invalid account";
+        return false;
+    }
+    tpl_log_manager_enable_for_entity(LogManagerPtr(this), tpAccount, entity);
+
+    return true;
+}
+
+bool LogManager::isDisabledForEntity(const Tp::AccountPtr &account, const EntityPtr &entity)
+{
+    TpAccount *tpAccount = Utils::instance()->tpAccount(account);
+    if (!tpAccount) {
+        qWarning() << "Invalid account";
+        return false;
+    }
+
+    return tpl_log_manager_is_disabled_for_entity(LogManagerPtr(this), tpAccount, entity);
+}
+#endif
