@@ -13,6 +13,11 @@ set(CMAKE_INCLUDE_DIRECTORIES_PROJECT_BEFORE ON)
 # Use colored output
 set(CMAKE_COLOR_MAKEFILE ON)
 
+# Add an option to decide where to install the config files
+if (${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}.${CMAKE_PATCH_VERSION} VERSION_GREATER 2.6.2)
+    option(USE_COMMON_CMAKE_PACKAGE_CONFIG_DIR "Prefer to install the <package>Config.cmake files to lib/cmake/<package> instead of lib/<package>/cmake" TRUE)
+endif (${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}.${CMAKE_PATCH_VERSION} VERSION_GREATER 2.6.2)
+
 # Set compiler flags
 if(CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -ggdb")
@@ -42,18 +47,23 @@ if(CMAKE_COMPILER_IS_GNUCXX)
         set(VISIBILITY_HIDDEN_FLAGS)
     endif (CXX_FVISIBILITY_HIDDEN)
 
+    CHECK_CXX_ACCEPTS_FLAG("-fvisibility-inlines-hidden" CXX_FVISIBILITY_INLINES_HIDDEN)
+    if (CXX_FVISIBILITY_INLINES_HIDDEN)
+        set(VISIBILITY_HIDDEN_FLAGS "${VISIBILITY_HIDDEN_FLAGS} -fvisibility-inlines-hidden")
+    endif (CXX_FVISIBILITY_INLINES_HIDDEN)
+
     CHECK_CXX_ACCEPTS_FLAG("-Wdeprecated-declarations" CXX_DEPRECATED_DECLARATIONS)
     if (CXX_DEPRECATED_DECLARATIONS)
-        set(DEPRECATED_DECLARATIONS_FLAGS "-Wdeprecated-declarations -DTELEPATHY_QT4_DEPRECATED_WARNINGS")
+        set(DEPRECATED_DECLARATIONS_FLAGS "-Wdeprecated-declarations -DTP_QT_DEPRECATED_WARNINGS")
     else (CXX_DEPRECATED_DECLARATIONS)
         set(DEPRECATED_DECLARATIONS_FLAGS)
     endif (CXX_DEPRECATED_DECLARATIONS)
 
-    if(${TP_LOGGER_QT4_NANO_VERSION} EQUAL 0)
+    if(${TP_LOGGER_QT_NANO_VERSION} EQUAL 0)
         set(NOT_RELEASE 0)
-    else(${TP_LOGGER_QT4_NANO_VERSION} EQUAL 0)
+    else(${TP_LOGGER_QT_NANO_VERSION} EQUAL 0)
         set(NOT_RELEASE 1)
-    endif(${TP_LOGGER_QT4_NANO_VERSION} EQUAL 0)
+    endif(${TP_LOGGER_QT_NANO_VERSION} EQUAL 0)
 
     set(desired
         all
@@ -65,7 +75,8 @@ if(CMAKE_COMPILER_IS_GNUCXX)
         non-virtual-dtor)
     set(undesired
         missing-field-initializers
-        unused-parameter)
+        unused-parameter
+        unused-local-typedefs)
     compiler_warnings(CMAKE_CXX_FLAGS_WARNINGS cxx ${NOT_RELEASE} "${desired}" "${undesired}")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_WARNINGS}")
 
@@ -83,7 +94,8 @@ if(CMAKE_COMPILER_IS_GNUCXX)
         init-self)
     set(undesired_c
         missing-field-initializers
-        unused-parameter)
+        unused-parameter
+        unused-local-typedefs)
     compiler_warnings(CMAKE_C_FLAGS_WARNINGS c ${NOT_RELEASE} "${desired_c}" "${undesired_c}")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${CMAKE_C_FLAGS_WARNINGS}")
 
@@ -101,7 +113,7 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 
     # Compiler coverage
     set(ENABLE_COMPILER_COVERAGE OFF CACHE BOOL "Enables compiler coverage tests through lcov. Enabling this option will build
-Telepathy-Qt4 as a static library.")
+Telepathy-Qt as a static library.")
 
     if (ENABLE_COMPILER_COVERAGE)
         check_cxx_accepts_flag("-fprofile-arcs -ftest-coverage" CXX_FPROFILE_ARCS)
@@ -113,7 +125,7 @@ Telepathy-Qt4 as a static library.")
             if (NOT LCOV OR NOT LCOV_GENHTML)
                 message(FATAL_ERROR "You chose to use compiler coverage tests, but lcov or genhtml could not be found in your PATH.")
             else (NOT LCOV OR NOT LCOV_GENHTML)
-                message(STATUS "Compiler coverage tests enabled - Telepathy-Qt4 will be compiled as a static library")
+                message(STATUS "Compiler coverage tests enabled - Telepathy-Qt will be compiled as a static library")
                 set(COMPILER_COVERAGE_FLAGS "-fprofile-arcs -ftest-coverage")
             endif (NOT LCOV OR NOT LCOV_GENHTML)
         else (CXX_FPROFILE_ARCS AND CXX_FTEST_COVERAGE)

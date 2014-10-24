@@ -176,15 +176,15 @@ ENDFUNCTION (TPQT_CREATE_MOC_COMMAND_TARGET_DEPS)
 
 # add the -i option to QT_GENERATE_MOC
 function(TPQT_GENERATE_MOC_I infile outfile)
-    qt_get_moc_flags(moc_flags)
+    qt5_get_moc_flags(moc_flags)
     get_filename_component(abs_infile ${infile} ABSOLUTE)
-    qt_create_moc_command(${abs_infile} ${outfile} "${moc_flags}" "-i")
+    qt5_create_moc_command(${abs_infile} ${outfile} "${moc_flags}" "-i")
     set_source_files_properties(${outfile} PROPERTIES SKIP_AUTOMOC TRUE)  # dont run automoc on this file
 endfunction(TPQT_GENERATE_MOC_I)
 
 # same as tpqt_generate_moc_i, but lets the caller specify a list of targets which the mocs should depend on
 function(TPQT_GENERATE_MOC_I_TARGET_DEPS infile outfile)
-    qt_get_moc_flags(moc_flags)
+    qt5_get_moc_flags(moc_flags)
     get_filename_component(abs_infile ${infile} ABSOLUTE)
     tpqt_create_moc_command_target_deps(${abs_infile} ${outfile} "${moc_flags}" "-i" ${ARGN})
     set_source_files_properties(${outfile} PROPERTIES SKIP_AUTOMOC TRUE)  # dont run automoc on this file

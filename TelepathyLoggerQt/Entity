@@ -1,0 +1,12 @@
+#ifndef _TelepathyLoggerQt4_Entity_HEADER_GUARD_
+#define _TelepathyLoggerQt4_Entity_HEADER_GUARD_
+
+#ifndef IN_TELEPATHY_LOGGER_QT_HEADER
+#define IN_TELEPATHY_LOGGER_QT_HEADER
+#endif
+
+#include <TelepathyLoggerQt/entity.h>
+
+#undef IN_TELEPATHY_LOGGER_QT_HEADER
+
+#endif

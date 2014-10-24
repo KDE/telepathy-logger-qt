@@ -1,0 +1,12 @@
+#ifndef _TelepathyLoggerQt4_PendingOperation_HEADER_GUARD_
+#define _TelepathyLoggerQt4_PendingOperation_HEADER_GUARD_
+
+#ifndef IN_TELEPATHY_LOGGER_QT_HEADER
+#define IN_TELEPATHY_LOGGER_QT_HEADER
+#endif
+
+#include <TelepathyLoggerQt/pending-operation.h>
+
+#undef IN_TELEPATHY_LOGGER_QT_HEADER
+
+#endif
