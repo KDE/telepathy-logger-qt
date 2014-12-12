@@ -184,15 +184,18 @@ endforeach(moc_src ${telepathy_logger_qt_MOC_SRCS})
 
 # Link
 target_link_libraries(telepathy-logger-qt
+LINK_PUBLIC
     ${QT_QTCORE_LIBRARY}
+    ${TELEPATHY_QT5_LIBRARIES}
+    ${QTGLIB_LIBRARIES}
+LINK_PRIVATE
     ${GLIB2_LIBRARIES}
     ${GOBJECT_LIBRARIES}
     -lgio-2.0
     ${QT_QTDBUS_LIBRARY}
     ${TELEPATHY_GLIB_LIBRARIES}
     ${TELEPATHY_LOGGER_LIBRARIES}
-    ${TELEPATHY_QT5_LIBRARIES}
-    ${QTGLIB_LIBRARIES})
+)
 
 if (ENABLE_COMPILER_COVERAGE)
     target_link_libraries(telepathy-logger-qt gcov)
@@ -223,6 +226,7 @@ else (WIN32)
             LIBRARY DESTINATION ${LIB_INSTALL_DIR} COMPONENT mainlibrary
             ARCHIVE DESTINATION ${LIB_INSTALL_DIR} COMPONENT headers)
 endif (WIN32)
+target_include_directories(telepathy-logger-qt PUBLIC $<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/telepathy-logger-0.2/> ${QTGLIB_INCLUDE_DIR})
 
 # pkg-config file
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/TelepathyLoggerQt.pc.in ${CMAKE_CURRENT_BINARY_DIR}/TelepathyLoggerQt.pc)
