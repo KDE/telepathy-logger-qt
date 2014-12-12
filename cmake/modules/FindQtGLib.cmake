@@ -22,9 +22,9 @@ if (NOT WIN32)
     # in the find_path() and find_library() calls
     find_package(PkgConfig)
     if (QTGLIB_MIN_VERSION)
-        PKG_CHECK_MODULES(PC_QTGLIB QtGLib-2.0>=${QTGLIB_MIN_VERSION})
+        PKG_CHECK_MODULES(PC_QTGLIB Qt5GLib-2.0>=${QTGLIB_MIN_VERSION})
     else (QTGLIB_MIN_VERSION)
-        PKG_CHECK_MODULES(PC_QTGLIB QtGLib-2.0)
+        PKG_CHECK_MODULES(PC_QTGLIB Qt5GLib-2.0)
     endif (QTGLIB_MIN_VERSION)
     set(QTGLIB_DEFINITIONS ${PC_QTGLIB_CFLAGS_OTHER})
 endif (NOT WIN32)
@@ -36,7 +36,7 @@ find_path(QTGLIB_INCLUDE_DIR
    )
 
 find_library(QTGLIB_LIBRARIES 
-   NAMES QtGLib-2.0
+   NAMES Qt5GLib-2.0
    PATHS ${PC_QTGLIB_LIBDIR} ${PC_QTGLIB_LIBRARY_DIRS}
    )
 
