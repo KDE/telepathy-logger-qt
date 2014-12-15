@@ -227,6 +227,8 @@ else (WIN32)
             ARCHIVE DESTINATION ${LIB_INSTALL_DIR} COMPONENT headers)
 endif (WIN32)
 target_include_directories(telepathy-logger-qt PUBLIC $<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/telepathy-logger-0.2/> ${QTGLIB_INCLUDE_DIR})
+set(TELEPATHY_LOGGER_QT_DEFINITIONS  "-fexceptions")
+target_compile_options(telepathy-logger-qt INTERFACE $<INSTALL_INTERFACE:${TELEPATHY_LOGGER_QT_DEFINITIONS}>)
 
 # pkg-config file
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/TelepathyLoggerQt.pc.in ${CMAKE_CURRENT_BINARY_DIR}/TelepathyLoggerQt.pc)
@@ -252,7 +254,6 @@ endmacro(make_install_path_absolute out in)
 # all the following variables are put into TelepathyLoggerQtConfig.cmake, so
 # they are usable by projects using TelepathyLoggerQt.
 make_install_path_absolute(TELEPATHY_LOGGER_QT_INCLUDE_DIR  ${INCLUDE_INSTALL_DIR}/telepathy-logger-0.2)
-set(TELEPATHY_LOGGER_QT_DEFINITIONS  "-fexceptions")
 
 configure_file(TelepathyLoggerQtConfig.cmake.in "${CMAKE_CURRENT_BINARY_DIR}/TelepathyLoggerQtConfig.cmake" @ONLY)
 
