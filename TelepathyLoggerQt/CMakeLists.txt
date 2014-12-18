@@ -208,52 +208,38 @@ set_target_properties(telepathy-logger-qt PROPERTIES
 
 # Install header files
 install(FILES ${telepathy_logger_qt_HEADERS}
-        DESTINATION ${INCLUDE_INSTALL_DIR}/telepathy-logger-0.2/TelepathyLoggerQt
+        DESTINATION ${INCLUDE_DESTINATION}/telepathy-logger-0.2/TelepathyLoggerQt
         COMPONENT headers)
 install(FILES ${telepathy_logger_qt_gen_HEADERS}
-        DESTINATION ${INCLUDE_INSTALL_DIR}/telepathy-logger-0.2/TelepathyLoggerQt/_gen
+        DESTINATION ${INCLUDE_DESTINATION}/telepathy-logger-0.2/TelepathyLoggerQt/_gen
         COMPONENT headers)
 
 # Install the library - watch out for the correct components
 if (WIN32)
     install(TARGETS telepathy-logger-qt
             EXPORT  TelepathyLoggerQtTargets
-            RUNTIME DESTINATION ${LIB_INSTALL_DIR} COMPONENT mainlibrary
-            ARCHIVE DESTINATION ${LIB_INSTALL_DIR} COMPONENT headers)
+            RUNTIME DESTINATION ${LIB_DESTINATION} COMPONENT mainlibrary
+            ARCHIVE DESTINATION ${LIB_DESTINATION} COMPONENT headers)
 else (WIN32)
     install(TARGETS telepathy-logger-qt
             EXPORT  TelepathyLoggerQtTargets
-            LIBRARY DESTINATION ${LIB_INSTALL_DIR} COMPONENT mainlibrary
-            ARCHIVE DESTINATION ${LIB_INSTALL_DIR} COMPONENT headers)
+            LIBRARY DESTINATION ${LIB_DESTINATION} COMPONENT mainlibrary
+            ARCHIVE DESTINATION ${LIB_DESTINATION} COMPONENT headers)
 endif (WIN32)
-target_include_directories(telepathy-logger-qt PUBLIC $<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/telepathy-logger-0.2/> ${QTGLIB_INCLUDE_DIR})
+target_include_directories(telepathy-logger-qt PUBLIC $<INSTALL_INTERFACE:${INCLUDE_DESTINATION}/telepathy-logger-0.2/> ${QTGLIB_INCLUDE_DIR})
 set(TELEPATHY_LOGGER_QT_DEFINITIONS  "-fexceptions")
 target_compile_options(telepathy-logger-qt INTERFACE $<INSTALL_INTERFACE:${TELEPATHY_LOGGER_QT_DEFINITIONS}>)
 
 # pkg-config file
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/TelepathyLoggerQt.pc.in ${CMAKE_CURRENT_BINARY_DIR}/TelepathyLoggerQt.pc)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/TelepathyLoggerQt-uninstalled.pc.in ${CMAKE_CURRENT_BINARY_DIR}/TelepathyLoggerQt-uninstalled.pc)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/TelepathyLoggerQt.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig COMPONENT headers)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/TelepathyLoggerQt.pc DESTINATION ${LIB_DESTINATION}/pkgconfig COMPONENT headers)
 
 # cmake file
 
 include(TpQtMacros)
 # CMake Version and config files
 include(MacroWriteBasicCMakeVersionFile)
-
-
-macro(make_install_path_absolute out in)
-   if (IS_ABSOLUTE "${in}")
-      set(${out} "${in}")
-   else (IS_ABSOLUTE "${in}")
-      set(${out} "\${TELEPATHY_LOGGER_QT_INSTALL_DIR}/${in}")
-   endif (IS_ABSOLUTE "${in}")
-endmacro(make_install_path_absolute out in)
-
-
-# all the following variables are put into TelepathyLoggerQtConfig.cmake, so
-# they are usable by projects using TelepathyLoggerQt.
-make_install_path_absolute(TELEPATHY_LOGGER_QT_INCLUDE_DIR  ${INCLUDE_INSTALL_DIR}/telepathy-logger-0.2)
 
 configure_file(TelepathyLoggerQtConfig.cmake.in "${CMAKE_CURRENT_BINARY_DIR}/TelepathyLoggerQtConfig.cmake" @ONLY)
 
@@ -263,10 +249,10 @@ macro_write_basic_cmake_version_file(${CMAKE_CURRENT_BINARY_DIR}/TelepathyLogger
 
 
 install(EXPORT TelepathyLoggerQtTargets
-        DESTINATION ${LIB_INSTALL_DIR}/cmake/TelepathyLoggerQt
+        DESTINATION ${LIB_DESTINATION}/cmake/TelepathyLoggerQt
         COMPONENT headers)
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/TelepathyLoggerQtConfigVersion.cmake
               ${CMAKE_CURRENT_BINARY_DIR}/TelepathyLoggerQtConfig.cmake
-        DESTINATION ${LIB_INSTALL_DIR}/cmake/TelepathyLoggerQt
+        DESTINATION ${LIB_DESTINATION}/cmake/TelepathyLoggerQt
         COMPONENT headers)

@@ -39,6 +39,7 @@ endif (${TP_LOGGER_QT_NANO_VERSION} EQUAL 0)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
 # This file contains all the needed initialization macros
+include(GNUInstallDirs)
 include(TelepathyDefaults)
 include(FeatureSummary)
 
