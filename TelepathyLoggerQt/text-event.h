@@ -69,11 +69,9 @@ public:
     QList<TextEventPtr> supersedes() const;
 
 private:
-    QTELEPATHYLOGGERQT4_WRAPPER(TextEvent)
+    QTELEPATHYLOGGERQT_WRAPPER(TextEvent, Event)
 };
 
 } //namespace
-
-QTELEPATHYLOGGERQT4_REGISTER_TYPE(Tpl::TextEvent)
 
 #endif

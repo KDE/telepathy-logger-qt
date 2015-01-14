@@ -57,9 +57,11 @@ PendingLogWalkerOperation::~PendingLogWalkerOperation()
 void PendingLogWalkerOperation::start()
 {
     if (mPriv->operation == Rewind) {
-        tpl_log_walker_rewind_async(mPriv->logWalker, mPriv->numEvents,
-                                    (GAsyncReadyCallback) Private::rewindFinished,
-                                    this);
+        tpl_log_walker_rewind_async(
+            TPLoggerQtWrapper::unwrap<TplLogWalker, LogWalker>(mPriv->logWalker),
+            mPriv->numEvents,
+            (GAsyncReadyCallback) Private::rewindFinished,
+            this);
     }
 }
 

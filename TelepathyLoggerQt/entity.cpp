@@ -29,7 +29,7 @@ using namespace Tpl;
 EntityPtr Entity::create(const char *id, EntityType type, const char *alias, const char *avatarToken)
 {
     TplEntity *entity = tpl_entity_new(id, (TplEntityType) type, alias, avatarToken);
-    return EntityPtr::wrap(entity, false);
+    return TPLoggerQtWrapper::wrap<TplEntity, Entity>(entity);
 }
 
 EntityPtr Entity::create(const Tp::ContactPtr & contact, EntityType type)
@@ -49,7 +49,7 @@ EntityPtr Entity::create(const Tp::ContactPtr & contact, EntityType type)
 EntityPtr Entity::create(const char *room_id)
 {
     TplEntity *entity = tpl_entity_new_from_room_id(room_id);
-    return EntityPtr::wrap(entity, false);
+    return TPLoggerQtWrapper::wrap<TplEntity, Entity>(entity, false);
 }
 
 QString Entity::alias() const

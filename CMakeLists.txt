@@ -43,15 +43,19 @@ include(GNUInstallDirs)
 include(TelepathyDefaults)
 include(FeatureSummary)
 
+# This file contains all macros used in the buildsystem
+include(TpQtMacros)
+include(Doxygen)
+include(MacroWriteBasicCMakeVersionFile)
+
+
 # TelepathyLoggerQt specific defines needed to trigger deprecation warnings
 if (CXX_DEPRECATED_DECLARATIONS)
     set(DEPRECATED_DECLARATIONS_FLAGS "${DEPRECATED_DECLARATIONS_FLAGS} -DTELEPATHY_LOGGER_QT_DEPRECATED_WARNINGS")
 endif (CXX_DEPRECATED_DECLARATIONS)
 
-# external dependencies
-
 # Required dependencies
-find_package(Qt5 REQUIRED)
+find_package(Qt5 REQUIRED COMPONENTS Core DBus Network Xml)
 
 set (TELEPATHYQT_MIN_VERSION "0.9.1")
 find_package(TelepathyQt5 ${TELEPATHYQT_MIN_VERSION} REQUIRED)
@@ -59,55 +63,6 @@ set_package_properties(TelepathyQt5 PROPERTIES
                        DESCRIPTION "Qt bindings for Telepathy"
                        URL "http://telepathy.freedesktop.org"
                        TYPE REQUIRED)
-
-# This file contains all macros used in the buildsystem
-include(TpQtMacros)
-
-include(Doxygen)
-include(MacroWriteBasicCMakeVersionFile)
-
-#add_definitions(-DQT_NO_CAST_FROM_ASCII)
-
-set(ENABLE_DEBUG_OUTPUT ON CACHE BOOL "If activated, compiles support for printing debug output to stderr")
-if (ENABLE_DEBUG_OUTPUT)
-    add_definitions(-DENABLE_DEBUG)
-endif (ENABLE_DEBUG_OUTPUT)
-
-# Find python version >= 2.5
-find_package(PythonLibrary REQUIRED)
-set(REQUIRED_PY 2.5)
-if(${PYTHON_SHORT_VERSION} VERSION_GREATER ${REQUIRED_PY} OR ${PYTHON_SHORT_VERSION} VERSION_EQUAL ${REQUIRED_PY})
-    message(STATUS "Python ${PYTHON_SHORT_VERSION} found")
-else(${PYTHON_SHORT_VERSION} VERSION_GREATER ${REQUIRED_PY} OR ${PYTHON_SHORT_VERSION} VERSION_EQUAL ${REQUIRED_PY})
-    message(SEND_ERROR "Python >= ${REQUIRED_PY} is required")
-endif(${PYTHON_SHORT_VERSION} VERSION_GREATER ${REQUIRED_PY} OR ${PYTHON_SHORT_VERSION} VERSION_EQUAL ${REQUIRED_PY})
-set_package_properties(PythonLibrary PROPERTIES
-                       DESCRIPTION "Python Library"
-                       URL "http://www.python.org"
-                       TYPE REQUIRED)
-
-# Check for Qt Glib support
-include(CheckCXXSourceCompiles)
-
-set(CMAKE_REQUIRED_INCLUDES ${Qt5Core_INCLUDE_DIRS})
-set(CMAKE_REQUIRED_DEFINITIONS "")
-set(CMAKE_REQUIRED_FLAGS "")
-
-CHECK_CXX_SOURCE_COMPILES("
-#include <QtCore/QtGlobal>
-int main()
-{
-#if defined(QT_NO_GLIB)
-#error \"Qt was compiled with Glib disabled\"
-#endif
-return 0;
-}"
-QT_GLIB_SUPPORT)
-if (QT_GLIB_SUPPORT)
-    message(STATUS "Qt was compiled with GLib support enabled")
-else ()
-    message(FATAL_ERROR "Qt was not compiled with GLib support enabled")
-endif()
 
 find_package(GLIB2 REQUIRED)
 set_package_properties(GLIB2 PROPERTIES
@@ -139,25 +94,6 @@ set_package_properties(LibXml2 PROPERTIES
                        URL "http://www.xmlsoft.org"
                        TYPE REQUIRED)
 
-find_package(QtGLib REQUIRED)
-set_package_properties(QtGLib PROPERTIES
-                       DESCRIPTION "Qt bindings for GLib, part of QtGStreamer"
-                       URL "http://www.qt-project.org"
-                       TYPE REQUIRED)
-
-set(TELEPATHY_LOGGER_MIN_VERSION 0.8.0)
-find_package(TelepathyLogger ${TELEPATHY_LOGGER_MIN_VERSION} REQUIRED)
-set_package_properties(TelepathyLogger PROPERTIES
-                       DESCRIPTION "Daemon for logging Telepathy conversations"
-                       URL "http://telepathy.freedesktop.org"
-                       TYPE REQUIRED)
-
-add_definitions(-DTPLQT_TPL_VERSION_MAJOR=${TELEPATHY_LOGGER_VERSION_MAJOR})
-add_definitions(-DTPLQT_TPL_VERSION_MINOR=${TELEPATHY_LOGGER_VERSION_MINOR})
-add_definitions(-DTPLQT_TPL_VERSION_PATCH=${TELEPATHY_LOGGER_VERSION_PATCH})
-
-#find_program(GLIB_GENMARSHAL glib-genmarshal)
-
 # Find telepathy-glib
 set(TELEPATHY_GLIB_MIN_VERSION 0.16.0)
 find_package(TelepathyGlib ${TELEPATHY_GLIB_MIN_VERSION} REQUIRED)
@@ -166,16 +102,46 @@ set_package_properties(TelepathyGlib PROPERTIES
                        URL "http://telepathy.freedesktop.org"
                        TYPE REQUIRED)
 
-# Activate debug symbols generation
-#set(CMAKE_CXX_FLAGS "-g -Wall")
+# Find python version >= 2.5
+find_package(PythonLibrary REQUIRED)
+set(REQUIRED_PY 2.5)
+if(${PYTHON_SHORT_VERSION} VERSION_GREATER ${REQUIRED_PY} OR ${PYTHON_SHORT_VERSION} VERSION_EQUAL ${REQUIRED_PY})
+    message(STATUS "Python ${PYTHON_SHORT_VERSION} found")
+else(${PYTHON_SHORT_VERSION} VERSION_GREATER ${REQUIRED_PY} OR ${PYTHON_SHORT_VERSION} VERSION_EQUAL ${REQUIRED_PY})
+    message(SEND_ERROR "Python >= ${REQUIRED_PY} is required")
+endif(${PYTHON_SHORT_VERSION} VERSION_GREATER ${REQUIRED_PY} OR ${PYTHON_SHORT_VERSION} VERSION_EQUAL ${REQUIRED_PY})
+set_package_properties(PythonLibrary PROPERTIES
+                       DESCRIPTION "Python Library"
+                       URL "http://www.python.org"
+                       TYPE REQUIRED)
+
+
+set(TELEPATHY_LOGGER_MIN_VERSION 0.8.0)
+find_package(TelepathyLogger ${TELEPATHY_LOGGER_MIN_VERSION} REQUIRED)
+set_package_properties(TelepathyLogger PROPERTIES
+                       DESCRIPTION "Daemon for logging Telepathy conversations"
+                       URL "http://telepathy.freedesktop.org"
+                       TYPE REQUIRED)
+
+
+add_definitions(-DTPLQT_TPL_VERSION_MAJOR=${TELEPATHY_LOGGER_VERSION_MAJOR})
+add_definitions(-DTPLQT_TPL_VERSION_MINOR=${TELEPATHY_LOGGER_VERSION_MINOR})
+add_definitions(-DTPLQT_TPL_VERSION_PATCH=${TELEPATHY_LOGGER_VERSION_PATCH})
+
+
+set(ENABLE_DEBUG_OUTPUT ON CACHE BOOL "If activated, compiles support for printing debug output to stderr")
+if (ENABLE_DEBUG_OUTPUT)
+    add_definitions(-DENABLE_DEBUG)
+endif (ENABLE_DEBUG_OUTPUT)
 
 include_directories(${CMAKE_SOURCE_DIR}
                     ${CMAKE_BINARY_DIR}
+                    ${GLIB2_INCLUDE_DIR}
+                    ${DBUS_GLIB_INCLUDE_DIR}
+                    ${TELEPATHY_GLIB_INCLUDE_DIR}
                     ${TELEPATHY_QT5_INCLUDE_DIR}
                     ${TELEPATHY_LOGGER_INCLUDE_DIR}
-                    ${TELEPATHY_GLIB_INCLUDE_DIR}
-                    ${GLIB2_INCLUDE_DIR}
-                    ${DBUS_GLIB_INCLUDE_DIR})
+)
 
 # Search codegen to see if it's installed somewhere
 #find_program(CODEGEN_BIN NAMES codegen PATHS /usr/bin /usr/local/bin ~/bin ./codegen ../codegen)

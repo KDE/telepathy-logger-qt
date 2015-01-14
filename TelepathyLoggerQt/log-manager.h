@@ -32,9 +32,9 @@
 || (TPLQT_TPL_VERSION_MAJOR == maj && TPLQT_TPL_VERSION_MINOR == min && TPLQT_TPL_VERSION_PATCH >= patch)
 #endif
 
-#include <QGlib/Object>
 #include <TelepathyLoggerQt/_gen/cli-logger.h>
 #include <TelepathyLoggerQt/Types>
+#include <TelepathyLoggerQt/Object>
 
 namespace Tpl
 {
@@ -43,7 +43,7 @@ namespace Tpl
  * \headerfile log-manager.h <TelepathyLoggerQt/LogManager>
  * \brief The LogManager object allows user to fetch logs and make searches.
  */
-class TELEPATHY_LOGGER_QT_EXPORT LogManager : public QGlib::Object
+class TELEPATHY_LOGGER_QT_EXPORT LogManager : public Tpl::Object
 {
 public:
     /*!
@@ -218,11 +218,9 @@ public:
 #endif
 
 private:
-    QTELEPATHYLOGGERQT4_WRAPPER(LogManager)
+    QTELEPATHYLOGGERQT_WRAPPER(LogManager)
 };
 
 } //namespace
-
-QTELEPATHYLOGGERQT4_REGISTER_TYPE(Tpl::LogManager)
 
 #endif

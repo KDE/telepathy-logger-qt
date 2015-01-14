@@ -24,8 +24,8 @@
 #error IN_TELEPATHY_LOGGER_QT_HEADER
 #endif
 
-#include <QGlib/Object>
 #include <TelepathyLoggerQt/Types>
+#include <TelepathyLoggerQt/Object>
 
 namespace Tpl {
 
@@ -38,7 +38,7 @@ class PendingEvents;
  *
  * \since 0.8.0
  */
-class TELEPATHY_LOGGER_QT_EXPORT LogWalker : public QGlib::Object
+class TELEPATHY_LOGGER_QT_EXPORT LogWalker : public Tpl::Object
 {
   public:
     /**
@@ -88,11 +88,9 @@ class TELEPATHY_LOGGER_QT_EXPORT LogWalker : public QGlib::Object
     PendingOperation* rewind(uint numEvents);
 
   private:
-    QTELEPATHYLOGGERQT4_WRAPPER(LogWalker)
+    QTELEPATHYLOGGERQT_WRAPPER(LogWalker)
 };
 
 } //Tpl
-
-QTELEPATHYLOGGERQT4_REGISTER_TYPE(Tpl::LogWalker)
 
 #endif

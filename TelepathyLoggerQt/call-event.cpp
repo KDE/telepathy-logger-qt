@@ -18,9 +18,10 @@
  */
 
 #include <TelepathyLoggerQt/CallEvent>
-
 #include <TelepathyLoggerQt/Entity>
+
 #include <telepathy-logger/call-event.h>
+#include <telepathy-logger/entity.h>
 
 using namespace Tpl;
 
@@ -40,7 +41,7 @@ QTime CallEvent::duration() const
 EntityPtr CallEvent::endActor() const
 {
     TplEntity * entity = tpl_call_event_get_end_actor(object<TplCallEvent>());
-    return EntityPtr::wrap(entity, true);
+    return TPLoggerQtWrapper::wrap<TplEntity, Entity>(entity, true);
 }
 
 Tp::CallStateChangeReason CallEvent::endReason() const

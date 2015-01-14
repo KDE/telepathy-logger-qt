@@ -19,7 +19,6 @@
 
 #include <TelepathyLoggerQt/pending-clear.h>
 #include <TelepathyLoggerQt/_gen/pending-clear.moc.hpp>
-#include <QGlib/refpointer.h>
 
 #include <TelepathyQt/Account>
 

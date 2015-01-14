@@ -59,11 +59,9 @@ public:
     QString detailedEndReason() const;
 
 private:
-    QTELEPATHYLOGGERQT4_WRAPPER(CallEvent)
+    QTELEPATHYLOGGERQT_WRAPPER(CallEvent, Event)
 };
 
 } //namespace
-
-QTELEPATHYLOGGERQT4_REGISTER_TYPE(Tpl::CallEvent)
 
 #endif

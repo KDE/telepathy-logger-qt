@@ -26,4 +26,4 @@ if (MSVC)
 endif()
 
 add_executable(codegen ${FLEX_analyzer_OUTPUTS} ${BISON_parser_OUTPUTS} generator.cpp)
-target_link_libraries(codegen ${QT_QTCORE_LIBRARY})
+target_link_libraries(codegen Qt5::Core)

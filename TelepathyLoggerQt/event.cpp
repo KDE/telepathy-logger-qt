@@ -52,18 +52,18 @@ Tp::AccountPtr Event::account() const
 EntityPtr Event::sender() const
 {
     TplEntity *entity = tpl_event_get_sender(object<TplEvent>());
-    return EntityPtr::wrap(entity, true);
+    return TPLoggerQtWrapper::wrap<TplEntity, Entity>(entity, true);
 }
 
 EntityPtr Event::receiver() const
 {
     TplEntity *entity = tpl_event_get_receiver(object<TplEvent>());
-    return EntityPtr::wrap(entity, true);
+    return TPLoggerQtWrapper::wrap<TplEntity, Entity>(entity, true);
 }
 
-bool Event::equalTo(const EventPtr & rhs) const
+bool Event::equalTo(const EventPtr& rhs) const
 {
-    return tpl_event_equal (object<TplEvent>(), rhs->object<TplEvent>());
+    return tpl_event_equal(object<TplEvent>(), rhs->object<TplEvent>());
 }
 
 bool Event::operator==(const EventPtr& rhs) const

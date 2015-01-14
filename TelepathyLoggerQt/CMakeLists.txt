@@ -23,7 +23,7 @@ set(TelepathyLoggerQt_CODEGEN_INCLUDES
     -ITelepathyLoggerQt/LogWalker
     -ITelepathyLoggerQt/TextEvent
     -ITelepathyLoggerQt/Types
-    -IQGlib/Quark)
+)
 
 # Add command to generate gen.cpp using codegen
 run_codegen("TelepathyLoggerQt" "${TelepathyLoggerQt_CODEGEN_INCLUDES}" "${TelepathyLoggerQt_CODEGEN_HEADERS}")
@@ -55,7 +55,7 @@ set(telepathy_logger_qt_SRCS
     text-event.cpp
     utils.cpp
     init.cpp
-    ${CMAKE_CURRENT_BINARY_DIR}/gen.cpp)
+)
 
 # Exported headers for Tp-Logger-Qt
 set(telepathy_logger_qt_HEADERS
@@ -66,6 +66,7 @@ set(telepathy_logger_qt_HEADERS
     Init
     LogManager
     LogWalker
+    Object
     PendingDates
     PendingEntities
     PendingEvents
@@ -81,6 +82,7 @@ set(telepathy_logger_qt_HEADERS
     init.h
     log-manager.h
     log-walker.h
+    object.h
     pending-dates.h
     pending-entities.h
     pending-events.h
@@ -185,9 +187,9 @@ endforeach(moc_src ${telepathy_logger_qt_MOC_SRCS})
 # Link
 target_link_libraries(telepathy-logger-qt
 LINK_PUBLIC
-    ${QT_QTCORE_LIBRARY}
+    Qt5::Core
+    Qt5::DBus
     ${TELEPATHY_QT5_LIBRARIES}
-    ${QTGLIB_LIBRARIES}
 LINK_PRIVATE
     ${GLIB2_LIBRARIES}
     ${GOBJECT_LIBRARIES}
@@ -226,7 +228,7 @@ else (WIN32)
             LIBRARY DESTINATION ${LIB_DESTINATION} COMPONENT mainlibrary
             ARCHIVE DESTINATION ${LIB_DESTINATION} COMPONENT headers)
 endif (WIN32)
-target_include_directories(telepathy-logger-qt PUBLIC $<INSTALL_INTERFACE:${INCLUDE_DESTINATION}/telepathy-logger-0.2/> ${QTGLIB_INCLUDE_DIR})
+target_include_directories(telepathy-logger-qt PUBLIC $<INSTALL_INTERFACE:${INCLUDE_DESTINATION}/telepathy-logger-0.2/> ${GLIB2_INCLUDE_DIR})
 set(TELEPATHY_LOGGER_QT_DEFINITIONS  "-fexceptions")
 target_compile_options(telepathy-logger-qt INTERFACE $<INSTALL_INTERFACE:${TELEPATHY_LOGGER_QT_DEFINITIONS}>)
 

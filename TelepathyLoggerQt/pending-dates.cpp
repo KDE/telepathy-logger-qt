@@ -75,9 +75,10 @@ void PendingDates::start()
 
 void PendingDates::Private::onAccountPrepared(void *logManager, void *result, PendingDates *self)
 {
-    tpl_log_manager_get_dates_async(self->mPriv->manager,
+    tpl_log_manager_get_dates_async(
+        TPLoggerQtWrapper::unwrap<TplLogManager, LogManager>(self->mPriv->manager),
         self->mPriv->tpAccount,
-        self->mPriv->entity,
+        TPLoggerQtWrapper::unwrap<TplEntity, Entity>(self->mPriv->entity),
         self->mPriv->typeMask,
         (GAsyncReadyCallback) Private::callback,
         self);

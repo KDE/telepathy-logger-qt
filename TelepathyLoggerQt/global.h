@@ -23,7 +23,8 @@
 #error IN_TELEPATHY_LOGGER_QT_HEADER
 #endif
 
-#include <QGlib/Global>
+#include <QSharedPointer>
+#include <glib-object.h>
 
 /* defined by cmake when building this library */
 #if defined(BUILDING_TELEPATHY_LOGGER_QT4)
@@ -39,37 +40,48 @@
 # define TELEPATHY_LOGGER_QT_NO_EXPORT
 #endif
 
-#define QTELEPATHYLOGGERQT4_REGISTER_TYPE(T) \
-    QGLIB_REGISTER_TYPE_WITH_EXPORT_MACRO(T, TELEPATHY_LOGGER_QT_EXPORT)
-
-
-#define QTELEPATHYLOGGERQT4_WRAPPER_TPLCLASS_DECLARATION(Class) \
-    typedef struct _Tpl##Class Tpl##Class;
-
-#define QTELEPATHYLOGGERQT4_WRAPPER_REFPOINTER_DECLARATION(Class) \
-    namespace Tpl { \
-        class Class; \
-        typedef QGlib::RefPointer<Class> Class##Ptr; \
+class TPLoggerQtWrapper {
+  public:
+    template<typename TplClass, typename TplQtClass>
+    static QSharedPointer<TplQtClass> wrap(TplClass *tplObj, bool ref = false) {
+        return QSharedPointer<TplQtClass>(new TplQtClass(tplObj, ref));
+    }
+    template<typename TplClass, typename TplQtClass>
+    static TplQtClass* wrap2(TplClass *tplObj, bool ref = false) {
+        return new TplQtClass(tplObj, ref);
     }
 
-#define QTELEPATHYLOGGERQT4_WRAPPER_DECLARATION(Class) \
-    QTELEPATHYLOGGERQT4_WRAPPER_TPLCLASS_DECLARATION(Class) \
-    QTELEPATHYLOGGERQT4_WRAPPER_REFPOINTER_DECLARATION(Class)
+    template<typename TplClass, typename TplQtClass>
+    static TplClass* unwrap(const QSharedPointer<TplQtClass> &obj) {
+        return reinterpret_cast<TplClass*>(obj->m_tplPtr);
+    }
+    template<typename TplClass, typename TplQtClass>
+    static TplClass* unwrap(TplQtClass *obj) {
+        return reinterpret_cast<TplClass*>(obj->m_tplPtr);
+    }
+};
 
-QTELEPATHYLOGGERQT4_WRAPPER_DECLARATION(CallEvent)
-QTELEPATHYLOGGERQT4_WRAPPER_DECLARATION(Entity)
-QTELEPATHYLOGGERQT4_WRAPPER_DECLARATION(Event)
-QTELEPATHYLOGGERQT4_WRAPPER_DECLARATION(TextEvent)
-QTELEPATHYLOGGERQT4_WRAPPER_DECLARATION(LogManager)
-QTELEPATHYLOGGERQT4_WRAPPER_DECLARATION(LogWalker)
+#define QTELEPATHYLOGGERQT_WRAPPER_IMPL_BASECLASS(Class) \
+  protected: \
+    friend class ::TPLoggerQtWrapper; \
+    Class(struct _Tpl##Class *tplPtr, bool ref): \
+        Object(tplPtr, ref) \
+    { }
 
-#undef QTELEPATHYLOGGERQT4_WRAPPER_DECLARATION
-#undef QTELEPATHYLOGGERQT4_WRAPPER_REFPOINTER_DECLARATION
-#undef QTELEPATHYLOGGERQT4_WRAPPER_TPLCLASS_DECLARATION
+#define QTELEPATHYLOGGERQT_WRAPPER_IMPL_SUBCLASSED(Class, Superclass) \
+  friend class ::TPLoggerQtWrapper; \
+  private: \
+    Class(struct _Tpl##Class *tplPtr, bool ref): \
+        Superclass(reinterpret_cast<struct _Tpl##Superclass*>(tplPtr), ref) \
+    { }
 
 
-#define QTELEPATHYLOGGERQT4_WRAPPER(Class) \
-    QGLIB_WRAPPER_DECLARATION_MACRO(Class, Class, Tpl, Class)
+#define QTELEPATHYLOGGERQT_WRAPPER_GET_IMPL(_1, _2, NAME, ...) NAME
 
+#define QTELEPATHYLOGGERQT_WRAPPER(...) \
+    QTELEPATHYLOGGERQT_WRAPPER_GET_IMPL( \
+        __VA_ARGS__, \
+        QTELEPATHYLOGGERQT_WRAPPER_IMPL_SUBCLASSED, \
+        QTELEPATHYLOGGERQT_WRAPPER_IMPL_BASECLASS)(__VA_ARGS__)
 
 #endif

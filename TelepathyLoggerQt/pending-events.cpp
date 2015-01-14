@@ -30,6 +30,7 @@
 #include <TelepathyLoggerQt/utils.h>
 #include <TelepathyLoggerQt/_gen/pending-events.moc.hpp>
 #include <glib.h>
+
 #include <telepathy-logger/log-manager.h>
 #include <telepathy-logger/event.h>
 #include <telepathy-logger/text-event.h>
@@ -121,16 +122,21 @@ void PendingEvents::start()
         GQuark features[] = { TP_ACCOUNT_FEATURE_CORE, 0 };
         tp_proxy_prepare_async(mPriv->tpAccount, features, (GAsyncReadyCallback) Private::onAccountPrepared, this);
     } else if (mPriv->logWalker) {
-        tpl_log_walker_get_events_async(mPriv->logWalker, mPriv->numEvents, (GAsyncReadyCallback) Private::callback, this);
+        tpl_log_walker_get_events_async(
+            TPLoggerQtWrapper::unwrap<TplLogWalker, LogWalker>(mPriv->logWalker),
+            mPriv->numEvents,
+            (GAsyncReadyCallback) Private::callback,
+            this);
     }
 }
 
 void PendingEvents::Private::onAccountPrepared(void *logManager, void *result, PendingEvents *self)
 {
     if (self->mPriv->filtered) {
-        tpl_log_manager_get_filtered_events_async(self->mPriv->manager,
+        tpl_log_manager_get_filtered_events_async(
+            TPLoggerQtWrapper::unwrap<TplLogManager, LogManager>(self->mPriv->manager),
             self->mPriv->tpAccount,
-            self->mPriv->entity,
+            TPLoggerQtWrapper::unwrap<TplEntity, Entity>(self->mPriv->entity),
             self->mPriv->typeMask,
             self->mPriv->numEvents,
             self->mPriv->filterFunction ? (TplLogEventFilter) Private::eventFilterMethod : 0,
@@ -142,9 +148,10 @@ void PendingEvents::Private::onAccountPrepared(void *logManager, void *result, P
             self->mPriv->date.day(),
             (GDateMonth) self->mPriv->date.month(),
             self->mPriv->date.year());
-        tpl_log_manager_get_events_for_date_async(self->mPriv->manager,
+        tpl_log_manager_get_events_for_date_async(
+            TPLoggerQtWrapper::unwrap<TplLogManager, LogManager>(self->mPriv->manager),
             self->mPriv->tpAccount,
-            self->mPriv->entity,
+            TPLoggerQtWrapper::unwrap<TplEntity, Entity>(self->mPriv->entity),
             self->mPriv->typeMask,
             gdate,
             (GAsyncReadyCallback) Private::callback,
@@ -209,13 +216,13 @@ void PendingEvents::Private::callback(void *caller, void *result, PendingEvents 
 void PendingEvents::Private::storeAndFreeEvent(TplEvent *tplEvent, PendingEvents *self)
 {
     if (TPL_IS_TEXT_EVENT(tplEvent)) {
-        TextEventPtr eventPtr = TextEventPtr::wrap(TPL_TEXT_EVENT(tplEvent), true);
+        TextEventPtr eventPtr = TPLoggerQtWrapper::wrap<TplTextEvent, TextEvent>(TPL_TEXT_EVENT(tplEvent), true);
         self->mPriv->events << eventPtr;
     } else if (TPL_IS_CALL_EVENT(tplEvent)) {
-        CallEventPtr eventPtr  = CallEventPtr::wrap(TPL_CALL_EVENT(tplEvent), true);
+        CallEventPtr eventPtr  = TPLoggerQtWrapper::wrap<TplCallEvent, CallEvent>(TPL_CALL_EVENT(tplEvent), true);
         self->mPriv->events << eventPtr;
     } else if (TPL_IS_EVENT(tplEvent)) {
-        EventPtr eventPtr = EventPtr::wrap(TPL_EVENT(tplEvent), true);
+        EventPtr eventPtr = TPLoggerQtWrapper::wrap<TplEvent, Event>(TPL_EVENT(tplEvent), true);
         self->mPriv->events << eventPtr;
     }
 
@@ -229,5 +236,5 @@ gboolean PendingEvents::Private::eventFilterMethod(TplEvent *event, gpointer *us
         return FALSE;
     }
 
-    return self->mPriv->filterFunction(EventPtr::wrap(event, true), self->mPriv->filterFunctionUserData);
+    return self->mPriv->filterFunction(TPLoggerQtWrapper::wrap<TplEvent, Event>(event, true), self->mPriv->filterFunctionUserData);
 }

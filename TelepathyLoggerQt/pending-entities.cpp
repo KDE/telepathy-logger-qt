@@ -71,7 +71,8 @@ void PendingEntities::start()
 
 void PendingEntities::Private::onAccountPrepared(void *logManager, void *result, PendingEntities *self)
 {
-    tpl_log_manager_get_entities_async(self->mPriv->manager,
+    tpl_log_manager_get_entities_async(
+        TPLoggerQtWrapper::unwrap<TplLogManager, LogManager>(self->mPriv->manager),
         self->mPriv->tpAccount,
         (GAsyncReadyCallback) Private::callback,
         self);
@@ -125,7 +126,7 @@ void PendingEntities::Private::callback(void *logManager, void *result, PendingE
     GList *i;
     for (i = entities; i; i = i->next) {
         TplEntity * item = (TplEntity *) i->data;
-        self->mPriv->entities << EntityPtr::wrap(item, true);
+        self->mPriv->entities << TPLoggerQtWrapper::wrap<TplEntity, Entity>(item, true);
     }
 
     g_list_foreach(entities, (GFunc) g_object_unref, NULL);
