@@ -21,13 +21,11 @@
 #ifndef _TelepathyLoggerQt_search_hit_h_HEADER_GUARD_
 #define _TelepathyLoggerQt_search_hit_h_HEADER_GUARD_
 
-#ifndef IN_TELEPATHY_LOGGER_QT_HEADER
-#error IN_TELEPATHY_LOGGER_QT_HEADER
-#endif
+#include "entity.h"
+
+#include <TelepathyLoggerQt_export.h>
 
 #include <TelepathyQt/Types>
-#include <TelepathyLoggerQt/PendingOperation>
-#include <TelepathyLoggerQt/Entity>
 
 #include <QtCore/QSharedDataPointer>
 

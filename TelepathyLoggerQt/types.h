@@ -19,10 +19,6 @@
 #ifndef _TelepathyLoggerQt_types_h_HEADER_GUARD_
 #define _TelepathyLoggerQt_types_h_HEADER_GUARD_
 
-#ifndef IN_TELEPATHY_LOGGER_QT_HEADER
-#error IN_TELEPATHY_LOGGER_QT_HEADER
-#endif
-
 #include <TelepathyQt/Types>
 #include <QtCore/QList>
 #include <QtCore/QDate>
@@ -100,6 +96,6 @@ struct _TplLogWalker;
 struct _TplTextEvent;
 
 
-#include <TelepathyLoggerQt/Global>
+#include "global.h"
 
 #endif

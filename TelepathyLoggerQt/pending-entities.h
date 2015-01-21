@@ -21,12 +21,10 @@
 #ifndef _TelepathyLoggerQt_pending_entities_h_HEADER_GUARD_
 #define _TelepathyLoggerQt_pending_entities_h_HEADER_GUARD_
 
-#ifndef IN_TELEPATHY_LOGGER_QT_HEADER
-#error IN_TELEPATHY_LOGGER_QT_HEADER
-#endif
+#include "pending-operation.h"
+#include "types.h"
 
-#include <TelepathyLoggerQt/PendingOperation>
-#include <TelepathyLoggerQt/Types>
+#include <TelepathyLoggerQt_export.h>
 
 namespace Tpl
 {

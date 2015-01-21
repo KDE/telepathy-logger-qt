@@ -18,17 +18,18 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include <TelepathyLoggerQt/PendingSearch>
+#include "pending-search.h"
+#include "entity.h"
+#include "log-manager.h"
+#include "search-hit.h"
+#include "utils.h"
 
 #include <QtCore/QDebug>
+
 #include <TelepathyQt/Account>
-#include <TelepathyLoggerQt/Entity>
-#include <TelepathyLoggerQt/LogManager>
-#include <TelepathyLoggerQt/SearchHit>
-#include <TelepathyLoggerQt/utils.h>
-#include <TelepathyLoggerQt/_gen/pending-search.moc.hpp>
-#include <glib.h>
 #include <telepathy-logger/log-manager.h>
+
+#include <glib.h>
 
 using namespace Tpl;
 

@@ -18,14 +18,13 @@
  */
 
 #include "pending-log-walker-operation.h"
+#include "log-walker.h"
+#include "utils.h"
 
-#include <TelepathyLoggerQt/LogWalker>
-#include <TelepathyLoggerQt/_gen/pending-log-walker-operation.moc.hpp>
 #include <TelepathyQt/Constants>
 
 #include <telepathy-logger/log-walker.h>
 
-#include "utils.h"
 
 using namespace Tpl;
 

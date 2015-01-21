@@ -20,8 +20,10 @@
 #ifndef _TelepathyLoggerQt_pending_log_walker_operation_h_HEADER_GUARD_
 #define _TelepathyLoggerQt_pending_log_walker_operation_h_HEADER_GUARD_
 
-#include <TelepathyLoggerQt/PendingOperation>
-#include <TelepathyLoggerQt/Types>
+#include "pending-operation.h"
+#include "types.h"
+
+#include <TelepathyLoggerQt_export.h>
 
 namespace Tpl {
 

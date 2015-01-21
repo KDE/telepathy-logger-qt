@@ -20,11 +20,10 @@
 #ifndef _TelepathyLoggerQt_text_event_h_HEADER_GUARD_
 #define _TelepathyLoggerQt_text_event_h_HEADER_GUARD_
 
-#ifndef IN_TELEPATHY_LOGGER_QT_HEADER
-#error IN_TELEPATHY_LOGGER_QT_HEADER
-#endif
+#include "event.h"
 
-#include <TelepathyLoggerQt/Event>
+#include <TelepathyLoggerQt_export.h>
+
 #include <TelepathyQt/Constants>
 
 namespace Tpl

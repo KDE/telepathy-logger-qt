@@ -19,9 +19,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include <TelepathyLoggerQt/PendingOperation>
+#include "pending-operation.h"
 
-#include <TelepathyLoggerQt/_gen/pending-operation.moc.hpp>
 #include <QtCore/QDebug>
 #include <QtCore/QTimer>
 

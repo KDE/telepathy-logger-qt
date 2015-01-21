@@ -18,11 +18,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <TelepathyLoggerQt/Event>
+#include "event.h"
+#include "entity.h"
+#include "utils.h"
 
 #include <TelepathyQt/Account>
-#include <TelepathyLoggerQt/Entity>
-#include <TelepathyLoggerQt/utils.h>
+
 #include <telepathy-logger/event.h>
 
 using namespace Tpl;

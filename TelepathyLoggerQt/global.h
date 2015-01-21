@@ -19,28 +19,12 @@
 #ifndef _TelepathyLoggerQt_global_h_HEADER_GUARD_
 #define _TelepathyLoggerQt_global_h_HEADER_GUARD_
 
-#ifndef IN_TELEPATHY_LOGGER_QT_HEADER
-#error IN_TELEPATHY_LOGGER_QT_HEADER
-#endif
-
 #include <QSharedPointer>
 #include <glib-object.h>
 
-/* defined by cmake when building this library */
-#if defined(BUILDING_TELEPATHY_LOGGER_QT4)
-# define TELEPATHY_LOGGER_QT_EXPORT Q_DECL_EXPORT
-#else
-# define TELEPATHY_LOGGER_QT_EXPORT Q_DECL_IMPORT
-#endif
+#include <TelepathyLoggerQt_export.h>
 
-#if !defined(Q_OS_WIN) && !defined(Q_CC_NOKIAX86) && \
-    !defined(Q_CC_RVCT) && defined(QT_VISIBILITY_AVAILABLE)
-# define TELEPATHY_LOGGER_QT_NO_EXPORT __attribute__((visibility("hidden")))
-#else
-# define TELEPATHY_LOGGER_QT_NO_EXPORT
-#endif
-
-class TPLoggerQtWrapper {
+class TELEPATHY_LOGGER_QT_EXPORT TPLoggerQtWrapper {
   public:
     template<typename TplClass, typename TplQtClass>
     static QSharedPointer<TplQtClass> wrap(TplClass *tplObj, bool ref = false) {

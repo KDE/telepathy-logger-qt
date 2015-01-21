@@ -21,20 +21,19 @@
 #ifndef _TelepathyLoggerQt_log_manager_h_HEADER_GUARD_
 #define _TelepathyLoggerQt_log_manager_h_HEADER_GUARD_
 
-#ifndef IN_TELEPATHY_LOGGER_QT_HEADER
-#error IN_TELEPATHY_LOGGER_QT_HEADER
-#endif
+#include <TelepathyLoggerQt_export.h>
+#include <TelepathyLogger_version.h>
 
+// Check TelepathyLogger version
 #ifndef TPLQT_TPL_IS_VERSION
 #define TPLQT_TPL_IS_VERSION(maj, min, patch) \
-   (TPLQT_TPL_VERSION_MAJOR > maj) \
-|| (TPLQT_TPL_VERSION_MAJOR == maj && TPLQT_TPL_VERSION_MINOR > min) \
-|| (TPLQT_TPL_VERSION_MAJOR == maj && TPLQT_TPL_VERSION_MINOR == min && TPLQT_TPL_VERSION_PATCH >= patch)
+   (TelepathyLogger_VERSION_MAJOR > maj) \
+|| (TelepathyLogger_VERSION_MAJOR == maj && TelepathyLogger_VERSION_MINOR > min) \
+|| (TelepathyLogger_VERSION_MAJOR == maj && TelepathyLogger_VERSION_MINOR == min && TelepathyLogger_VERSION_PATCH >= patch)
 #endif
 
-#include <TelepathyLoggerQt/_gen/cli-logger.h>
-#include <TelepathyLoggerQt/Types>
-#include <TelepathyLoggerQt/Object>
+#include "types.h"
+#include "object.h"
 
 namespace Tpl
 {

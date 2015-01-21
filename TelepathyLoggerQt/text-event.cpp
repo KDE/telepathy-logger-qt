@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <TelepathyLoggerQt/TextEvent>
+#include "text-event.h"
 
 #include <telepathy-logger/text-event.h>
 

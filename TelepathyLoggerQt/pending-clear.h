@@ -21,13 +21,16 @@
 #ifndef _TelepathyLoggerQt_pending_log_manager_h_HEADER_GUARD_
 #define _TelepathyLoggerQt_pending_log_manager_h_HEADER_GUARD_
 
-#include <TelepathyLoggerQt/LogManager>
-#include <TelepathyLoggerQt/PendingOperation>
+#include "pending-operation.h"
+
+#include <TelepathyLoggerQt_export.h>
+
+#include <TelepathyQt/Types>
 
 namespace Tpl
 {
 
-class Logger;
+class LoggerInterface;
 
 /**
  * \internal

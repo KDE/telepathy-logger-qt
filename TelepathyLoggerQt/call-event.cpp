@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <TelepathyLoggerQt/CallEvent>
-#include <TelepathyLoggerQt/Entity>
+#include "call-event.h"
+#include "entity.h"
 
 #include <telepathy-logger/call-event.h>
 #include <telepathy-logger/entity.h>

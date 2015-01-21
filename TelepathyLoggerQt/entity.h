@@ -20,12 +20,9 @@
 #ifndef _TelepathyLoggerQt_entity_h_HEADER_GUARD_
 #define _TelepathyLoggerQt_entity_h_HEADER_GUARD_
 
-#ifndef IN_TELEPATHY_LOGGER_QT_HEADER
-#error IN_TELEPATHY_LOGGER_QT_HEADER
-#endif
-
-#include <TelepathyLoggerQt/Object>
-#include <TelepathyLoggerQt/Types>
+#include "object.h"
+#include "types.h"
+#include <TelepathyLoggerQt_export.h>
 
 namespace Tpl
 {

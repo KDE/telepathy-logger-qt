@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <TelepathyLoggerQt/utils.h>
+#include "utils.h"
 
 #include <TelepathyQt/AccountManager>
 #include <TelepathyQt/Connection>

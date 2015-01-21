@@ -17,8 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <TelepathyLoggerQt/pending-clear.h>
-#include <TelepathyLoggerQt/_gen/pending-clear.moc.hpp>
+#include "pending-clear.h"
+#include "entity.h"
+#include "_gen/cli-logger.h"
 
 #include <TelepathyQt/Account>
 

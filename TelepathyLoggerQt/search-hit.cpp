@@ -19,10 +19,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include <TelepathyLoggerQt/SearchHit>
+#include "search-hit.h"
+#include "entity.h"
 
 #include <TelepathyQt/Account>
-#include <TelepathyLoggerQt/Entity>
+
 #include <QDate>
 
 using namespace Tpl;

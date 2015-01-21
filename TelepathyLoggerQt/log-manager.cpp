@@ -18,25 +18,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <TelepathyLoggerQt/LogManager>
+#include "log-manager.h"
+#include "entity.h"
+#include "log-walker.h"
+#include "pending-dates.h"
+#include "pending-entities.h"
+#include "pending-events.h"
+#include "pending-search.h"
+#include "pending-clear.h"
+#include "utils.h"
 
 #include <TelepathyQt/Account>
 #include <TelepathyQt/AccountManager>
-#include <TelepathyLoggerQt/Entity>
-#include <TelepathyLoggerQt/LogWalker>
-#include <TelepathyLoggerQt/PendingDates>
-#include <TelepathyLoggerQt/PendingEntities>
-#include <TelepathyLoggerQt/PendingEvents>
-#include <TelepathyLoggerQt/PendingSearch>
-#include <TelepathyLoggerQt/pending-clear.h>
-#include <TelepathyLoggerQt/utils.h>
 
 #include <telepathy-logger/log-manager.h>
 #include <telepathy-logger/entity.h>
 #include <telepathy-glib/account.h>
 
-#include <_gen/cli-logger-body.hpp>
-#include <_gen/cli-logger.moc.hpp>
+#include "_gen/cli-logger.h"
+#include "_gen/cli-logger-body.hpp"
 
 using namespace Tpl;
 

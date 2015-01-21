@@ -17,10 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <TelepathyLoggerQt/LogWalker>
-#include <TelepathyLoggerQt/Types>
-#include <TelepathyLoggerQt/PendingEvents>
-
+#include "log-walker.h"
+#include "types.h"
+#include "pending-events.h"
 #include "pending-log-walker-operation.h"
 
 #include <telepathy-logger/log-walker.h>

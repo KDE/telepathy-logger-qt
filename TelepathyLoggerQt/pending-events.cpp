@@ -18,23 +18,24 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include <TelepathyLoggerQt/PendingEvents>
+#include "pending-events.h"
+#include "log-manager.h"
+#include "log-walker.h"
+#include "call-event.h"
+#include "entity.h"
+#include "text-event.h"
+#include "utils.h"
 
 #include <QtCore/QDebug>
+
 #include <TelepathyQt/Account>
-#include <TelepathyLoggerQt/LogManager>
-#include <TelepathyLoggerQt/LogWalker>
-#include <TelepathyLoggerQt/CallEvent>
-#include <TelepathyLoggerQt/Entity>
-#include <TelepathyLoggerQt/TextEvent>
-#include <TelepathyLoggerQt/utils.h>
-#include <TelepathyLoggerQt/_gen/pending-events.moc.hpp>
-#include <glib.h>
 
 #include <telepathy-logger/log-manager.h>
 #include <telepathy-logger/event.h>
 #include <telepathy-logger/text-event.h>
 #include <telepathy-logger/call-event.h>
+
+#include <glib.h>
 
 using namespace Tpl;
 

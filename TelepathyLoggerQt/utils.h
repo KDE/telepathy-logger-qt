@@ -19,19 +19,15 @@
 #ifndef _TelepathyLoggerQt_utils_h_HEADER_GUARD_
 #define _TelepathyLoggerQt_utils_h_HEADER_GUARD_
 
-#include <TelepathyLoggerQt/Global>
+#include "global.h"
+
+#include <TelepathyLoggerQt_export.h>
+
 #include <TelepathyQt/Types>
 #include <telepathy-glib/account-manager.h>
 #include <telepathy-glib/account.h>
-#include <QtCore/QDebug>
 
-#if __GNUC__ >= 2
-#  define __func__ __PRETTY_FUNCTION__
-#elif __STDC_VERSION__ >= 199901L
-#  define __func__ __FUNCTION__
-#else
-#  define __func__ "<unknown>"
-#endif
+#include <QtCore/QDebug>
 
 namespace Tpl {
 
