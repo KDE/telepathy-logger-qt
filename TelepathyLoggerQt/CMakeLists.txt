@@ -1,33 +1,3 @@
-file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/_gen")
-
-set(TelepathyLoggerQt_CODEGEN_HEADERS
-    call-event.h
-    entity.h
-    event.h
-    log-manager.h
-    log-walker.h
-    text-event.h
-    types.h)
-
-set(TelepathyLoggerQt_CODEGEN_INCLUDES
-    -Itelepathy-logger/call-event.h
-    -Itelepathy-logger/entity.h
-    -Itelepathy-logger/log-manager.h
-    -Itelepathy-logger/log-walker.h
-    -Itelepathy-logger/event.h
-    -Itelepathy-logger/text-event.h
-    -ITelepathyLoggerQt/CallEvent
-    -ITelepathyLoggerQt/Entity
-    -ITelepathyLoggerQt/Event
-    -ITelepathyLoggerQt/LogManager
-    -ITelepathyLoggerQt/LogWalker
-    -ITelepathyLoggerQt/TextEvent
-    -ITelepathyLoggerQt/Types
-)
-
-# Add command to generate gen.cpp using codegen
-run_codegen("TelepathyLoggerQt" "${TelepathyLoggerQt_CODEGEN_INCLUDES}" "${TelepathyLoggerQt_CODEGEN_HEADERS}")
-
 # Set the required flags found in TelepathyDefaults
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${VISIBILITY_HIDDEN_FLAGS} ${COMPILER_COVERAGE_FLAGS} ${DEPRECATED_DECLARATIONS_FLAGS}")
 set(LD_FLAGS "${LD_FLAGS} ${VISIBILITY_HIDDEN_FLAGS} ${COMPILER_COVERAGE_FLAGS} ${DEPRECATED_DECLARATIONS_FLAGS}")
