@@ -21,6 +21,7 @@ set(telepathy_logger_qt_SRCS
     text-event.cpp
     utils.cpp
     init.cpp
+    object.cpp
 )
 
 

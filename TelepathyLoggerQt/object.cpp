@@ -16,34 +16,25 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef _TelepathyLoggerQt_object_h_HEADER_GUARD_
-#define _TelepathyLoggerQt_object_h_HEADER_GUARD_
 
-#include "types.h"
+#include "object.h"
 
-#include <TelepathyLoggerQt_export.h>
+#include <glib-object.h>
 
 namespace Tpl
 {
 
-class TELEPATHY_LOGGER_QT_EXPORT Object
+Object::Object(void *tplPtr, bool ref):
+    m_tplPtr(tplPtr)
 {
-public:
-    Object(void *tplPtr, bool ref = false);
-
-    virtual ~Object();
-
-protected:
-    template<typename T>
-    T* object() const {
-        return reinterpret_cast<T*>(m_tplPtr);
+    if (ref) {
+        g_object_ref(G_OBJECT(m_tplPtr));
     }
+}
 
-private:
-    friend class ::TPLoggerQtWrapper;
-    void *m_tplPtr;
-};
+Object::~Object()
+{
+    g_object_unref(G_OBJECT(m_tplPtr));
+}
 
-} //namespace
-
-#endif
+}

@@ -20,7 +20,6 @@
 #define _TelepathyLoggerQt_global_h_HEADER_GUARD_
 
 #include <QSharedPointer>
-#include <glib-object.h>
 
 #include <TelepathyLoggerQt_export.h>
 
