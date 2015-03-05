@@ -1,5 +1,5 @@
 /*
- * This file is part of TelepathyLoggerQt4
+ * This file is part of TelepathyLoggerQt
  *
  * Copyright (C) 2011 Collabora Ltd. <http://www.collabora.co.uk/>
  *
@@ -19,7 +19,7 @@
 
 #include "tpl-tool.h"
 #include <tools/_gen/tpl-tool.moc.hpp>
-#include <TelepathyLoggerQt4/utils.h>
+#include <TelepathyLoggerQt/utils.h>
 #include <QApplication>
 #include <TelepathyQt/Account>
 #include <TelepathyQt/AccountSet>
@@ -27,16 +27,16 @@
 #include <TelepathyQt/ContactManager>
 #include <TelepathyQt/Connection>
 #include <TelepathyQt/PendingReady>
-#include <TelepathyLoggerQt4/Entity>
-#include <TelepathyLoggerQt4/Event>
-#include <TelepathyLoggerQt4/TextEvent>
-#include <TelepathyLoggerQt4/CallEvent>
-#include <TelepathyLoggerQt4/LogManager>
-#include <TelepathyLoggerQt4/PendingDates>
-#include <TelepathyLoggerQt4/PendingEntities>
-#include <TelepathyLoggerQt4/PendingEvents>
-#include <TelepathyLoggerQt4/PendingSearch>
-#include <TelepathyLoggerQt4/Init>
+#include <TelepathyLoggerQt/Entity>
+#include <TelepathyLoggerQt/Event>
+#include <TelepathyLoggerQt/TextEvent>
+#include <TelepathyLoggerQt/CallEvent>
+#include <TelepathyLoggerQt/LogManager>
+#include <TelepathyLoggerQt/PendingDates>
+#include <TelepathyLoggerQt/PendingEntities>
+#include <TelepathyLoggerQt/PendingEvents>
+#include <TelepathyLoggerQt/PendingSearch>
+#include <TelepathyLoggerQt/Init>
 #include <glib-object.h>
 #include <QGst/Init>
 #include <QDebug>
@@ -46,7 +46,7 @@
 TplToolApplication::TplToolApplication(int &argc, char **argv)
     : QCoreApplication(argc, argv)
 {
-    debugfn();
+    qDebug();
 
     mAccountManager = Tp::AccountManager::create();
     connect(mAccountManager->becomeReady(Tp::AccountManager::FeatureCore),
@@ -57,7 +57,7 @@ TplToolApplication::TplToolApplication(int &argc, char **argv)
 
 Tp::AccountPtr TplToolApplication::accountPtr(const QString &id)
 {
-    debugfn();
+    qDebug();
 
     mAccountPtr = Tpl::Utils::instance()->accountPtr(id);
     if (!mAccountPtr->isValid()) {
@@ -74,14 +74,14 @@ Tp::AccountPtr TplToolApplication::accountPtr(const QString &id)
 
 Tpl::EntityPtr TplToolApplication::entityPtr(const QString &id)
 {
-    debugfn();
+    qDebug();
 
     return Tpl::Entity::create(id.toUtf8(), Tpl::EntityTypeContact, NULL, NULL);
 }
 
 bool TplToolApplication::parseArgs1()
 {
-    debugfn();
+    qDebug();
 
     QStringList args = arguments();
 
@@ -114,7 +114,7 @@ bool TplToolApplication::parseArgs1()
         return true;
     } else if (args.size() == 3 && args.at(1) == "search") {
         Tpl::PendingSearch *ps = logManager->search(args.at(2), Tpl::EventTypeMaskAny);
-        debugfn() << "PendingSearch=" << ps;
+        qDebug() << "PendingSearch=" << ps;
         if (!ps) {
             qWarning() << "Error in search";
             this->exit(-1);
@@ -148,7 +148,7 @@ bool TplToolApplication::parseArgs1()
 
 bool TplToolApplication::parseArgs2()
 {
-    debugfn();
+    qDebug();
 
     QStringList args = arguments();
 
@@ -181,7 +181,7 @@ bool TplToolApplication::parseArgs2()
         return true;
     } else if (args.at(1) == "entities") {
         Tpl::PendingEntities *pe = logManager->queryEntities(mAccountPtr);
-        debugfn() << "PendingEntities=" << pe;
+        qDebug() << "PendingEntities=" << pe;
         if (!pe) {
             qWarning() << "Error in PendingEntities";
             this->exit(-1);
@@ -201,7 +201,7 @@ bool TplToolApplication::parseArgs2()
         }
 
         Tpl::PendingDates *pd = logManager->queryDates(mAccountPtr, entity, Tpl::EventTypeMaskAny);
-        debugfn() << "PendingDates=" << pd;
+        qDebug() << "PendingDates=" << pd;
         if (!pd) {
             qWarning() << "Error in PendingDates";
             this->exit(-1);
@@ -223,7 +223,7 @@ bool TplToolApplication::parseArgs2()
         QDate date = QDate::fromString(args.at(4), TPL_TOOL_DATE_FORMAT);
 
         Tpl::PendingEvents *pe = logManager->queryEvents(mAccountPtr, entity, Tpl::EventTypeMaskAny, date);
-        debugfn() << "PendingEvents=" << pe << "date=" << date;
+        qDebug() << "PendingEvents=" << pe << "date=" << date;
         if (!pe) {
             qWarning() << "Error in PendingDates";
             this->exit(-1);
@@ -243,7 +243,7 @@ bool TplToolApplication::parseArgs2()
         }
 
         Tpl::PendingEvents *pe = logManager->queryFilteredEvents(mAccountPtr, entity, Tpl::EventTypeMaskAny, args.at(4).toInt(), &TplToolApplication::eventFilterMethod, this);
-        debugfn() << "PendingEvents (filtered) =" << pe << "numEvents=" << args.at(4);
+        qDebug() << "PendingEvents (filtered) =" << pe << "numEvents=" << args.at(4);
         if (!pe) {
             qWarning() << "Error in PendingDates";
             this->exit(-1);
@@ -264,7 +264,7 @@ bool TplToolApplication::parseArgs2()
 
 void TplToolApplication::onAccountManagerReady(Tp::PendingOperation *po)
 {
-    debugfn() << "po=" << po << "isError=" << po->isError();
+    qDebug() << "po=" << po << "isError=" << po->isError();
 
     if (po->isError()) {
         qWarning() << "error getting account mananger ready";
@@ -286,7 +286,7 @@ void TplToolApplication::onAccountManagerReady(Tp::PendingOperation *po)
 
 void TplToolApplication::onAccountReady(Tp::PendingOperation *po)
 {
-    debugfn() << "po=" << po << "isError=" << po->isError();
+    qDebug() << "po=" << po << "isError=" << po->isError();
 
     if (po->isError()) {
         qWarning() << "error getting account ready";
@@ -309,7 +309,7 @@ void TplToolApplication::onAccountReady(Tp::PendingOperation *po)
 
 void TplToolApplication::onConnectionReady(Tp::PendingOperation *po)
 {
-    debugfn() << "po=" << po << "isError=" << po->isError();
+    qDebug() << "po=" << po << "isError=" << po->isError();
 
     if (po->isError()) {
         qWarning() << "error getting connection ready";

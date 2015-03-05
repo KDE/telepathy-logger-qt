@@ -1,5 +1,5 @@
 /*
- * This file is part of TelepathyLoggerQt4
+ * This file is part of TelepathyLoggerQt
  *
  * Copyright (C) 2011 Collabora Ltd. <http://www.collabora.co.uk/>
  *
@@ -19,8 +19,8 @@
 
 #include <QApplication>
 #include <TelepathyQt/Account>
-#include <TelepathyLoggerQt4/Entity>
-#include <TelepathyLoggerQt4/PendingOperation>
+#include <TelepathyLoggerQt/Entity>
+#include <TelepathyLoggerQt/PendingOperation>
 
 class TplToolApplication : public QCoreApplication {
     Q_OBJECT

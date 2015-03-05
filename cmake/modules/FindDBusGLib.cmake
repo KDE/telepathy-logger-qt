@@ -15,25 +15,36 @@ if(DBUS_GLIB_INCLUDE_DIR AND DBUS_GLIB_LIBRARIES)
   set(DBUS_GLIB_FIND_QUIETLY TRUE)
 endif(DBUS_GLIB_INCLUDE_DIR AND DBUS_GLIB_LIBRARIES)
 
-find_package(PkgConfig)
-if(PKG_CONFIG_FOUND)
-    if (DBusGLib_FIND_VERSION)
-        pkg_check_modules(PC_DBUS_GLIB QUIET dbus-glib-1>=${DBusGLib_FIND_VERSION})
-    else (DBusGLib_FIND_VERSION)
-        pkg_check_modules(PC_DBUS_GLIB QUIET dbus-glib-1)
-    endif (DBusGLib_FIND_VERSION)
-endif(PKG_CONFIG_FOUND)
+if(NOT WIN32)
+    find_package(PkgConfig)
+    if (DBusGLib_FIND_VERSION_EXACT)
+        pkg_check_modules(PC_DBUS_GLIB QUIET dbus-glib-1=${DBusGLib_FIND_VERSION})
+    else (DBusGLib_FIND_VERSION_EXACT)
+        if (DBusGLib_FIND_VERSION)
+            pkg_check_modules(PC_DBUS_GLIB REQUIRED dbus-glib-1>=${DBusGLib_FIND_VERSION})
+        else (DBusGLib_FIND_VERSION)
+            pkg_check_modules(PC_DBUS_GLIB REQUIRED dbus-glib-1)
+        endif (DBusGLib_FIND_VERSION)
+    endif (DBusGLib_FIND_VERSION_EXACT)
+endif(NOT WIN32)
 
 find_path(DBUS_GLIB_INCLUDE_DIR
-          NAMES dbus-1.0/dbus/dbus-glib.h
+          NAMES dbus/dbus-glib.h
+          HINTS
+          ${PC_DBUS_GLIB_INCLUDEDIR}
+          ${PC_DBUS_GLIB_INCLUDE_DIRS}
+)
+
+find_path(DBUS_GLIB_LOWLEVEL_INCLUDE_DIR
+          NAMES dbus/dbus-arch-deps.h
           HINTS
           ${PC_DBUS_GLIB_INCLUDEDIR}
           ${PC_DBUS_GLIB_INCLUDE_DIRS}
 )
 
 # HACK! Workaround appending "/dbus-1.0" to the HINTS above not working for some reason.
-set (DBUS_GLIB_INCLUDE_DIR
-     "${DBUS_GLIB_INCLUDE_DIR}/dbus-1.0"
+set(DBUS_GLIB_INCLUDE_DIRS
+    "${DBUS_GLIB_INCLUDE_DIR}/dbus-1.0" "${DBUS_GLIB_LOWLEVEL_INCLUDE_DIR}"
 )
 
 find_library(DBUS_GLIB_LIBRARIES
@@ -44,4 +55,7 @@ find_library(DBUS_GLIB_LIBRARIES
 )
 
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(DBusGLib DEFAULT_MSG DBUS_GLIB_LIBRARIES DBUS_GLIB_INCLUDE_DIR)
+find_package_handle_standard_args(DBUS_GLIB DEFAULT_MSG
+                                  DBUS_GLIB_LIBRARIES DBUS_GLIB_INCLUDE_DIR)
+
+set(DBusGLib_FOUND ${DBUS_GLIB_FOUND})

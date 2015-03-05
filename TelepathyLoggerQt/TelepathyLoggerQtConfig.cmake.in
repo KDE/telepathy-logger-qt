@@ -1,0 +1,7 @@
+@PACKAGE_INIT@
+
+find_dependency(Qt5Core @QT5_MIN_VERSION@)
+find_dependency(Qt5DBus @QT5_MIN_VERSION@)
+find_dependency(TelepathyQt @TELEPATHY_QT_MIN_VERSION@)
+
+include("${CMAKE_CURRENT_LIST_DIR}/TelepathyLoggerQtTargets.cmake")
