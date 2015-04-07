@@ -16,7 +16,7 @@ include(KDECMakeSettings)
 
 include(Doxygen)
 
-set(TELEPATHY_LOGGER_QT_VERSION "0.9.80.0")
+set(TELEPATHY_LOGGER_QT_VERSION "15.04.0")
 
 ecm_setup_version(${TELEPATHY_LOGGER_QT_VERSION} VARIABLE_PREFIX TelepathyLoggerQt
                   VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/TelepathyLoggerQt_version.h"
