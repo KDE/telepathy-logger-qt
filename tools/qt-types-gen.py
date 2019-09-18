@@ -116,7 +116,7 @@ class Generator(object):
             self.must_define = opts.get('--must-define', None)
             self.visibility = opts.get('--visibility', '')
             dom = xml.dom.minidom.parse(opts['--specxml'])
-        except KeyError, k:
+        except KeyError as k:
             assert False, 'Missing required parameter %s' % k.args[0]
 
         self.decls = []
@@ -254,8 +254,8 @@ TP_QT_NO_EXPORT void _registerTypes()
 
         # Write output to files
 
-        open(self.declfile, 'w').write(''.join(self.decls).encode("utf-8"))
-        open(self.implfile, 'w').write(''.join(self.impls).encode("utf-8"))
+        open(self.declfile, 'wb').write(''.join(self.decls).encode("utf-8"))
+        open(self.implfile, 'wb').write(''.join(self.impls).encode("utf-8"))
 
     def decl(self, str):
         self.decls.append(str)
@@ -302,6 +302,40 @@ TP_QT_NO_EXPORT void _registerTypes()
             self.decl(self.faketype(val, real))
             self.to_declare.append(self.namespace + '::' + val)
 
+            self.both('%s QDBusArgument& operator<<(QDBusArgument& arg, const %s &list)' %
+                    (self.visibility, val))
+            self.decl(';\n')
+            self.impl("""
+{
+    int id = qMetaTypeId<%s>();
+    arg.beginArray(id);
+    for (int i = 0; i < list.count(); ++i) {
+        arg << list.at(i);
+    }
+    arg.endArray();
+    return arg;
+}
+
+""" % (array_of))
+
+            self.both('%s const QDBusArgument& operator>>(const QDBusArgument& arg, %s &list)' %
+                    (self.visibility, val))
+            self.decl(';\n\n')
+            self.impl("""
+{
+    arg.beginArray();
+    list.clear();
+    while (!arg.atEnd()) {
+        %s item;
+        arg >> item;
+        list.append(item);
+    }
+    arg.endArray();
+    return arg;
+}
+
+""" % (array_of))
+
         structs = self.spec.getElementsByTagNameNS(NS_TP, 'struct')
         mappings = self.spec.getElementsByTagNameNS(NS_TP, 'mapping')
         exts = self.spec.getElementsByTagNameNS(NS_TP, 'external-type')
@@ -313,11 +347,11 @@ TP_QT_NO_EXPORT void _registerTypes()
         leaves = []
         next_leaves = []
 
-        for val, depinfo in self.depinfos.iteritems():
+        for val, depinfo in self.depinfos.items():
             leaf = True
 
             for dep in depinfo.deps:
-                if not self.depinfos.has_key(dep):
+                if dep not in self.depinfos:
                     raise UnresolvedDependency(val, dep)
 
                 leaf = False
@@ -400,7 +434,7 @@ struct %(visibility)s %(name)s
         'visibility': self.visibility,
         })
 
-            for i in xrange(members):
+            for i in range(members):
                 self.decl("""\
 %s\
     %s %s;
@@ -424,7 +458,7 @@ struct %(visibility)s %(name)s
             else:
                 self.impl("""
     return ((v1.%s.variant() == v2.%s.variant())""" % (names[0], names[0]))
-            for i in xrange(1, members):
+            for i in range(1, members):
                 if (bindings[i].val != 'QDBusVariant'):
                     self.impl("""
             && (v1.%s == v2.%s)""" % (names[i], names[i]))
@@ -525,10 +559,10 @@ typedef QList<%s> %sList;
         return """\
 struct %(visibility)s %(fake)s : public %(real)s
 {
-    inline %(fake)s() : %(real)s() {}
-    inline %(fake)s(const %(real)s& a) : %(real)s(a) {}
+    %(fake)s() : %(real)s() {}
+    %(fake)s(const %(real)s& a) : %(real)s(a) {}
 
-    inline %(fake)s& operator=(const %(real)s& a)
+    %(fake)s& operator=(const %(real)s& a)
     {
         *(static_cast<%(real)s*>(this)) = a;
         return *this;
@@ -553,5 +587,5 @@ if __name__ == '__main__':
     try:
         Generator(dict(options))()
     except BrokenSpecException as e:
-        print >> sys.stderr, 'Your spec is broken, dear developer! %s' % e
+        print('Your spec is broken, dear developer! %s' % e, file=sys.stderr)
         sys.exit(42)
