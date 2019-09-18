@@ -78,18 +78,23 @@ set_package_properties(TelepathyGlib PROPERTIES
                        URL "http://telepathy.freedesktop.org"
                        TYPE REQUIRED)
 
-# Find python version >= 2.5
-find_package(PythonLibrary REQUIRED)
-set(REQUIRED_PY 2.5)
-if(${PYTHON_SHORT_VERSION} VERSION_GREATER ${REQUIRED_PY} OR ${PYTHON_SHORT_VERSION} VERSION_EQUAL ${REQUIRED_PY})
-    message(STATUS "Python ${PYTHON_SHORT_VERSION} found")
-else(${PYTHON_SHORT_VERSION} VERSION_GREATER ${REQUIRED_PY} OR ${PYTHON_SHORT_VERSION} VERSION_EQUAL ${REQUIRED_PY})
-    message(SEND_ERROR "Python >= ${REQUIRED_PY} is required")
-endif(${PYTHON_SHORT_VERSION} VERSION_GREATER ${REQUIRED_PY} OR ${PYTHON_SHORT_VERSION} VERSION_EQUAL ${REQUIRED_PY})
-set_package_properties(PythonLibrary PROPERTIES
-                       DESCRIPTION "Python Library"
-                       URL "http://www.python.org"
-                       TYPE REQUIRED)
+# Find python
+if(${CMAKE_VERSION} VERSION_LESS 3.12)
+    find_package(PythonInterp 3 REQUIRED)
+    set_package_properties(PythonInterp PROPERTIES
+                           DESCRIPTION "Python Interpreter"
+                           URL "http://www.python.org"
+                           TYPE REQUIRED)
+
+    # PythonInterp exposes PYTHON_EXECUTABLE on its own
+else()
+    find_package(Python3 REQUIRED)
+    set_package_properties(Python3 PROPERTIES
+                           DESCRIPTION "Python Interpreter"
+                           URL "http://www.python.org"
+                           TYPE REQUIRED)
+    set(PYTHON_EXECUTABLE "${Python3_EXECUTABLE}")
+endif()
 
 # Find TelepathyLogger >= 0.8.0
 set(TELEPATHY_LOGGER_MIN_VERSION 0.8.0)
