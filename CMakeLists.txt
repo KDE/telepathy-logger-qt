@@ -37,31 +37,31 @@ set(TELEPATHY_QT_MIN_VERSION "0.9.1")
 find_package(TelepathyQt5 ${TELEPATHY_QT_MIN_VERSION} REQUIRED)
 set_package_properties(TelepathyQt5 PROPERTIES
                        DESCRIPTION "Qt bindings for Telepathy"
-                       URL "http://telepathy.freedesktop.org"
+                       URL "https://telepathy.freedesktop.org"
                        TYPE REQUIRED)
 
 find_package(GLIB2 REQUIRED)
 set_package_properties(GLIB2 PROPERTIES
                        DESCRIPTION "A library containing many useful C routines"
-                       URL "http://developer.gnome.org/glib/"
+                       URL "https://developer.gnome.org/glib/"
                        TYPE REQUIRED)
 
 find_package(GObject REQUIRED)
 set_package_properties(GObject PROPERTIES
                        DESCRIPTION "GLib Object System"
-                       URL "http://developer.gnome.org/glib/"
+                       URL "https://developer.gnome.org/glib/"
                        TYPE REQUIRED)
 
 find_package(DBus REQUIRED)
 set_package_properties(DBus PROPERTIES
                        DESCRIPTION "Inter-process communication system"
-                       URL "http://dbus.freedesktop.org"
+                       URL "https://dbus.freedesktop.org"
                        TYPE REQUIRED)
 
 find_package(DBusGLib REQUIRED)
 set_package_properties(DBusGLib PROPERTIES
                        DESCRIPTION "GLib bindings for DBus"
-                       URL "http://dbus.freedesktop.org"
+                       URL "https://dbus.freedesktop.org"
                        TYPE REQUIRED)
 
 find_package(LibXml2 REQUIRED)
@@ -75,7 +75,7 @@ set(TELEPATHY_GLIB_MIN_VERSION 0.16.0)
 find_package(TelepathyGlib ${TELEPATHY_GLIB_MIN_VERSION} REQUIRED)
 set_package_properties(TelepathyGlib PROPERTIES
                        DESCRIPTION "Glib bindings for Telepathy"
-                       URL "http://telepathy.freedesktop.org"
+                       URL "https://telepathy.freedesktop.org"
                        TYPE REQUIRED)
 
 # Find python
@@ -83,7 +83,7 @@ if(${CMAKE_VERSION} VERSION_LESS 3.12)
     find_package(PythonInterp 3 REQUIRED)
     set_package_properties(PythonInterp PROPERTIES
                            DESCRIPTION "Python Interpreter"
-                           URL "http://www.python.org"
+                           URL "https://www.python.org"
                            TYPE REQUIRED)
 
     # PythonInterp exposes PYTHON_EXECUTABLE on its own
@@ -91,7 +91,7 @@ else()
     find_package(Python3 REQUIRED)
     set_package_properties(Python3 PROPERTIES
                            DESCRIPTION "Python Interpreter"
-                           URL "http://www.python.org"
+                           URL "https://www.python.org"
                            TYPE REQUIRED)
     set(PYTHON_EXECUTABLE "${Python3_EXECUTABLE}")
 endif()
@@ -101,7 +101,7 @@ set(TELEPATHY_LOGGER_MIN_VERSION 0.8.0)
 find_package(TelepathyLogger ${TELEPATHY_LOGGER_MIN_VERSION} REQUIRED)
 set_package_properties(TelepathyLogger PROPERTIES
                        DESCRIPTION "Daemon for logging Telepathy conversations"
-                       URL "http://telepathy.freedesktop.org"
+                       URL "https://telepathy.freedesktop.org"
                        TYPE REQUIRED)
 # Generate a helper include file that defines current TPL version
 ecm_setup_version(${TELEPATHY_LOGGER_VERSION} VARIABLE_PREFIX TelepathyLogger
