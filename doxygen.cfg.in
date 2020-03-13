@@ -535,7 +535,7 @@ WARN_LOGFILE           = doxygen.log
 # directories like "/usr/src/myproject". Separate the files or directories 
 # with spaces.
 
-INPUT                  = ${abs_top_srcdir}/TelepathyLoggerQt4 ${abs_top_builddir}/TelepathyLoggerQt4
+INPUT                  = ${abs_top_srcdir}/TelepathyLoggerQt ${abs_top_builddir}/TelepathyLoggerQt
 
 # This tag can be used to specify the character encoding of the source files 
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is 
@@ -1431,12 +1431,12 @@ DOT_CLEANUP            = YES
 SEARCHENGINE           = NO
 
 GENERATE_QHP           = ${GENERATE_QHP}
-QHP_NAMESPACE          = "org.freedesktop.Telepathy.Logger.Qt4"
+QHP_NAMESPACE          = "org.freedesktop.Telepathy.Logger.Qt"
 QHP_VIRTUAL_FOLDER     = "${PROJECT_NAME}-${PACKAGE_VERSION}"
 QCH_FILE               = ${abs_top_builddir}/doc/help/telepathy-logger-qt4.qch
 QHG_LOCATION           = "${QHELPGENERATOR_EXECUTABLE}"
 
-### TelepathyLoggerQt4 Settings
+### TelepathyLoggerQt Settings
 ALIASES = \
 	"intern=\par<b>Internal use only.</b>" \
 	"reimp=\par<b>Reimplemented from superclass.</b>" \
@@ -1448,7 +1448,7 @@ ALIASES = \
 	"faq=\xrefitem FAQ \"F.A.Q.\" \"F.A.Q.\"" \
 	"authors=\xrefitem authors \"Author(s)\" \"Authors\"" \
 	"maintainers=\xrefitem maintainers \"Maintainer(s)\" \"Maintainers\"" \
-	"glossary=\xrefitem glossary \"TelepathyLoggerQt4 Glossary\" \"TelepathyLoggerQt4 Glossary\"" \
+	"glossary=\xrefitem glossary \"TelepathyLoggerQt Glossary\" \"TelepathyLoggerQt Glossary\"" \
 	"acronym=\b "\
 	"licenses=\xrefitem licenses \"License(s)\" \"Licenses\"" \
 	"short=@brief "\
