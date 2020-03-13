@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#ifndef _TelepathyLoggerQt_tlp_tool_h_HEADER_GUARD_
+#define _TelepathyLoggerQt_tlp_tool_h_HEADER_GUARD_
 
 #include <QApplication>
 #include <TelepathyQt/Account>
@@ -48,4 +50,6 @@ private:
     Tp::AccountManagerPtr mAccountManager;
     Tp::AccountPtr mAccountPtr;
 };
+
+#endif
 

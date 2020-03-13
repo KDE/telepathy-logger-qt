@@ -21,8 +21,8 @@
 
 #include "pending-operation.h"
 
-#include <QtCore/QDebug>
-#include <QtCore/QTimer>
+#include <QDebug>
+#include <QTimer>
 
 using namespace Tpl;
 

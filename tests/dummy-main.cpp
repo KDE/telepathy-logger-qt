@@ -19,7 +19,7 @@
 #include <QGlib/Error>
 
 #include <QApplication>
-#include <QtCore/QDebug>
+#include <QDebug>
 
 //using namespace Tpl;
 

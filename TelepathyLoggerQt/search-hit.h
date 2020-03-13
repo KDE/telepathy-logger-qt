@@ -27,7 +27,7 @@
 
 #include <TelepathyQt/Types>
 
-#include <QtCore/QSharedDataPointer>
+#include <QSharedDataPointer>
 
 namespace Tpl
 {

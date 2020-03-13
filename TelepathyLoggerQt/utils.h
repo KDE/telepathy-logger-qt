@@ -27,7 +27,7 @@
 #include <telepathy-glib/account-manager.h>
 #include <telepathy-glib/account.h>
 
-#include <QtCore/QDebug>
+#include <QDebug>
 
 namespace Tpl {
 

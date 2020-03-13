@@ -21,7 +21,7 @@
 #ifndef _TelepathyLoggerQt_pending_operation_h_HEADER_GUARD_
 #define _TelepathyLoggerQt_pending_operation_h_HEADER_GUARD_
 
-#include <QtCore/QObject>
+#include <QObject>
 
 #include <TelepathyLoggerQt_export.h>
 

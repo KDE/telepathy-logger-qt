@@ -26,7 +26,7 @@
 #include "text-event.h"
 #include "utils.h"
 
-#include <QtCore/QDebug>
+#include <QDebug>
 
 #include <TelepathyQt/Account>
 

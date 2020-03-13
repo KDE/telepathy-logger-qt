@@ -20,8 +20,8 @@
 #define _TelepathyLoggerQt_types_h_HEADER_GUARD_
 
 #include <TelepathyQt/Types>
-#include <QtCore/QList>
-#include <QtCore/QDate>
+#include <QList>
+#include <QDate>
 
 namespace Tpl
 {

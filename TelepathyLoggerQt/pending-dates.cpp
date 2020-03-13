@@ -23,7 +23,7 @@
 #include "log-manager.h"
 #include "utils.h"
 
-#include <QtCore/QDebug>
+#include <QDebug>
 
 #include <TelepathyQt/Account>
 #include <telepathy-logger/log-manager.h>
