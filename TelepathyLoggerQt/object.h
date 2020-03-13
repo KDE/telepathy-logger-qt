@@ -29,7 +29,7 @@ namespace Tpl
 class TELEPATHY_LOGGER_QT_EXPORT Object
 {
 public:
-    Object(void *tplPtr, bool ref = false);
+    explicit Object(void *tplPtr, bool ref = false);
 
     virtual ~Object();
 
