@@ -21,7 +21,7 @@
 # function TPQT_CREATE_MOC_COMMAND_TARGET_DEPS(inputfile outputfile moc_flags moc_options target_dependencies ...)
 #          This function behaves exactly like qt_create_moc_command, but creates a custom target for the
 #          moc file generation, allowing to specify a list of targets the generated moc target will depend on.
-#          Just like qt_create_moc_command, it is an internal macro and it's not meant to be used explicitely.
+#          Just like qt_create_moc_command, it is an internal macro and it's not meant to be used explicitly.
 #
 # function TPQT_GENERATE_MOC_I(inputfile outputfile)
 #          This function behaves exactly like qt_generate_moc, but it generates moc files with the -i option,
@@ -179,7 +179,7 @@ function(TPQT_GENERATE_MOC_I infile outfile)
     qt5_get_moc_flags(moc_flags)
     get_filename_component(abs_infile ${infile} ABSOLUTE)
     qt5_create_moc_command(${abs_infile} ${outfile} "${moc_flags}" "-i")
-    set_source_files_properties(${outfile} PROPERTIES SKIP_AUTOMOC TRUE)  # dont run automoc on this file
+    set_source_files_properties(${outfile} PROPERTIES SKIP_AUTOMOC TRUE)  # don't run automoc on this file
 endfunction()
 
 # same as tpqt_generate_moc_i, but lets the caller specify a list of targets which the mocs should depend on
@@ -187,7 +187,7 @@ function(TPQT_GENERATE_MOC_I_TARGET_DEPS infile outfile)
     qt5_get_moc_flags(moc_flags)
     get_filename_component(abs_infile ${infile} ABSOLUTE)
     tpqt_create_moc_command_target_deps(${abs_infile} ${outfile} "${moc_flags}" "-i" ${ARGN})
-    set_source_files_properties(${outfile} PROPERTIES SKIP_AUTOMOC TRUE)  # dont run automoc on this file
+    set_source_files_properties(${outfile} PROPERTIES SKIP_AUTOMOC TRUE)  # don't run automoc on this file
 endfunction()
 
 # generates mocs for the passed list. The list should be added to the target's sources

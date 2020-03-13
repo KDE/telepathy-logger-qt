@@ -37,3 +37,4 @@ function(tplqt_generate_headers camelcase_headers_var)
         set(${GH_REQUIRED_HEADERS} ${${GH_REQUIRED_HEADERS}} PARENT_SCOPE)
     endif ()
 endfunction()
+

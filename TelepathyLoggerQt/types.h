@@ -30,7 +30,7 @@ enum EntityType
 {
     //codegen: EntityTypeUnknown=ENTITY_UNKNOWN,EntityTypeContact=ENTITY_CONTACT,EntityTypeRoom=ENTITY_ROOM,EntityTypeSelf=ENTITY_SELF
     EntityTypeUnknown, /**< the current contact's type is unknown **/
-    EntityTypeContact, /**< the the contact's type represents a user (buddy), but not
+    EntityTypeContact, /**< the contact's type represents a user (buddy), but not
                          the account's owner for which EntityTypeSelf is used **/
     EntityTypeRoom,    /**< a named room **/
     EntityTypeSelf     /**< the contact's type represents the owner of the account
