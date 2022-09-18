@@ -121,7 +121,7 @@ target_include_directories(telepathy-logger-qt PRIVATE
     ${TELEPATHY_LOGGER_INCLUDE_DIR}
 )
 target_include_directories(telepathy-logger-qt INTERFACE
-    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/TelepathyLoggerQt>
+    $<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR}/TelepathyLoggerQt>
     ${GLIB2_INCLUDE_DIR}
     ${TELEPATHY_QT5_INCLUDE_DIR}
 )
@@ -163,9 +163,9 @@ install(FILES
     ${TelepathyLoggerQt_HEADERS}
     ${TelepathyLoggerQt_CamelCase_HEADERS}
     "${CMAKE_CURRENT_BINARY_DIR}/TelepathyLoggerQt_export.h"
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/TelepathyLoggerQt
+    DESTINATION ${KDE_INSTALL_INCLUDEDIR}/TelepathyLoggerQt
     COMPONENT Devel)
 
 install(TARGETS telepathy-logger-qt
         EXPORT  TelepathyLoggerQtTargets
-        ${INSTALL_TARGETS_DEFAULT_ARGS})
+        ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})

@@ -121,7 +121,7 @@ add_subdirectory(TelepathyLoggerQt)
 
 ############### CMake Config Files ####################
 
-set(CMAKECONFIG_INSTALL_DIR "${CMAKECONFIG_INSTALL_PREFIX}/TelepathyLoggerQt")
+set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/TelepathyLoggerQt")
 
 ecm_configure_package_config_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/TelepathyLoggerQt/TelepathyLoggerQtConfig.cmake.in"
@@ -143,7 +143,7 @@ install(EXPORT TelepathyLoggerQtTargets
 install(FILES
     "${CMAKE_CURRENT_BINARY_DIR}/TelepathyLoggerQt_version.h"
     "${CMAKE_CURRENT_BINARY_DIR}/TelepathyLogger_version.h"
-    DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/TelepathyLoggerQt"
+    DESTINATION "${KDE_INSTALL_INCLUDEDIR}/TelepathyLoggerQt"
     COMPONENT Devel)
 
 
